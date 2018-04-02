@@ -1,15 +1,20 @@
 <template>
   <div id="editor">
-    <textarea v-model="text" wrap="off"></textarea>
+    <textarea v-model="rawCode" wrap="off"></textarea>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Editor',
-  data: function () {
-    return {
-      text: null
+  computed: {
+    rawCode: {
+      get () {
+        return this.$store.state.rawCode
+      },
+      set (value) {
+        this.$store.commit('setRawCode', value)
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <Split ref="split1" :gutterSize="10" @onDragEnd="onDragEnd" style="height: 100vh;">
+    <Split ref="split1" :gutterSize="10" style="height: 100vh;">
       <SplitArea :size="50">
         <Editor></Editor>
       </SplitArea>
