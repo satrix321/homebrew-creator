@@ -1,27 +1,24 @@
 <template>
-  <div id="documentContainer">
+  <div class="documentContainer">
     <div id='dpi'></div>
-    <div id="documentToolbar">
-      <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></Icon></button>
-      <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></Icon></button>
+    <div class="documentToolbar">
+      <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></icon></button>
+      <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></icon></button>
     </div>
-    <div id="document">
+    <div class="document">
       <div class="spacerBlock"></div>
-      <div class="pages">
-        <div class="page" data-size="A4">
-          <div class="column leftColumn"><p>{{ rawCode }}</p></div>
-          <div class="column rightColumn"><p></p></div>
-        </div>
-        <div style="clear: both;"></div>
-      </div>
+      <div class="pages" v-html="compiledMarkdown"></div>
       <div class="spacerBlock"></div>
     </div>
   </div>
 </template>
 
 <script>
+import '../assets/document.css'
+
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
+import createDocument from '../document/document.js'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -34,9 +31,14 @@ export default {
       zoom: 100
     }
   },
-  computed: mapGetters({
-    rawCode: 'rawCode'
-  }),
+  computed: {
+    compiledMarkdown: function () {
+      return createDocument(this.rawCode)
+    },
+    ...mapGetters({
+      rawCode: 'rawCode'
+    })
+  },
   methods: {
     getDPI: function () {
       var dpiDiv = document.getElementById('dpi')
@@ -83,6 +85,10 @@ export default {
 </script>
 
 <style scoped>
+.documentContainer {
+  background: rgb(204,204,204);
+  height: 100%;
+}
 #dpi {
   height: 1in;
   left: -100%;
@@ -91,82 +97,31 @@ export default {
   width: 1in;
   display: none;
 }
-#documentToolbar {
+.documentToolbar {
   width: 100%;
   height: 30px;
   display: flex;
   justify-content: left;
   background-color: rgb(65,65,65);
 }
-#documentToolbar .btn {
+.documentToolbar .btn {
   width: 30px;
   height: 30px;
   border: 0;
   padding: 0 8px 0 8px;
+  color: white;
   background-color: rgb(75,75,75);
   outline: none;
 }
-#documentToolbar .btn:hover {
+.documentToolbar .btn:hover {
   background-color: rgb(115, 115, 115);
   cursor: pointer;
 }
-#documentToolbar .btn::-moz-focus-inner {
+.documentToolbar .btn::-moz-focus-inner {
    border: 0;
 }
-#documentToolbar .btn:active {
+.documentToolbar .btn:active {
   background-color: rgb(95,95,95);
   padding: 0 8px 0 8px;
-}
-.column {
-  float: left;
-  width: 10.5cm;
-  height: 29.7cm;
-  padding-top: 1cm;
-  padding-bottom: 1cm;
-  box-sizing: border-box;
-  text-align: left;
-}
-.column > p {
-  margin: 0;
-}
-.column.leftColumn {
-  padding-left: 1.2cm;
-  padding-right: 0.4cm;
-}
-.column.rightColumn {
-  padding-left: 0.4cm;
-  padding-right: 1.2cm;
-}
-#document {
-  background: rgb(204,204,204);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-}
-#document > .spacerBlock {
-  width: 100%;
-  height: 10px;
-}
-#document > .pages > .page {
-  background: white;
-  display: block;
-  margin-bottom: 0.5cm;
-  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-}
-#document > .pages > .page[data-size="A4"] {
-  width: 21cm;
-  height: 29.7cm;
-}
-#document > .pages > .page[data-size="A4"][data-layout="portrait"] {
-  width: 29.7cm;
-  height: 21cm;
-}
-@media print {
-  body, .page {
-    margin: 0;
-    box-shadow: 0;
-  }
 }
 </style>

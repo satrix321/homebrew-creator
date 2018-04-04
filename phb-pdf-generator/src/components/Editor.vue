@@ -1,21 +1,24 @@
 <template>
   <div id="editor">
-    <textarea v-model="rawCode" wrap="off"></textarea>
+    <textarea :value="rawCode" @input="updateRawCode" wrap="on"></textarea>
   </div>
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   name: 'Editor',
-  computed: {
-    rawCode: {
-      get () {
-        return this.$store.state.rawCode
-      },
-      set (value) {
-        this.$store.commit('setRawCode', value)
-      }
+  data () {
+    return {
+      rawCode: '# header'
     }
+  },
+  methods: {
+    updateRawCode: _.debounce(function (e) {
+      this.rawCode = e.target.value
+      this.$store.commit('setRawCode', e.target.value)
+    }, 300)
   }
 }
 </script>
