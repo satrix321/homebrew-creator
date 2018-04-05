@@ -1,0 +1,50 @@
+@media print {
+  body, .page {
+    margin: 0 !important;
+    box-shadow: 0 !important;
+  }
+  .gutter.gutter-horizontal {
+    display: none !important;
+    height: 0 !important;
+  }
+  .editor > textarea {
+    display: none !important;
+  }
+  .editorArea {
+    display: none !important;
+    height: 0 !important;
+    float: none !important;
+  }
+  .gutter.gutter-horizontal {
+    display: none !important;
+    height: 0 !important;
+  }
+  .documentArea {
+    width: 100% !important;
+    float: none !important;
+  }
+  .spacerBlock {
+    display: none !important;
+    height: 0 !important;
+  }
+  .documentToolbar {
+    display: none !important;
+    height: 0 !important;
+  }
+  .document {
+    display: block !important;
+  }
+  .document > .pages > .page {
+    box-shadow: 0 0 0 rgba(0,0,0,0) !important;
+    -webkit-box-shadow: 0 0 0 rgba(0,0,0,0) !important;
+    margin: 0;
+    position: relative;
+    box-sizing: border-box;
+  }
+  .split {
+    overflow: visible !important;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

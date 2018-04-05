@@ -1,10 +1,10 @@
 <template>
   <div class="main">
     <Split ref="split1" :gutterSize="10" style="height: 100vh;">
-      <SplitArea :size="50">
+      <SplitArea class="editorArea" :size="50">
         <Editor></Editor>
       </SplitArea>
-      <SplitArea :size="50">
+      <SplitArea class="documentArea" :size="50">
           <Document></Document>
       </SplitArea>
     </Split>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import '../assets/print.css'
+
 import Editor from './Editor.vue'
 import Document from './Document.vue'
 
@@ -39,5 +41,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.editorArea {
+  overflow-y: hidden;
 }
 </style>

@@ -1,10 +1,12 @@
 <template>
-  <div id="editor">
-    <textarea :value="rawCode" @input="updateRawCode" wrap="on"></textarea>
+  <div class="editor">
+    <textarea :value="rawCode" @input="updateRawCode" wrap="on" spellcheck="false"></textarea>
   </div>
 </template>
 
 <script>
+import '../assets/print.css'
+
 import _ from 'lodash'
 
 export default {
@@ -24,7 +26,10 @@ export default {
 </script>
 
 <style scoped>
-#editor > textarea {
+.editor {
+  height: 100vh;
+}
+.editor > textarea {
   height: 100vh;
   width: 100%;
   margin: 0px;

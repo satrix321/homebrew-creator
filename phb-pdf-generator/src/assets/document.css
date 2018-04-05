@@ -39,9 +39,20 @@
   margin: 0;
   height: 100%;
 }
-@media print {
-  body, .page {
-    margin: 0;
-    box-shadow: 0;
-  }
+.columns * {
+  margin-top: 0 !important;
+}
+.page .columns > h1,
+.page .columns > h2,
+.page .columns > h3,
+.page .columns > h4,
+.page .columns > h5,
+.page .columns > h6 {
+  font-family: 'Cormorant SC', serif;
+  text-transform: uppercase;
+  color: rgb(106, 28, 15);
+}
+
+.page .columns > p {
+  font-family: 'Source Serif Pro', serif;
 }

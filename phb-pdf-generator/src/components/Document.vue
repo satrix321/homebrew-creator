@@ -1,6 +1,6 @@
 <template>
   <div class="documentContainer">
-    <div id='dpi'></div>
+    <div class="dpi"></div>
     <div class="documentToolbar">
       <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></icon></button>
       <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></icon></button>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import '../assets/print.css'
 import '../assets/document.css'
 
 import 'vue-awesome/icons'
@@ -89,7 +90,7 @@ export default {
   background: rgb(204,204,204);
   height: 100%;
 }
-#dpi {
+.documentContainer > .dpi {
   height: 1in;
   left: -100%;
   position: absolute;
