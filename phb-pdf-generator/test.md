@@ -44,9 +44,9 @@ Dziennik zawiera rekordy związane z poczynaniami mrocznego stowarzyszenia operu
 
 Późnym popołudniem Rupert nie żyje. Badacze mają wolną rękę, jednakże chociaż jeden z nich powinien zająć się czytaniem dziennika. Biblioteka pobliskiego uniwersytetu Miskatonic jest otwarta wieczorami w ciągu tygodnia.
 
-Jeżeli badacze zdecydują się na rozmowę z wdową i synem po Rupercie nie dowiedzą się niczego interesującego, jako że nie wiedzą oni nic na temat opuszczonej farmy ani młodzieńczych poczynań Ruperta.
-
 \page
+
+Jeżeli badacze zdecydują się na rozmowę z wdową i synem po Rupercie nie dowiedzą się niczego interesującego, jako że nie wiedzą oni nic na temat opuszczonej farmy ani młodzieńczych poczynań Ruperta.
 
 > ##### Medycyna
 >
@@ -57,4 +57,3 @@ Syn jak i wdowa nie wnoszą nic więcej do historii, jednakże mogą być wykorz
 Możliwy wątek poboczny: Bertrand Merriweather, syn Ruperta, może zażądać od badaczy zawartości pudełka, a nawet pojawić się na farmie w towarzystwie policjanta w celu wydalenia badaczy z posiadłości. Ciężko może być im przekonać funkcjonariusza że Rupert dobrowolnie przekazał im akt własności farmy. Syn Ruperta, kierowany chęcią zysku może chcieć za wszelką cenę zyskać dany akt aby móc sprzedać gospodarstwo. W przypadku gdy nie uda się przekonać policjanta może dojść do drobnej potyczki bądź do przedstawienia zarzutów wtargnięcia, co skutkowałoby wydaleniem z posesji bądź zatrzymaniem badaczy.
 
 W przypadku gdy badacze potrzebowaliby dodatkowej pomocy istnieje opcja wprowadzenia do historii pielęgniarki, która byłaby świadkiem dziwnych koszmarów Ruperta, w których motywem przewodnim byłaby wskazówka pozwalająca naprowadzić graczy na odpowiedni trop.
-

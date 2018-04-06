@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro');
 @import url('https://fonts.googleapis.com/css?family=Cormorant+SC');
 
+.page {
+  background-image: url('./texture_01.jpg');
+  position: relative;
+}
 .page > h1,
 .page > h2,
 .page > h3,
@@ -54,4 +58,19 @@
 .page > blockquote > p {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
+}
+.page > .pageFooter {
+  position: absolute;
+  width: 21cm;
+  height: 1cm;
+  bottom: 0;
+  left: 0;
+  background-image: url('./footer_01.png');
+  background-size: 21cm 1cm;
+}
+.page > .pageFooter.even {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }

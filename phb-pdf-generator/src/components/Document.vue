@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import '../assets/print.css'
-import '../assets/document.css'
-import '../assets/pages.css'
+import '@/assets/print.css'
+import '@/assets/document.css'
+import '@/assets/pages.css'
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -100,6 +100,9 @@ export default {
   display: none;
 }
 .documentToolbar {
+  position: absolute;
+  z-index: 1;
+  top: 0;
   width: 100%;
   height: 30px;
   display: flex;

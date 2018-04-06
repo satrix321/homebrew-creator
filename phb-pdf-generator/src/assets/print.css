@@ -2,6 +2,7 @@
   body, .page {
     margin: 0 !important;
     box-shadow: 0 !important;
+    overflow-x: auto !important;
   }
   .gutter.gutter-horizontal {
     display: none !important;
