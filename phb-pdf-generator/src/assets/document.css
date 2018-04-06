@@ -10,23 +10,21 @@
   width: 100%;
   height: 10px;
 }
-.document > .pages > .page {
+.document .page {
   background: white;
   display: block;
   margin-bottom: 0.5cm;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
 }
-.document > .pages > .page[data-size="A4"] {
+.document .page[data-size="A4"] {
   width: 21cm;
   height: 29.7cm;
 }
-.document > .pages > .page[data-size="A4"][data-layout="portrait"] {
+.document .page[data-size="A4"][data-layout="portrait"] {
   width: 29.7cm;
   height: 21cm;
 }
 .columns {
-  width: 21cm;
-  height: 29.7cm;
   padding-left: 1cm;
   padding-right: 1cm;
   padding-top: 1cm;
@@ -41,18 +39,4 @@
 }
 .columns * {
   margin-top: 0 !important;
-}
-.page .columns > h1,
-.page .columns > h2,
-.page .columns > h3,
-.page .columns > h4,
-.page .columns > h5,
-.page .columns > h6 {
-  font-family: 'Cormorant SC', serif;
-  text-transform: uppercase;
-  color: rgb(106, 28, 15);
-}
-
-.page .columns > p {
-  font-family: 'Source Serif Pro', serif;
 }

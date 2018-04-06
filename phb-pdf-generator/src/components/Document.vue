@@ -16,6 +16,7 @@
 <script>
 import '../assets/print.css'
 import '../assets/document.css'
+import '../assets/pages.css'
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -49,8 +50,8 @@ export default {
     },
     zoomIn: function () {
       if (this.zoom === 50) {
-        var pagesElement = document.querySelector('#document .pages')
-        var documentElement = document.getElementById('document')
+        var pagesElement = document.querySelector('.document .pages')
+        var documentElement = pagesElement.parentElement
         var pagesHeight = pagesElement.clientHeight
         var documentHeight = documentElement.clientHeight
 
@@ -66,8 +67,8 @@ export default {
     },
     zoomOut: function () {
       if (this.zoom === 100) {
-        var pagesElement = document.querySelector('#document .pages')
-        var documentElement = document.getElementById('document')
+        var pagesElement = document.querySelector('.document .pages')
+        var documentElement = pagesElement.parentElement
         var pagesHeight = pagesElement.clientHeight
         var documentHeight = documentElement.clientHeight
 
