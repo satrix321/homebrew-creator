@@ -10,8 +10,7 @@ import { codemirror } from 'vue-codemirror'
 
 import '@/assets/print.css'
 import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/monokai.css'
-
+import '@/assets/codemirror-custom.css'
 import 'codemirror/mode/markdown/markdown.js'
 
 import _ from 'lodash'
@@ -25,12 +24,13 @@ export default {
     return {
       rawCode: '# header',
       cmOptions: {
-        tabSize: 4,
-        mode: 'text/markdown',
-        theme: 'monokai',
+        tabSize: 2,
+        mode: 'text/x-markdown',
+        theme: 'custom',
         lineNumbers: true,
         styleActiveLine: true,
-        lineWrapping: true
+        lineWrapping: true,
+        highlightFormatting: true
       }
     }
   },
