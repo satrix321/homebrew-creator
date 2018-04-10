@@ -49,35 +49,29 @@ export default {
       return { dpiX, dpiY }
     },
     zoomIn: function () {
-      if (this.zoom === 50) {
+      if (this.zoom < 100) {
         var pagesElement = document.querySelector('.document .pages')
-        var documentElement = pagesElement.parentElement
         var pagesHeight = pagesElement.clientHeight
-        var documentHeight = documentElement.clientHeight
 
         pagesElement.style['-webkit-transform-origin'] = ''
         pagesElement.style['-moz-transform-origin'] = ''
         pagesElement.style['transform-origin'] = ''
         pagesElement.style['transform'] = ''
         pagesElement.style['height'] = (pagesHeight * 2) + 'px'
-        documentElement.style['height'] = (documentHeight * 2) + 'px'
 
         this.zoom = 100
       }
     },
     zoomOut: function () {
-      if (this.zoom === 100) {
+      if (this.zoom > 50) {
         var pagesElement = document.querySelector('.document .pages')
-        var documentElement = pagesElement.parentElement
         var pagesHeight = pagesElement.clientHeight
-        var documentHeight = documentElement.clientHeight
 
         pagesElement.style['-webkit-transform-origin'] = 'top center'
         pagesElement.style['-moz-transform-origin'] = 'top center'
         pagesElement.style['transform-origin'] = 'top center'
         pagesElement.style['transform'] = 'scale(0.5)'
         pagesElement.style['height'] = (pagesHeight / 2) + 'px'
-        documentElement.style['height'] = (documentHeight / 2) + 'px'
 
         this.zoom = 50
       }
