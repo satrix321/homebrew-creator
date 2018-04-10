@@ -1,19 +1,10 @@
 .document {
-  /*
-  background: rgb(204,204,204);
-  align-items: center;
   overflow-y: auto;
+  background: rgb(204,204,204);
   position: relative;
   height: calc(100% - 30px);
   width: 100%;
-  */
-
   background: rgb(204,204,204);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: auto;
 }
 .document .page {
   display: block;
@@ -27,10 +18,8 @@
 .page[data-size="A4"] {
   width: 21cm;
   height: 29.7cm;
-  /*
   margin-left: auto;
   margin-right: auto;
-  */
 }
 .page[data-size="A4"][data-layout="portrait"] {
   width: 29.7cm;

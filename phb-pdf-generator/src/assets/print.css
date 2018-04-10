@@ -29,20 +29,15 @@
     height: 0 !important;
   }
   .documentContainer {
-    overflow: auto !important;
+    overflow: visible !important;
   }
   .documentToolbar {
     display: none !important;
     height: 0 !important;
   }
-  .documentToolbar .btn {
-    float: none;
-  }
   .document {
     display: block !important;
-    overflow: auto !important;
-    height: 100% !important;
-    position: inherit !important;
+    overflow-y: visible !important;
   }
   .document > .pages > .page {
     box-shadow: 0 0 0 rgba(0,0,0,0) !important;
@@ -50,10 +45,6 @@
     margin: 0;
     position: relative;
     box-sizing: border-box;
-  }
-  .page {
-    margin-left: 0;
-    margin-right: 0;
   }
   .split {
     overflow: visible !important;
