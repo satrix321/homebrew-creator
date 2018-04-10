@@ -13,7 +13,7 @@ export default function createDocument (rawInput) {
       page += marked(pagesRawInput[i].substring(currentIndex, pagesRawInput[i].length))
     }
 
-    page += '<div class="pageFooter ' + (pageNum % 2 === 1 ? 'odd' : 'even') + '"></div>'
+    page += '<div class="pageFooter ' + (pageNum % 2 === 1 ? 'odd' : 'even') + '" data-page="' + pageNum + '"><div class="background"></div><p class="pageNumber">' + pageNum + '</p></div>'
 
     page += '</div>'
     pages += page

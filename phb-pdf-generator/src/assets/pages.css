@@ -49,15 +49,21 @@
   margin: 0;
   overflow: auto;
 }
+.page > blockquote > blockquote > blockquote {
+  background-color: rgb(231, 227, 239);
+  margin: 0;
+  overflow: auto;
+}
 .page > blockquote > *:not(blockquote),
-.page > blockquote > blockquote > *:not(blockquote) {
+.page > blockquote > blockquote > *:not(blockquote),
+.page > blockquote > blockquote > blockquote > *:not(blockquote) {
   margin-left: 10px;
   margin-right: 10px;
 }
 .page > blockquote *:not(blockquote):last-child {
   margin-bottom: 5px;
 }
-.page > blockquote > *:first-child {
+.page > blockquote h5 {
   padding-top: 5px;
 }
 .page > blockquote h5 {
@@ -70,7 +76,7 @@
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
 }
-.page > .pageFooter {
+.page > .pageFooter > .background {
   position: absolute;
   width: 21cm;
   height: 1cm;
@@ -79,11 +85,24 @@
   background-image: url('./footer_01.png');
   background-size: 21cm 1cm;
 }
-.page > .pageFooter.even {
+.page > .pageFooter.even > .background {
   -moz-transform: scaleX(-1);
   -o-transform: scaleX(-1);
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+}
+.page > .pageFooter > .pageNumber,
+.page > .pageFooter.even > .pageNumber {
+  position: absolute;
+  bottom: 0;
+  font-family: 'Alegreya Sans SC';
+  color: rgb(106, 28, 15);
+}
+.page > .pageFooter > .pageNumber {
+  right: 0.5cm;
+}
+.page > .pageFooter.even > .pageNumber {
+  left: 0.5cm;
 }
 .page > blockquote > table {
   width: 100%;
@@ -118,9 +137,9 @@
   margin: 0;
 }
 .page > blockquote {
-  -webkit-column-break-inside: avoid; 
-  -moz-column-break-inside: avoid; 
-  -o-column-break-inside: avoid; 
-  -ms-column-break-inside: avoid; 
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  -o-column-break-inside: avoid;
+  -ms-column-break-inside: avoid;
   page-break-inside: avoid;
 }
