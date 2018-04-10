@@ -406,7 +406,7 @@ Istnieje także możliwość że istota animuje ciało Red Jake’a, w zależno�
 
 >>> ##### Zabicie truposzy
 >>>
->>> Zniszczenie animowane ciała daje badaczom 1d6+1 pkt niepoczytalności (tylko dla tych którzy biorą aktywny udział w unicestwieniu danego trupa).
+>>> **Zniszczenie animowanego ciała daje badaczom 1d6+1 pkt poczytalności** (tylko dla tych którzy biorą aktywny udział w unicestwieniu danego trupa).
 
 ___
 >|M. Mcphirter, truposz, animowany przez istotę|

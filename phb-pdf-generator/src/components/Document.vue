@@ -90,6 +90,7 @@ export default {
 .documentContainer {
   background: rgb(204,204,204);
   height: 100%;
+  /*overflow: hidden;*/
 }
 .documentContainer > .dpi {
   height: 1in;
@@ -100,6 +101,11 @@ export default {
   display: none;
 }
 .documentToolbar {
+  /*
+  height: 30px;
+  width: 100%;
+  background-color: rgb(65,65,65);
+  */
   position: absolute;
   z-index: 1;
   top: 0;
@@ -117,6 +123,7 @@ export default {
   color: white;
   background-color: rgb(75,75,75);
   outline: none;
+  /*float: left;*/
 }
 .documentToolbar .btn:hover {
   background-color: rgb(115, 115, 115);

@@ -1,6 +1,5 @@
 <template>
   <div class="editor">
-    <!--<textarea :value="rawCode" @input="updateRawCode" wrap="on" spellcheck="false"></textarea>-->
     <codemirror :value="rawCode" :options="cmOptions" @input="onCmCodeChange"></codemirror>
   </div>
 </template>
@@ -13,12 +12,16 @@ import 'codemirror/lib/codemirror.css'
 import '@/assets/codemirror-custom.css'
 import 'codemirror/mode/markdown/markdown.js'
 
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+
 import _ from 'lodash'
 
 export default {
   name: 'Editor',
   components: {
-    codemirror
+    codemirror,
+    Icon
   },
   data () {
     return {
