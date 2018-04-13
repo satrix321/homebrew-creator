@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import '@/assets/print.css'
+import '@/assets/css/print.css'
 
 import Editor from './Editor.vue'
 import Document from './Document.vue'

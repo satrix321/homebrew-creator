@@ -14,13 +14,11 @@
 </template>
 
 <script>
-import '@/assets/print.css'
-import '@/assets/document.css'
-import '@/assets/pages.css'
+import '@/assets/css/print.css'
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
-import createDocument from '../document/document.js'
+import marked from 'marked'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -35,7 +33,29 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      return createDocument(this.rawCode)
+      var pagesRawInput = this.rawCode.split('\\page')
+      var pages = ''
+      var pageNum = 1
+
+      for (let i = 0; i < pagesRawInput.length; i++) {
+        let page = '<div class="page columns" data-size="A4">'
+        let currentIndex = 0
+
+        if (currentIndex < pagesRawInput[i].length) {
+          page += marked(pagesRawInput[i].substring(currentIndex, pagesRawInput[i].length))
+        }
+
+        page += '<div class="pageFooter ' + (pageNum % 2 === 1 ? 'odd' : 'even') + '" data-page="' + pageNum + '"><div class="background"></div><p class="pageNumber">' + pageNum + '</p></div>'
+
+        page += '</div>'
+        pages += page
+
+        pageNum++
+      }
+
+      pages += '<div style="clear: both;"></div>'
+
+      return pages
     },
     ...mapGetters({
       rawCode: 'rawCode'
@@ -80,7 +100,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC');
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro');
+@import url('https://fonts.googleapis.com/css?family=Cormorant+SC');
+
 .documentContainer {
   background: rgb(204,204,204);
   height: 100%;
@@ -120,4 +144,195 @@ export default {
   background-color: rgb(95,95,95);
   padding: 0 8px 0 8px;
 }
+
+/* Document */
+.document {
+  overflow-y: auto;
+  background: rgb(204,204,204);
+  position: relative;
+  height: calc(100% - 30px);
+  width: 100%;
+  background: rgb(204,204,204);
+}
+.document .page {
+  display: block;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+.spacerBlock {
+  width: 100%;
+  height: 50px;
+}
+.page[data-size="A4"] {
+  width: 21cm;
+  height: 29.7cm;
+  margin-left: auto;
+  margin-right: auto;
+}
+.page[data-size="A4"][data-layout="portrait"] {
+  width: 29.7cm;
+  height: 21cm;
+}
+.columns {
+  padding-left: 1cm;
+  padding-right: 1cm;
+  padding-top: 1cm;
+  padding-bottom: 1cm;
+  box-sizing: border-box;
+  text-align: left;
+  -moz-column-count: 2;
+  -webkit-column-count: 2;
+  column-count: 2;
+  margin: 0;
+  height: 100%;
+}
+.columns * {
+  margin-top: 0 !important;
+}
+
+/* Pages style */
+.page {
+  background-image: url('../assets/imgs/texture_01.jpg');
+  position: relative;
+}
+.page > h1,
+.page > h2,
+.page > h3,
+.page > h4,
+.page > h5,
+.page > h6 {
+  font-family: 'Cormorant SC', serif;
+  text-transform: uppercase;
+  color: rgb(106, 28, 15);
+}
+.page > h1 {
+  font-size: 21pt;
+  font-weight: 600;
+}
+.page > h1::first-letter {
+  font-size: 130%;
+}
+.page > h2 {
+  font-size: 18pt;
+  font-weight: 400;
+  border-bottom: 1px solid rgb(201, 173, 105);
+}
+.page > h2::first-letter {
+  font-size: 130%;
+}
+.page > p {
+  font-family: 'Source Serif Pro', serif;
+  font-size: 9pt;
+}
+.page > blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  border-left: 3px solid gray;
+  border-right: 3px solid gray;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+  background-color: rgb(218, 230, 191);
+}
+.page > blockquote > blockquote {
+  background-color: rgb(220, 207, 172);
+  margin: 0;
+  overflow: auto;
+}
+.page > blockquote > blockquote > blockquote {
+  background-color: rgb(231, 227, 239);
+  margin: 0;
+  overflow: auto;
+}
+.page > blockquote > *:not(blockquote),
+.page > blockquote > blockquote > *:not(blockquote),
+.page > blockquote > blockquote > blockquote > *:not(blockquote) {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.page > blockquote *:not(blockquote):last-child {
+  margin-bottom: 5px;
+}
+.page > blockquote h5 {
+  padding-top: 5px;
+}
+.page > blockquote h5 {
+  font-family: 'Alegreya Sans SC';
+  font-size: 11pt;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.page > blockquote p {
+  font-family: 'Source Serif Pro', serif;
+  font-size: 9pt;
+}
+.page > .pageFooter > .background {
+  position: absolute;
+  width: 21cm;
+  height: 1cm;
+  bottom: 0;
+  left: 0;
+  background-image: url('../assets/imgs/footer_01.png');
+  background-size: 21cm 1cm;
+}
+.page > .pageFooter.even > .background {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.page > .pageFooter > .pageNumber,
+.page > .pageFooter.even > .pageNumber {
+  position: absolute;
+  bottom: 0;
+  font-family: 'Alegreya Sans SC';
+  color: rgb(106, 28, 15);
+}
+.page > .pageFooter > .pageNumber {
+  right: 0.5cm;
+}
+.page > .pageFooter.even > .pageNumber {
+  left: 0.5cm;
+}
+.page > blockquote > table {
+  width: 100%;
+  margin-bottom: 5px;
+  margin-left: 0;
+  margin-right: 0;
+}
+.page > hr {
+  display: none;
+}
+
+/* monster tables */
+.page > blockquote > hr {
+  margin-bottom: 0;
+}
+.page > hr + blockquote {
+  background-color: #ffbcbc;
+}
+.page > hr + blockquote > table > thead > tr > th {
+  font-size: 13pt;
+  font-family: 'Alegreya Sans SC';
+}
+.page > hr + blockquote > table > tbody > tr > td {
+  font-size: 9pt;
+  font-family: 'Alegreya Sans SC';
+}
+
+/* lists */
+.page > ul {
+  font-size: 9pt;
+  font-family: 'Source Serif Pro', serif;
+}
+.page > ul > li > blockquote {
+  margin: 0;
+}
+.page > blockquote {
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  -o-column-break-inside: avoid;
+  -ms-column-break-inside: avoid;
+  page-break-inside: avoid;
+}
+
 </style>

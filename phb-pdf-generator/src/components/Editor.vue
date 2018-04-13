@@ -7,9 +7,8 @@
 <script>
 import { codemirror } from 'vue-codemirror'
 
-import '@/assets/print.css'
+import '@/assets/css/print.css'
 import 'codemirror/lib/codemirror.css'
-import '@/assets/codemirror-custom.css'
 import 'codemirror/mode/markdown/markdown.js'
 
 import 'vue-awesome/icons'
@@ -38,20 +37,16 @@ export default {
     }
   },
   methods: {
-    updateRawCode: _.debounce(function (e) {
-      this.rawCode = e.target.value
-      this.$store.commit('setRawCode', e.target.value)
-    }, 300),
-    onCmCodeChange: function (newCode) {
+    onCmCodeChange: _.debounce(function (newCode) {
       this.rawCode = newCode
       this.$store.commit('setRawCode', newCode)
-    }
+    }, 300)
   }
 }
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Fira+Mono');
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700&subset=latin-ext');
 .editor {
   height: 100vh;
 }
@@ -64,5 +59,74 @@ export default {
   resize: none;
   font-family: 'Fira Mono', monospace;
   font-size: 8pt;
+}
+
+/* CodeMirror Custom */
+.cm-s-custom {
+  font-size: 1em;
+  line-height: 1.5em;
+  font-family: 'Fira Mono', monospace;
+  background: #2a2a2a;
+  color: #ffffff;
+}
+.cm-s-custom .CodeMirror-lines {
+  padding: 8px 0;
+}
+.cm-s-custom .CodeMirror-gutters {
+  box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
+  background-color: #2a2a2a;
+  padding-right: 10px;
+  z-index: 3;
+  border: none;
+}
+.cm-s-custom div.CodeMirror-cursor {
+  border-left: 3px solid #ffffff;
+}
+.cm-s-custom .CodeMirror-activeline-background {
+  background: #3E3D32;
+}
+.cm-s-custom .CodeMirror-selected {
+  background: #237CC4;
+}
+.cm-s-custom .cm-comment {
+  color: #B8FF9A;
+}
+.cm-s-custom .cm-string {
+  color: #FF9F9A;
+}
+.cm-s-custom .cm-number {
+  color: #66D9EF;
+}
+.cm-s-custom .cm-atom {
+  color: #66D9EF;
+}
+.cm-s-custom .cm-variable {
+  color: #A6E22E;
+}
+.cm-s-custom .cm-def {
+  font-style: italic;
+  color: #FD971F;
+}
+.cm-s-custom .cm-variable-2 {
+  color: #F29C00;
+}
+.cm-s-custom .cm-property {
+  color: #66D9EF;
+}
+.cm-s-custom .cm-keyword {
+  color: null;
+}
+.cm-s-custom .cm-operator {
+  color: null;
+}
+.cm-s-custom .CodeMirror-linenumber {
+  color: #B8FF9A;
+}
+.cm-s-custom .cm-quote {
+  color: #B8FF9A;
+}
+.cm-s-custom .cm-header {
+  color: #66D9EF;
 }
 </style>
