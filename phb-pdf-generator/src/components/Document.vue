@@ -2,8 +2,8 @@
   <div class="documentContainer">
     <div class="dpi"></div>
     <div class="documentToolbar">
-      <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></icon></button>
-      <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></icon></button>
+      <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></Icon></button>
+      <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></Icon></button>
     </div>
     <div class="document">
       <div class="spacerBlock"></div>
@@ -118,13 +118,14 @@ export default {
   width: 1in;
   display: none;
 }
+
+/* Document toolbar */
 .documentToolbar {
   height: 30px;
   width: 100%;
   background-color: rgb(65,65,65);
 }
 .documentToolbar .btn {
-  width: 30px;
   height: 30px;
   border: 0;
   padding: 0 8px 0 8px;
@@ -150,7 +151,7 @@ export default {
   overflow-y: auto;
   background: rgb(204,204,204);
   position: relative;
-  height: calc(100% - 30px);
+  height: calc(100vh - 30px);
   width: 100%;
   background: rgb(204,204,204);
 }
@@ -204,21 +205,29 @@ export default {
   font-family: 'Cormorant SC', serif;
   text-transform: uppercase;
   color: rgb(106, 28, 15);
+  margin-bottom: 15px;
 }
 .page > h1 {
   font-size: 21pt;
   font-weight: 600;
 }
 .page > h1::first-letter {
-  font-size: 130%;
+  font-size: 120%;
 }
 .page > h2 {
   font-size: 18pt;
-  font-weight: 400;
-  border-bottom: 1px solid rgb(201, 173, 105);
+  font-weight: 600;
 }
 .page > h2::first-letter {
-  font-size: 130%;
+  font-size: 120%;
+}
+.page > h3 {
+  font-size: 16pt;
+  font-weight: 600;
+  border-bottom: 1px solid rgb(201, 173, 105);
+}
+.page > h3::first-letter {
+  font-size: 120%;
 }
 .page > p {
   font-family: 'Source Serif Pro', serif;
@@ -265,6 +274,8 @@ export default {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
 }
+
+/* footer */
 .page > .pageFooter > .background {
   position: absolute;
   width: 21cm;
@@ -280,12 +291,11 @@ export default {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
-.page > .pageFooter > .pageNumber,
-.page > .pageFooter.even > .pageNumber {
+.page > .pageFooter > .pageNumber {
   position: absolute;
   bottom: 0;
   font-family: 'Alegreya Sans SC';
-  color: rgb(106, 28, 15);
+  color: rgb(213, 187, 118);
 }
 .page > .pageFooter > .pageNumber {
   right: 0.5cm;
@@ -293,6 +303,7 @@ export default {
 .page > .pageFooter.even > .pageNumber {
   left: 0.5cm;
 }
+
 .page > blockquote > table {
   width: 100%;
   margin-bottom: 5px;
@@ -311,14 +322,19 @@ export default {
   background-color: #ffbcbc;
 }
 .page > hr + blockquote > table > thead > tr > th {
-  font-size: 13pt;
+  font-size: 12pt;
   font-family: 'Alegreya Sans SC';
 }
 .page > hr + blockquote > table > tbody > tr > td {
   font-size: 9pt;
   font-family: 'Alegreya Sans SC';
 }
-
+.page > blockquote table {
+  margin-bottom: 0;
+}
+.page > blockquote hr {
+  margin: 0;
+}
 /* lists */
 .page > ul {
   font-size: 9pt;

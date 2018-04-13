@@ -1,8 +1,8 @@
 # The Edge of Darkness
 
-# Scenariusz
+## Scenariusz
 
-## Wstęp
+### Wstęp
 
 Przygoda rozpoczyna się w Arkham w stanie Massachusetts w 1928 roku. Zostaliście wezwani do szpitala ze względu na pogarszający się stan bliskiej wam osoby, Ruperta Merriweather, starszego dżentelmena cierpiącego na raka płuc. Każdy z was mieszka w Arkham bądź nieopodal i miał swego czasu styczność z Rupertem, miło wspominacie poczciwego staruszka, jednakże trudno było nie zauważyć jego rezerwy wobec innych. W tym miejscu każda z postaci może przedstawić się i krótko opisać czym się zajmuje.
 
@@ -10,7 +10,7 @@ Rupert poprosił was o wizytę w szpitalu Św. Marii w Arkham jutrzejszego popo�
 
 Po tym jak opuszczają pomieszczenie, Rupert prosi was abyście upewnili że drzwi są szczelnie zamknięte, a następnie tłumaczy wam cel tej nagłej wizyty, wyjawiając zarazem swój najmroczniejszy sekret…
 
-## Mroczny sekret
+### Mroczny sekret
 
 Za młodu w czasach studenckich Rupert wraz z kolegami oddali się, według nich nic nieznaczącą, eksploracją zagadnień okultystycznych. Ich grupie przewodził starszy od nich Marion Allen. W szóstkę kupili farmę kilka mil na zachód od Arkham, niedaleko wioski Ross’s Corners. W tamtym miejscu mogli bez przeszkód oddawać się seansom spirytystycznym oraz innym aktywnością oraz innymi paranormalnymi eksperymentami. Jednakże ostatni z nich przyniósł nieoczekiwane rezultaty - do naszego świata została sprowadzona mroczna, niegodziwa siła. Zamiast próbować odesłać plugastwo do zaświatów, młodzi ludzie opuścili farmę, pewni tego że magia, której użyli do przywołania zła utrzyma je w ryzach w tym opuszczonym domu. Jednakże w tym czasie nie wiedzieli oni o jednym istotnym szczególe - magia, która niewoli zło będzie działać tak długo, jak żyją osoby które z niej skorzystały. Rupert Merriweather jest ostatnim żyjącym z grupy studentów i obawia się, że jego śmierć może uwolnić ten prastary byt, który siałby spustoszenie na okolicznych terenach.
 
@@ -22,7 +22,7 @@ Wskazuje wam na pudełko leżące na półce - *weźcie je, wewnątrz znajdzieci
 
 Pokój wypełnia się pielęgniarkami, internistami a także wchodzą do niego żona i syn. Pomimo usilnych starań Rupert umiera w ciągu godziny.
 
-## Zawartość pudełka
+### Zawartość pudełka
 
 Wewnątrz pudełka znajdują się: pożółkła koperta zawierająca akt własności farmy wraz z kluczem, małą, złotą skrzyneczkę w kształcie sarkofagu oraz oprawiony skórą dziennik. Skrzyneczka jest zdobiona w różne hieroglify z dawnych czasów, jednakże jest pusta. Wewnątrz również znajdują się hieroglify, jednakże zasadniczo różnią się od tych na zewnątrz.
 
@@ -40,7 +40,7 @@ Wewnątrz pudełka znajdują się: pożółkła koperta zawierająca akt własno
 
 Dziennik zawiera rekordy związane z poczynaniami mrocznego stowarzyszenia operującego na starej farmie na Boone Road.
 
-## Co dalej?
+### Co dalej?
 
 Późnym popołudniem Rupert nie żyje. Badacze mają wolną rękę, jednakże chociaż jeden z nich powinien zająć się czytaniem dziennika. Biblioteka pobliskiego uniwersytetu Miskatonic jest otwarta wieczorami w ciągu tygodnia.
 
@@ -58,7 +58,7 @@ Możliwy wątek poboczny: Bertrand Merriweather, syn Ruperta, może zażądać o
 
 W przypadku gdy badacze potrzebowaliby dodatkowej pomocy istnieje opcja wprowadzenia do historii pielęgniarki, która byłaby świadkiem dziwnych koszmarów Ruperta, w których motywem przewodnim byłaby wskazówka pozwalająca naprowadzić graczy na odpowiedni trop.
 
-## Dziennik Ruperta
+### Dziennik Ruperta
 
 Oprawiony w czarną skórę, dziennik zawiera rekordy od czerwca 1881 do marca 1882. Tusz wyblakł po tylu latach, jednakże samo odczytanie dziennika nie wymaga od graczy rzutów, jednakże do pełnego zrozumienia przekazu potrzebne są min. **4h**.
 
@@ -85,11 +85,11 @@ Streszczenie dziennika w podpunktach:
 - Mały skrawek gazety z sierpnia 1883 jest przyklejony obok wpisu o śmierci Mariona Allen, Player Aid #2.
 - Wpis napisany słabą ręką, stosunkowo świeży atrament, Player Aid #3.
 
-## Tematy do zbadania
+### Tematy do zbadania
 
 W Arkham znajdują się dwie biblioteki: zwykła, publiczna oraz biblioteka uniwersytetu Miskatonic, znana na całym świecie. Tylko studenci i wykładowcy mają możliwość wypożyczenia ksiąg, jednakże biblioteka umożliwia korzystanie z dzieł na terenie placówki. Godziny otwarcia: 8:00 - 21:00 w tygodniu oraz 10:00 - 18:00 w soboty. Pokój referencyjny jest otwarty od 13:00 do 18:00 w niedziele, ale półki z książkami są niedostępne tego dnia. Uniwersytet ma w swoim zbiorze ponad 400,000 woluminów - badacze muszą podawać konkretne tematy którym chcą się przyjrzeć.
 
-## Historia egiptologii
+### Historia egiptologii
 
 Cztery godziny poszukiwań mogą skutkować znalezieniem odpowiednich materiałów.
 
@@ -105,7 +105,7 @@ Sarkofag domniemanie miał być przekazany Nophru-Ka przez Bogów i miał zawier
 
 Przez lata złote pudełko było w posiadaniu Brytyjskiej rodziny szlacheckiej. Został skradziony w trakcie włamania w 1876 i od tego czasu więcej go nie widziano. Artykuł zawiera przetłumaczoną wersję hieroglifów znajdującą się na zewnątrz pudełka - Player Aid #4. Podsumowanie artykułu zwraca uwagę na znaki znajdujące się wewnątrz pudełka, jednakże nie podjęto żadnej próby przetłumaczenia ich oraz wyjaśnienia ich pochodzenia.
 
-## Okultyzm
+### Okultyzm
 
 Cztery godziny poszukiwań mogą skutkować znalezieniem odpowiednich materiałów.
 
@@ -115,7 +115,7 @@ Cztery godziny poszukiwań mogą skutkować znalezieniem odpowiednich materiał�
 
 W tekście znajduje się reprodukcja znaków, które według domysłów uczonych zostały stworzone przez Muwian. Wydają się zadziwiająco podobne do znaków występujących wewnątrz złotego pudełka. Książka nie oferuje żadnych informacji związanych z tematem tłumaczenia znaków. Zapiski wewnątrz pudełka pozostają dla was niezrozumiałe.
 
-## De Vermiis Mysteriis
+### De Vermiis Mysteriis
 
 W katalogu ksiąg znajdujecie informację że biblioteka posiada kopię danej księgi, jednakże jest przetrzymywana w zamkniętym zbiorze rzadkich ksiąg znajdującym się na piętrze budynku. Bibliotekarz udziela was informacji że stara księga jest na specjalnej, restrykcyjnej liście i wymaga oficjalnego przyzwolenia na korzystanie z niej od zarządcy biblioteki, starszego Doktora Henry'ego Armitage.
 
@@ -135,11 +135,11 @@ Niedawno powiadomiony o zagrożeniu ze strony Mythosu oraz nie nie rozumiejąc g
 >
 > Możliwość wkradnięcia się do biblioteki po zmroku, jednakże nie ma możliwości znalezienia księgi - Armitage trzyma ją przy sobie.
 
-## Stare gazety
+### Stare gazety
 
 Badacze mogą sprawdzić kolekcję starych gazet w bibliotece, przechowywaną na niższym poziomie. Przegląd głównej gazety Arkham zajmuje około godziny i pozwala na znalezienie wycinka opisującego wypadek powozu z marca 1882. Rupert wraz ze znajomymi są wspomniani po nazwisku - jedna osoba zginęła natomiast druga poważnie ucierpiała na zdrowiu psychicznym.
 
-## Ross’s Corners
+### Ross’s Corners
 
 Po poszukiwaniach wskazówek badacze zapewne będą chcieli wyruszyć na starą farmę Ruperta. Aby się tam dostać będa musieli przejść przez Ross’s Corners, małą wioskę kilka mil na zachód or Arkham. Aby się tam dostać mogą skorzystać z czyjegoś auta, bądź pojechać autobusem zatrzymującym się w Ross’s Corners i jadącym w stronę Worcester w obie strony raz dziennie. Podróż autobusem kosztuje 80 centów. Autobus zatrzymuje się w Ross’s Corners o 10 rano gdy jedzie w stronę Worcester, w kierunku przeciwnym o 14.
 
@@ -165,7 +165,7 @@ Miejscowi pytani o farmę mogą przekazać informacje, jakoby okoliczne dzieci s
 
 Boone Road przebiega na północ od miasta i jest stosunkowo prosta do odnalezienia. Jeżeli badacze przybyli autobusem mogą spróbować poprosić lokalnego mieszkańca żeby ich podwiózł ciężarówką lub wozem, który będzie zdziwiony że ktokolwiek chciałby płacić za przejazd 1,5 mili pośrodku niczego.
 
-## Opuszczona farma
+### Opuszczona farma
 
 Prastary dom znajduje się na szczycie wzgórza i jest widoczny z drogi, znajdując się w odległości 100 jardów na wschód. Po wyglądzie można datować dom na zabudowę z wczesnego wieku XVIII z wysokim zadaszeniem oraz ze starymi żaluzjami w oknach. Większą część domu stanowi parter z dwoma pokojami. Dodatkowo w domu można jest malutki strych oraz piwnica. Wielki ceglasty kominek stoi na końcu drugiego pokoju. Dach jest wyraźnie pochylony, jednakże gont jest nienaruszony.
 
@@ -187,7 +187,7 @@ Zamknięte drzwi frontowe otwierają się bez problemu przy użyciu klucza, któ
 >
 > Szop posiada złamane żebra, a jego serce zostało doszczętnie zjedzone. Mógł tego dokonać list lub coś o wiele gorszego...
 
-## Frontowe pomieszczenie
+### Frontowe pomieszczenie
 
 Frontowe pomieszczenie jest bardzo brudne i nietknięte od lat. Kurz leży grubymi warstwami na pustych półkach i parapetach, a na podłodze widać pełno starych liści. Drewniane panele są mocno wykrzywione i poplamione - efekt kapiącej wody z sufitu. Stara kanapa i krzesła są zjadane przez pleśń. Możliwe że są one źródłem lekkiego, nieprzyjemnego zapachu, jaki badacze odczuwają.
 
@@ -195,7 +195,7 @@ Frontowe pomieszczenie jest bardzo brudne i nietknięte od lat. Kurz leży gruby
 >
 > Strażnik rzuca dla każdego badacza, jeżeli się uda dany badacz słyszy szuranie, tupanie i uderzanie z jakiegoś miejsca pod podłogą.
 
-## Tylne pomieszczenie
+### Tylne pomieszczenie
 
 Niedaleko wejścia do pokoju znajduje się wąski otwór w podłodze, ukazujący strome schody w dół do piwnicy. Klapa na suficie prowadzi na strych, jej rama zdobiona symbolami ochronnymi. Tylne drzwi, lekko uchylone, oraz kominek są także ważnymi punktami w pomieszczeniu.
 
@@ -211,7 +211,7 @@ Na wysokiej półce znajdują się materiały, o których mowa w dzienniku Ruper
 
 \page
 
-## Pudełko po cygarach
+### Pudełko po cygarach
 
 Wewnątrz pudełka znajdują się stare cygara z pożółkłymi kawałkami papieru z boku.
 
@@ -231,7 +231,7 @@ Badacze nie są w stanie zidentyfikować srebrnej, talkowej substancji. Jak graf
 >
 > Badacze rozpoznają substancję - to proszek Ibn-Ghazi. Armitage w Arkham także jest w stanie stwierdzić jaka to substancja.
 
-## Pożółkłe papiery
+### Pożółkłe papiery
 
 Papiery zawierają ręcznie pisany tekst datujący na marzec 1882. Wszystkie kartki są zapisane wielkim, zamaszystym pismem Mariona Allena (badacze mogą tego nigdy nie dowieść), niepodobne do zapisków Ruperta Merriweather. Na żadnej z kart nie ma wzmianki na temat proszku Ibn-Ghazi.
 
@@ -245,7 +245,7 @@ Ostatnie trzy strony opisują rytuał. Wskazują one na to, iż aby odczynić ry
 
 Ceremonia może być przeprowadzona przez jedną osobę, ale Prinn zaleca użycie kilku osób intonujących pradawny tekst, dzięki czemu przerwanie jej przez jedną z osób nie zaprzepaści szans powodzenia rytuału. Jeżeli intonacja odbywa się nieprzerwanie przez dwie godziny, z przynajmniej jedną osobą podtrzymującą rytm, złowroga dusza musi ulec, jednakże nawet najmniejsze zakłócenie intonacji zakończy się porażką; w takim przypadku należy ponownie odprawić rytuał następnej nocy. Prinn podkreśla znaczenie “obserwatora”, który ochroniłby osoby przeprowadzające rytuał w trakcie intonacji przed zakłóceniami.
 
-## Piwnica
+### Piwnica
 
 > ##### Nasłuchiwanie (ukryty rzut)
 >
@@ -297,7 +297,7 @@ Badacze mogą odprowadzić bezdomnego do Pa Peters’a w Ross’s Corners, organ
 
 Jeśli Red Jake ucieknie badaczom, umrze tej nocy, jako kolejna ofiara okropnego stworzenia ze strychu. Może powrócić po śmierci aby odpłacić się badaczom za to co go spotkało.
 
-## Istota czająca się na strychu
+### Istota czająca się na strychu
 
 Istota czeka nie wydając z siebie żadnego dźwięku i nasłuchuje hałasów dobywających się z dołu. Stara się określić jak silni są intruzi, a także jakie są ich zamiary wobec domu w którym się znajdują. Po 40 latach przebywania w tym domu nauczyło się odpowiednio odżywiać aby przeżyć i wykorzysta swoją inteligencję i przebiegłość aby nadal w nim pozostać.
 
@@ -323,7 +323,7 @@ Jeśli cios zabije badacza można założyć że pazury wbiją się w czaszkę o
 
 Ilość punktów obłędu może sprawić że niektórzy z badaczy na stałe postradali zmysły, należy uważnie śledzić punkty każdego z badaczy.
 
-## Potwór
+### Potwór
 
 Kreatura jest praktycznie niewidzialna, ledwo manifestując się z innego wymiaru. Istota nie jest już związana z domem, jednakże uważa strych za swoje schronienie. Światło nie rani jej, ale nie lubi go i sprawia jej ból - definitywnie preferuje ciemniejsze zakątki domu.
 
@@ -350,7 +350,7 @@ ___
 >|Przenikanie przez fizyczny materiał jeżeli nie jest oznaczony symbolami ochronnymi|
 >|Generowanie śmierdzącego kwasu                                                    |
 
-## Wypędzenie istoty
+### Wypędzenie istoty
 
 Większość ataków bronią fizyczną przenika przez potwora. Badacze nie są w stanie pokonać go magią dostępną w tym scenariuszu, chyba że posiadają zaklęcia z innym przygód. Wykorzystanie notatek Mariona Allena wydaje się jedynym rozwiązaniem problemu. Podpalenie posiadłości nie skrzywdzi istoty, jedynie spowoduje że osiedli się ona bliżej Ross’s Corners.
 
@@ -370,7 +370,7 @@ Istota byłaby w stanie zaatakować z zaskoczenia badaczy znajdujących się na 
 >
 > Badacze słyszą w oddali krzyki bezdomnego, jednakże ucichają praktycznie w tej samej chwili w której zwracają na nie uwagę.
 
-## Rytuał
+### Rytuał
 
 Ceremonia rozpoczyna się, a potwór powraca do domu, przeczuwając czego chcą dokonać badacze. Istota nie jest w stanie dostać się do pokoi ze względu na symbole ochronne, także powraca na strych i rozpoczyna we wszelaki sposób przeszkodzić w odprawianiu rytuału. W trakcie trwania tego zdarzenia Strażnik powinien wymagać od graczy większej liczby rzutów na zdrowie psychiczne. Istnieje niebezpieczeństwo tymczasowej niepoczytalności a także permanentnej przez szybką stratę punktów zdrowia psychicznego. Niepoczytalni badacze nie są w stanie brać czynnego udziału w rytuale. Każdy badacz niezależnie od tego czy jest poczytalny bądź nie może opuścić budynek w trakcie rytuału, jednakże będzie skutkowało dopadnięciem przez potwora i niechybną śmiercią.
 
@@ -417,12 +417,12 @@ ___
 >|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |
 >|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |
 >___
->|Bronie                        |Bonus obrażeń    |
->|:----------------------------:|:---------------:|
->|Okaleczenie 65%, **1d6**      |-                |
+>|Bronie|Bonus obrażeń|
+>|:-:|:-:|
+>|Okaleczenie 65%, **1d6**|-|
 >___
->|Umiejętności                      |
->|:--------------------------------:|
+>|Umiejętności|
+>|:-:|
 >|Strata pkt poczytalności **1/1d6**|
 
 ___
@@ -434,15 +434,15 @@ ___
 >|**STR 55** |**CON 20** |**SIZ 75** |**INT 0**  |**POW 5**  |
 >|**DEX 25** |**MOV 5**  |-          |-          |**HP 10**   |
 >___
->|Bronie                        |Bonus obrażeń    |
->|:----------------------------:|:---------------:|
->|Okaleczenie 65%, **1d6**      |**1d4**          |
+>|Bronie|Bonus obrażeń|
+>|:-:|:-:|
+>|Okaleczenie 65%, **1d6**|**1d4**|
 >___
->|Umiejętności                      |
->|:--------------------------------:|
+>|Umiejętności|
+>|:-:|
 >|Strata pkt poczytalności **1/1d6**|
 
-## Konfrontacja
+### Konfrontacja
 
 5 minut przed końcem rytuału ze strychu zaczyna wydobywać się dym, który zaczyna się przemieszczać w kierunku środka pentagramu. Potwór manifestuje się na oczach badaczy. Do końca rytuału pozostały już tylko 4 minuty. Dym zaczyna się scalać w istotę materialną - masę pazurów, szczęk oraz długich kłów.
 
@@ -454,11 +454,11 @@ Każdy badacz który jest tymczasowo niepoczytalny zamiast potwora dostrzega atr
 
 Jeżeli badaczom uda się dokończyć rytuał istota znika, głośno skowycząc. Pozostaje po niej jedynie nieprzyjemny zapach i strużka dymu.
 
-## Konkluzja
+### Konkluzja
 
 Jeżeli rytuał zakończył się sukcesem **każdy z badaczy odzyskuje 1d10+1 pkt zdrowia psychicznego**. w przypadku porażki uczestnicy otrzymują tracą **1/1d4 pkt w ciągu następnego tygodnia, w trakcie gdy potwór zabija jeszcze 3 osoby i na zawsze opuszcza okolicę**.
 
-## Niedokończone wątki
+### Niedokończone wątki
 
 Udział badaczy w danej przygodzie może nie być jeszcze zakończony. Co z Bertrandem Merriweather, który będzie próbował odzyskać starą farmę z rąk badaczy? Czy są oni w stanie w przekonywujący sposób wytłumaczyć skąd w domostwie znajduje się tyle ciał i jaka jest przyczyna ich śmierci?
 
