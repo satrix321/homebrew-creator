@@ -4,7 +4,8 @@
     <div class="documentToolbar">
       <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></Icon></button>
       <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></Icon></button>
-      <button class="btn" v-on:click="toggleBackground"><Icon name="image"></Icon></button>
+      <button class="btn" v-on:click="togglePageBackground"><Icon name="image"></Icon></button>
+      <button class="btn" v-on:click="toggleNotesBackground"><Icon name="file"></Icon></button>
     </div>
     <div class="document">
       <div class="pages" v-html="compiledMarkdown"></div>
@@ -28,7 +29,8 @@ export default {
   data: function () {
     return {
       zoom: 100,
-      backgroundImage: true
+      backgroundImage: true,
+      notesBackground: true
     }
   },
   computed: {
@@ -59,11 +61,16 @@ export default {
       for (let i = 1; i < pagesRawInput.length; i++) {
         let page = ''
 
+        page = '<div class="page '
+
+        page += (this.backgroundImage ? 'backgroundImage ' : '')
+        page += (this.notesBackground ? 'notesBackground ' : '')
+
         if (pageOptions[i - 1] !== null) {
-          page = '<div class="page ' + (this.backgroundImage ? 'backgroundImage ' : '') + pageOptions[i - 1] + '"data-size="A4">'
-        } else {
-          page = '<div class="page ' + (this.backgroundImage ? 'backgroundImage' : '') + '" data-size="A4">'
+          page += pageOptions[i - 1]
         }
+
+        page += '" data-size="A4">'
 
         let currentIndex = 0
 
@@ -130,8 +137,11 @@ export default {
         this.zoom = newZoom
       }
     },
-    toggleBackground: function () {
+    togglePageBackground: function () {
       this.backgroundImage = !this.backgroundImage
+    },
+    toggleNotesBackground: function () {
+      this.notesBackground = !this.notesBackground
     }
   }
 }
@@ -286,18 +296,24 @@ export default {
   border-right: 3px solid gray;
   border-top: 5px solid black;
   border-bottom: 5px solid black;
-  background-color: rgb(218, 230, 191);
   page-break-inside: avoid;
 }
+.page.notesBackground > blockquote {
+  background-color: rgb(218, 230, 191);
+}
 .page > blockquote > blockquote {
-  background-color: rgb(220, 207, 172);
   margin: 0;
   overflow: auto;
 }
+.page.notesBackground > blockquote > blockquote {
+  background-color: rgb(220, 207, 172);
+}
 .page > blockquote > blockquote > blockquote {
-  background-color: rgb(231, 227, 239);
   margin: 0;
   overflow: auto;
+}
+.page.notesBackground > blockquote > blockquote > blockquote {
+  background-color: rgb(231, 227, 239);
 }
 .page > blockquote > *:not(blockquote),
 .page > blockquote > blockquote > *:not(blockquote),
