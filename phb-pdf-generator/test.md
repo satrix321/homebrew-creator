@@ -1,3 +1,4 @@
+\page[columns]
 # The Edge of Darkness
 
 ## Scenariusz
@@ -44,7 +45,7 @@ Dziennik zawiera rekordy związane z poczynaniami mrocznego stowarzyszenia operu
 
 Późnym popołudniem Rupert nie żyje. Badacze mają wolną rękę, jednakże chociaż jeden z nich powinien zająć się czytaniem dziennika. Biblioteka pobliskiego uniwersytetu Miskatonic jest otwarta wieczorami w ciągu tygodnia.
 
-\page
+\page[columns]
 
 Jeżeli badacze zdecydują się na rozmowę z wdową i synem po Rupercie nie dowiedzą się niczego interesującego, jako że nie wiedzą oni nic na temat opuszczonej farmy ani młodzieńczych poczynań Ruperta.
 
@@ -97,7 +98,7 @@ Cztery godziny poszukiwań mogą skutkować znalezieniem odpowiednich materiał�
 >
 > Znalezienie kopii książki wspomnianej przez Mariona Allena w dzienniku Ruperta.
 
-\page
+\page[columns]
 
 Książka zawiera rysunek a także krótki opis małego pudełka w kształcie sarkofagu, które jest w posiadaniu badaczy. Odnotowano, iż niewiele wiadomo na temat samego pudełka. Uczeni uważają że należało ono do mało znanego Nophru-Ka, niedoszłego uzurpatora egipskiego tronu, który żył w czasach XIV dynastii.
 
@@ -151,7 +152,7 @@ Jeżeli badacze zdecydują się na zatrzymanie w tym miejscu aby kupić coś w s
 >
 > Miejscowi wykazują się typową jankeską małomównością, jednak wydaje się wam że w bardziej publicznym miejscu, jak sklep czy kościół, będziecie mieli szansę uzyskać potrzebne informacje.
 
-\page
+\page[columns]
 
 > ##### Przekonywanie / łapówka
 >
@@ -209,7 +210,7 @@ Dodatkowo obok leży pudełko drewnianych zapałek, w połowie puste, otwieracz 
 
 Na wysokiej półce znajdują się materiały, o których mowa w dzienniku Ruperta - stare pudełko po cygarach i plik żółtych papierów.
 
-\page
+\page[columns]
 
 ### Pudełko po cygarach
 
@@ -265,7 +266,7 @@ Jeśli któryś z badaczy zdecyduje się odnaleźć źródło dziwnego hałasu z
 
 Celem Jake’a jest jedynie ucieczka z piwnicy, także zaatakuje jedynie osoby stojące mu na drodze do wyjścia.
 
-\page
+\page[columns]
 
 ___
 >|Red Jake, wystraszony bezdomny|
@@ -329,7 +330,7 @@ Kreatura jest praktycznie niewidzialna, ledwo manifestując się z innego wymiar
 
 Potwór nie może zostać zraniony bronią fizyczną. Zaklęcia które wysysają POW nadal oddziałują na istotę. Ogień, elektryczność lub kwas także są nieskuteczne. Kreatura staje się widzialna i przybiera w połowie materialną formę jeżeli zostanie potraktowana proszkiem Ibn-Ghazi lub w trakcie pożywiania. To coś odnajduje spokój i przyjemność podczas spożywania serc ciepłokrwistych stworzeń. Jeżeli badaczom uda dostać się na strych, znajdują w nim pełno szkieletów oraz trucheł szopów, oposów, ptaków i innych małych stworzeń które dostały się do domu.
 
-\page
+\page[columns]
 
 ___
 >|Istota czająca się na strychu, prawie niewidzialna|
@@ -394,7 +395,7 @@ Po godzinie od rozpoczęcia rytuału potwór przestaje hałasować i badacze są
 
 Badacz patrzący na zewnątrz przez okno może dostrzec coś czołgającego się około 50 jardów od domu.
 
-\page
+\page[columns]
 
 > ##### Spostrzegawczość / latarka
 >

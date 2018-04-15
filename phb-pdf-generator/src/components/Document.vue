@@ -33,40 +33,34 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      const pageSplitOptionsRegex = /\\page([^\r\n]*)/g
-      const pageSplitRegex = /\\page[^\r\n]*/g
+      const pageSplitOptionsRegex = /\\page(?:\[([\w ]*)\])?/g
+      const pageSplitRegex = /\\page(?:\[[\w ]*\])?/g
 
       var pageOptions = []
       var pageOptionsIt
 
-      while (pageOptionsIt = pageSplitOptionsRegex.exec(this.rawCode)) {
-        if (pageOptionsIt[1]) {
-          try {
-            pageOptions.push(JSON.parse(pageOptionsIt[1]))
-          } catch (e) {
+      do {
+        pageOptionsIt = pageSplitOptionsRegex.exec(this.rawCode)
+        if (pageOptionsIt) {
+          if (pageOptionsIt[1]) {
+            pageOptions.push(pageOptionsIt[1])
+          } else {
             pageOptions.push(null)
           }
-        } else {
-          pageOptions.push(null)
         }
-      }
+      } while (pageOptionsIt)
 
       var pagesRawInput = this.rawCode.split(pageSplitRegex)
       var pages = ''
       var pageNum = 1
 
       for (let i = 1; i < pagesRawInput.length; i++) {
-
         let page = ''
 
         if (pageOptions[i - 1] !== null) {
-          page = '<div class="page'
-          if (pageOptions.hasOwnProperty('columns') && pageOptions.columns === true) {
-            page += ' columns'
-          }
-          page += '"data-size="A4">'
+          page = '<div class="page ' + pageOptions[i - 1] + '"data-size="A4">'
         } else {
-          page = '<div class="page columns" data-size="A4">'
+          page = '<div class="page" data-size="A4">'
         }
 
         let currentIndex = 0

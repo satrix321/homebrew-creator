@@ -33,7 +33,8 @@
       <div class="dropdown">
         <button class="btn"><Icon name="file"></Icon> Pages</button>
         <div class="dropdownContent">
-          <button class="btn" v-on:click="insertPageBreak"><Icon name="file"></Icon> Page Break</button>
+          <button class="btn" v-on:click="insertRegularPage"><Icon name="file"></Icon> Regular Page</button>
+          <button class="btn" v-on:click="insertColumnsPage"><Icon name="file"></Icon> Columns Page</button>
         </div>
       </div>
     </div>
@@ -116,8 +117,12 @@ export default {
       var data = '- Item\n- Item\n- Item'
       this.insertData(data, this.getCursorPosition())
     },
-    insertPageBreak: function () {
+    insertRegularPage: function () {
       var data = '\\page'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertColumnsPage: function () {
+      var data = '\\page[columns]'
       this.insertData(data, this.getCursorPosition())
     },
     getCursorPosition: function () {
