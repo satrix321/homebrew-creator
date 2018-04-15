@@ -30,6 +30,12 @@
           <button class="btn" v-on:click="insertUnorderedList"><Icon name="list-ul"></Icon> Unordered List</button>
         </div>
       </div>
+      <div class="dropdown">
+        <button class="btn"><Icon name="file"></Icon> Pages</button>
+        <div class="dropdownContent">
+          <button class="btn" v-on:click="insertPageBreak"><Icon name="file"></Icon> Page Break</button>
+        </div>
+      </div>
     </div>
     <div class="editor">
       <codemirror :value="rawCode" :options="cmOptions" @input="onCmCodeChange"></codemirror>
@@ -108,6 +114,10 @@ export default {
     },
     insertUnorderedList: function () {
       var data = '- Item\n- Item\n- Item'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertPageBreak: function () {
+      var data = '\\page'
       this.insertData(data, this.getCursorPosition())
     },
     getCursorPosition: function () {

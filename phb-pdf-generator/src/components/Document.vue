@@ -33,12 +33,42 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      var pagesRawInput = this.rawCode.split('\\page')
+      const pageSplitOptionsRegex = /\\page([^\r\n]*)/g
+      const pageSplitRegex = /\\page[^\r\n]*/g
+
+      var pageOptions = []
+      var pageOptionsIt
+
+      while (pageOptionsIt = pageSplitOptionsRegex.exec(this.rawCode)) {
+        if (pageOptionsIt[1]) {
+          try {
+            pageOptions.push(JSON.parse(pageOptionsIt[1]))
+          } catch (e) {
+            pageOptions.push(null)
+          }
+        } else {
+          pageOptions.push(null)
+        }
+      }
+
+      var pagesRawInput = this.rawCode.split(pageSplitRegex)
       var pages = ''
       var pageNum = 1
 
-      for (let i = 0; i < pagesRawInput.length; i++) {
-        let page = '<div class="page columns" data-size="A4">'
+      for (let i = 1; i < pagesRawInput.length; i++) {
+
+        let page = ''
+
+        if (pageOptions[i - 1] !== null) {
+          page = '<div class="page'
+          if (pageOptions.hasOwnProperty('columns') && pageOptions.columns === true) {
+            page += ' columns'
+          }
+          page += '"data-size="A4">'
+        } else {
+          page = '<div class="page columns" data-size="A4">'
+        }
+
         let currentIndex = 0
 
         if (currentIndex < pagesRawInput[i].length) {
@@ -175,17 +205,9 @@ export default {
   height: 21cm;
 }
 .columns {
-  padding-left: 1cm;
-  padding-right: 1cm;
-  padding-top: 1cm;
-  padding-bottom: 1cm;
-  box-sizing: border-box;
-  text-align: left;
   -moz-column-count: 2;
   -webkit-column-count: 2;
   column-count: 2;
-  margin: 0;
-  height: 100%;
 }
 .columns * {
   margin-top: 0 !important;
@@ -195,6 +217,14 @@ export default {
 .page {
   background-image: url('../assets/imgs/texture_01.jpg');
   position: relative;
+  padding-left: 1cm;
+  padding-right: 1cm;
+  padding-top: 1cm;
+  padding-bottom: 1cm;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
 }
 .page > h1,
 .page > h2,
