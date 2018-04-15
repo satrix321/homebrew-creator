@@ -4,6 +4,7 @@
     <div class="documentToolbar">
       <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></Icon></button>
       <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></Icon></button>
+      <button class="btn" v-on:click="toggleBackground"><Icon name="image"></Icon></button>
     </div>
     <div class="document">
       <div class="pages" v-html="compiledMarkdown"></div>
@@ -26,7 +27,8 @@ export default {
   },
   data: function () {
     return {
-      zoom: 100
+      zoom: 100,
+      backgroundImage: true
     }
   },
   computed: {
@@ -58,9 +60,9 @@ export default {
         let page = ''
 
         if (pageOptions[i - 1] !== null) {
-          page = '<div class="page ' + pageOptions[i - 1] + '"data-size="A4">'
+          page = '<div class="page ' + (this.backgroundImage ? 'backgroundImage ' : '') + pageOptions[i - 1] + '"data-size="A4">'
         } else {
-          page = '<div class="page" data-size="A4">'
+          page = '<div class="page ' + (this.backgroundImage ? 'backgroundImage' : '') + '" data-size="A4">'
         }
 
         let currentIndex = 0
@@ -127,6 +129,9 @@ export default {
 
         this.zoom = newZoom
       }
+    },
+    toggleBackground: function () {
+      this.backgroundImage = !this.backgroundImage
     }
   }
 }
@@ -217,7 +222,7 @@ export default {
 
 /* Pages style */
 .page {
-  background-image: url('../assets/imgs/texture_01.jpg');
+  background-color: white;
   position: relative;
   padding-left: 1cm;
   padding-right: 1cm;
@@ -227,6 +232,9 @@ export default {
   text-align: left;
   margin: 0;
   height: 100%;
+}
+.page.backgroundImage {
+  background-image: url('../assets/imgs/texture_01.jpg');
 }
 .page > h1,
 .page > h2,
@@ -238,6 +246,7 @@ export default {
   text-transform: uppercase;
   color: rgb(106, 28, 15);
   margin-bottom: 15px;
+  page-break-inside: avoid;
 }
 .page > h1 {
   font-size: 21pt;
@@ -265,6 +274,11 @@ export default {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
 }
+.page > hr {
+  display: none;
+}
+
+/* notes */
 .page > blockquote {
   margin-left: 0;
   margin-right: 0;
@@ -273,6 +287,7 @@ export default {
   border-top: 5px solid black;
   border-bottom: 5px solid black;
   background-color: rgb(218, 230, 191);
+  page-break-inside: avoid;
 }
 .page > blockquote > blockquote {
   background-color: rgb(220, 207, 172);
@@ -336,16 +351,6 @@ export default {
   left: 0.5cm;
 }
 
-.page > blockquote > table {
-  width: 100%;
-  margin-bottom: 5px;
-  margin-left: 0;
-  margin-right: 0;
-}
-.page > hr {
-  display: none;
-}
-
 /* monster tables */
 .page > blockquote > hr {
   margin-bottom: 0;
@@ -361,12 +366,19 @@ export default {
   font-size: 9pt;
   font-family: 'Alegreya Sans SC';
 }
+.page > blockquote > table {
+  width: 100%;
+  margin-bottom: 5px;
+  margin-left: 0;
+  margin-right: 0;
+}
 .page > blockquote table {
   margin-bottom: 0;
 }
 .page > blockquote hr {
   margin: 0;
 }
+
 /* lists */
 .page > ul {
   font-size: 9pt;
@@ -375,12 +387,4 @@ export default {
 .page > ul > li > blockquote {
   margin: 0;
 }
-.page > blockquote {
-  -webkit-column-break-inside: avoid;
-  -moz-column-break-inside: avoid;
-  -o-column-break-inside: avoid;
-  -ms-column-break-inside: avoid;
-  page-break-inside: avoid;
-}
-
 </style>
