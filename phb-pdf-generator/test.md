@@ -277,16 +277,16 @@ ___
 >|**STR 75** |**CON 70** |**SIZ 75** |**INT 55** |**POW 50** |
 >|**DEX 60** |**APP 40** |**EDU 30** |**SAN 42** |**HP 15**  |
 >___
->|Bronie                        |Bonus obrażeń    |
->|:----------------------------:|:---------------:|
->|Pięści **65%**, **1d3**       |**1d4**          |
->|Noga od stołu **50%**, **1d8**|**1d4**          |
+>|Bronie|Bonus obrażeń|
+>|:-:|:-:|
+>|Pięści **65%**, **1d3**|**1d4**|
+>|Noga od stołu **50%**, **1d8**|**1d4**|
 >___
->|Umiejętności                                                 |
->|:-----------------------------------------------------------:|
+>|Umiejętności|
+>|:-:|
 >|Wspinaczka **75%**, Stolarstwo **40%**, Cthulhu Mythos **5%**|
->|Uniki **55%**, Ukrywanie się **75%**, Skakanie **65%**       |
->|Nasłuchiwanie **55%**, Skradanie się **55%**                 |
+>|Uniki **55%**, Ukrywanie się **75%**, Skakanie **65%**|
+>|Nasłuchiwanie **55%**, Skradanie się **55%**|
 
 Jeżeli badacze pokonają bezdomnego to i tak nie będą w stanie wydobyć z niego żadnych informacji. Jake trzęsie się z przerażenia i nie potrafi ułożyć składnego zdania.
 
@@ -341,15 +341,15 @@ ___
 >|**STR 100**|**CON 80** |**SIZ 75** |**INT 60** |**POW 100**|
 >|**DEX 80** |**MOV 12** |-          |-          |**HP 18**  |
 >___
->|Bronie                   |Bonus obrażeń    |
->|:-----------------------:|:---------------:|
->|Pazury (2) 70%, **1d8**  |**1d6**          |
+>|Bronie|Bonus obrażeń|
+>|:-:|:-:|
+>|Pazury (2) 70%, **1d8**|**1d6**|
 >___
->|Umiejętności                                                                      |
->|:--------------------------------------------------------------------------------:|
->|Animacja i kontrola zwłok                                                         |
+>|Umiejętności|
+>|:-:|
+>|Animacja i kontrola zwłok|
 >|Przenikanie przez fizyczny materiał jeżeli nie jest oznaczony symbolami ochronnymi|
->|Generowanie śmierdzącego kwasu                                                    |
+>|Generowanie śmierdzącego kwasu|
 
 ### Wypędzenie istoty
 

@@ -6,9 +6,7 @@
       <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></Icon></button>
     </div>
     <div class="document">
-      <div class="spacerBlock"></div>
       <div class="pages" v-html="compiledMarkdown"></div>
-      <div class="spacerBlock"></div>
     </div>
   </div>
 </template>
@@ -54,6 +52,8 @@ export default {
       var pages = ''
       var pageNum = 1
 
+      pages += '<div class="spacerBlock"></div>'
+
       for (let i = 1; i < pagesRawInput.length; i++) {
         let page = ''
 
@@ -77,6 +77,7 @@ export default {
         pageNum++
       }
 
+      pages += '<div class="spacerBlock"></div>'
       pages += '<div style="clear: both;"></div>'
 
       return pages
@@ -94,30 +95,37 @@ export default {
     },
     zoomIn: function () {
       if (this.zoom < 100) {
+        let newZoom = this.zoom + 10
+
         var pagesElement = document.querySelector('.document .pages')
-        var pagesHeight = pagesElement.clientHeight
 
-        pagesElement.style['-webkit-transform-origin'] = ''
-        pagesElement.style['-moz-transform-origin'] = ''
-        pagesElement.style['transform-origin'] = ''
-        pagesElement.style['transform'] = ''
-        pagesElement.style['height'] = (pagesHeight * 2) + 'px'
+        if (newZoom === 100) {
+          pagesElement.style['-webkit-transform-origin'] = ''
+          pagesElement.style['-moz-transform-origin'] = ''
+          pagesElement.style['transform-origin'] = ''
+          pagesElement.style['transform'] = ''
+        } else {
+          pagesElement.style['-webkit-transform-origin'] = 'top center'
+          pagesElement.style['-moz-transform-origin'] = 'top center'
+          pagesElement.style['transform-origin'] = 'top center'
+          pagesElement.style['transform'] = 'scale(' + (newZoom / 100).toFixed(2) + ')'
+        }
 
-        this.zoom = 100
+        this.zoom = newZoom
       }
     },
     zoomOut: function () {
       if (this.zoom > 50) {
+        let newZoom = this.zoom - 10
+
         var pagesElement = document.querySelector('.document .pages')
-        var pagesHeight = pagesElement.clientHeight
 
         pagesElement.style['-webkit-transform-origin'] = 'top center'
         pagesElement.style['-moz-transform-origin'] = 'top center'
         pagesElement.style['transform-origin'] = 'top center'
-        pagesElement.style['transform'] = 'scale(0.5)'
-        pagesElement.style['height'] = (pagesHeight / 2) + 'px'
+        pagesElement.style['transform'] = 'scale(' + (newZoom / 100).toFixed(2) + ')'
 
-        this.zoom = 50
+        this.zoom = newZoom
       }
     }
   }
@@ -178,6 +186,8 @@ export default {
   height: calc(100vh - 30px);
   width: 100%;
   background: rgb(204,204,204);
+  display: flex;
+  justify-content: center;
 }
 .document .page {
   display: block;
@@ -191,8 +201,6 @@ export default {
 .page[data-size="A4"] {
   width: 21cm;
   height: 29.7cm;
-  margin-left: auto;
-  margin-right: auto;
 }
 .page[data-size="A4"][data-layout="portrait"] {
   width: 29.7cm;
