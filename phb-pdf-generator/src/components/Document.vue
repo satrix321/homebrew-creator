@@ -149,9 +149,9 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC');
-@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro');
-@import url('https://fonts.googleapis.com/css?family=Cormorant+SC');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Cormorant+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
 
 .documentContainer {
   background: rgb(204,204,204);
@@ -232,9 +232,9 @@ export default {
   height: 21cm;
 }
 .columns {
-  -moz-column-count: 2;
-  -webkit-column-count: 2;
-  column-count: 2;
+  -moz-column-count: 2 !important;
+  -webkit-column-count: 2 !important;
+  column-count: 2 !important;
 }
 .columns * {
   margin-top: 0 !important;
@@ -266,7 +266,9 @@ export default {
   text-transform: uppercase;
   color: rgb(106, 28, 15);
   margin-bottom: 15px;
+  -webkit-break-inside: avoid;
   page-break-inside: avoid;
+  break-inside: avoid;
 }
 .page > h1 {
   font-size: 21pt;
@@ -294,6 +296,11 @@ export default {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
 }
+.page > p:last-of-type {
+  -webkit-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
 .page > hr {
   display: none;
 }
@@ -306,7 +313,12 @@ export default {
   border-right: 3px solid gray;
   border-top: 5px solid black;
   border-bottom: 5px solid black;
+  -webkit-break-before: avoid;
+  page-break-before: avoid;
+  break-before: avoid;
+  -webkit-break-inside: avoid;
   page-break-inside: avoid;
+  break-inside: avoid;
 }
 .page.notesBackground > blockquote {
   background-color: rgb(218, 230, 191);
@@ -349,6 +361,11 @@ export default {
 }
 
 /* footer */
+.page > .pageFooter {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
 .page > .pageFooter > .background {
   position: absolute;
   width: 21cm;
@@ -371,7 +388,7 @@ export default {
   color: rgb(213, 187, 118);
 }
 .page > .pageFooter > .pageNumber {
-  right: 0.5cm;
+  left: 20.3cm;
 }
 .page > .pageFooter.even > .pageNumber {
   left: 0.5cm;
