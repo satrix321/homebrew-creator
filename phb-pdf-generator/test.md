@@ -15,6 +15,9 @@ Po tym jak opuszczają pomieszczenie, Rupert prosi was abyście upewnili że drz
 
 Za młodu w czasach studenckich Rupert wraz z kolegami oddali się, według nich nic nieznaczącą, eksploracją zagadnień okultystycznych. Ich grupie przewodził starszy od nich Marion Allen. W szóstkę kupili farmę kilka mil na zachód od Arkham, niedaleko wioski Ross’s Corners. W tamtym miejscu mogli bez przeszkód oddawać się seansom spirytystycznym oraz innym aktywnością oraz innymi paranormalnymi eksperymentami. Jednakże ostatni z nich przyniósł nieoczekiwane rezultaty - do naszego świata została sprowadzona mroczna, niegodziwa siła. Zamiast próbować odesłać plugastwo do zaświatów, młodzi ludzie opuścili farmę, pewni tego że magia, której użyli do przywołania zła utrzyma je w ryzach w tym opuszczonym domu. Jednakże w tym czasie nie wiedzieli oni o jednym istotnym szczególe - magia, która niewoli zło będzie działać tak długo, jak żyją osoby które z niej skorzystały. Rupert Merriweather jest ostatnim żyjącym z grupy studentów i obawia się, że jego śmierć może uwolnić ten prastary byt, który siałby spustoszenie na okolicznych terenach.
 
+```
+```
+
 Wskazuje wam na pudełko leżące na półce - *weźcie je, wewnątrz znajdziecie wszystko co mogę wam dać aby pomóc pozbyć się tego szkaradztwa. Musicie doprowadzić to do końca. Proszę, zróbcie to dla mnie. Zaraz po tym wydarzeniu Rupert doznaje spazmów, po czym zapada w śpiączkę*.
 
 >> ##### Poczytalność
@@ -128,6 +131,9 @@ Niedawno powiadomiony o zagrożeniu ze strony Mythosu oraz nie nie rozumiejąc g
 >
 > Udany rzut nie powoduje konsekwencji, nie tracicie pieniędzy, jednakże po udanym rzucie  nie dowiadujecie się niczego konkretnego.
 
+```
+```
+
 > ##### Przekonywanie
 >
 > Wzmianka na temat okropności Mythosu jakie księga może zawierać, wspomnienie  o Necronomiconie, **1% do wiedzy o Mythosie**.
@@ -183,6 +189,9 @@ Zamknięte drzwi frontowe otwierają się bez problemu przy użyciu klucza, któ
 > ##### Spostrzegawczość (przed domem)
 >
 > Badacze znajdują niedawno zmarłego szopa w trawie sięgającej do kolan. Jeżeli obrócą jego ciało łatwo dostrzegą przyczynę śmierci - brzuch zwierzęcia posiada widoczne ślady ugryzień i pełno skrzepłej krwi.
+
+```
+```
 
 > ##### Medycyna / historia naturalna
 >
@@ -243,6 +252,9 @@ Na 6 kartkach zapisano łacińską intonację, po każdej dla uczestnika rytuał
 Dziesiąta strona zawiera opis pentagramu, symboli do narysowania oraz kombinacji chemikaliów, które powinny być spalone w ogniu.
 
 Ostatnie trzy strony opisują rytuał. Wskazują one na to, iż aby odczynić rytuał należałoby skorzystać z odwróconej intonacji, jednakże pozostała część rytuału musiałaby odbyć się ponownie. Dwugodzinna ceremonia, rozpoczęta o północy, odpędzi niechcianą duszę.
+
+```
+```
 
 Ceremonia może być przeprowadzona przez jedną osobę, ale Prinn zaleca użycie kilku osób intonujących pradawny tekst, dzięki czemu przerwanie jej przez jedną z osób nie zaprzepaści szans powodzenia rytuału. Jeżeli intonacja odbywa się nieprzerwanie przez dwie godziny, z przynajmniej jedną osobą podtrzymującą rytm, złowroga dusza musi ulec, jednakże nawet najmniejsze zakłócenie intonacji zakończy się porażką; w takim przypadku należy ponownie odprawić rytuał następnej nocy. Prinn podkreśla znaczenie “obserwatora”, który ochroniłby osoby przeprowadzające rytuał w trakcie intonacji przed zakłóceniami.
 
@@ -305,6 +317,9 @@ Istota czeka nie wydając z siebie żadnego dźwięku i nasłuchuje hałasów do
 Istota jest ostrożna i stara się nie wydać żadnego dźwięku, jednakże któryś z badaczy może chcieć sprawdzić klapę prowadzącą na strych. W tym celu będzie potrzebna drabina lub podsadzenie przez innego z badaczy. Klapa utknęła i aby ją podnieść należy skorzystać z siły - STR 12 (60%).
 
 Zła istota czeka aż głowa intruza będzie widoczna w otworze, wtedy rzuca się w stronę otworu warcząc i próbując chwycić badacza. Kreatura jest praktycznie niewidzialna i nawet światło latarki nie jest w stanie w pełni ukazać jej kształtu, jednakże badacze słyszą głośne kroki i odgłosy przez nią wydawane.
+
+```
+```
 
 >> ##### Uniki
 >>
@@ -370,6 +385,9 @@ Istota byłaby w stanie zaatakować z zaskoczenia badaczy znajdujących się na 
 > ##### Nasłuchiwanie
 >
 > Badacze słyszą w oddali krzyki bezdomnego, jednakże ucichają praktycznie w tej samej chwili w której zwracają na nie uwagę.
+
+```
+```
 
 ### Rytuał
 
@@ -446,6 +464,9 @@ ___
 ### Konfrontacja
 
 5 minut przed końcem rytuału ze strychu zaczyna wydobywać się dym, który zaczyna się przemieszczać w kierunku środka pentagramu. Potwór manifestuje się na oczach badaczy. Do końca rytuału pozostały już tylko 4 minuty. Dym zaczyna się scalać w istotę materialną - masę pazurów, szczęk oraz długich kłów.
+
+```
+```
 
 >> ##### Poczytalność
 >>

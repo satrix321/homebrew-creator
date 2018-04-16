@@ -38,6 +38,7 @@ export default {
     compiledMarkdown: function () {
       const pageSplitOptionsRegex = /\\page(?:\[([\w ]*)\])?/g
       const pageSplitRegex = /\\page(?:\[[\w ]*\])?/g
+      const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g
 
       var pageOptions = []
       var pageOptionsIt
@@ -73,11 +74,15 @@ export default {
 
         page += '" data-size="A4">'
 
+        page += "<div class='pxSpacer'>_</div>"
+
         let currentIndex = 0
 
         if (currentIndex < pagesRawInput[i].length) {
           page += marked(pagesRawInput[i].substring(currentIndex, pagesRawInput[i].length))
         }
+
+        page = page.replace(preElementRegex, "<pre><code></code></pre><div class='pxSpacer'>_</div>")
 
         page += '<div class="pageFooter ' + (pageNum % 2 === 1 ? 'odd' : 'even') + '" data-page="' + pageNum + '"><div class="background"></div><p class="pageNumber">' + pageNum + '</p></div>'
 
@@ -88,7 +93,6 @@ export default {
       }
 
       pages += '<div class="spacerBlock"></div>'
-      pages += '<div style="clear: both;"></div>'
 
       return pages
     },
@@ -154,7 +158,6 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Cormorant+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
 
 .documentContainer {
-  background: rgb(204,204,204);
   height: 100%;
   overflow: hidden;
 }
@@ -206,13 +209,12 @@ export default {
 /* Document */
 .document {
   overflow-y: auto;
-  background: rgb(204,204,204);
   position: relative;
   height: calc(100vh - 30px);
   width: 100%;
-  background: rgb(204,204,204);
   display: flex;
   justify-content: center;
+  background-color: rgb(204, 204, 204);
 }
 .document .page {
   display: block;
@@ -224,6 +226,8 @@ export default {
   height: 50px;
 }
 .page[data-size="A4"] {
+  /* width: 21cm;
+  height: 29.7cm; */
   width: 21cm;
   height: 29.7cm;
 }
@@ -235,9 +239,13 @@ export default {
   -moz-column-count: 2 !important;
   -webkit-column-count: 2 !important;
   column-count: 2 !important;
+  column-fill: auto;
 }
 .columns * {
   margin-top: 0 !important;
+}
+.columns > blockquote {
+  border-top-style: inset;
 }
 
 /* Pages style */
@@ -266,9 +274,6 @@ export default {
   text-transform: uppercase;
   color: rgb(106, 28, 15);
   margin-bottom: 15px;
-  -webkit-break-inside: avoid;
-  page-break-inside: avoid;
-  break-inside: avoid;
 }
 .page > h1 {
   font-size: 21pt;
@@ -296,13 +301,17 @@ export default {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
 }
-.page > p:last-of-type {
-  -webkit-break-inside: avoid;
-  page-break-inside: avoid;
-  break-inside: avoid;
-}
 .page > hr {
-  display: none;
+  display: none !important;
+}
+.page > pre {
+  -webkit-break-after: always;
+  page-break-after: always;
+  break-after: always;
+}
+.page > .pxSpacer {
+  height: 1px;
+  visibility: hidden;
 }
 
 /* notes */
@@ -313,12 +322,6 @@ export default {
   border-right: 3px solid gray;
   border-top: 5px solid black;
   border-bottom: 5px solid black;
-  -webkit-break-before: avoid;
-  page-break-before: avoid;
-  break-before: avoid;
-  -webkit-break-inside: avoid;
-  page-break-inside: avoid;
-  break-inside: avoid;
 }
 .page.notesBackground > blockquote {
   background-color: rgb(218, 230, 191);
