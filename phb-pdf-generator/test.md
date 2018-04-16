@@ -290,7 +290,7 @@ ___
 
 Jeżeli badacze pokonają bezdomnego to i tak nie będą w stanie wydobyć z niego żadnych informacji. Jake trzęsie się z przerażenia i nie potrafi ułożyć składnego zdania.
 
-> Psychoanaliza
+> ##### Psychoanaliza
 >
 > Badacze uspokoją go na tyle aby uzyskać kilka wskazówek na temat domu bądź wczorajszych wydarzeń.
 
@@ -433,7 +433,7 @@ ___
 >||||||
 >|:-:|:-:|:-:|:-:|:-:|
 >|**STR 55** |**CON 20** |**SIZ 75** |**INT 0**  |**POW 5**  |
->|**DEX 25** |**MOV 5**  |-          |-          |**HP 10**   |
+>|**DEX 25** |**MOV 5**  |-          |-          |**HP 10**  |
 >___
 >|Bronie|Bonus obrażeń|
 >|:-:|:-:|

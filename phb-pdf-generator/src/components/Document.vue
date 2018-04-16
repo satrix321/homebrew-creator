@@ -4,8 +4,9 @@
     <div class="documentToolbar">
       <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></Icon></button>
       <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></Icon></button>
-      <button class="btn" v-on:click="togglePageBackground"><Icon name="image"></Icon></button>
-      <button class="btn" v-on:click="toggleNotesBackground"><Icon name="file"></Icon></button>
+      <button class="btn" v-bind:class="{btnClicked: backgroundImage}" v-on:click="togglePageBackground"><Icon name="image"></Icon></button>
+      <button class="btn" v-bind:class="{btnClicked: notesBackground}" v-on:click="toggleNotesBackground"><Icon name="file"></Icon></button>
+      <button class="btn btnRight">Zoom {{zoom}}%</button>
     </div>
     <div class="document">
       <div class="pages" v-html="compiledMarkdown"></div>
@@ -170,14 +171,14 @@ export default {
 .documentToolbar {
   height: 30px;
   width: 100%;
-  background-color: rgb(65,65,65);
+  background-color: rgb(65, 65, 65);
 }
 .documentToolbar .btn {
   height: 30px;
   border: 0;
   padding: 0 8px 0 8px;
   color: white;
-  background-color: rgb(75,75,75);
+  background-color: rgb(75, 75, 75);
   outline: none;
   float: left;
 }
@@ -189,8 +190,17 @@ export default {
    border: 0;
 }
 .documentToolbar .btn:active {
-  background-color: rgb(95,95,95);
+  background-color: rgb(95, 95, 95);
   padding: 0 8px 0 8px;
+}
+.documentToolbar .btn.btnClicked {
+  background-color: rgb(25, 25, 25);
+}
+.documentToolbar .btn.btnClicked:hover {
+  background-color: rgb(115, 115, 115);
+}
+.documentToolbar .btn.btnRight {
+  float: right;
 }
 
 /* Document */
@@ -371,7 +381,7 @@ export default {
 .page > blockquote > hr {
   margin-bottom: 0;
 }
-.page > hr + blockquote {
+.page.notesBackground > hr + blockquote {
   background-color: #ffbcbc;
 }
 .page > hr + blockquote > table > thead > tr > th {
