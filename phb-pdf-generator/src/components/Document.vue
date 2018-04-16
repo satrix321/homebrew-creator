@@ -226,8 +226,6 @@ export default {
   height: 50px;
 }
 .page[data-size="A4"] {
-  /* width: 21cm;
-  height: 29.7cm; */
   width: 21cm;
   height: 29.7cm;
 }
