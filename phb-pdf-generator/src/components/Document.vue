@@ -303,9 +303,7 @@ export default {
   display: none !important;
 }
 .page > pre {
-  -webkit-column-break-after: always;
-  page-break-after: always;
-  break-after: always;
+  break-after: column;
 }
 .page > .pxSpacer {
   height: 1px;
