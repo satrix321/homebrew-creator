@@ -1,4 +1,5 @@
 \page[columns]
+
 # The Edge of Darkness
 
 ## Scenariusz

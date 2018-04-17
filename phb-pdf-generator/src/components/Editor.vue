@@ -15,6 +15,8 @@
           <button class="btn" v-on:click="insertGreenNote"><Icon style="color: rgb(218, 230, 191);" name="sticky-note"></Icon> Green</button>
           <button class="btn" v-on:click="insertBrownNote"><Icon style="color: rgb(220, 207, 172);" name="sticky-note"></Icon> Brown</button>
           <button class="btn" v-on:click="insertPurpleNote"><Icon style="color: rgb(231, 227, 239);" name="sticky-note"></Icon> Purple</button>
+          <button class="btn" v-on:click="insertNewspaperNote"><Icon style="color: rgb(244, 244, 226)" name="sticky-note"></Icon> Newspaper</button>
+          <button class="btn" v-on:click="insertHandwrittenNote"><Icon style="color: rgb(244, 244, 236)" name="sticky-note"></Icon> Handwritten</button>
         </div>
       </div>
       <div class="dropdown">
@@ -103,6 +105,14 @@ export default {
     },
     insertPurpleNote: function () {
       var data = '>>> ##### Header\n>>>\n>>> Example text.'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertNewspaperNote: function () {
+      var data = '<blockquote class="newspaperNote">\n\t<h5>headline</h5>\n\t<p>article_content</p>\n</blockquote>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertHandwrittenNote: function () {
+      var data = '<blockquote class="handwrittenNote">\n\t<p>note_content</p>\n</blockquote>'
       this.insertData(data, this.getCursorPosition())
     },
     insertCocMonsterTable: function () {

@@ -83,10 +83,9 @@ export default {
         }
 
         page = page.replace(preElementRegex, "<pre><code></code></pre><div class='pxSpacer'>_</div>")
-
         page += '<div class="pageFooter ' + (pageNum % 2 === 1 ? 'odd' : 'even') + '" data-page="' + pageNum + '"><div class="background"></div><p class="pageNumber">' + pageNum + '</p></div>'
-
         page += '</div>'
+
         pages += page
 
         pageNum++
@@ -156,6 +155,8 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
 @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
 @import url('https://fonts.googleapis.com/css?family=Cormorant+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Caveat:400,700');
 
 .documentContainer {
   height: 100%;
@@ -233,20 +234,22 @@ export default {
   width: 29.7cm;
   height: 21cm;
 }
+
+/* Columns */
 .columns {
   -moz-column-count: 2 !important;
   -webkit-column-count: 2 !important;
   column-count: 2 !important;
   column-fill: auto;
-}
-.columns * {
-  margin-top: 0 !important;
+  -webkit-column-gap: 16px;
+  -moz-column-gap: 16px;
+  column-gap: 16px;
 }
 .columns > blockquote {
   border-top-style: inset;
 }
 
-/* Pages style */
+/* Pages */
 .page {
   background-color: white;
   position: relative;
@@ -258,6 +261,9 @@ export default {
   text-align: left;
   margin: 0;
   height: 100%;
+}
+.page * {
+  margin-top: 0 !important;
 }
 .page.backgroundImage {
   background-image: url('../assets/imgs/texture_01.jpg');
@@ -298,6 +304,7 @@ export default {
 .page > p {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
+  line-height: 1.25;
 }
 .page > hr {
   display: none !important;
@@ -318,6 +325,7 @@ export default {
   border-right: 3px solid gray;
   border-top: 5px solid black;
   border-bottom: 5px solid black;
+  page-break-inside: avoid;
 }
 .page.notesBackground > blockquote {
   background-color: rgb(218, 230, 191);
@@ -357,6 +365,29 @@ export default {
 .page > blockquote p {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
+}
+.page.notesBackground > blockquote.newspaperNote,
+.page.notesBackground > blockquote.handwrittenNote {
+  background-color: #f4f4e2;
+}
+.page > blockquote.newspaperNote h5 {
+  font-family: 'Lora', serif;
+  text-align: center;
+  text-decoration: underline;
+  font-size: 18pt;
+  text-transform: uppercase;
+  color: black;
+}
+.page > blockquote.newspaperNote p {
+  font-family: 'Lora', serif;
+  text-align: justify;
+  font-size: 12pt;
+  color: black;
+}
+.page > blockquote.handwrittenNote p {
+  font-family: 'Caveat', cursive;
+  font-size: 12pt;
+  color: black;
 }
 
 /* footer */
