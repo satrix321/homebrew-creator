@@ -303,7 +303,6 @@ export default {
   display: none !important;
 }
 .page > pre {
-  -webkit-break-after: always;
   -webkit-column-break-after: always;
   page-break-after: always;
   break-after: always;
