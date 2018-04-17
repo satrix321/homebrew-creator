@@ -1,8 +1,16 @@
-\page[columns]
+\page[title]
+
+<div style="height: 350px;"></div>
 
 # The Edge of Darkness
 
-## Scenariusz
+##### A Call of Cthulhu scenario
+
+<img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg"/>
+
+\page[columns]
+
+# Scenariusz
 
 ### Wstęp
 
@@ -493,3 +501,41 @@ Kto zamordował Mariona Allena lata temu w Nowym Orleanie? Odcięty język może
 
 Co z pracą badaczy? Wszakże wykonanie zadania mogło zająć im kilka dni, jak wytłumaczą swoją nieobecność? W prawdę nikt nie uwierzy…
 
+\page
+
+# Player Aids
+
+### Player aid #1: Wpis w dzienniku, marzec 1882
+
+<blockquote class="handwrittenNote">
+  <p>Marzec, 1882</p>
+  <p>Rozpoczynamy ceremonię tak jak poinstruował nas Marion, wedle zapisków z jego książki, De Vermiis Mysteriis. W kominku rozpaliliśmy ogień a na podłodze wyrysowaliśmy kredą pentagram, oznaczony odpowiednimi symbolami oraz podświetlony przez dwie czarne świece usytuowane na środku, po bokach bursztynu wiążącego duszę. Inni siedzieli w okręgu gdy ja, oddelegowany “obserwator”, który wypatruje wrogich dusz, spoczywałem w rogu pomieszczenia.</p>
+	<p>Marion rzuca garść proszku w ogień kominka, wytwarzając w ten sposób złowrogo pachnący dym i przygasając ogień, który teraz rozpyla zielono-brązowy kolor. Usadowieni w okręgu zaczynają intonować po łacinie tekst przygotowany przez Mariona Allena z jego książki.</p>
+	<p>Po prawie dwóch godzinach widzę strużkę dymu, która krąży w górę od kawałka bursztynu. Jego powierzchnia wydaje się zaczyna bulgotwać, topnieć. Czy to jest to? Czy w końcu nam się udało? Wydaje mi się że widzę jakiś kształt...</p>
+	<p>Nastał następny dzień. Wykonaliśmy nasze plany i zawarliśmy pakt, aby nigdy nikomu nie mówić o tym zaszło minionej nocy. Przekonywująco udało nam się wytłumaczyć śmierć Roberta i w jakimś stopniu szaleństwo Harolda. Szeryf nie kwestionował historii o wypadku powozu - dobrze to zaplanowaliśmy. Powiedzieliśmy mu że Robert złamał kark w trakcie upadku. Harold uderzył głową o kamień gdy koń złamał głowę a powóz przetoczył się po drodze. Dobrze by było gdyby to była prawda. Reszta z nas będzie już na zawsze odmieniona po doświadczeniach z ostatniej nocy.</p>
+	<p>To coś co uformowało się w centrum pentagramu nie miało kształtu i było praktycznie niewidzialne. Tego głos powinien od razu skłonić nas do zaprzestania rytuału, jednakże byliśmy głupi. Przemówiło, a następnie Marion użył na nim tego przeklętego proszku! Piasek Ibn-Ghazi, tak to nazywał - i wtedy właśnie mogliśmy zobaczyć tą kreaturę.</p>
+	<p>Słowa nie są w stanie opisać bytu bez twarzy z tysiącem paszczy. To coś zaczęło wierzgać i mienić się dziwnymi barwami nie z tego świata, nigdy nie ukazując się w pełnej postaci. Tak przerażający był tego aspekt że siedziałem niby przybity do podłogi a długopis wypadł mi z zdrętwiałej ręki. Cecil i Marion wyglądali na tak samo przerażonych jak ja, gdy nagle z ust Crawforda dał się słyszeć ostry krzyk. Jednakże Robert zachował na tyle trzeźwości umysłu aby powstać z kręgu i zanim ktokolwiek z nas zdołał go powstrzymać zaczął kroczyć w kierunku naszego okropnego gościa, tak jakby chciał go objąć i się z nim przywitać. Za pomocą swoich rąk, a przynajmniej kończyn które przypominały ręce, objął Roberta a następnie wykręcił mu głowę tak jakby miał do czynienia z najzwyklejszą lalką. Jego bezwładne ciało zostało rzucone na kolana Harolda i wtedy rozpoczęło się jego niekontrolowane skowytanie - skowytanie którego nie zaprzestał nawet wtedy gdy oddaliśmy go w ręce ludzi szeryfa.</p>
+	<p>Nadal mieliśmy szansę, a tak przynajmniej nam się wydawało. Marion uważa, że jeżeli byśmy zachowali trzeźwość umysłów bylibyśmy w stanie odwrócić pradawne zaklęcie i zmusić tą przebrzydłą kreaturę do powrotu w zaświaty z których przybyła. Ale Crawford spanikował, myśląc iż zniszczenie pentagramu zgładzi to zło. Nim ktokolwiek zrozumiał co się stało zdążył on wymazać część pentagramu, zmniejszając przy tym jego efektywność. To coś, wyzwolone z więzów, z okropnym krzykiem satysfakcji opuściło domostwo, przedostając się przez okno jako barwna masa wrzeszczącego wiatru o niespotykanych kolorach.</p>
+	<p>Marion wierzy że to coś nadal może być zniszczone, a przynajmniej odesłane w zaświaty, jednakże nikt z naszej czwórki nie czuł się na siłach aby podjąć się tego przedsięwzięcia. Wierzymy że zaklęcie którego użyliśmy wiąże to coś do farmy, co potwierdza nasza późniejsza wizyta gdy przybyliśmy odzyskać nasze rzeczy. Było słychać jego przedziwne dźwięki ze strychu gdy w pośpiechu opróżnialiśmy wszystkie szafki budynku. Znaki ochronne wygrawerowane przez Mariona w lepszych czasach wydawały się skuteczne - to coś nie mogło opuścić domu.</p>
+</blockquote>
+
+\page
+
+### Player aid #2: Artykuł z gazety z sierpnia 1883
+
+<blockquote class="newspaperNote">
+	<h5>MORDERSTWO W DOKACH</h5>
+  <p><strong>NOWY ORLEAN</strong> - ciało Pana Mariona Allena, zamieszkałego w Arkham, Massachusetts, zostało znalezione wczesnym rankiem w pobliżu doków Gulf & Panama. Pan Marion padł ofiarą nieczystego zagrania - został zidentyfikowany przez lokalnego świadka, który twierdzi iż Pan Marion był widziany w okolicy zeszłego wieczoru. Uważa się że rabunek był motywem zbrodni, jednakże policja odnotowała w swoim raporcie przedziwną rzecz - ofiara miała odcięty język. Marion Allen podobno odwiedził policję wcześniej w tygodniu twierdząc że ktoś go śledzi i boi się o swoje życie. Według jego wyjaśnień cienie które go ścigały chciały pozyskać egipski artefakt, którego ofiara już nie miała.</p>
+</blockquote>
+
+### Player aid #3: Ostatni wpis w dzienniku
+
+<blockquote class="handwrittenNote">
+	<p>Strasznie obawiam się tego, co ja i moi koledzy wypuściliśmy na pobliską okolicę. Na razie nie miało miejsce żadne niepokojące zdarzenie, jednakże wraz z moją śmiercią więzy zostaną zniszczone a to coś zostanie wyzwolone. Życia i dusze, które nie zostały jeszcze zabrane ciążą mi na sumieniu. Metoda na pozbycie się tego czegoś nadal znajduje się w tym przeklętym domu - przetłumaczony tekst Mariona Allena z okropnej księgi De Vermiis Mysteriis. Nie jestem dostatecznie silny by podjąć się tego zadania, jednakże wydaje mi się że znam kogoś kto temu podoła. Jeżeli nie uda im się… niech Bóg ma nas w swojej opiece.</p>
+</blockquote>
+
+### Player aid #4: Przetłumaczone hieroglify
+
+<blockquote class="handwrittenNote">
+	<p>Poszukiwacz wiedzy, sługa (syn) Yugi (Yoag) Setheh, Doręczyciel ludzi (niewolników) wody, Posiadacz dusz Nar-Loth-hotep, syn Toth, Poszukiwacz wiedzy.</p>
+</blockquote>

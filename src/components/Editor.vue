@@ -37,6 +37,21 @@
         <div class="dropdownContent">
           <button class="btn" v-on:click="insertRegularPage"><Icon name="file"></Icon> Regular Page</button>
           <button class="btn" v-on:click="insertColumnsPage"><Icon name="file"></Icon> Columns Page</button>
+          <button class="btn" v-on:click="insertTitlePage"><Icon name="file"></Icon> Title Page</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="btn"><Icon name="image"></Icon> Images</button>
+        <div class="dropdownContent">
+          <button class="btn" v-on:click="insertRelativeImage"><Icon name="image"></Icon> Relative Image</button>
+          <button class="btn" v-on:click="insertAbsoluteImage"><Icon name="image"></Icon> Absolute Image</button>
+          <button class="btn" v-on:click="insertFullPageImage"><Icon name="file-image-o"></Icon> Full Page Image</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="btn"><Icon name="random"></Icon> Misc</button>
+        <div class="dropdownContent">
+          <button class="btn" v-on:click="insertColumnBreak"><Icon name="columns"></Icon> Column Break</button>
         </div>
       </div>
     </div>
@@ -66,7 +81,7 @@ export default {
   },
   data () {
     return {
-      rawCode: '',
+      rawCode: '\\page[columns]',
       cmOptions: {
         tabSize: 2,
         mode: 'text/x-markdown',
@@ -131,8 +146,28 @@ export default {
       var data = '\\page'
       this.insertData(data, this.getCursorPosition())
     },
+    insertRelativeImage: function () {
+      var data = '![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Image")'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertAbsoluteImage: function () {
+      var data = '<img class="absoluteImage" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertFullPageImage: function () {
+      var data = '<img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg"/>'
+      this.insertData(data, this.getCursorPosition())
+    },
     insertColumnsPage: function () {
       var data = '\\page[columns]'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertTitlePage: function () {
+      var data = '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertColumnBreak: function () {
+      var data = '```\n```'
       this.insertData(data, this.getCursorPosition())
     },
     getCursorPosition: function () {

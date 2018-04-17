@@ -1,7 +1,7 @@
 // initial state
 // shape: [{ id, quantity }]
 const state = {
-  rawCode: '',
+  rawCode: '\\page[columns]',
   outputHtml: null
 }
 

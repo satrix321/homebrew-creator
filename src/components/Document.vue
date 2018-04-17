@@ -83,12 +83,15 @@ export default {
         }
 
         page = page.replace(preElementRegex, "<pre><code></code></pre><div class='pxSpacer'>_</div>")
-        page += '<div class="pageFooter ' + (pageNum % 2 === 1 ? 'odd' : 'even') + '" data-page="' + pageNum + '"><div class="background"></div><p class="pageNumber">' + pageNum + '</p></div>'
+
+        if (!(pageOptions[i - 1] !== null && pageOptions[i - 1].includes('title'))) {
+          page += '<div class="pageFooter ' + (pageNum % 2 === 1 ? 'odd' : 'even') + '" data-page="' + pageNum + '"><div class="background"></div><p class="pageNumber">' + pageNum + '</p></div>'
+          pageNum++
+        }
+
         page += '</div>'
 
         pages += page
-
-        pageNum++
       }
 
       pages += '<div class="spacerBlock"></div>'
@@ -157,6 +160,8 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Cormorant+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
 @import url('https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i');
 @import url('https://fonts.googleapis.com/css?family=Caveat:400,700');
+@import url('https://fonts.googleapis.com/css?family=Metal+Mania');
+@import url('https://fonts.googleapis.com/css?family=Old+Standard+TT:400,400i,700');
 
 .documentContainer {
   height: 100%;
@@ -261,6 +266,7 @@ export default {
   text-align: left;
   margin: 0;
   height: 100%;
+  z-index: 1;
 }
 .page * {
   margin-top: 0 !important;
@@ -315,6 +321,33 @@ export default {
 .page > .pxSpacer {
   height: 1px;
   visibility: hidden;
+}
+.page.title > h1,
+.page.title > h5 {
+  text-align: center;
+  font-family: 'Metal Mania', cursive;
+  color: rgb(56, 14, 8);
+  text-shadow: 0 0 2px #fff;
+  -moz-text-shadow: 0 0 2px #fff;
+  -webkit-text-shadow: 0 0 2px #fff;
+}
+.page.title > h1 {
+  font-size: 70pt;
+}
+.page.title > h5 {
+  font-size: 18pt;
+}
+
+/* images */
+.absoluteImage {
+  position: absolute;
+  z-index: -1;
+}
+.absoluteImage.fullPageImage {
+  left: 0cm;
+  top: 0cm;
+  width: 21cm;
+  height: 29.7cm;
 }
 
 /* notes */
@@ -379,7 +412,7 @@ export default {
   color: black;
 }
 .page > blockquote.newspaperNote p {
-  font-family: 'Lora', serif;
+  font-family: 'Old Standard TT', serif;
   text-align: justify;
   font-size: 12pt;
   color: black;
