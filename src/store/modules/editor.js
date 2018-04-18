@@ -1,14 +1,12 @@
 // initial state
 // shape: [{ id, quantity }]
 const state = {
-  rawCode: '\\page[columns]',
-  outputHtml: null
+  rawCode: '\\page[columns]'
 }
 
 // getters
 const getters = {
-  rawCode: state => state.rawCode,
-  outputHtml: outputHtml => state.outputHtml
+  rawCode: state => state.rawCode
 }
 
 // actions

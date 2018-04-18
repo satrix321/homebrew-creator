@@ -1,13 +1,6 @@
 <template>
   <div class="documentContainer">
-    <div class="dpi"></div>
-    <div class="documentToolbar">
-      <button class="btn" v-on:click="zoomIn"><Icon name="search-plus"></Icon></button>
-      <button class="btn" v-on:click="zoomOut"><Icon name="search-minus"></Icon></button>
-      <button class="btn" v-bind:class="{btnClicked: backgroundImage}" v-on:click="togglePageBackground"><Icon name="image"></Icon></button>
-      <button class="btn" v-bind:class="{btnClicked: notesBackground}" v-on:click="toggleNotesBackground"><Icon name="file"></Icon></button>
-      <button class="btn btnRight">Zoom {{zoom}}%</button>
-    </div>
+    <document-toolbar @zoomChanged="zoomChanged"></document-toolbar>
     <div class="document">
       <div class="pages" v-html="compiledMarkdown"></div>
     </div>
@@ -17,22 +10,14 @@
 <script>
 import '@/assets/css/print.css'
 
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
+import DocumentToolbar from './DocumentToolbar.vue'
 import marked from 'marked'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Document',
   components: {
-    Icon
-  },
-  data: function () {
-    return {
-      zoom: 100,
-      backgroundImage: true,
-      notesBackground: true
-    }
+    DocumentToolbar
   },
   computed: {
     compiledMarkdown: function () {
@@ -65,8 +50,8 @@ export default {
 
         page = '<div class="page '
 
-        page += (this.backgroundImage ? 'backgroundImage ' : '')
-        page += (this.notesBackground ? 'notesBackground ' : '')
+        page += (this.pagesTexture ? 'pagesTexture ' : '')
+        page += (this.notesTexture ? 'notesTexture ' : '')
 
         if (pageOptions[i - 1] !== null) {
           page += pageOptions[i - 1]
@@ -99,56 +84,26 @@ export default {
       return pages
     },
     ...mapGetters({
-      rawCode: 'rawCode'
+      rawCode: 'rawCode',
+      pagesTexture: 'pagesTexture',
+      notesTexture: 'notesTexture',
+      zoom: 'zoom'
     })
   },
   methods: {
-    getDPI: function () {
-      var dpiDiv = document.getElementById('dpi')
-      var dpiX = dpiDiv.offsetWidth
-      var dpiY = dpiDiv.offsetHeight
-      return { dpiX, dpiY }
-    },
-    zoomIn: function () {
-      if (this.zoom < 100) {
-        let newZoom = this.zoom + 10
-
-        var pagesElement = document.querySelector('.document .pages')
-
-        if (newZoom === 100) {
-          pagesElement.style['-webkit-transform-origin'] = ''
-          pagesElement.style['-moz-transform-origin'] = ''
-          pagesElement.style['transform-origin'] = ''
-          pagesElement.style['transform'] = ''
-        } else {
-          pagesElement.style['-webkit-transform-origin'] = 'top center'
-          pagesElement.style['-moz-transform-origin'] = 'top center'
-          pagesElement.style['transform-origin'] = 'top center'
-          pagesElement.style['transform'] = 'scale(' + (newZoom / 100).toFixed(2) + ')'
-        }
-
-        this.zoom = newZoom
-      }
-    },
-    zoomOut: function () {
-      if (this.zoom > 50) {
-        let newZoom = this.zoom - 10
-
-        var pagesElement = document.querySelector('.document .pages')
-
+    zoomChanged: function () {
+      var pagesElement = document.querySelector('.document .pages')
+      if (this.zoom === 100) {
+        pagesElement.style['-webkit-transform-origin'] = ''
+        pagesElement.style['-moz-transform-origin'] = ''
+        pagesElement.style['transform-origin'] = ''
+        pagesElement.style['transform'] = ''
+      } else {
         pagesElement.style['-webkit-transform-origin'] = 'top center'
         pagesElement.style['-moz-transform-origin'] = 'top center'
         pagesElement.style['transform-origin'] = 'top center'
-        pagesElement.style['transform'] = 'scale(' + (newZoom / 100).toFixed(2) + ')'
-
-        this.zoom = newZoom
+        pagesElement.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')'
       }
-    },
-    togglePageBackground: function () {
-      this.backgroundImage = !this.backgroundImage
-    },
-    toggleNotesBackground: function () {
-      this.notesBackground = !this.notesBackground
     }
   }
 }
@@ -166,50 +121,6 @@ export default {
 .documentContainer {
   height: 100%;
   overflow: hidden;
-}
-.documentContainer > .dpi {
-  height: 1in;
-  left: -100%;
-  position: absolute;
-  top: -100%;
-  width: 1in;
-  display: none;
-}
-
-/* Document toolbar */
-.documentToolbar {
-  height: 30px;
-  width: 100%;
-  background-color: rgb(65, 65, 65);
-}
-.documentToolbar .btn {
-  height: 30px;
-  border: 0;
-  padding: 0 8px 0 8px;
-  color: white;
-  background-color: rgb(75, 75, 75);
-  outline: none;
-  float: left;
-}
-.documentToolbar .btn:hover {
-  background-color: rgb(115, 115, 115);
-  cursor: pointer;
-}
-.documentToolbar .btn::-moz-focus-inner {
-   border: 0;
-}
-.documentToolbar .btn:active {
-  background-color: rgb(95, 95, 95);
-  padding: 0 8px 0 8px;
-}
-.documentToolbar .btn.btnClicked {
-  background-color: rgb(25, 25, 25);
-}
-.documentToolbar .btn.btnClicked:hover {
-  background-color: rgb(115, 115, 115);
-}
-.documentToolbar .btn.btnRight {
-  float: right;
 }
 
 /* Document */
@@ -271,7 +182,7 @@ export default {
 .page * {
   margin-top: 0 !important;
 }
-.page.backgroundImage {
+.page.pagesTexture {
   background-image: url('../assets/imgs/texture_01.jpg');
 }
 .page > h1,
@@ -360,21 +271,21 @@ export default {
   border-bottom: 5px solid black;
   page-break-inside: avoid;
 }
-.page.notesBackground > blockquote {
+.page.notesTexture > blockquote {
   background-color: rgb(218, 230, 191);
 }
 .page > blockquote > blockquote {
   margin: 0;
   overflow: auto;
 }
-.page.notesBackground > blockquote > blockquote {
+.page.notesTexture > blockquote > blockquote {
   background-color: rgb(220, 207, 172);
 }
 .page > blockquote > blockquote > blockquote {
   margin: 0;
   overflow: auto;
 }
-.page.notesBackground > blockquote > blockquote > blockquote {
+.page.notesTexture > blockquote > blockquote > blockquote {
   background-color: rgb(231, 227, 239);
 }
 .page > blockquote > *:not(blockquote),
@@ -399,8 +310,8 @@ export default {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
 }
-.page.notesBackground > blockquote.newspaperNote,
-.page.notesBackground > blockquote.handwrittenNote {
+.page.notesTexture > blockquote.newspaperNote,
+.page.notesTexture > blockquote.handwrittenNote {
   background-color: #f4f4e2;
 }
 .page > blockquote.newspaperNote h5 {
@@ -461,7 +372,7 @@ export default {
 .page > blockquote > hr {
   margin-bottom: 0;
 }
-.page.notesBackground > hr + blockquote {
+.page.notesTexture > hr + blockquote {
   background-color: #ffbcbc;
 }
 .page > hr + blockquote > table > thead > tr > th {
@@ -492,5 +403,9 @@ export default {
 }
 .page > ul > li > blockquote {
   margin: 0;
+}
+.page > ol {
+  font-size: 9pt;
+  font-family: 'Source Serif Pro', serif;
 }
 </style>

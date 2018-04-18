@@ -1,60 +1,26 @@
 <template>
   <div class="editorContainer">
-    <div class="editorToolbar">
-      <div class="dropdown">
-        <button class="btn"><Icon name="header"></Icon> Headers</button>
-        <div class="dropdownContent">
-          <button class="btn" v-on:click="insertHeader1"><Icon name="header"></Icon> Header 1</button>
-          <button class="btn" v-on:click="insertHeader2"><Icon name="header"></Icon> Header 2</button>
-          <button class="btn" v-on:click="insertHeader3"><Icon name="header"></Icon> Header 3</button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="btn"><Icon name="sticky-note"></Icon> Notes</button>
-        <div class="dropdownContent">
-          <button class="btn" v-on:click="insertGreenNote"><Icon style="color: rgb(218, 230, 191);" name="sticky-note"></Icon> Green</button>
-          <button class="btn" v-on:click="insertBrownNote"><Icon style="color: rgb(220, 207, 172);" name="sticky-note"></Icon> Brown</button>
-          <button class="btn" v-on:click="insertPurpleNote"><Icon style="color: rgb(231, 227, 239);" name="sticky-note"></Icon> Purple</button>
-          <button class="btn" v-on:click="insertNewspaperNote"><Icon style="color: rgb(244, 244, 226)" name="sticky-note"></Icon> Newspaper</button>
-          <button class="btn" v-on:click="insertHandwrittenNote"><Icon style="color: rgb(244, 244, 236)" name="sticky-note"></Icon> Handwritten</button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="btn"><Icon name="table"></Icon> Tables</button>
-        <div class="dropdownContent">
-          <button class="btn" v-on:click="insertCocMonsterTable"><Icon name="table"></Icon> CoC - Monster Table</button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="btn"><Icon name="list"></Icon> Lists</button>
-        <div class="dropdownContent">
-          <button class="btn" v-on:click="insertOrderedList"><Icon name="list-ol"></Icon> Ordered List</button>
-          <button class="btn" v-on:click="insertUnorderedList"><Icon name="list-ul"></Icon> Unordered List</button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="btn"><Icon name="file"></Icon> Pages</button>
-        <div class="dropdownContent">
-          <button class="btn" v-on:click="insertRegularPage"><Icon name="file"></Icon> Regular Page</button>
-          <button class="btn" v-on:click="insertColumnsPage"><Icon name="file"></Icon> Columns Page</button>
-          <button class="btn" v-on:click="insertTitlePage"><Icon name="file"></Icon> Title Page</button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="btn"><Icon name="image"></Icon> Images</button>
-        <div class="dropdownContent">
-          <button class="btn" v-on:click="insertRelativeImage"><Icon name="image"></Icon> Relative Image</button>
-          <button class="btn" v-on:click="insertAbsoluteImage"><Icon name="image"></Icon> Absolute Image</button>
-          <button class="btn" v-on:click="insertFullPageImage"><Icon name="file-image-o"></Icon> Full Page Image</button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="btn"><Icon name="random"></Icon> Misc</button>
-        <div class="dropdownContent">
-          <button class="btn" v-on:click="insertColumnBreak"><Icon name="columns"></Icon> Column Break</button>
-        </div>
-      </div>
-    </div>
+    <editor-toolbar
+      @insertHeader1="insertHeader1"
+      @insertHeader2="insertHeader2"
+      @insertHeader3="insertHeader3"
+      @insertGreenNote="insertGreenNote"
+      @insertBrownNote="insertBrownNote"
+      @insertPurpleNote="insertPurpleNote"
+      @insertNewspaperNote="insertNewspaperNote"
+      @insertHandwrittenNote="insertHandwrittenNote"
+      @insertCocMonsterTable="insertCocMonsterTable"
+      @insertOrderedList="insertOrderedList"
+      @insertUnorderedList="insertUnorderedList"
+      @insertRegularPage="insertRegularPage"
+      @insertRelativeImage="insertRelativeImage"
+      @insertAbsoluteImage="insertAbsoluteImage"
+      @insertFullPageImage="insertFullPageImage"
+      @insertColumnsPage="insertColumnsPage"
+      @insertTitlePage="insertTitlePage"
+      @insertColumnBreak="insertColumnBreak"
+      >
+    </editor-toolbar>
     <div class="editor">
       <codemirror :value="rawCode" :options="cmOptions" @input="onCmCodeChange"></codemirror>
     </div>
@@ -62,14 +28,13 @@
 </template>
 
 <script>
-import { codemirror } from 'vue-codemirror'
-
 import '@/assets/css/print.css'
+
+import { codemirror } from 'vue-codemirror'
+import EditorToolbar from './EditorToolbar.vue'
+
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/markdown/markdown.js'
-
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
 
 import _ from 'lodash'
 
@@ -77,7 +42,7 @@ export default {
   name: 'Editor',
   components: {
     codemirror,
-    Icon
+    EditorToolbar
   },
   data () {
     return {
@@ -98,6 +63,21 @@ export default {
       this.rawCode = newCode
       this.$store.commit('setRawCode', newCode)
     }, 300),
+    getCursorPosition: function () {
+      var codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror
+      var codeMirrorDocument = codeMirror.getDoc()
+      var cursor = codeMirrorDocument.getCursor()
+      var position = {
+        line: cursor.line,
+        ch: cursor.position
+      }
+      return position
+    },
+    insertData: function (data, position) {
+      var codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror
+      var codeMirrorDocument = codeMirror.getDoc()
+      codeMirrorDocument.replaceRange(data, position)
+    },
     insertHeader1: function () {
       var data = '# Header'
       this.insertData(data, this.getCursorPosition())
@@ -169,21 +149,6 @@ export default {
     insertColumnBreak: function () {
       var data = '```\n```'
       this.insertData(data, this.getCursorPosition())
-    },
-    getCursorPosition: function () {
-      var codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror
-      var codeMirrorDocument = codeMirror.getDoc()
-      var cursor = codeMirrorDocument.getCursor()
-      var position = {
-        line: cursor.line,
-        ch: cursor.position
-      }
-      return position
-    },
-    insertData: function (data, position) {
-      var codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror
-      var codeMirrorDocument = codeMirror.getDoc()
-      codeMirrorDocument.replaceRange(data, position)
     }
   }
 }
@@ -203,66 +168,6 @@ export default {
   resize: none;
   font-family: 'Fira Mono', monospace;
   font-size: 8pt;
-}
-
-/* Editor toolbar */
-.editorToolbar {
-  height: 30px;
-  width: 100%;
-  background-color: rgb(65,65,65);
-}
-.editorToolbar .btn {
-  height: 30px;
-  border: 0;
-  padding: 0 8px 0 8px;
-  color: white;
-  background-color: rgb(75,75,75);
-  outline: none;
-  float: left;
-  font-family: 'Fira Mono', monospace;
-  font-size: 9pt;
-}
-.editorToolbar .btn:hover {
-  background-color: rgb(115, 115, 115);
-  cursor: pointer;
-}
-.editorToolbar .btn::-moz-focus-inner {
-   border: 0;
-}
-.editorToolbar .btn:active {
-  background-color: rgb(95,95,95);
-  padding: 0 8px 0 8px;
-}
-.editorToolbar > .dropdown {
-  float: left;
-}
-.editorToolbar > .dropdown > .dropdownContent,
-.editorToolbar > .dropdown > .dropdownContent > .dropdown > .dropdownContent {
-  display: none;
-  position: absolute;
-  background-color: rgb(65,65,65);
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 10;
-  top: 30px;
-  float: none;
-  overflow: visible;
-}
-.editorToolbar > .dropdown > .dropdownContent > .dropdown > .dropdownContent {
-  left: 30px;
-  width: auto;
-}
-.editorToolbar > .dropdown > .dropdownContent > .btn {
-  float: none;
-  display: block;
-  width: 100%;
-  text-align: left;
-}
-.editorToolbar > .dropdown:hover > .dropdownContent,
-.editorToolbar > .dropdown:hover > .dropdownContent > .dropdown:hover > .dropdownContent {
-  display: block;
-}
-.editorToolbar .btn svg {
-  vertical-align: middle;
 }
 
 /* CodeMirror Custom */
