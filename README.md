@@ -6,7 +6,7 @@ A simple web-based tool for creating homebrews.
 
 ## Live preview
 
-> http://satrix321.github.io/PHB_PDF_Generator/index.html#/
+> http://satrix321.github.io/PHB_PDF_Generator/index.html
 
 ## Build Setup
 
