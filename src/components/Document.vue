@@ -43,6 +43,17 @@ export default {
       var pages = ''
       var pageNum = 1
 
+      if (this.pagesTexture && this.pagesTextureFile !== null) {
+        var reader = new FileReader()
+        var pagesTextureUrl
+
+        reader.onload = function (event) {
+          pagesTextureUrl = event.target.result
+        }
+
+        reader.readAsDataURL(this.pagesTextureFile)
+      }
+
       pages += '<div class="spacerBlock"></div>'
 
       for (let i = 1; i < pagesRawInput.length; i++) {
@@ -50,14 +61,20 @@ export default {
 
         page = '<div class="page '
 
-        page += (this.pagesTexture ? 'pagesTexture ' : '')
+        page += ((this.pagesTexture && this.pagesTextureFile === null) ? 'pagesTexture ' : '')
         page += (this.notesTexture ? 'notesTexture ' : '')
 
         if (pageOptions[i - 1] !== null) {
           page += pageOptions[i - 1]
         }
 
-        page += '" data-size="A4">'
+        page += '"'
+
+        if (this.pagesTexture && this.pagesTextureFile !== null) {
+          page += ' style="background-image: src(\'' + pagesTextureUrl + '\')"'
+        }
+
+        page += ' data-size="A4">'
 
         page += "<div class='pxSpacer'>_</div>"
 
@@ -87,7 +104,8 @@ export default {
       rawCode: 'rawCode',
       pagesTexture: 'pagesTexture',
       notesTexture: 'notesTexture',
-      zoom: 'zoom'
+      zoom: 'zoom',
+      pagesTextureFile: 'pagesTextureFile'
     })
   },
   methods: {

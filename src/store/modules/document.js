@@ -3,14 +3,16 @@
 const state = {
   pagesTexture: true,
   notesTexture: true,
-  zoom: 100
+  zoom: 100,
+  pagesTextureFile: null
 }
 
 // getters
 const getters = {
   pagesTexture: state => state.pagesTexture,
   notesTexture: state => state.notesTexture,
-  zoom: state => state.zoom
+  zoom: state => state.zoom,
+  pagesTextureFile: state => state.pagesTextureFile
 }
 
 // actions
@@ -26,6 +28,9 @@ const mutations = {
   },
   setZoom (state, zoom) {
     state.zoom = zoom
+  },
+  setPagesTextureFile (state, pagesTextureFile) {
+    state.pagesTextureFile = pagesTextureFile
   }
 }
 

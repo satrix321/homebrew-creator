@@ -2,8 +2,9 @@
   <div class="documentToolbar">
     <button class="btn" @click="zoomIn"><icon name="search-plus"></icon></button>
     <button class="btn" @click="zoomOut"><icon name="search-minus"></icon></button>
-    <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><Icon name="image"></Icon></button>
-    <button class="btn" v-bind:class="{btnClicked: notesTexture}" @click="toggleNotesTexture"><Icon name="file"></Icon></button>
+    <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><icon name="image"></icon></button>
+    <button class="btn" @click="uploadPagesTexture"><icon name="share-square"></icon><input type="file" id="uploadPagesTextureInput" style="display: none;"></button>
+    <button class="btn" v-bind:class="{btnClicked: notesTexture}" @click="toggleNotesTexture"><icon name="file"></icon></button>
     <button class="btn btnRight">Zoom {{zoom}}%</button>
   </div>
 </template>
@@ -18,6 +19,14 @@ export default {
   name: 'Document',
   components: {
     Icon
+  },
+  mounted: function () {
+    var context = this
+    this.$nextTick(function () {
+      document.getElementById('uploadPagesTextureInput').onchange = function () {
+        context.$store.commit('setPagesTextureFile', this.files[0])
+      }
+    })
   },
   computed: {
     ...mapGetters({
@@ -38,6 +47,9 @@ export default {
         this.$store.commit('setZoom', this.zoom - 10)
         this.$emit('zoomChanged')
       }
+    },
+    uploadPagesTexture: function () {
+      document.getElementById('uploadPagesTextureInput').click()
     },
     togglePagesTexture: function () {
       this.$store.commit('setPagesTexture', !this.pagesTexture)
