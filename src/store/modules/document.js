@@ -4,7 +4,8 @@ const state = {
   pagesTexture: true,
   notesTexture: true,
   zoom: 100,
-  pagesTextureFile: null
+  pagesTextureFile: undefined,
+  pagesTextureFileChanged: false
 }
 
 // getters
@@ -12,7 +13,8 @@ const getters = {
   pagesTexture: state => state.pagesTexture,
   notesTexture: state => state.notesTexture,
   zoom: state => state.zoom,
-  pagesTextureFile: state => state.pagesTextureFile
+  pagesTextureFile: state => state.pagesTextureFile,
+  pagesTextureFileChanged: state => state.pagesTextureFileChanged
 }
 
 // actions
@@ -31,6 +33,10 @@ const mutations = {
   },
   setPagesTextureFile (state, pagesTextureFile) {
     state.pagesTextureFile = pagesTextureFile
+    state.pagesTextureFileChanged = true
+  },
+  unsetPagesTextureFileChanged (state) {
+    state.pagesTextureFileChanged = false
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="documentContainer">
-    <document-toolbar @zoomChanged="zoomChanged"></document-toolbar>
+    <document-toolbar @zoomChanged="zoomChanged" @setDefaultPagesTexture="setDefaultPagesTexture"></document-toolbar>
     <div class="document">
       <div class="pages" v-html="compiledMarkdown"></div>
     </div>
@@ -14,13 +14,21 @@ import DocumentToolbar from './DocumentToolbar.vue'
 import marked from 'marked'
 import { mapGetters } from 'vuex'
 
+// import _ from 'lodash'
+
 export default {
   name: 'Document',
   components: {
     DocumentToolbar
   },
+  data: function () {
+    return {
+      pagesTextureUrl: undefined
+    }
+  },
   computed: {
     compiledMarkdown: function () {
+      var context = this
       const pageSplitOptionsRegex = /\\page(?:\[([\w ]*)\])?/g
       const pageSplitRegex = /\\page(?:\[[\w ]*\])?/g
       const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g
@@ -43,15 +51,15 @@ export default {
       var pages = ''
       var pageNum = 1
 
-      if (this.pagesTexture && this.pagesTextureFile !== null) {
+      if (this.pagesTexture && this.pagesTextureFile !== undefined && (context.pagesTextureUrl === undefined || this.pagesTextureFileChanged)) {
         var reader = new FileReader()
-        var pagesTextureUrl
 
         reader.onload = function (event) {
-          pagesTextureUrl = event.target.result
+          context.pagesTextureUrl = event.target.result
         }
 
         reader.readAsDataURL(this.pagesTextureFile)
+        this.$store.commit('unsetPagesTextureFileChanged')
       }
 
       pages += '<div class="spacerBlock"></div>'
@@ -61,7 +69,7 @@ export default {
 
         page = '<div class="page '
 
-        page += ((this.pagesTexture && this.pagesTextureFile === null) ? 'pagesTexture ' : '')
+        page += (this.pagesTexture ? 'pagesTexture ' : '')
         page += (this.notesTexture ? 'notesTexture ' : '')
 
         if (pageOptions[i - 1] !== null) {
@@ -70,8 +78,8 @@ export default {
 
         page += '"'
 
-        if (this.pagesTexture && this.pagesTextureFile !== null) {
-          page += ' style="background-image: src(\'' + pagesTextureUrl + '\')"'
+        if (this.pagesTexture && context.pagesTextureUrl !== undefined) {
+          page += ' style="background-image: url(\'' + context.pagesTextureUrl + '\') !important"'
         }
 
         page += ' data-size="A4">'
@@ -105,7 +113,8 @@ export default {
       pagesTexture: 'pagesTexture',
       notesTexture: 'notesTexture',
       zoom: 'zoom',
-      pagesTextureFile: 'pagesTextureFile'
+      pagesTextureFile: 'pagesTextureFile',
+      pagesTextureFileChanged: 'pagesTextureFileChanged'
     })
   },
   methods: {
@@ -122,6 +131,10 @@ export default {
         pagesElement.style['transform-origin'] = 'top center'
         pagesElement.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')'
       }
+    },
+    setDefaultPagesTexture: function () {
+      this.$store.commit('setPagesTextureFile', undefined)
+      this.pagesTextureUrl = undefined
     }
   }
 }
@@ -129,8 +142,8 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
-@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
-@import url('https://fonts.googleapis.com/css?family=Cormorant+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Cormorant+SC:300,400,500,600,700');
 @import url('https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i');
 @import url('https://fonts.googleapis.com/css?family=Caveat:400,700');
 @import url('https://fonts.googleapis.com/css?family=Metal+Mania');

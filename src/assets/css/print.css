@@ -1,7 +1,7 @@
 @media print {
   @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
-  @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
-  @import url('https://fonts.googleapis.com/css?family=Cormorant+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
+  @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700');
+  @import url('https://fonts.googleapis.com/css?family=Cormorant+SC:300,400,500,600,700');
   @import url('https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i');
   @import url('https://fonts.googleapis.com/css?family=Caveat:400,700');
   @import url('https://fonts.googleapis.com/css?family=Metal+Mania');

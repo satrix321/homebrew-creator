@@ -2,9 +2,15 @@
   <div class="documentToolbar">
     <button class="btn" @click="zoomIn"><icon name="search-plus"></icon></button>
     <button class="btn" @click="zoomOut"><icon name="search-minus"></icon></button>
-    <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><icon name="image"></icon></button>
-    <button class="btn" @click="uploadPagesTexture"><icon name="share-square"></icon><input type="file" id="uploadPagesTextureInput" style="display: none;"></button>
-    <button class="btn" v-bind:class="{btnClicked: notesTexture}" @click="toggleNotesTexture"><icon name="file"></icon></button>
+    <div class="dropdown">
+      <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><icon name="image"></icon> Pages Texture</button>
+      <div class="dropdownContent">
+        <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><icon name="image"></icon> Toggle Pages Texture</button>
+        <button class="btn" @click="uploadPagesTexture"><icon name="share-square"></icon> Upload Pages Texture<input type="file" id="uploadPagesTextureInput" style="display: none;"></button>
+        <button class="btn" @click="setDefaultPagesTexture"><icon name="times"></icon> Set Default Pages Texture</button>
+      </div>
+    </div>
+    <button class="btn" v-bind:class="{btnClicked: notesTexture}" @click="toggleNotesTexture"><icon name="file"></icon> Notes Texture</button>
     <button class="btn btnRight">Zoom {{zoom}}%</button>
   </div>
 </template>
@@ -24,6 +30,7 @@ export default {
     var context = this
     this.$nextTick(function () {
       document.getElementById('uploadPagesTextureInput').onchange = function () {
+        console.log(this.files[0])
         context.$store.commit('setPagesTextureFile', this.files[0])
       }
     })
@@ -49,13 +56,18 @@ export default {
       }
     },
     uploadPagesTexture: function () {
-      document.getElementById('uploadPagesTextureInput').click()
+      var input = document.getElementById('uploadPagesTextureInput')
+      input.value = ''
+      input.click()
     },
     togglePagesTexture: function () {
       this.$store.commit('setPagesTexture', !this.pagesTexture)
     },
     toggleNotesTexture: function () {
       this.$store.commit('setNotesTexture', !this.notesTexture)
+    },
+    setDefaultPagesTexture: function () {
+      this.$emit('setDefaultPagesTexture')
     }
   }
 }
@@ -76,6 +88,8 @@ export default {
   background-color: rgb(75, 75, 75);
   outline: none;
   float: left;
+  font-family: 'Fira Mono', monospace;
+  font-size: 9pt;
 }
 .documentToolbar .btn:hover {
   background-color: rgb(115, 115, 115);
@@ -96,5 +110,36 @@ export default {
 }
 .documentToolbar .btn.btnRight {
   float: right;
+}
+.documentToolbar > .dropdown {
+  float: left;
+}
+.documentToolbar > .dropdown > .dropdownContent,
+.documentToolbar > .dropdown > .dropdownContent > .dropdown > .dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: rgb(65,65,65);
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 10;
+  top: 30px;
+  float: none;
+  overflow: visible;
+}
+.documentToolbar > .dropdown > .dropdownContent > .dropdown > .dropdownContent {
+  left: 30px;
+  width: auto;
+}
+.documentToolbar > .dropdown > .dropdownContent > .btn {
+  float: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+.documentToolbar > .dropdown:hover > .dropdownContent,
+.documentToolbar > .dropdown:hover > .dropdownContent > .dropdown:hover > .dropdownContent {
+  display: block;
+}
+.documentToolbar .btn svg {
+  vertical-align: middle;
 }
 </style>
