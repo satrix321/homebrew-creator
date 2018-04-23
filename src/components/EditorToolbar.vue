@@ -51,6 +51,7 @@
       <button class="btn"><icon name="random"></icon> Misc</button>
       <div class="dropdownContent">
         <button class="btn" @click="insertColumnBreak"><icon name="columns"></icon> Column Break</button>
+        <button class="btn" @click="insertWideBlock"><icon name="arrows-h"></icon> Wide Block</button>
       </div>
     </div>
   </div>
@@ -121,6 +122,9 @@ export default {
     },
     insertColumnBreak: function () {
       this.$emit('insertColumnBreak')
+    },
+    insertWideBlock: function () {
+      this.$emit('insertWideBlock')
     }
   }
 }
