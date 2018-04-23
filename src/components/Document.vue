@@ -103,6 +103,8 @@ export default {
 
           footer.appendChild(backgroundElement)
           footer.appendChild(pageNumberElement)
+
+          page.appendChild(footer)
         }
 
         pageNum++
@@ -432,6 +434,7 @@ export default {
   bottom: 0;
   font-family: 'Alegreya Sans SC';
   color: rgb(213, 187, 118);
+  font-size: 12pt;
 }
 .page > .pageFooter > .pageNumber {
   left: 20.3cm;
