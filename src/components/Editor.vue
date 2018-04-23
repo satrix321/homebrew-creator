@@ -19,6 +19,7 @@
       @insertColumnsPage="insertColumnsPage"
       @insertTitlePage="insertTitlePage"
       @insertColumnBreak="insertColumnBreak"
+      @insertWideBlock="insertWideBlock"
       >
     </editor-toolbar>
     <div class="editor">
@@ -148,6 +149,10 @@ export default {
     },
     insertColumnBreak: function () {
       var data = '```\n```'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertWideBlock: function () {
+      var data = '<div markdown="true" class="wideBlock">\nwide_block\n</div>'
       this.insertData(data, this.getCursorPosition())
     }
   }

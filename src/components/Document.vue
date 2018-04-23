@@ -28,85 +28,90 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      var context = this
-      const pageSplitOptionsRegex = /\\page(?:\[([\w ]*)\])?/g
       const pageSplitRegex = /\\page(?:\[[\w ]*\])?/g
       const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g
 
-      var pageOptions = []
-      var pageOptionsIt
-
-      do {
-        pageOptionsIt = pageSplitOptionsRegex.exec(this.rawCode)
-        if (pageOptionsIt) {
-          if (pageOptionsIt[1]) {
-            pageOptions.push(pageOptionsIt[1])
-          } else {
-            pageOptions.push(null)
-          }
-        }
-      } while (pageOptionsIt)
-
+      var pagesOptions = this.getPagesOptions(this.rawCode)
       var pagesRawInput = this.rawCode.split(pageSplitRegex)
-      var pages = ''
       var pageNum = 1
 
-      if (this.pagesTexture && this.pagesTextureFile !== undefined && (context.pagesTextureUrl === undefined || this.pagesTextureFileChanged)) {
-        var reader = new FileReader()
-
-        reader.onload = function (event) {
-          context.pagesTextureUrl = event.target.result
-        }
-
-        reader.readAsDataURL(this.pagesTextureFile)
-        this.$store.commit('unsetPagesTextureFileChanged')
+      if (this.pagesTexture && this.pagesTextureFile !== undefined && (this.pagesTextureUrl === undefined || this.pagesTextureFileChanged)) {
+        this.loadPagesTexture()
       }
 
-      pages += '<div class="spacerBlock"></div>'
+      var spacerBlock = document.createElement('div')
+      spacerBlock.className = 'spacerBlock'
+
+      var pages = document.createElement('div')
+      pages.appendChild(spacerBlock)
 
       for (let i = 1; i < pagesRawInput.length; i++) {
-        let page = ''
+        let page = document.createElement('div')
+        page.classList.add('page')
+        page.dataset.size = 'A4'
 
-        page = '<div class="page '
-
-        page += (this.pagesTexture ? 'pagesTexture ' : '')
-        page += (this.notesTexture ? 'notesTexture ' : '')
-
-        if (pageOptions[i - 1] !== null) {
-          page += pageOptions[i - 1]
+        if (this.pagesTexture) page.classList.add('pagesTexture')
+        if (this.notesTexture) page.classList.add('notesTexture')
+        if (pagesOptions[i - 1] !== null) {
+          let classNames = pagesOptions[i - 1].split(' ')
+          for (let j = 0; j < classNames.length; j++) {
+            page.classList.add(classNames[j])
+          }
         }
 
-        page += '"'
-
-        if (this.pagesTexture && context.pagesTextureUrl !== undefined) {
-          page += ' style="background-image: url(\'' + context.pagesTextureUrl + '\') !important"'
+        if (this.pagesTexture && this.pagesTextureUrl !== undefined) {
+          page.style.backgroundImage = 'url("' + this.pagesTextureUrl + '") !important'
         }
 
-        page += ' data-size="A4">'
+        var pxSpacer = document.createElement('div')
+        pxSpacer.className = 'pxSpacer'
+        pxSpacer.innerText = '_'
 
-        page += "<div class='pxSpacer'>_</div>"
+        page.appendChild(pxSpacer)
 
         let currentIndex = 0
-
         if (currentIndex < pagesRawInput[i].length) {
-          page += marked(pagesRawInput[i].substring(currentIndex, pagesRawInput[i].length))
+          let pageMarkdownContainer = document.createElement('div')
+          let pageMarkdown = marked(pagesRawInput[i].substring(currentIndex, pagesRawInput[i].length))
+          pageMarkdown.replace(preElementRegex, "<pre><code></code></pre><div class='pxSpacer'>_</div>")
+          pageMarkdownContainer.innerHTML = pageMarkdown
+
+          let elements = pageMarkdownContainer.querySelectorAll('*[markdown]')
+          for (let j = 0; j < elements.length; j++) {
+            elements[j].innerHTML = marked(elements[j].innerHTML)
+          }
+
+          page.innerHTML += pageMarkdownContainer.innerHTML
         }
 
-        page = page.replace(preElementRegex, "<pre><code></code></pre><div class='pxSpacer'>_</div>")
+        if (!(pagesOptions[i - 1] !== null && pagesOptions[i - 1].includes('title'))) {
+          let footer = document.createElement('div')
+          footer.classList.add('pageFooter')
+          if (pageNum % 2 === 1) {
+            footer.classList.add('odd')
+          } else {
+            footer.classList.add('even')
+          }
+          footer.dataset.page = pageNum
 
-        if (!(pageOptions[i - 1] !== null && pageOptions[i - 1].includes('title'))) {
-          page += '<div class="pageFooter ' + (pageNum % 2 === 1 ? 'odd' : 'even') + '" data-page="' + pageNum + '"><div class="background"></div><p class="pageNumber">' + pageNum + '</p></div>'
-          pageNum++
+          let backgroundElement = document.createElement('div')
+          backgroundElement.className = 'background'
+
+          let pageNumberElement = document.createElement('p')
+          pageNumberElement.className = 'pageNumber'
+          pageNumberElement.innerText = pageNum
+
+          footer.appendChild(backgroundElement)
+          footer.appendChild(pageNumberElement)
         }
 
-        page += '</div>'
-
-        pages += page
+        pageNum++
+        pages.appendChild(page)
       }
 
-      pages += '<div class="spacerBlock"></div>'
+      pages.appendChild(spacerBlock.cloneNode(true))
 
-      return pages
+      return pages.outerHTML
     },
     ...mapGetters({
       rawCode: 'rawCode',
@@ -118,6 +123,35 @@ export default {
     })
   },
   methods: {
+    getPagesOptions: function (rawCode) {
+      const pageSplitOptionsRegex = /\\page(?:\[([\w ]*)\])?/g
+      var pageOptions = []
+      var pageOptionsIt
+
+      do {
+        pageOptionsIt = pageSplitOptionsRegex.exec(rawCode)
+        if (pageOptionsIt) {
+          if (pageOptionsIt[1]) {
+            pageOptions.push(pageOptionsIt[1])
+          } else {
+            pageOptions.push(null)
+          }
+        }
+      } while (pageOptionsIt)
+
+      return pageOptions
+    },
+    loadPagesTexture: function () {
+      var context = this
+      var reader = new FileReader()
+
+      reader.onload = function (event) {
+        context.pagesTextureUrl = event.target.result
+      }
+
+      reader.readAsDataURL(this.pagesTextureFile)
+      this.$store.commit('unsetPagesTextureFileChanged')
+    },
     zoomChanged: function () {
       var pagesElement = document.querySelector('.document .pages')
       if (this.zoom === 100) {
@@ -214,42 +248,42 @@ export default {
   margin-top: 0 !important;
 }
 .page.pagesTexture {
-  background-image: url('../assets/imgs/texture_01.jpg');
+  background-image: url('../assets/imgs/texture_02.jpg');
 }
-.page > h1,
-.page > h2,
-.page > h3,
-.page > h4,
-.page > h5,
-.page > h6 {
+.page h1,
+.page h2,
+.page h3,
+.page h4,
+.page h5,
+.page h6 {
   font-family: 'Cormorant SC', serif;
   text-transform: uppercase;
   color: rgb(106, 28, 15);
   margin-bottom: 15px;
 }
-.page > h1 {
+.page h1 {
   font-size: 21pt;
   font-weight: 600;
 }
-.page > h1::first-letter {
+.page h1::first-letter {
   font-size: 120%;
 }
-.page > h2 {
+.page h2 {
   font-size: 18pt;
   font-weight: 600;
 }
-.page > h2::first-letter {
+.page h2::first-letter {
   font-size: 120%;
 }
-.page > h3 {
+.page h3 {
   font-size: 16pt;
   font-weight: 600;
   border-bottom: 1px solid rgb(201, 173, 105);
 }
-.page > h3::first-letter {
+.page h3::first-letter {
   font-size: 120%;
 }
-.page > p {
+.page p {
   font-family: 'Source Serif Pro', serif;
   font-size: 9pt;
   line-height: 1.25;
@@ -257,6 +291,8 @@ export default {
 .page > hr {
   display: none !important;
 }
+
+/* misc */
 .page > pre {
   break-after: column;
 }
@@ -264,6 +300,12 @@ export default {
   height: 1px;
   visibility: hidden;
 }
+.page > .wideBlock {
+  column-span: all;
+  -webkit-column-span: all;
+}
+
+/* title page */
 .page.title > h1,
 .page.title > h5 {
   text-align: center;
@@ -330,12 +372,11 @@ export default {
 }
 .page > blockquote h5 {
   padding-top: 5px;
-}
-.page > blockquote h5 {
   font-family: 'Alegreya Sans SC';
   font-size: 11pt;
   font-weight: 700;
   margin-bottom: 5px;
+  color: black;
 }
 .page > blockquote p {
   font-family: 'Source Serif Pro', serif;
