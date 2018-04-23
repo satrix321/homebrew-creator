@@ -104,11 +104,11 @@ export default {
       this.insertData(data, this.getCursorPosition())
     },
     insertNewspaperNote: function () {
-      var data = '<blockquote class="newspaperNote">\n\t<h5>headline</h5>\n\t<p>article_content</p>\n</blockquote>'
+      var data = '<blockquote markdown="true" class="newspaperNote">\n##### headline\n\narticle_content\n</blockquote>'
       this.insertData(data, this.getCursorPosition())
     },
     insertHandwrittenNote: function () {
-      var data = '<blockquote class="handwrittenNote">\n\t<p>note_content</p>\n</blockquote>'
+      var data = '<blockquote markdown="true" class="handwrittenNote">\nnote_content\n</blockquote>'
       this.insertData(data, this.getCursorPosition())
     },
     insertCocMonsterTable: function () {

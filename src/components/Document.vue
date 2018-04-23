@@ -369,13 +369,14 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
 }
+.page > blockquote *:not(blockquote):first-child {
+  padding-top: 5px;
+}
 .page > blockquote *:not(blockquote):last-child {
   margin-bottom: 5px;
 }
 .page > blockquote h5 {
-  padding-top: 5px;
   font-family: 'Alegreya Sans SC';
-  font-size: 11pt;
   font-weight: 700;
   margin-bottom: 5px;
   color: black;
@@ -449,6 +450,9 @@ export default {
 }
 .page.notesTexture > hr + blockquote {
   background-color: #ffbcbc;
+}
+.page.notesTexture > hr + blockquote *:not(blockquote):first-child {
+  padding-top: 0;
 }
 .page > hr + blockquote > table > thead > tr > th {
   font-size: 12pt;
