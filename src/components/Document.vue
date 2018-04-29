@@ -14,8 +14,6 @@ import DocumentToolbar from './DocumentToolbar.vue'
 import marked from 'marked'
 import { mapGetters } from 'vuex'
 
-// import _ from 'lodash'
-
 export default {
   name: 'Document',
   components: {
@@ -121,7 +119,8 @@ export default {
       notesTexture: 'notesTexture',
       zoom: 'zoom',
       pagesTextureFile: 'pagesTextureFile',
-      pagesTextureFileChanged: 'pagesTextureFileChanged'
+      pagesTextureFileChanged: 'pagesTextureFileChanged',
+      titlePageFont: 'titlePageFont'
     })
   },
   methods: {
@@ -177,13 +176,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
-@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Cormorant+SC:300,400,500,600,700');
-@import url('https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i');
-@import url('https://fonts.googleapis.com/css?family=Caveat:400,700');
-@import url('https://fonts.googleapis.com/css?family=Metal+Mania');
-@import url('https://fonts.googleapis.com/css?family=Old+Standard+TT:400,400i,700');
+@import url('../assets/css/fonts.css');
 
 .documentContainer {
   height: 100%;
@@ -258,7 +251,7 @@ export default {
 .page h4,
 .page h5,
 .page h6 {
-  font-family: 'Cormorant SC', serif;
+  font-family: 'headers';
   text-transform: uppercase;
   color: rgb(106, 28, 15);
   margin-bottom: 15px;
@@ -286,7 +279,11 @@ export default {
   font-size: 120%;
 }
 .page p {
-  font-family: 'Source Serif Pro', serif;
+  font-family: 'regular-text';
+  /*
+  -webkit-text-shadow: 0 0 0.001px #000;
+  text-shadow: 0 0 0.001px #000;
+  */
   font-size: 9pt;
   line-height: 1.25;
 }
@@ -311,11 +308,10 @@ export default {
 .page.title > h1,
 .page.title > h5 {
   text-align: center;
-  font-family: 'Metal Mania', cursive;
+  font-family: 'titlePage';
   color: rgb(56, 14, 8);
-  text-shadow: 0 0 2px #fff;
-  -moz-text-shadow: 0 0 2px #fff;
-  -webkit-text-shadow: 0 0 2px #fff;
+  -webkit-text-shadow: 0 0 10px #fff;
+  text-shadow: 0 0 10px #fff;
 }
 .page.title > h1 {
   font-size: 70pt;
@@ -376,13 +372,13 @@ export default {
   margin-bottom: 5px;
 }
 .page > blockquote h5 {
-  font-family: 'Alegreya Sans SC';
+  font-family: 'headers-blockquotes';
   font-weight: 700;
   margin-bottom: 5px;
   color: black;
 }
 .page > blockquote p {
-  font-family: 'Source Serif Pro', serif;
+  font-family: 'regular-text';
   font-size: 9pt;
 }
 .page.notesTexture > blockquote.newspaperNote,
@@ -390,7 +386,7 @@ export default {
   background-color: #f4f4e2;
 }
 .page > blockquote.newspaperNote h5 {
-  font-family: 'Lora', serif;
+  font-family: 'newspaper-headers';
   text-align: center;
   text-decoration: underline;
   font-size: 18pt;
@@ -398,13 +394,13 @@ export default {
   color: black;
 }
 .page > blockquote.newspaperNote p {
-  font-family: 'Old Standard TT', serif;
+  font-family: 'newspaper-text';
   text-align: justify;
   font-size: 12pt;
   color: black;
 }
 .page > blockquote.handwrittenNote p {
-  font-family: 'Caveat', cursive;
+  font-family: 'handwritten';
   font-size: 12pt;
   color: black;
 }
@@ -433,7 +429,7 @@ export default {
 .page > .pageFooter > .pageNumber {
   position: absolute;
   bottom: 0;
-  font-family: 'Alegreya Sans SC';
+  font-family: 'headers';
   color: rgb(213, 187, 118);
   font-size: 12pt;
 }
@@ -455,12 +451,13 @@ export default {
   padding-top: 0;
 }
 .page > hr + blockquote > table > thead > tr > th {
-  font-size: 12pt;
-  font-family: 'Alegreya Sans SC';
+  font-size: 10pt;
+  font-family: 'headers-blockquotes';
+  text-transform: uppercase;
 }
 .page > hr + blockquote > table > tbody > tr > td {
   font-size: 9pt;
-  font-family: 'Alegreya Sans SC';
+  font-family: 'regular-text';
 }
 .page > blockquote > table {
   width: 100%;
@@ -478,13 +475,13 @@ export default {
 /* lists */
 .page > ul {
   font-size: 9pt;
-  font-family: 'Source Serif Pro', serif;
+  font-family: 'regular-text';
 }
 .page > ul > li > blockquote {
   margin: 0;
 }
 .page > ol {
   font-size: 9pt;
-  font-family: 'Source Serif Pro', serif;
+  font-family: 'regular-text';
 }
 </style>

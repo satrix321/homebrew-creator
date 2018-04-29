@@ -5,7 +5,8 @@ const state = {
   notesTexture: true,
   zoom: 100,
   pagesTextureFile: undefined,
-  pagesTextureFileChanged: false
+  pagesTextureFileChanged: false,
+  titlePageFont: ''
 }
 
 // getters
@@ -14,7 +15,8 @@ const getters = {
   notesTexture: state => state.notesTexture,
   zoom: state => state.zoom,
   pagesTextureFile: state => state.pagesTextureFile,
-  pagesTextureFileChanged: state => state.pagesTextureFileChanged
+  pagesTextureFileChanged: state => state.pagesTextureFileChanged,
+  titlePageFont: state => state.titlePageFont
 }
 
 // actions
@@ -37,6 +39,9 @@ const mutations = {
   },
   unsetPagesTextureFileChanged (state) {
     state.pagesTextureFileChanged = false
+  },
+  setTitlePageFont (state, font) {
+    state.titlePageFont = font
   }
 }
 
