@@ -20,6 +20,13 @@
       @insertTitlePage="insertTitlePage"
       @insertColumnBreak="insertColumnBreak"
       @insertWideBlock="insertWideBlock"
+      @insertCustomTitlePageFont="insertCustomTitlePageFont"
+      @insertCustomHeadersFont="insertCustomHeadersFont"
+      @insertCustomNoteHeadersFont="insertCustomNoteHeadersFont"
+      @insertCustomRegularTextFont="insertCustomRegularTextFont"
+      @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
+      @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
+      @insertCustomHandwritingFont="insertCustomHandwritingFont"
       >
     </editor-toolbar>
     <div class="editor">
@@ -112,7 +119,8 @@ export default {
       this.insertData(data, this.getCursorPosition())
     },
     insertCocMonsterTable: function () {
-      var data = '___\n>|Monster name|\n>|:-:|\n>___\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>___\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>___\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|'
+      var data = '<div markdown="true" class="monsterTable cthulhu">\n>|Monster name|\n>|:-:|\n>\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|\n</div>'
+      // var data = '___\n>|Monster name|\n>|:-:|\n>___\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>___\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>___\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|'
       this.insertData(data, this.getCursorPosition())
     },
     insertOrderedList: function () {
@@ -153,6 +161,34 @@ export default {
     },
     insertWideBlock: function () {
       var data = '<div markdown="true" class="wideBlock">\nwide_block\n</div>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertCustomTitlePageFont: function () {
+      var data = '<style>\n@font-face {\n\tfont-family: "titlePage";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertCustomHeadersFont: function () {
+      var data = '<style>\n@font-face {\n\tfont-family: "headers";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertCustomNoteHeadersFont: function () {
+      var data = '<style>\n@font-face {\n\tfont-family: "headers-blockquotes";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertCustomRegularTextFont: function () {
+      var data = '<style>\n@font-face {\n\tfont-family: "regular-text";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertCustomNewspaperHeadersFont: function () {
+      var data = '<style>\n@font-face {\n\tfont-family: "newspaper-headers";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertCustomNewspaperTextFont: function () {
+      var data = '<style>\n@font-face {\n\tfont-family: "newspaper-text";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>'
+      this.insertData(data, this.getCursorPosition())
+    },
+    insertCustomHandwritingFont: function () {
+      var data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>'
       this.insertData(data, this.getCursorPosition())
     }
   }

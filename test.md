@@ -299,25 +299,26 @@ Celem Jake’a jest jedynie ucieczka z piwnicy, także zaatakuje jedynie osoby s
 
 \page[columns]
 
-___
+<div markdown="true" class="monsterTable cthulhu">
 >|Red Jake, wystraszony bezdomny|
 >|:-:|
->___
+>
 >||||||
 >|:-:|:-:|:-:|:-:|:-:|
 >|**STR 75** |**CON 70** |**SIZ 75** |**INT 55** |**POW 50** |
 >|**DEX 60** |**APP 40** |**EDU 30** |**SAN 42** |**HP 15**  |
->___
+>
 >|Bronie|Bonus obrażeń|
 >|:-:|:-:|
 >|Pięści **65%**, **1d3**|**1d4**|
 >|Noga od stołu **50%**, **1d8**|**1d4**|
->___
+>
 >|Umiejętności|
 >|:-:|
 >|Wspinaczka **75%**, Stolarstwo **40%**, Cthulhu Mythos **5%**|
 >|Uniki **55%**, Ukrywanie się **75%**, Skakanie **65%**|
 >|Nasłuchiwanie **55%**, Skradanie się **55%**|
+</div>
 
 Jeżeli badacze pokonają bezdomnego to i tak nie będą w stanie wydobyć z niego żadnych informacji. Jake trzęsie się z przerażenia i nie potrafi ułożyć składnego zdania.
 
@@ -366,24 +367,25 @@ Potwór nie może zostać zraniony bronią fizyczną. Zaklęcia które wysysają
 
 \page[columns]
 
-___
+<div markdown="true" class="monsterTable cthulhu">
 >|Istota czająca się na strychu, prawie niewidzialna|
 >|:-:|
->___
+>
 >||||||
 >|:-:|:-:|:-:|:-:|:-:|
 >|**STR 100**|**CON 80** |**SIZ 75** |**INT 60** |**POW 100**|
 >|**DEX 80** |**MOV 12** |-          |-          |**HP 18**  |
->___
+>
 >|Bronie|Bonus obrażeń|
 >|:-:|:-:|
 >|Pazury (2) 70%, **1d8**|**1d6**|
->___
+>
 >|Umiejętności|
 >|:-:|
 >|Animacja i kontrola zwłok|
 >|Przenikanie przez fizyczny materiał jeżeli nie jest oznaczony symbolami ochronnymi|
 >|Generowanie śmierdzącego kwasu|
+</div>
 
 ### Wypędzenie istoty
 
@@ -446,39 +448,41 @@ Istnieje także możliwość że istota animuje ciało Red Jake’a, w zależno�
 >>>
 >>> **Zniszczenie animowanego ciała daje badaczom 1d6+1 pkt poczytalności** (tylko dla tych którzy biorą aktywny udział w unicestwieniu danego trupa).
 
-___
+<div markdown="true" class="monsterTable cthulhu">
 >|M. Mcphirter, truposz, animowany przez istotę|
 >|:-:|
->___
+>
 >||||||
 >|:-:|:-:|:-:|:-:|:-:|
 >|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |
 >|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |
->___
+>
 >|Bronie|Bonus obrażeń|
 >|:-:|:-:|
 >|Okaleczenie 65%, **1d6**|-|
->___
+>
 >|Umiejętności|
 >|:-:|
 >|Strata pkt poczytalności **1/1d6**|
+</div>
 
-___
+<div markdown="true" class="monsterTable cthulhu">
 >|Red jake, truposz, animowany przez istotę|
 >|:-:|
->___
+>
 >||||||
 >|:-:|:-:|:-:|:-:|:-:|
 >|**STR 55** |**CON 20** |**SIZ 75** |**INT 0**  |**POW 5**  |
 >|**DEX 25** |**MOV 5**  |-          |-          |**HP 10**  |
->___
+>
 >|Bronie|Bonus obrażeń|
 >|:-:|:-:|
 >|Okaleczenie 65%, **1d6**|**1d4**|
->___
+>
 >|Umiejętności|
 >|:-:|
 >|Strata pkt poczytalności **1/1d6**|
+</div>
 
 ### Konfrontacja
 

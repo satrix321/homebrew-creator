@@ -76,7 +76,8 @@ export default {
 
           let elements = pageMarkdownContainer.querySelectorAll('*[markdown]')
           for (let j = 0; j < elements.length; j++) {
-            elements[j].innerHTML = marked(elements[j].innerHTML)
+            let innerHTML = elements[j].innerHTML.replace(/&gt;/g, '>')
+            elements[j].innerHTML = marked(innerHTML)
           }
 
           page.innerHTML += pageMarkdownContainer.innerHTML
@@ -278,12 +279,10 @@ export default {
 .page h3::first-letter {
   font-size: 120%;
 }
-.page p {
+.page p,
+.page td {
   font-family: 'regular-text';
-  /*
-  -webkit-text-shadow: 0 0 0.001px #000;
-  text-shadow: 0 0 0.001px #000;
-  */
+  text-shadow: 0.1px 0.1px #000;
   font-size: 9pt;
   line-height: 1.25;
 }
@@ -400,7 +399,7 @@ export default {
   color: black;
 }
 .page > blockquote.handwrittenNote p {
-  font-family: 'handwritten';
+  font-family: 'handwriting';
   font-size: 12pt;
   color: black;
 }
@@ -441,35 +440,61 @@ export default {
 }
 
 /* monster tables */
-.page > blockquote > hr {
-  margin-bottom: 0;
+.page .monsterTable blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  border-left: 3px solid gray;
+  border-right: 3px solid gray;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+  page-break-inside: avoid;
 }
-.page.notesTexture > hr + blockquote {
+
+/* CoC monster table */
+.page.notesTexture > .monsterTable.cthulhu > blockquote {
   background-color: #ffbcbc;
 }
-.page.notesTexture > hr + blockquote *:not(blockquote):first-child {
-  padding-top: 0;
-}
-.page > hr + blockquote > table > thead > tr > th {
-  font-size: 10pt;
-  font-family: 'headers-blockquotes';
-  text-transform: uppercase;
-}
-.page > hr + blockquote > table > tbody > tr > td {
-  font-size: 9pt;
-  font-family: 'regular-text';
-}
-.page > blockquote > table {
+.page > .monsterTable.cthulhu > blockquote > table {
   width: 100%;
   margin-bottom: 5px;
   margin-left: 0;
   margin-right: 0;
+  border-bottom: 1px solid black;
+  border-collapse: collapse;
 }
-.page > blockquote table {
+.page > .monsterTable.cthulhu > blockquote > table {
   margin-bottom: 0;
 }
-.page > blockquote hr {
-  margin: 0;
+.page > .monsterTable.cthulhu > blockquote > table th {
+  font-size: 10pt;
+  font-family: 'headers-blockquotes';
+  text-transform: uppercase;
+}
+.page > .monsterTable.cthulhu > blockquote > table td {
+  font-size: 9pt;
+  font-family: 'headers-blockquotes';
+  padding: 3px 0 3px 0;
+}
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(1) th {
+  padding: 5px 0 5px 0;
+}
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(1) tbody,
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(2) thead {
+  display: none;
+}
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody,
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody {
+  border-top: 1px solid black;
+}
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(2) tbody tr:nth-child(odd),
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody tr:nth-child(odd),
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody tr:nth-child(odd) {
+  background-color: white;
+}
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(2) tbody tr:nth-child(even),
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody tr:nth-child(even),
+.page > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody tr:nth-child(even) {
+  background-color: rgb(231, 227, 239);
 }
 
 /* lists */

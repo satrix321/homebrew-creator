@@ -54,6 +54,18 @@
         <button class="btn" @click="insertWideBlock"><icon name="arrows-h"></icon> Wide Block</button>
       </div>
     </div>
+    <div class="dropdown">
+      <button class="btn"><icon name="font"></icon> Fonts</button>
+      <div class="dropdownContent">
+        <button class="btn" @click="insertCustomTitlePageFont"><icon name="font"></icon> Title Font</button>
+        <button class="btn" @click="insertCustomHeadersFont"><icon name="font"></icon> Headers Font</button>
+        <button class="btn" @click="insertCustomNoteHeadersFont"><icon name="font"></icon> Note Headers Font</button>
+        <button class="btn" @click="insertCustomRegularTextFont"><icon name="font"></icon> Regular Text Font</button>
+        <button class="btn" @click="insertCustomNewspaperHeadersFont"><icon name="font"></icon> Newspaper Headers Font</button>
+        <button class="btn" @click="insertCustomNewspaperTextFont"><icon name="font"></icon> Newspaper Text Font</button>
+        <button class="btn" @click="insertCustomHandwritingFont"><icon name="font"></icon> Handwriting Font</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -125,6 +137,27 @@ export default {
     },
     insertWideBlock: function () {
       this.$emit('insertWideBlock')
+    },
+    insertCustomTitlePageFont: function () {
+      this.$emit('insertCustomTitlePageFont')
+    },
+    insertCustomHeadersFont: function () {
+      this.$emit('insertCustomHeadersFont')
+    },
+    insertCustomNoteHeadersFont: function () {
+      this.$emit('insertCustomNoteHeadersFont')
+    },
+    insertCustomRegularTextFont: function () {
+      this.$emit('insertCustomRegularTextFont')
+    },
+    insertCustomNewspaperHeadersFont: function () {
+      this.$emit('insertCustomNewspaperHeadersFont')
+    },
+    insertCustomNewspaperTextFont: function () {
+      this.$emit('insertCustomNewspaperTextFont')
+    },
+    insertCustomHandwritingFont: function () {
+      this.$emit('insertCustomHandwritingFont')
     }
   }
 }
