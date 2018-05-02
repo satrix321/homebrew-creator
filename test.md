@@ -16,7 +16,7 @@
 
 ##### A Call of Cthulhu scenario
 
-<img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg"/>
+<img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg?1"/>
 
 \page[columns]
 
