@@ -27,7 +27,7 @@ export default {
     Icon
   },
   mounted: function () {
-    var context = this
+    let context = this
     this.$nextTick(function () {
       document.getElementById('uploadPagesTextureInput').onchange = function () {
         console.log(this.files[0])
@@ -56,7 +56,7 @@ export default {
       }
     },
     uploadPagesTexture: function () {
-      var input = document.getElementById('uploadPagesTextureInput')
+      let input = document.getElementById('uploadPagesTextureInput')
       input.value = ''
       input.click()
     },

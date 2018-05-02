@@ -29,18 +29,18 @@ export default {
       const pageSplitRegex = /\\page(?:\[[\w ]*\])?/g
       const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g
 
-      var pagesOptions = this.getPagesOptions(this.rawCode)
-      var pagesRawInput = this.rawCode.split(pageSplitRegex)
-      var pageNum = 1
+      let pagesOptions = this.getPagesOptions(this.rawCode)
+      let pagesRawInput = this.rawCode.split(pageSplitRegex)
+      let pageNum = 1
 
       if (this.pagesTexture && this.pagesTextureFile !== undefined && (this.pagesTextureUrl === undefined || this.pagesTextureFileChanged)) {
         this.loadPagesTexture()
       }
 
-      var spacerBlock = document.createElement('div')
+      let spacerBlock = document.createElement('div')
       spacerBlock.className = 'spacerBlock'
 
-      var pages = document.createElement('div')
+      let pages = document.createElement('div')
       pages.appendChild(spacerBlock)
 
       for (let i = 1; i < pagesRawInput.length; i++) {
@@ -61,7 +61,7 @@ export default {
           page.style.backgroundImage = 'url("' + this.pagesTextureUrl + '") !important'
         }
 
-        var pxSpacer = document.createElement('div')
+        let pxSpacer = document.createElement('div')
         pxSpacer.className = 'pxSpacer'
         pxSpacer.innerText = '_'
 
@@ -127,8 +127,8 @@ export default {
   methods: {
     getPagesOptions: function (rawCode) {
       const pageSplitOptionsRegex = /\\page(?:\[([\w ]*)\])?/g
-      var pageOptions = []
-      var pageOptionsIt
+      let pageOptions = []
+      let pageOptionsIt
 
       do {
         pageOptionsIt = pageSplitOptionsRegex.exec(rawCode)
@@ -144,8 +144,8 @@ export default {
       return pageOptions
     },
     loadPagesTexture: function () {
-      var context = this
-      var reader = new FileReader()
+      let context = this
+      let reader = new FileReader()
 
       reader.onload = function (event) {
         context.pagesTextureUrl = event.target.result
@@ -155,7 +155,7 @@ export default {
       this.$store.commit('unsetPagesTextureFileChanged')
     },
     zoomChanged: function () {
-      var pagesElement = document.querySelector('.document .pages')
+      let pagesElement = document.querySelector('.document .pages')
       if (this.zoom === 100) {
         pagesElement.style['-webkit-transform-origin'] = ''
         pagesElement.style['-moz-transform-origin'] = ''
@@ -280,7 +280,8 @@ export default {
   font-size: 120%;
 }
 .page p,
-.page td {
+.page td,
+.page li {
   font-family: 'regular-text';
   text-shadow: 0.1px 0.1px #000;
   font-size: 9pt;
@@ -486,14 +487,14 @@ export default {
 .page > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody {
   border-top: 1px solid black;
 }
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(2) tbody tr:nth-child(odd),
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody tr:nth-child(odd),
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody tr:nth-child(odd) {
+.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(2) tbody tr:nth-child(odd),
+.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody tr:nth-child(odd),
+.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody tr:nth-child(odd) {
   background-color: white;
 }
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(2) tbody tr:nth-child(even),
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody tr:nth-child(even),
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody tr:nth-child(even) {
+.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(2) tbody tr:nth-child(even),
+.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody tr:nth-child(even),
+.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody tr:nth-child(even) {
   background-color: rgb(231, 227, 239);
 }
 

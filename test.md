@@ -104,7 +104,7 @@ Streszczenie dziennika w podpunktach:
 >- Marion Allen, sierpień 1882
 >- Crawford Harris, styczeń 1915
 >- Cecil Jones, marzec 1924
-- Rupert Merriweather ---
+>- Rupert Merriweather ---
 - Mały skrawek gazety z sierpnia 1883 jest przyklejony obok wpisu o śmierci Mariona Allen, Player Aid #2.
 - Wpis napisany słabą ręką, stosunkowo świeży atrament, Player Aid #3.
 
