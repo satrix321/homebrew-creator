@@ -36,15 +36,15 @@
 </template>
 
 <script>
-import '@/assets/css/print.css'
+import '@/assets/css/print.css';
 
-import { codemirror } from 'vue-codemirror'
-import EditorToolbar from './EditorToolbar.vue'
+import { codemirror } from 'vue-codemirror';
+import EditorToolbar from './EditorToolbar.vue';
 
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/markdown/markdown.js'
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/markdown/markdown.js';
 
-import _ from 'lodash'
+import _ from 'lodash';
 
 export default {
   name: 'Editor',
@@ -64,134 +64,134 @@ export default {
         lineWrapping: true,
         highlightFormatting: true
       }
-    }
+    };
   },
   methods: {
     onCmCodeChange: _.debounce(function (newCode) {
-      this.rawCode = newCode
-      this.$store.commit('setRawCode', newCode)
+      this.rawCode = newCode;
+      this.$store.commit('setRawCode', newCode);
     }, 300),
     getCursorPosition: function () {
-      let codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror
-      let codeMirrorDocument = codeMirror.getDoc()
-      let cursor = codeMirrorDocument.getCursor()
+      let codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
+      let codeMirrorDocument = codeMirror.getDoc();
+      let cursor = codeMirrorDocument.getCursor();
       let position = {
         line: cursor.line,
         ch: cursor.position
-      }
-      return position
+      };
+      return position;
     },
     insertData: function (data, position) {
-      let codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror
-      let codeMirrorDocument = codeMirror.getDoc()
-      codeMirrorDocument.replaceRange(data, position)
+      let codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
+      let codeMirrorDocument = codeMirror.getDoc();
+      codeMirrorDocument.replaceRange(data, position);
     },
     insertHeader1: function () {
-      let data = '# Header'
-      this.insertData(data, this.getCursorPosition())
+      let data = '# Header';
+      this.insertData(data, this.getCursorPosition());
     },
     insertHeader2: function () {
-      let data = '## Header'
-      this.insertData(data, this.getCursorPosition())
+      let data = '## Header';
+      this.insertData(data, this.getCursorPosition());
     },
     insertHeader3: function () {
-      let data = '### Header'
-      this.insertData(data, this.getCursorPosition())
+      let data = '### Header';
+      this.insertData(data, this.getCursorPosition());
     },
     insertGreenNote: function () {
-      let data = '> ##### Header\n>\n> Example text.'
-      this.insertData(data, this.getCursorPosition())
+      let data = '> ##### Header\n>\n> Example text.';
+      this.insertData(data, this.getCursorPosition());
     },
     insertBrownNote: function () {
-      let data = '>> ##### Header\n>>\n>> Example text.'
-      this.insertData(data, this.getCursorPosition())
+      let data = '>> ##### Header\n>>\n>> Example text.';
+      this.insertData(data, this.getCursorPosition());
     },
     insertPurpleNote: function () {
-      let data = '>>> ##### Header\n>>>\n>>> Example text.'
-      this.insertData(data, this.getCursorPosition())
+      let data = '>>> ##### Header\n>>>\n>>> Example text.';
+      this.insertData(data, this.getCursorPosition());
     },
     insertNewspaperNote: function () {
-      let data = '<blockquote markdown="true" class="newspaperNote">\n##### headline\n\narticle_content\n</blockquote>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<blockquote markdown="true" class="newspaperNote">\n##### headline\n\narticle_content\n</blockquote>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertHandwrittenNote: function () {
-      let data = '<blockquote markdown="true" class="handwrittenNote">\nnote_content\n</blockquote>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<blockquote markdown="true" class="handwrittenNote">\nnote_content\n</blockquote>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertCocMonsterTable: function () {
-      let data = '<div markdown="true" class="monsterTable cthulhu">\n>|Monster name|\n>|:-:|\n>\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|\n</div>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<div markdown="true" class="monsterTable cthulhu">\n>|Monster name|\n>|:-:|\n>\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|\n</div>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertOrderedList: function () {
-      let data = '1. Item\n2. Item\n3. Item'
-      this.insertData(data, this.getCursorPosition())
+      let data = '1. Item\n2. Item\n3. Item';
+      this.insertData(data, this.getCursorPosition());
     },
     insertUnorderedList: function () {
-      let data = '- Item\n- Item\n- Item'
-      this.insertData(data, this.getCursorPosition())
+      let data = '- Item\n- Item\n- Item';
+      this.insertData(data, this.getCursorPosition());
     },
     insertRegularPage: function () {
-      let data = '\\page'
-      this.insertData(data, this.getCursorPosition())
+      let data = '\\page';
+      this.insertData(data, this.getCursorPosition());
     },
     insertRelativeImage: function () {
-      let data = '![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Image")'
-      this.insertData(data, this.getCursorPosition())
+      let data = '![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Image")';
+      this.insertData(data, this.getCursorPosition());
     },
     insertAbsoluteImage: function () {
-      let data = '<img class="absoluteImage" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<img class="absoluteImage" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertFullPageImage: function () {
-      let data = '<img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg"/>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg"/>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertColumnsPage: function () {
-      let data = '\\page[columns]'
-      this.insertData(data, this.getCursorPosition())
+      let data = '\\page[columns]';
+      this.insertData(data, this.getCursorPosition());
     },
     insertTitlePage: function () {
-      let data = '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description'
-      this.insertData(data, this.getCursorPosition())
+      let data = '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description';
+      this.insertData(data, this.getCursorPosition());
     },
     insertColumnBreak: function () {
-      let data = '```\n```'
-      this.insertData(data, this.getCursorPosition())
+      let data = '```\n```';
+      this.insertData(data, this.getCursorPosition());
     },
     insertWideBlock: function () {
-      let data = '<div markdown="true" class="wideBlock">\nwide_block\n</div>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<div markdown="true" class="wideBlock">\nwide_block\n</div>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertCustomTitlePageFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "titlePage";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<style>\n@font-face {\n\tfont-family: "titlePage";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertCustomHeadersFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "headers";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<style>\n@font-face {\n\tfont-family: "headers";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertCustomNoteHeadersFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "headers-blockquotes";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<style>\n@font-face {\n\tfont-family: "headers-blockquotes";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertCustomRegularTextFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "regular-text";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<style>\n@font-face {\n\tfont-family: "regular-text";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertCustomNewspaperHeadersFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "newspaper-headers";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<style>\n@font-face {\n\tfont-family: "newspaper-headers";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertCustomNewspaperTextFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "newspaper-text";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<style>\n@font-face {\n\tfont-family: "newspaper-text";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
+      this.insertData(data, this.getCursorPosition());
     },
     insertCustomHandwritingFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>'
-      this.insertData(data, this.getCursorPosition())
+      let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
+      this.insertData(data, this.getCursorPosition());
     }
   }
-}
+};
 </script>
 
 <style>

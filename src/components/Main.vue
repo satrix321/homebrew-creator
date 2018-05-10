@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import '@/assets/css/print.css'
+import '@/assets/css/print.css';
 
-import Editor from './Editor.vue'
-import Document from './Document.vue'
+import Editor from './Editor.vue';
+import Document from './Document.vue';
 
 export default {
   name: 'Main',
@@ -23,7 +23,7 @@ export default {
     Editor,
     Document
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

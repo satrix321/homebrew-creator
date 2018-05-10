@@ -70,10 +70,10 @@
 </template>
 
 <script>
-import '@/assets/css/print.css'
+import '@/assets/css/print.css';
 
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
+import 'vue-awesome/icons';
+import Icon from 'vue-awesome/components/Icon';
 
 export default {
   name: 'Editor',
@@ -82,85 +82,85 @@ export default {
   },
   methods: {
     insertHeader1: function () {
-      this.$emit('insertHeader1')
+      this.$emit('insertHeader1');
     },
     insertHeader2: function () {
-      this.$emit('insertHeader2')
+      this.$emit('insertHeader2');
     },
     insertHeader3: function () {
-      this.$emit('insertHeader3')
+      this.$emit('insertHeader3');
     },
     insertGreenNote: function () {
-      this.$emit('insertGreenNote')
+      this.$emit('insertGreenNote');
     },
     insertBrownNote: function () {
-      this.$emit('insertBrownNote')
+      this.$emit('insertBrownNote');
     },
     insertPurpleNote: function () {
-      this.$emit('insertPurpleNote')
+      this.$emit('insertPurpleNote');
     },
     insertNewspaperNote: function () {
-      this.$emit('insertNewspaperNote')
+      this.$emit('insertNewspaperNote');
     },
     insertHandwrittenNote: function () {
-      this.$emit('insertHandwrittenNote')
+      this.$emit('insertHandwrittenNote');
     },
     insertCocMonsterTable: function () {
-      this.$emit('insertCocMonsterTable')
+      this.$emit('insertCocMonsterTable');
     },
     insertOrderedList: function () {
-      this.$emit('insertOrderedList')
+      this.$emit('insertOrderedList');
     },
     insertUnorderedList: function () {
-      this.$emit('insertUnorderedList')
+      this.$emit('insertUnorderedList');
     },
     insertRegularPage: function () {
-      this.$emit('insertRegularPage')
+      this.$emit('insertRegularPage');
     },
     insertRelativeImage: function () {
-      this.$emit('insertRelativeImage')
+      this.$emit('insertRelativeImage');
     },
     insertAbsoluteImage: function () {
-      this.$emit('insertAbsoluteImage')
+      this.$emit('insertAbsoluteImage');
     },
     insertFullPageImage: function () {
-      this.$emit('insertFullPageImage')
+      this.$emit('insertFullPageImage');
     },
     insertColumnsPage: function () {
-      this.$emit('insertColumnsPage')
+      this.$emit('insertColumnsPage');
     },
     insertTitlePage: function () {
-      this.$emit('insertTitlePage')
+      this.$emit('insertTitlePage');
     },
     insertColumnBreak: function () {
-      this.$emit('insertColumnBreak')
+      this.$emit('insertColumnBreak');
     },
     insertWideBlock: function () {
-      this.$emit('insertWideBlock')
+      this.$emit('insertWideBlock');
     },
     insertCustomTitlePageFont: function () {
-      this.$emit('insertCustomTitlePageFont')
+      this.$emit('insertCustomTitlePageFont');
     },
     insertCustomHeadersFont: function () {
-      this.$emit('insertCustomHeadersFont')
+      this.$emit('insertCustomHeadersFont');
     },
     insertCustomNoteHeadersFont: function () {
-      this.$emit('insertCustomNoteHeadersFont')
+      this.$emit('insertCustomNoteHeadersFont');
     },
     insertCustomRegularTextFont: function () {
-      this.$emit('insertCustomRegularTextFont')
+      this.$emit('insertCustomRegularTextFont');
     },
     insertCustomNewspaperHeadersFont: function () {
-      this.$emit('insertCustomNewspaperHeadersFont')
+      this.$emit('insertCustomNewspaperHeadersFont');
     },
     insertCustomNewspaperTextFont: function () {
-      this.$emit('insertCustomNewspaperTextFont')
+      this.$emit('insertCustomNewspaperTextFont');
     },
     insertCustomHandwritingFont: function () {
-      this.$emit('insertCustomHandwritingFont')
+      this.$emit('insertCustomHandwritingFont');
     }
   }
-}
+};
 </script>
 
 <style>

@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import '@/assets/css/print.css'
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
-import { mapGetters } from 'vuex'
+import '@/assets/css/print.css';
+import 'vue-awesome/icons';
+import Icon from 'vue-awesome/components/Icon';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Document',
@@ -27,13 +27,12 @@ export default {
     Icon
   },
   mounted: function () {
-    let context = this
+    let context = this;
     this.$nextTick(function () {
       document.getElementById('uploadPagesTextureInput').onchange = function () {
-        console.log(this.files[0])
-        context.$store.commit('setPagesTextureFile', this.files[0])
-      }
-    })
+        context.$store.commit('setPagesTextureFile', this.files[0]);
+      };
+    });
   },
   computed: {
     ...mapGetters({
@@ -45,32 +44,32 @@ export default {
   methods: {
     zoomIn: function () {
       if (this.zoom < 100) {
-        this.$store.commit('setZoom', this.zoom + 10)
-        this.$emit('zoomChanged')
+        this.$store.commit('setZoom', this.zoom + 10);
+        this.$emit('zoomChanged');
       }
     },
     zoomOut: function () {
       if (this.zoom > 50) {
-        this.$store.commit('setZoom', this.zoom - 10)
-        this.$emit('zoomChanged')
+        this.$store.commit('setZoom', this.zoom - 10);
+        this.$emit('zoomChanged');
       }
     },
     uploadPagesTexture: function () {
-      let input = document.getElementById('uploadPagesTextureInput')
-      input.value = ''
-      input.click()
+      let input = document.getElementById('uploadPagesTextureInput');
+      input.value = '';
+      input.click();
     },
     togglePagesTexture: function () {
-      this.$store.commit('setPagesTexture', !this.pagesTexture)
+      this.$store.commit('setPagesTexture', !this.pagesTexture);
     },
     toggleNotesTexture: function () {
-      this.$store.commit('setNotesTexture', !this.notesTexture)
+      this.$store.commit('setNotesTexture', !this.notesTexture);
     },
     setDefaultPagesTexture: function () {
-      this.$emit('setDefaultPagesTexture')
+      this.$emit('setDefaultPagesTexture');
     }
   }
-}
+};
 </script>
 
 <style>

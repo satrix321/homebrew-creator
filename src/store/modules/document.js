@@ -7,7 +7,7 @@ const state = {
   pagesTextureFile: undefined,
   pagesTextureFileChanged: false,
   titlePageFont: ''
-}
+};
 
 // getters
 const getters = {
@@ -17,37 +17,37 @@ const getters = {
   pagesTextureFile: state => state.pagesTextureFile,
   pagesTextureFileChanged: state => state.pagesTextureFileChanged,
   titlePageFont: state => state.titlePageFont
-}
+};
 
 // actions
-const actions = {}
+const actions = {};
 
 // mutations
 const mutations = {
   setPagesTexture (state, pagesTexture) {
-    state.pagesTexture = pagesTexture
+    state.pagesTexture = pagesTexture;
   },
   setNotesTexture (state, notesTexture) {
-    state.notesTexture = notesTexture
+    state.notesTexture = notesTexture;
   },
   setZoom (state, zoom) {
-    state.zoom = zoom
+    state.zoom = zoom;
   },
   setPagesTextureFile (state, pagesTextureFile) {
-    state.pagesTextureFile = pagesTextureFile
-    state.pagesTextureFileChanged = true
+    state.pagesTextureFile = pagesTextureFile;
+    state.pagesTextureFileChanged = true;
   },
   unsetPagesTextureFileChanged (state) {
-    state.pagesTextureFileChanged = false
+    state.pagesTextureFileChanged = false;
   },
   setTitlePageFont (state, font) {
-    state.titlePageFont = font
+    state.titlePageFont = font;
   }
-}
+};
 
 export default {
   state,
   getters,
   actions,
   mutations
-}
+};
