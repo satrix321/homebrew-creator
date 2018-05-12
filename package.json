@@ -1,7 +1,7 @@
 {
   "name": "homebrew-creator",
   "version": "0.1.0",
-  "description": "Markdown to PDF converter for custom homebrew",
+  "description": "Markdown to PDF converter for custom RPG homebrew",
   "author": "satrix321",
   "private": true,
   "scripts": {

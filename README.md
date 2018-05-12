@@ -1,4 +1,4 @@
-# PHB PDF Generator
+# Homebrew Creator
 
 ## Description
 
