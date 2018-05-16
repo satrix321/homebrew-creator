@@ -1,4 +1,4 @@
-// vue.config.js
+/* eslint-disable */
 const fs = require('fs')
 
 module.exports = {
@@ -10,3 +10,4 @@ module.exports = {
     }
   }
 }
+/* eslint-enable */

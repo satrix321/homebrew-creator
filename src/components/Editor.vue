@@ -36,14 +36,10 @@
 </template>
 
 <script>
-import '@/assets/scss/print.scss';
-
 import { codemirror } from 'vue-codemirror';
 import EditorToolbar from './EditorToolbar.vue';
-
-import 'codemirror/lib/codemirror.css';
+import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/markdown/markdown.js';
-
 import _ from 'lodash';
 
 export default {
@@ -194,7 +190,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700&subset=latin-ext');
 .editorContainer {
   height: 100%;

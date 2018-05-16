@@ -10,15 +10,8 @@ export default {
 };
 </script>
 
-<style>
-body {
-  margin: 0px;
-  overflow-x: hidden;
-}
+<style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  @include font-smoothing;
 }
 </style>

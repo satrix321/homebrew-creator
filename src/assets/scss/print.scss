@@ -1,5 +1,5 @@
 @media print {
-  @import url('./fonts.scss');
+  @import "@/assets/scss/fonts.scss";
 
   body, .page {
     margin: 0 !important;

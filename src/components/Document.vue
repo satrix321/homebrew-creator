@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import '@/assets/scss/print.scss';
-
 import DocumentToolbar from './DocumentToolbar.vue';
 import marked from 'marked';
 import { mapGetters } from 'vuex';
@@ -176,8 +174,8 @@ export default {
 };
 </script>
 
-<style>
-@import url('../assets/scss/fonts.scss');
+<style lang="scss">
+@import "@/assets/scss/fonts.scss";
 
 .documentContainer {
   height: 100%;

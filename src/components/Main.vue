@@ -5,15 +5,13 @@
         <Editor></Editor>
       </SplitArea>
       <SplitArea class="documentArea" :size="50">
-          <Document></Document>
+        <Document></Document>
       </SplitArea>
     </Split>
   </div>
 </template>
 
 <script>
-import '@/assets/scss/print.scss';
-
 import Editor from './Editor.vue';
 import Document from './Document.vue';
 
@@ -26,22 +24,6 @@ export default {
 };
 </script>
 
-<style>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.editorArea {
-  overflow-y: hidden;
-}
+<style lang="scss">
+@import "@/assets/scss/print.scss";
 </style>
