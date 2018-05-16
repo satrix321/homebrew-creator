@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import '@/assets/css/print.css';
+import '@/assets/scss/print.scss';
 
 import Editor from './Editor.vue';
 import Document from './Document.vue';
@@ -26,7 +26,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 h1, h2 {
   font-weight: normal;

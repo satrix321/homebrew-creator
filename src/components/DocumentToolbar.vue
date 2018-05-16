@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import '@/assets/css/print.css';
+import '@/assets/scss/print.scss';
 import 'vue-awesome/icons';
 import Icon from 'vue-awesome/components/Icon';
 import { mapGetters } from 'vuex';

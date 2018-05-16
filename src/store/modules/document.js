@@ -1,5 +1,4 @@
 // initial state
-// shape: [{ id, quantity }]
 const state = {
   pagesTexture: true,
   notesTexture: true,

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import '@/assets/css/print.css';
+import '@/assets/scss/print.scss';
 
 import DocumentToolbar from './DocumentToolbar.vue';
 import marked from 'marked';
@@ -177,7 +177,7 @@ export default {
 </script>
 
 <style>
-@import url('../assets/css/fonts.css');
+@import url('../assets/scss/fonts.scss');
 
 .documentContainer {
   height: 100%;

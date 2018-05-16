@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import '@/assets/css/print.css';
+import '@/assets/scss/print.scss';
 
 import { codemirror } from 'vue-codemirror';
 import EditorToolbar from './EditorToolbar.vue';
