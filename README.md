@@ -17,7 +17,7 @@ To avoid any display problems you should use Chrome browser, otherwise some thin
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm run serve
 
 # build for production with minification
 npm run build
