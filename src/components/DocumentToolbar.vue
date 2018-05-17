@@ -1,5 +1,9 @@
+<style lang="scss" scoped>
+@import "@/assets/scss/toolbar.scss";
+</style>
+
 <template>
-  <div class="documentToolbar">
+  <div class="toolbar">
     <button class="btn" @click="zoomIn"><icon name="search-plus"></icon></button>
     <button class="btn" @click="zoomOut"><icon name="search-minus"></icon></button>
     <div class="dropdown">
@@ -70,74 +74,3 @@ export default {
   }
 };
 </script>
-
-<style>
-/* Document toolbar */
-.documentToolbar {
-  height: 30px;
-  width: 100%;
-  background-color: rgb(65, 65, 65);
-}
-.documentToolbar .btn {
-  height: 30px;
-  border: 0;
-  padding: 0 8px 0 8px;
-  color: white;
-  background-color: rgb(75, 75, 75);
-  outline: none;
-  float: left;
-  font-family: 'Fira Mono', monospace;
-  font-size: 9pt;
-}
-.documentToolbar .btn:hover {
-  background-color: rgb(115, 115, 115);
-  cursor: pointer;
-}
-.documentToolbar .btn::-moz-focus-inner {
-   border: 0;
-}
-.documentToolbar .btn:active {
-  background-color: rgb(95, 95, 95);
-  padding: 0 8px 0 8px;
-}
-.documentToolbar .btn.btnClicked {
-  background-color: rgb(25, 25, 25);
-}
-.documentToolbar .btn.btnClicked:hover {
-  background-color: rgb(115, 115, 115);
-}
-.documentToolbar .btn.btnRight {
-  float: right;
-}
-.documentToolbar > .dropdown {
-  float: left;
-}
-.documentToolbar > .dropdown > .dropdownContent,
-.documentToolbar > .dropdown > .dropdownContent > .dropdown > .dropdownContent {
-  display: none;
-  position: absolute;
-  background-color: rgb(65,65,65);
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 10;
-  top: 30px;
-  float: none;
-  overflow: visible;
-}
-.documentToolbar > .dropdown > .dropdownContent > .dropdown > .dropdownContent {
-  left: 30px;
-  width: auto;
-}
-.documentToolbar > .dropdown > .dropdownContent > .btn {
-  float: none;
-  display: block;
-  width: 100%;
-  text-align: left;
-}
-.documentToolbar > .dropdown:hover > .dropdownContent,
-.documentToolbar > .dropdown:hover > .dropdownContent > .dropdown:hover > .dropdownContent {
-  display: block;
-}
-.documentToolbar .btn svg {
-  vertical-align: middle;
-}
-</style>

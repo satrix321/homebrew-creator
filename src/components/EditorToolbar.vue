@@ -1,5 +1,9 @@
+<style lang="scss" scoped>
+@import "@/assets/scss/toolbar.scss";
+</style>
+
 <template>
-  <div class="editorToolbar">
+  <div class="toolbar">
     <div class="dropdown">
       <button class="btn"><icon name="header"></icon> Headers</button>
       <div class="dropdownContent">
@@ -160,67 +164,3 @@ export default {
   }
 };
 </script>
-
-<style>
-@import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700&subset=latin-ext');
-
-/* Editor toolbar */
-.editorToolbar {
-  height: 30px;
-  width: 100%;
-  background-color: rgb(65,65,65);
-}
-.editorToolbar .btn {
-  height: 30px;
-  border: 0;
-  padding: 0 8px 0 8px;
-  color: white;
-  background-color: rgb(75,75,75);
-  outline: none;
-  float: left;
-  font-family: 'Fira Mono', monospace;
-  font-size: 9pt;
-}
-.editorToolbar .btn:hover {
-  background-color: rgb(115, 115, 115);
-  cursor: pointer;
-}
-.editorToolbar .btn::-moz-focus-inner {
-   border: 0;
-}
-.editorToolbar .btn:active {
-  background-color: rgb(95,95,95);
-  padding: 0 8px 0 8px;
-}
-.editorToolbar > .dropdown {
-  float: left;
-}
-.editorToolbar > .dropdown > .dropdownContent,
-.editorToolbar > .dropdown > .dropdownContent > .dropdown > .dropdownContent {
-  display: none;
-  position: absolute;
-  background-color: rgb(65,65,65);
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 10;
-  top: 30px;
-  float: none;
-  overflow: visible;
-}
-.editorToolbar > .dropdown > .dropdownContent > .dropdown > .dropdownContent {
-  left: 30px;
-  width: auto;
-}
-.editorToolbar > .dropdown > .dropdownContent > .btn {
-  float: none;
-  display: block;
-  width: 100%;
-  text-align: left;
-}
-.editorToolbar > .dropdown:hover > .dropdownContent,
-.editorToolbar > .dropdown:hover > .dropdownContent > .dropdown:hover > .dropdownContent {
-  display: block;
-}
-.editorToolbar .btn svg {
-  vertical-align: middle;
-}
-</style>

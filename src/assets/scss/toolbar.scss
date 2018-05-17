@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700&subset=latin-ext');
+
+.toolbar {
+  height: 30px;
+  width: 100%;
+  background-color: rgb(65,65,65);
+
+  .btn {
+    height: 30px;
+    border: 0;
+    padding: 0 8px 0 8px;
+    color: white;
+    background-color: rgb(75,75,75);
+    outline: none;
+    float: left;
+    font-family: 'Fira Mono', monospace;
+    font-size: 9pt;  
+
+    &:hover {
+      background-color: rgb(115, 115, 115);
+      cursor: pointer;
+    }
+
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
+    &:active {
+      background-color: rgb(95,95,95);
+      padding: 0 8px 0 8px;
+    }
+
+    svg {
+      vertical-align: middle;
+    }
+
+    &.btnClicked {
+      background-color: rgb(25, 25, 25);
+
+      &:hover {
+        background-color: rgb(115, 115, 115);
+      }
+    }
+
+    &.btnRight {
+      float: right;
+    }
+  }
+
+  > .dropdown {
+    float: left;
+
+    > .dropdownContent {
+      display: none;
+      position: absolute;
+      background-color: rgb(65,65,65);
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 10;
+      top: 30px;
+      float: none;
+      overflow: visible;
+
+      .btn {
+        float: none;
+        display: block;
+        width: 100%;
+        text-align: left;
+      }
+      
+      > .dropdown > .dropdownContent {
+        display: none;
+        position: absolute;
+        background-color: rgb(65,65,65);
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 10;
+        top: 30px;
+        float: none;
+        overflow: visible;
+        left: 30px;
+        width: auto;
+      }
+    }
+
+    &:hover > .dropdownContent {
+      display: block;
+
+      > .dropdown:hover > .dropdownContent {
+        display: block;
+      }
+    }
+  }
+}

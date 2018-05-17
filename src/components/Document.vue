@@ -180,332 +180,282 @@ export default {
 .documentContainer {
   height: 100%;
   overflow: hidden;
+  .document {
+    overflow-y: auto;
+    position: relative;
+    height: calc(100vh - 30px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(204, 204, 204);
+    .page {
+      display: block;
+      margin: 0 0 0.5cm 0;
+      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+      background-color: white;
+      position: relative;
+      padding-left: 1cm;
+      padding-right: 1cm;
+      padding-top: 1cm;
+      padding-bottom: 1cm;
+      box-sizing: border-box;
+      text-align: left;
+      height: 100%;
+      z-index: 1;
+      &[data-size="A4"] {
+        width: 21cm;
+        height: 29.7cm;
+        &[data-layout="portrait"] {
+          width: 29.7cm;
+          height: 21cm;
+        }
+      }
+      &.page.pagesTexture {
+        background-image: url('../assets/imgs/texture_02.jpg');
+      }
+      * {
+        margin-top: 0 !important;
+      }
+
+      &.columns {
+        -moz-column-count: 2 !important;
+        -webkit-column-count: 2 !important;
+        column-count: 2 !important;
+        column-fill: auto;
+        -webkit-column-gap: 16px;
+        -moz-column-gap: 16px;
+        column-gap: 16px;
+        >blockquote {
+          border-top-style: inset;
+        }
+      }
+      p,
+      td{
+        font-family: 'regular-text';
+        text-shadow: 0.1px 0.1px #000;
+        font-size: 9pt;
+        line-height: 1.25;
+      }
+
+      @import "@/assets/scss/document/_headers.scss";
+
+      @import "@/assets/scss/document/_lists.scss";
+
+      >hr {
+        display: none !important;
+      }
+      >pre {
+        break-after: column;
+      }
+      >.pxSpacer {
+        height: 1px;
+        visibility: hidden;
+      }
+      >.wideBlock {
+        column-span: all;
+        -webkit-column-span: all;
+      }
+      
+      @import "@/assets/scss/document/_titlePages.scss";
+
+      .absoluteImage {
+        position: absolute;
+        z-index: -1;
+        &.fullPageImage {
+          left: 0cm;
+          top: 0cm;
+          width: 21cm;
+          height: 29.7cm;
+        }
+      }
+      &.notesTexture>blockquote {
+        background-color: rgb(218, 230, 191);
+        >blockquote {
+          background-color: rgb(220, 207, 172);
+          >blockquote {
+            background-color: rgb(231, 227, 239);
+          }
+        }
+        &.newspaperNote,
+        &.handwrittenNote {
+          background-color: #f4f4e2;
+        }
+      }
+      >blockquote {
+        margin-left: 0;
+        margin-right: 0;
+        border-left: 3px solid gray;
+        border-right: 3px solid gray;
+        border-top: 5px solid black;
+        border-bottom: 5px solid black;
+        page-break-inside: avoid;
+        >blockquote {
+          margin: 0;
+          overflow: auto;
+          >blockquote {
+            margin: 0;
+            overflow: auto;
+            >*:not(blockquote) {
+              margin-left: 10px;
+              margin-right: 10px;
+            }
+          }
+          >*:not(blockquote) {
+            margin-left: 10px;
+            margin-right: 10px;
+          }
+        }
+        >*:not(blockquote) {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        *:not(blockquote):first-child {
+          padding-top: 5px;
+        }
+        *:not(blockquote):last-child {
+          margin-bottom: 5px;
+        }
+        h5 {
+          font-family: 'headers-blockquotes';
+          font-weight: 700;
+          margin-bottom: 5px;
+          color: black;
+        }
+        p {
+          font-family: 'regular-text';
+          font-size: 9pt;
+        }
+        &.newspaperNote {
+          h5 {
+            font-family: 'newspaper-headers';
+            text-align: center;
+            text-decoration: underline;
+            font-size: 18pt;
+            text-transform: uppercase;
+            color: black;
+          }
+          p {
+            font-family: 'newspaper-text';
+            text-align: justify;
+            font-size: 12pt;
+            color: black;
+          }
+        }
+        &.handwrittenNote p {
+          font-family: 'handwriting';
+          font-size: 12pt;
+          color: black;
+        }
+      }
+      >.pageFooter {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        >.background {
+          position: absolute;
+          width: 21cm;
+          height: 1cm;
+          bottom: 0;
+          left: 0;
+          background-image: url('../assets/imgs/footer_01.png');
+          background-size: 21cm 1cm;
+        }
+        &.even>.background {
+          -moz-transform: scaleX(-1);
+          -o-transform: scaleX(-1);
+          -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+        }
+        >.pageNumber {
+          position: absolute;
+          bottom: 0;
+          font-family: 'headers';
+          color: rgb(213, 187, 118);
+          font-size: 12pt;
+          left: 20.3cm;
+        }
+        &.even>.pageNumber {
+          left: 0.5cm;
+        }
+      }
+      .monsterTable blockquote {
+        margin-left: 0;
+        margin-right: 0;
+        border-left: 3px solid gray;
+        border-right: 3px solid gray;
+        border-top: 5px solid black;
+        border-bottom: 5px solid black;
+        page-break-inside: avoid;
+      }
+      >.monsterTable {
+        &.cthulhu {
+          >blockquote {
+            >table {
+              width: 100%;
+              margin-bottom: 5px;
+              margin-left: 0;
+              margin-right: 0;
+              border-bottom: 1px solid black;
+              border-collapse: collapse;
+              margin-bottom: 0;
+              th {
+                font-size: 10pt;
+                font-family: 'headers-blockquotes';
+                text-transform: uppercase;
+              }
+              td {
+                font-size: 9pt;
+                font-family: 'headers-blockquotes';
+                padding: 3px 0 3px 0;
+              }
+              &:nth-child(1) {
+                th {
+                  padding: 5px 0 5px 0;
+                }
+                tbody {
+                  display: none;
+                }
+              }
+              &:nth-child(2) {
+                thead {
+                  display: none;
+                }
+              }
+              &:nth-child(3),
+              &:nth-child(4) {
+                tbody {
+                  border-top: 1px solid black;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.notesTexture>.monsterTable {
+        &.cthulhu {
+          >blockquote {
+            >table {
+              background-color: #ffbcbc;
+              &:nth-child(2) tbody tr:nth-child(even),
+              &:nth-child(3) tbody tr:nth-child(even),
+              &:nth-child(4) tbody tr:nth-child(even) {
+                background-color: rgb(231, 227, 239);
+              }
+              &:nth-child(2) tbody tr:nth-child(odd),
+              &:nth-child(3) tbody tr:nth-child(odd),
+              &:nth-child(4) tbody tr:nth-child(odd) {
+                background-color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .spacerBlock {
+    width: 100%;
+    height: 50px;
+  }
 }
 
-/* Document */
-.document {
-  overflow-y: auto;
-  position: relative;
-  height: calc(100vh - 30px);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: rgb(204, 204, 204);
-}
-.document .page {
-  display: block;
-  margin-bottom: 0.5cm;
-  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-}
-.spacerBlock {
-  width: 100%;
-  height: 50px;
-}
-.page[data-size="A4"] {
-  width: 21cm;
-  height: 29.7cm;
-}
-.page[data-size="A4"][data-layout="portrait"] {
-  width: 29.7cm;
-  height: 21cm;
-}
-
-/* Columns */
-.columns {
-  -moz-column-count: 2 !important;
-  -webkit-column-count: 2 !important;
-  column-count: 2 !important;
-  column-fill: auto;
-  -webkit-column-gap: 16px;
-  -moz-column-gap: 16px;
-  column-gap: 16px;
-}
-.columns > blockquote {
-  border-top-style: inset;
-}
-
-/* Pages */
-.page {
-  background-color: white;
-  position: relative;
-  padding-left: 1cm;
-  padding-right: 1cm;
-  padding-top: 1cm;
-  padding-bottom: 1cm;
-  box-sizing: border-box;
-  text-align: left;
-  margin: 0;
-  height: 100%;
-  z-index: 1;
-}
-.page * {
-  margin-top: 0 !important;
-}
-.page.pagesTexture {
-  background-image: url('../assets/imgs/texture_02.jpg');
-}
-.page h1,
-.page h2,
-.page h3,
-.page h4,
-.page h5,
-.page h6 {
-  font-family: 'headers';
-  text-transform: uppercase;
-  color: rgb(106, 28, 15);
-  margin-bottom: 15px;
-}
-.page h1 {
-  font-size: 21pt;
-  font-weight: 600;
-}
-.page h1::first-letter {
-  font-size: 120%;
-}
-.page h2 {
-  font-size: 18pt;
-  font-weight: 600;
-}
-.page h2::first-letter {
-  font-size: 120%;
-}
-.page h3 {
-  font-size: 16pt;
-  font-weight: 600;
-  border-bottom: 1px solid rgb(201, 173, 105);
-}
-.page h3::first-letter {
-  font-size: 120%;
-}
-.page p,
-.page td,
-.page li {
-  font-family: 'regular-text';
-  text-shadow: 0.1px 0.1px #000;
-  font-size: 9pt;
-  line-height: 1.25;
-}
-.page > hr {
-  display: none !important;
-}
-
-/* misc */
-.page > pre {
-  break-after: column;
-}
-.page > .pxSpacer {
-  height: 1px;
-  visibility: hidden;
-}
-.page > .wideBlock {
-  column-span: all;
-  -webkit-column-span: all;
-}
-
-/* title page */
-.page.title > h1,
-.page.title > h5 {
-  text-align: center;
-  font-family: 'titlePage';
-  color: rgb(56, 14, 8);
-  -webkit-text-shadow: 0 0 10px #fff;
-  text-shadow: 0 0 10px #fff;
-}
-.page.title > h1 {
-  font-size: 70pt;
-}
-.page.title > h5 {
-  font-size: 18pt;
-}
-
-/* images */
-.absoluteImage {
-  position: absolute;
-  z-index: -1;
-}
-.absoluteImage.fullPageImage {
-  left: 0cm;
-  top: 0cm;
-  width: 21cm;
-  height: 29.7cm;
-}
-
-/* notes */
-.page > blockquote {
-  margin-left: 0;
-  margin-right: 0;
-  border-left: 3px solid gray;
-  border-right: 3px solid gray;
-  border-top: 5px solid black;
-  border-bottom: 5px solid black;
-  page-break-inside: avoid;
-}
-.page.notesTexture > blockquote {
-  background-color: rgb(218, 230, 191);
-}
-.page > blockquote > blockquote {
-  margin: 0;
-  overflow: auto;
-}
-.page.notesTexture > blockquote > blockquote {
-  background-color: rgb(220, 207, 172);
-}
-.page > blockquote > blockquote > blockquote {
-  margin: 0;
-  overflow: auto;
-}
-.page.notesTexture > blockquote > blockquote > blockquote {
-  background-color: rgb(231, 227, 239);
-}
-.page > blockquote > *:not(blockquote),
-.page > blockquote > blockquote > *:not(blockquote),
-.page > blockquote > blockquote > blockquote > *:not(blockquote) {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-.page > blockquote *:not(blockquote):first-child {
-  padding-top: 5px;
-}
-.page > blockquote *:not(blockquote):last-child {
-  margin-bottom: 5px;
-}
-.page > blockquote h5 {
-  font-family: 'headers-blockquotes';
-  font-weight: 700;
-  margin-bottom: 5px;
-  color: black;
-}
-.page > blockquote p {
-  font-family: 'regular-text';
-  font-size: 9pt;
-}
-.page.notesTexture > blockquote.newspaperNote,
-.page.notesTexture > blockquote.handwrittenNote {
-  background-color: #f4f4e2;
-}
-.page > blockquote.newspaperNote h5 {
-  font-family: 'newspaper-headers';
-  text-align: center;
-  text-decoration: underline;
-  font-size: 18pt;
-  text-transform: uppercase;
-  color: black;
-}
-.page > blockquote.newspaperNote p {
-  font-family: 'newspaper-text';
-  text-align: justify;
-  font-size: 12pt;
-  color: black;
-}
-.page > blockquote.handwrittenNote p {
-  font-family: 'handwriting';
-  font-size: 12pt;
-  color: black;
-}
-
-/* footer */
-.page > .pageFooter {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.page > .pageFooter > .background {
-  position: absolute;
-  width: 21cm;
-  height: 1cm;
-  bottom: 0;
-  left: 0;
-  background-image: url('../assets/imgs/footer_01.png');
-  background-size: 21cm 1cm;
-}
-.page > .pageFooter.even > .background {
-  -moz-transform: scaleX(-1);
-  -o-transform: scaleX(-1);
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-.page > .pageFooter > .pageNumber {
-  position: absolute;
-  bottom: 0;
-  font-family: 'headers';
-  color: rgb(213, 187, 118);
-  font-size: 12pt;
-}
-.page > .pageFooter > .pageNumber {
-  left: 20.3cm;
-}
-.page > .pageFooter.even > .pageNumber {
-  left: 0.5cm;
-}
-
-/* monster tables */
-.page .monsterTable blockquote {
-  margin-left: 0;
-  margin-right: 0;
-  border-left: 3px solid gray;
-  border-right: 3px solid gray;
-  border-top: 5px solid black;
-  border-bottom: 5px solid black;
-  page-break-inside: avoid;
-}
-
-/* CoC monster table */
-.page.notesTexture > .monsterTable.cthulhu > blockquote {
-  background-color: #ffbcbc;
-}
-.page > .monsterTable.cthulhu > blockquote > table {
-  width: 100%;
-  margin-bottom: 5px;
-  margin-left: 0;
-  margin-right: 0;
-  border-bottom: 1px solid black;
-  border-collapse: collapse;
-}
-.page > .monsterTable.cthulhu > blockquote > table {
-  margin-bottom: 0;
-}
-.page > .monsterTable.cthulhu > blockquote > table th {
-  font-size: 10pt;
-  font-family: 'headers-blockquotes';
-  text-transform: uppercase;
-}
-.page > .monsterTable.cthulhu > blockquote > table td {
-  font-size: 9pt;
-  font-family: 'headers-blockquotes';
-  padding: 3px 0 3px 0;
-}
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(1) th {
-  padding: 5px 0 5px 0;
-}
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(1) tbody,
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(2) thead {
-  display: none;
-}
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody,
-.page > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody {
-  border-top: 1px solid black;
-}
-.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(2) tbody tr:nth-child(odd),
-.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody tr:nth-child(odd),
-.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody tr:nth-child(odd) {
-  background-color: white;
-}
-.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(2) tbody tr:nth-child(even),
-.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(3) tbody tr:nth-child(even),
-.page.notesTexture > .monsterTable.cthulhu > blockquote > table:nth-child(4) tbody tr:nth-child(even) {
-  background-color: rgb(231, 227, 239);
-}
-
-/* lists */
-.page > ul {
-  font-size: 9pt;
-  font-family: 'regular-text';
-}
-.page > ul > li > blockquote {
-  margin: 0;
-}
-.page > ol {
-  font-size: 9pt;
-  font-family: 'regular-text';
-}
 </style>

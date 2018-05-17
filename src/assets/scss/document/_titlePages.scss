@@ -1,0 +1,16 @@
+&.title {
+  h1,
+  h5 {
+    text-align: center;
+    font-family: 'titlePage';
+    color: rgb(56, 14, 8);
+    -webkit-text-shadow: 0 0 10px #fff;
+    text-shadow: 0 0 10px #fff;
+  }
+  h1 {
+    font-size: 70pt;
+  }
+  h5 {
+    font-size: 18pt;
+  }
+}
