@@ -1,0 +1,35 @@
+.pageFooter {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  > .background {
+    position: absolute;
+    width: 21cm;
+    height: 1cm;
+    bottom: 0;
+    left: 0;
+    background-image: url('../assets/imgs/footer_01.png');
+    background-size: 21cm 1cm;
+  }
+
+  &.even > .background {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+  }
+
+  > .pageNumber {
+    position: absolute;
+    bottom: 0;
+    font-family: 'headers';
+    color: rgb(213, 187, 118);
+    font-size: 12pt;
+    left: 20.3cm;
+  }
+
+  &.even > .pageNumber {
+    left: 0.5cm;
+  }
+}

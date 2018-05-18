@@ -4,12 +4,14 @@
     text-align: center;
     font-family: 'titlePage';
     color: rgb(56, 14, 8);
-    -webkit-text-shadow: 0 0 10px #fff;
-    text-shadow: 0 0 10px #fff;
+    -webkit-text-shadow: -2.5px 0 black, 0 2.5px black, 2.5px 0 black, 0 -2.5px black;
+    text-shadow: -2.5px 0 black, 0 2.5px black, 2.5px 0 black, 0 -2.5px black;
   }
+
   h1 {
     font-size: 70pt;
   }
+  
   h5 {
     font-size: 18pt;
   }

@@ -175,11 +175,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/fonts.scss";
-
 .documentContainer {
   height: 100%;
   overflow: hidden;
+
   .document {
     overflow-y: auto;
     position: relative;
@@ -188,6 +187,7 @@ export default {
     display: flex;
     justify-content: center;
     background-color: rgb(204, 204, 204);
+
     .page {
       display: block;
       margin: 0 0 0.5cm 0;
@@ -202,17 +202,21 @@ export default {
       text-align: left;
       height: 100%;
       z-index: 1;
+
       &[data-size="A4"] {
         width: 21cm;
         height: 29.7cm;
+
         &[data-layout="portrait"] {
           width: 29.7cm;
           height: 21cm;
         }
       }
+
       &.page.pagesTexture {
         background-image: url('../assets/imgs/texture_02.jpg');
       }
+
       * {
         margin-top: 0 !important;
       }
@@ -229,229 +233,49 @@ export default {
           border-top-style: inset;
         }
       }
+
       p,
-      td{
+      td {
         font-family: 'regular-text';
         text-shadow: 0.1px 0.1px #000;
         font-size: 9pt;
         line-height: 1.25;
       }
 
-      @import "@/assets/scss/document/_headers.scss";
-
-      @import "@/assets/scss/document/_lists.scss";
-
-      >hr {
+      > hr {
         display: none !important;
       }
-      >pre {
+
+      > pre {
         break-after: column;
       }
-      >.pxSpacer {
+
+      > .pxSpacer {
         height: 1px;
         visibility: hidden;
       }
-      >.wideBlock {
+
+      > .wideBlock {
         column-span: all;
         -webkit-column-span: all;
       }
+
+      @import "@/assets/scss/document/_headers.scss";
+
+      @import "@/assets/scss/document/_lists.scss";
       
       @import "@/assets/scss/document/_titlePages.scss";
 
-      .absoluteImage {
-        position: absolute;
-        z-index: -1;
-        &.fullPageImage {
-          left: 0cm;
-          top: 0cm;
-          width: 21cm;
-          height: 29.7cm;
-        }
-      }
-      &.notesTexture>blockquote {
-        background-color: rgb(218, 230, 191);
-        >blockquote {
-          background-color: rgb(220, 207, 172);
-          >blockquote {
-            background-color: rgb(231, 227, 239);
-          }
-        }
-        &.newspaperNote,
-        &.handwrittenNote {
-          background-color: #f4f4e2;
-        }
-      }
-      >blockquote {
-        margin-left: 0;
-        margin-right: 0;
-        border-left: 3px solid gray;
-        border-right: 3px solid gray;
-        border-top: 5px solid black;
-        border-bottom: 5px solid black;
-        page-break-inside: avoid;
-        >blockquote {
-          margin: 0;
-          overflow: auto;
-          >blockquote {
-            margin: 0;
-            overflow: auto;
-            >*:not(blockquote) {
-              margin-left: 10px;
-              margin-right: 10px;
-            }
-          }
-          >*:not(blockquote) {
-            margin-left: 10px;
-            margin-right: 10px;
-          }
-        }
-        >*:not(blockquote) {
-          margin-left: 10px;
-          margin-right: 10px;
-        }
-        *:not(blockquote):first-child {
-          padding-top: 5px;
-        }
-        *:not(blockquote):last-child {
-          margin-bottom: 5px;
-        }
-        h5 {
-          font-family: 'headers-blockquotes';
-          font-weight: 700;
-          margin-bottom: 5px;
-          color: black;
-        }
-        p {
-          font-family: 'regular-text';
-          font-size: 9pt;
-        }
-        &.newspaperNote {
-          h5 {
-            font-family: 'newspaper-headers';
-            text-align: center;
-            text-decoration: underline;
-            font-size: 18pt;
-            text-transform: uppercase;
-            color: black;
-          }
-          p {
-            font-family: 'newspaper-text';
-            text-align: justify;
-            font-size: 12pt;
-            color: black;
-          }
-        }
-        &.handwrittenNote p {
-          font-family: 'handwriting';
-          font-size: 12pt;
-          color: black;
-        }
-      }
-      >.pageFooter {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        >.background {
-          position: absolute;
-          width: 21cm;
-          height: 1cm;
-          bottom: 0;
-          left: 0;
-          background-image: url('../assets/imgs/footer_01.png');
-          background-size: 21cm 1cm;
-        }
-        &.even>.background {
-          -moz-transform: scaleX(-1);
-          -o-transform: scaleX(-1);
-          -webkit-transform: scaleX(-1);
-          transform: scaleX(-1);
-        }
-        >.pageNumber {
-          position: absolute;
-          bottom: 0;
-          font-family: 'headers';
-          color: rgb(213, 187, 118);
-          font-size: 12pt;
-          left: 20.3cm;
-        }
-        &.even>.pageNumber {
-          left: 0.5cm;
-        }
-      }
-      .monsterTable blockquote {
-        margin-left: 0;
-        margin-right: 0;
-        border-left: 3px solid gray;
-        border-right: 3px solid gray;
-        border-top: 5px solid black;
-        border-bottom: 5px solid black;
-        page-break-inside: avoid;
-      }
-      >.monsterTable {
-        &.cthulhu {
-          >blockquote {
-            >table {
-              width: 100%;
-              margin-bottom: 5px;
-              margin-left: 0;
-              margin-right: 0;
-              border-bottom: 1px solid black;
-              border-collapse: collapse;
-              margin-bottom: 0;
-              th {
-                font-size: 10pt;
-                font-family: 'headers-blockquotes';
-                text-transform: uppercase;
-              }
-              td {
-                font-size: 9pt;
-                font-family: 'headers-blockquotes';
-                padding: 3px 0 3px 0;
-              }
-              &:nth-child(1) {
-                th {
-                  padding: 5px 0 5px 0;
-                }
-                tbody {
-                  display: none;
-                }
-              }
-              &:nth-child(2) {
-                thead {
-                  display: none;
-                }
-              }
-              &:nth-child(3),
-              &:nth-child(4) {
-                tbody {
-                  border-top: 1px solid black;
-                }
-              }
-            }
-          }
-        }
-      }
-      &.notesTexture>.monsterTable {
-        &.cthulhu {
-          >blockquote {
-            >table {
-              background-color: #ffbcbc;
-              &:nth-child(2) tbody tr:nth-child(even),
-              &:nth-child(3) tbody tr:nth-child(even),
-              &:nth-child(4) tbody tr:nth-child(even) {
-                background-color: rgb(231, 227, 239);
-              }
-              &:nth-child(2) tbody tr:nth-child(odd),
-              &:nth-child(3) tbody tr:nth-child(odd),
-              &:nth-child(4) tbody tr:nth-child(odd) {
-                background-color: white;
-              }
-            }
-          }
-        }
-      }
+      @import "@/assets/scss/document/_images.scss";
+
+      @import "@/assets/scss/document/_notes.scss";
+
+      @import "@/assets/scss/document/_footer.scss";
+
+      @import "@/assets/scss/document/_monsterTables.scss";
     }
   }
+
   .spacerBlock {
     width: 100%;
     height: 50px;

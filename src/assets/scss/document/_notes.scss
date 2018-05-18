@@ -1,0 +1,95 @@
+&.notesTexture > blockquote {
+  background-color: rgb(218, 230, 191);
+
+  > blockquote {
+    background-color: rgb(220, 207, 172);
+
+    > blockquote {
+      background-color: rgb(231, 227, 239);
+    }
+  }
+  
+  &.newspaperNote,
+  &.handwrittenNote {
+    background-color: #f4f4e2;
+  }
+}
+
+& > blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  border-left: 3px solid gray;
+  border-right: 3px solid gray;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+  page-break-inside: avoid;
+
+  > blockquote {
+    margin: 0;
+    overflow: auto;
+
+    > blockquote {
+      margin: 0;
+      overflow: auto;
+
+      > *:not(blockquote) {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+
+    > *:not(blockquote) {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  > *:not(blockquote) {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  *:not(blockquote):first-child {
+    padding-top: 5px;
+  }
+
+  *:not(blockquote):last-child {
+    margin-bottom: 5px;
+  }
+
+  h5 {
+    font-family: 'headers-blockquotes';
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: black;
+  }
+
+  p {
+    font-family: 'regular-text';
+    font-size: 9pt;
+  }
+
+  &.newspaperNote {
+    h5 {
+      font-family: 'newspaper-headers';
+      text-align: center;
+      text-decoration: underline;
+      font-size: 18pt;
+      text-transform: uppercase;
+      color: black;
+    }
+
+    p {
+      font-family: 'newspaper-text';
+      text-align: justify;
+      font-size: 12pt;
+      color: black;
+    }
+  }
+
+  &.handwrittenNote p {
+    font-family: 'handwriting';
+    font-size: 12pt;
+    color: black;
+  }
+}

@@ -25,5 +25,6 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/fonts.scss";
 @import "@/assets/scss/print.scss";
 </style>
