@@ -12,11 +12,12 @@
 
 <div style="height: 350px;"></div>
 
-# The Edge of Darkness
-
-##### A Call of Cthulhu scenario
+<h1 style="color: rgb(255, 220, 105);">
+The Edge of Darkness
+</h1>
 
 <img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg?1"/>
+<img class="absoluteImage" style="top: 1cm; width: 18.5cm;" src="https://i.imgur.com/rj6JfGF.png"/>
 
 \page[columns]
 
