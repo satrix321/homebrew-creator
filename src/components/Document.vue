@@ -56,7 +56,10 @@ export default {
         }
 
         if (this.pagesTexture && this.pagesTextureUrl !== undefined) {
-          page.style.backgroundImage = 'url("' + this.pagesTextureUrl + '") !important';
+          console.log(page.style.backgroundImage);
+          console.log('url("' + this.pagesTextureUrl + '") !important');
+          page.style.backgroundImage = 'url(\'' + this.pagesTextureUrl + '\')';
+          console.log(page.style.backgroundImage);
         }
 
         let pxSpacer = document.createElement('div');
@@ -118,8 +121,7 @@ export default {
       notesTexture: 'notesTexture',
       zoom: 'zoom',
       pagesTextureFile: 'pagesTextureFile',
-      pagesTextureFileChanged: 'pagesTextureFileChanged',
-      titlePageFont: 'titlePageFont'
+      pagesTextureFileChanged: 'pagesTextureFileChanged'
     })
   },
   methods: {
