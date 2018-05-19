@@ -32,7 +32,7 @@
       >
     </editor-toolbar>
     <div class="editor">
-      <codemirror :value="rawCode" :options="cmOptions" @input="onCmCodeChange"></codemirror>
+      <codemirror :value="rawCode" :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     </div>
   </div>
 </template>
@@ -40,8 +40,10 @@
 <script>
 import { codemirror } from 'vue-codemirror';
 import EditorToolbar from './EditorToolbar.vue';
-import 'codemirror/lib/codemirror.css'
+import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
+import 'codemirror/addon/search/searchcursor.js';
+import 'codemirror/addon/search/search.js';
 import _ from 'lodash';
 
 export default {
@@ -50,13 +52,15 @@ export default {
     codemirror,
     EditorToolbar
   },
-  mounted: function () {
-    this.codeMirror = document.querySelector('.CodeMirror').CodeMirror;
-  },
   data () {
     return {
       rawCode: '\\page[columns]',
       codeMirror: undefined,
+      pageHeight: 1141.42,
+      pageOffset: 40,
+      pageLines: [],
+      currentLine: 0,
+      currentPage: 0,
       cmOptions: {
         tabSize: 2,
         mode: 'text/x-markdown',
@@ -68,10 +72,30 @@ export default {
       }
     };
   },
+  mounted: function () {
+    this.codeMirror = document.querySelector('.CodeMirror').CodeMirror;
+  },
   methods: {
-    onCmCodeChange: _.debounce(function (newCode) {
+    codeChange: _.debounce(function (newCode) {
+      this.pageLines = [];
+      let search = this.codeMirror.getSearchCursor('\\page');
+      while (search.findNext()) {
+        this.pageLines.push(search.from().line);
+      }
       this.$store.commit('setRawCode', newCode);
-    }, 1000),
+    }, 500),
+    cursorPositionChange: _.debounce(function (position) {
+      this.currentLine = position.getCursor().line;
+      this.currentPage = 0;
+      if (this.pageLines.length > 1) {
+        let i = 1;
+        while(this.currentLine >= this.pageLines[i]) {
+          this.currentPage++;
+          i++;
+        }
+      }
+      this.$store.commit('setCurrentPage', this.currentPage);
+    }, 200),
     getCursorPosition: function () {
       let codeMirrorDocument = this.codeMirror.getDoc();
       let cursor = codeMirrorDocument.getCursor();
@@ -212,7 +236,7 @@ export default {
     border: 0px;
     padding: 0px;
     resize: none;
-    font-family: 'Fira Mono', monospace;
+    font-family: $site-font;
     font-size: 8pt;  
   }
 }
@@ -220,7 +244,7 @@ export default {
 .cm-s-custom {
   font-size: 1em;
   line-height: 1.5em;
-  font-family: 'Fira Mono', monospace;
+  font-family: $site-font;
   background: #2a2a2a !important;
   color: #ffffff !important;
 

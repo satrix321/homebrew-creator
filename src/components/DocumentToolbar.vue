@@ -15,6 +15,7 @@
       </div>
     </div>
     <button class="btn" v-bind:class="{btnClicked: notesTexture}" @click="toggleNotesTexture"><icon name="file"></icon> Notes Texture</button>
+    <button class="btn" @click="scrollToCursor"><icon name="file"></icon> Scroll To</button>
     <button class="btn btnRight">Zoom {{zoom}}%</button>
   </div>
 </template>
@@ -37,11 +38,18 @@ export default {
       };
     });
   },
+  data () {
+    return {
+      pageHeight: 1141.42,
+      pageOffset: 40
+    };
+  },
   computed: {
     ...mapGetters({
       pagesTexture: 'pagesTexture',
       notesTexture: 'notesTexture',
-      zoom: 'zoom'
+      zoom: 'zoom',
+      currentPage: 'currentPage'
     })
   },
   methods: {
@@ -70,6 +78,12 @@ export default {
     },
     setDefaultPagesTexture: function () {
       this.$emit('setDefaultPagesTexture');
+    },
+    scrollToCursor: function () {
+      console.log(this.pageHeight);
+      console.log(this.currentPage);
+      console.log(this.pageOffset);
+      document.querySelector('.document').scrollTo(0, this.pageHeight * this.currentPage + this.pageOffset);
     }
   }
 };

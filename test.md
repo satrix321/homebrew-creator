@@ -123,6 +123,10 @@ Cztery godziny poszukiwań mogą skutkować znalezieniem odpowiednich materiał�
 >
 > Znalezienie kopii książki wspomnianej przez Mariona Allena w dzienniku Ruperta.
 
+\page[title]
+
+<img class="absoluteImage" style="width: 100%; height: 100%; top: 0; left: 0;" src="https://i.imgur.com/BBRCBGT.jpg"/>
+
 \page[columns]
 
 Książka zawiera rysunek a także krótki opis małego pudełka w kształcie sarkofagu, które jest w posiadaniu badaczy. Odnotowano, iż niewiele wiadomo na temat samego pudełka. Uczeni uważają że należało ono do mało znanego Nophru-Ka, niedoszłego uzurpatora egipskiego tronu, który żył w czasach XIV dynastii.

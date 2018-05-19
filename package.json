@@ -34,7 +34,10 @@
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"
-    ]
+    ],
+    "rules": {
+        "semi": "error"
+    }
   },
   "browserslist": [
     "> 1%",
