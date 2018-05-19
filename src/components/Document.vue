@@ -56,10 +56,7 @@ export default {
         }
 
         if (this.pagesTexture && this.pagesTextureUrl !== undefined) {
-          console.log(page.style.backgroundImage);
-          console.log('url("' + this.pagesTextureUrl + '") !important');
           page.style.backgroundImage = 'url(\'' + this.pagesTextureUrl + '\')';
-          console.log(page.style.backgroundImage);
         }
 
         let pxSpacer = document.createElement('div');
