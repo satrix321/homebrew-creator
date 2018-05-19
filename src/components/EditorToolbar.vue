@@ -20,6 +20,7 @@
         <button class="btn" @click="insertPurpleNote"><icon style="color: rgb(231, 227, 239);" name="sticky-note"></icon> Purple</button>
         <button class="btn" @click="insertNewspaperNote"><icon style="color: rgb(244, 244, 226)" name="sticky-note"></icon> Newspaper</button>
         <button class="btn" @click="insertHandwrittenNote"><icon style="color: rgb(244, 244, 236)" name="sticky-note"></icon> Handwritten</button>
+        <button class="btn" @click="insertPhbNote"><icon name="sticky-note"></icon> PHB</button>
       </div>
     </div>
     <div class="dropdown">
@@ -56,6 +57,7 @@
       <div class="dropdownContent">
         <button class="btn" @click="insertColumnBreak"><icon name="columns"></icon> Column Break</button>
         <button class="btn" @click="insertWideBlock"><icon name="arrows-h"></icon> Wide Block</button>
+        <button class="btn" @click="insertVerticalSpacing"><icon name="arrows-v"></icon> Vertical Spacing</button>
       </div>
     </div>
     <div class="dropdown">
@@ -107,6 +109,9 @@ export default {
     insertHandwrittenNote: function () {
       this.$emit('insertHandwrittenNote');
     },
+    insertPhbNote: function () {
+      this.$emit('insertPhbNote');
+    },
     insertCocMonsterTable: function () {
       this.$emit('insertCocMonsterTable');
     },
@@ -139,6 +144,9 @@ export default {
     },
     insertWideBlock: function () {
       this.$emit('insertWideBlock');
+    },
+    insertVerticalSpacing: function () {
+      this.$emit('insertVerticalSpacing');
     },
     insertCustomTitlePageFont: function () {
       this.$emit('insertCustomTitlePageFont');

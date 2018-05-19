@@ -9,6 +9,7 @@
       @insertPurpleNote="insertPurpleNote"
       @insertNewspaperNote="insertNewspaperNote"
       @insertHandwrittenNote="insertHandwrittenNote"
+      @insertPhbNote="insertPhbNote"
       @insertCocMonsterTable="insertCocMonsterTable"
       @insertOrderedList="insertOrderedList"
       @insertUnorderedList="insertUnorderedList"
@@ -20,6 +21,7 @@
       @insertTitlePage="insertTitlePage"
       @insertColumnBreak="insertColumnBreak"
       @insertWideBlock="insertWideBlock"
+      @insertVerticalSpacing="insertVerticalSpacing"
       @insertCustomTitlePageFont="insertCustomTitlePageFont"
       @insertCustomHeadersFont="insertCustomHeadersFont"
       @insertCustomNoteHeadersFont="insertCustomNoteHeadersFont"
@@ -48,9 +50,13 @@ export default {
     codemirror,
     EditorToolbar
   },
+  mounted: function () {
+    this.codeMirror = document.querySelector('.CodeMirror').CodeMirror;
+  },
   data () {
     return {
       rawCode: '\\page[columns]',
+      codeMirror: undefined,
       cmOptions: {
         tabSize: 2,
         mode: 'text/x-markdown',
@@ -64,12 +70,10 @@ export default {
   },
   methods: {
     onCmCodeChange: _.debounce(function (newCode) {
-      this.rawCode = newCode;
       this.$store.commit('setRawCode', newCode);
-    }, 300),
+    }, 1000),
     getCursorPosition: function () {
-      let codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
-      let codeMirrorDocument = codeMirror.getDoc();
+      let codeMirrorDocument = this.codeMirror.getDoc();
       let cursor = codeMirrorDocument.getCursor();
       let position = {
         line: cursor.line,
@@ -78,8 +82,7 @@ export default {
       return position;
     },
     insertData: function (data, position) {
-      let codeMirror = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
-      let codeMirrorDocument = codeMirror.getDoc();
+      let codeMirrorDocument = this.codeMirror.getDoc();
       codeMirrorDocument.replaceRange(data, position);
     },
     insertHeader1: function () {
@@ -112,6 +115,10 @@ export default {
     },
     insertHandwrittenNote: function () {
       let data = '<blockquote markdown="true" class="handwrittenNote">\nnote_content\n</blockquote>';
+      this.insertData(data, this.getCursorPosition());
+    },
+    insertPhbNote: function () {
+      let data = '<blockquote markdown="true" class="phbNote">\n##### header\n\nnote_content\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertCocMonsterTable: function () {
@@ -156,6 +163,10 @@ export default {
     },
     insertWideBlock: function () {
       let data = '<div markdown="true" class="wideBlock">\nwide_block\n</div>';
+      this.insertData(data, this.getCursorPosition());
+    },
+    insertVerticalSpacing: function () {
+      let data = '<div style="height: 350px;"></div>';
       this.insertData(data, this.getCursorPosition());
     },
     insertCustomTitlePageFont: function () {
