@@ -5,7 +5,7 @@
   font-family: 'titlePage';
   font-style: normal;
   font-weight: 400;
-  src: local('Metal Mania'), local('MetalMania-Regular'), url(https://fonts.gstatic.com/s/metalmania/v7/RWmMoKWb4e8kqMfBUdPFJdXFiaQ.woff2) format('woff2');
+  src: local('Skranji'), url(https://fonts.gstatic.com/s/skranji/v5/OZpDg_dtriVFNerMUzykkw.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 </style>
@@ -35,10 +35,10 @@ Po tym jak opuszczają pomieszczenie, Rupert prosi was abyście upewnili że drz
 
 Za młodu w czasach studenckich Rupert wraz z kolegami oddali się, według nich nic nieznaczącą, eksploracją zagadnień okultystycznych. Ich grupie przewodził starszy od nich Marion Allen. W szóstkę kupili farmę kilka mil na zachód od Arkham, niedaleko wioski Ross’s Corners. W tamtym miejscu mogli bez przeszkód oddawać się seansom spirytystycznym oraz innym aktywnością oraz innymi paranormalnymi eksperymentami. Jednakże ostatni z nich przyniósł nieoczekiwane rezultaty - do naszego świata została sprowadzona mroczna, niegodziwa siła. Zamiast próbować odesłać plugastwo do zaświatów, młodzi ludzie opuścili farmę, pewni tego że magia, której użyli do przywołania zła utrzyma je w ryzach w tym opuszczonym domu. Jednakże w tym czasie nie wiedzieli oni o jednym istotnym szczególe - magia, która niewoli zło będzie działać tak długo, jak żyją osoby które z niej skorzystały. Rupert Merriweather jest ostatnim żyjącym z grupy studentów i obawia się, że jego śmierć może uwolnić ten prastary byt, który siałby spustoszenie na okolicznych terenach.
 
-```
-```
-
 Wskazuje wam na pudełko leżące na półce - *weźcie je, wewnątrz znajdziecie wszystko co mogę wam dać aby pomóc pozbyć się tego szkaradztwa. Musicie doprowadzić to do końca. Proszę, zróbcie to dla mnie. Zaraz po tym wydarzeniu Rupert doznaje spazmów, po czym zapada w śpiączkę*.
+
+```
+```
 
 >> ##### Poczytalność
 >>
@@ -67,6 +67,8 @@ Dziennik zawiera rekordy związane z poczynaniami mrocznego stowarzyszenia operu
 ### Co dalej?
 
 Późnym popołudniem Rupert nie żyje. Badacze mają wolną rękę, jednakże chociaż jeden z nich powinien zająć się czytaniem dziennika. Biblioteka pobliskiego uniwersytetu Miskatonic jest otwarta wieczorami w ciągu tygodnia.
+
+<img class="absoluteImage" style="bottom: 1cm; right: 4.5cm; height: 7cm; transform: rotate(45deg);" src="https://i.imgur.com/6jmUsTN.png"/>
 
 \page[columns]
 
