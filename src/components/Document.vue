@@ -40,6 +40,7 @@ export default {
       rawCode: 'editor/rawCode',
       pagesTexture: 'document/pagesTexture',
       notesTexture: 'document/notesTexture',
+      oldZoom: 'document/oldZoom',
       zoom: 'document/zoom',
       pagesTextureFile: 'document/pagesTextureFile',
       pagesTextureFileChanged: 'document/pagesTextureFileChanged',
@@ -168,6 +169,10 @@ export default {
       this.$store.commit('document/unsetPagesTextureFileChanged');
     },
     zoomChanged: function () {
+      if (this.oldZoom > this.zoom) {
+        this.documentElement.scrollTo(0, (this.zoom * this.documentElement.scrollTop) / this.oldZoom);
+      }
+
       let pagesElement = document.querySelector('.document .pages');
       if (this.zoom === 100) {
         pagesElement.style['-webkit-transform-origin'] = '';
@@ -179,6 +184,10 @@ export default {
         pagesElement.style['-moz-transform-origin'] = 'top center';
         pagesElement.style['transform-origin'] = 'top center';
         pagesElement.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
+      }
+
+      if (this.zoom > this.oldZoom) {
+        this.documentElement.scrollTo(0, (this.zoom * this.documentElement.scrollTop) / this.oldZoom);
       }
     },
     setDefaultPagesTexture: function () {

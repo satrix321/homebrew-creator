@@ -48,12 +48,14 @@ export default {
   methods: {
     zoomIn: function () {
       if (this.zoom < 100) {
+        this.$store.commit('document/setOldZoom', this.zoom);
         this.$store.commit('document/setZoom', this.zoom + 10);
         this.$emit('zoomChanged');
       }
     },
     zoomOut: function () {
       if (this.zoom > 50) {
+        this.$store.commit('document/setOldZoom', this.zoom);
         this.$store.commit('document/setZoom', this.zoom - 10);
         this.$emit('zoomChanged');
       }

@@ -4,6 +4,7 @@ const document = {
   state: {
     pagesTexture: true,
     notesTexture: true,
+    oldZoom: 100,
     zoom: 100,
     pagesTextureFile: undefined,
     pagesTextureFileChanged: false,
@@ -15,6 +16,7 @@ const document = {
   getters: {
     pagesTexture: state => state.pagesTexture,
     notesTexture: state => state.notesTexture,
+    oldZoom: state => state.oldZoom,
     zoom: state => state.zoom,
     pagesTextureFile: state => state.pagesTextureFile,
     pagesTextureFileChanged: state => state.pagesTextureFileChanged,
@@ -31,6 +33,9 @@ const document = {
     },
     setNotesTexture (state, notesTexture) {
       state.notesTexture = notesTexture;
+    },
+    setOldZoom (state, oldZoom) {
+      state.oldZoom = oldZoom;
     },
     setZoom (state, zoom) {
       state.zoom = zoom;
