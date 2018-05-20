@@ -44,9 +44,11 @@ import { codemirror } from 'vue-codemirror';
 import EditorToolbar from './EditorToolbar.vue';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
+import 'codemirror/mode/htmlmixed/htmlmixed.js';
 import 'codemirror/addon/search/searchcursor.js';
 import 'codemirror/addon/search/search.js';
 import 'codemirror/addon/mode/overlay.js';
+import 'codemirror/addon/selection/active-line.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 
@@ -82,13 +84,12 @@ export default {
       currentLine: 0,
       currentPage: 0,
       cmOptions: {
+        styleActiveLine: true,
         tabSize: 2,
         mode: 'homebrew-markdown',
         theme: 'custom',
         lineNumbers: true,
-        styleActiveLine: true,
-        lineWrapping: true,
-        highlightFormatting: true
+        lineWrapping: true
       }
     };
   },
@@ -303,12 +304,21 @@ export default {
     background: #237CC4;
   }
 
+  /* default */
+  .box pre {
+    color: white;
+  }
+
   .cm-comment {
     color: #B8FF9A;
   }
   
   .cm-string {
     color: #FF9F9A;
+  }
+
+  .cm-string-2 {
+    color: #FFFFFF;
   }
 
   .cm-number {
@@ -323,6 +333,10 @@ export default {
     font-style: italic;
     color: #FD971F;
   }
+
+  .cm-variable {
+    color: #ddca7e;
+  }
   
   .cm-variable-2 {
     color: #F29C00;
@@ -333,11 +347,15 @@ export default {
   }
 
   .cm-keyword {
-    color: null;
+    color: #ddca7e;
+  }
+
+  .cm-atom {
+    color: #ddca7e;
   }
 
   .cm-operator {
-    color: null;
+    color: #cccccc;
   }
 
   .CodeMirror-linenumber {
@@ -355,5 +373,41 @@ export default {
   .cm-pageLine {
     color: yellow;
   }
+
+  .cm-unit {
+    color: #d0782a;
+  }
+
+  .cm-meta {
+    color: #9a8297;
+  }
+
+  .cm-tag {
+    color: #D043E0;
+  }
+
+  .cm-attribute {
+    color: #ddca7e;
+  }
+
+  .cm-strong {
+    color: #ddca7e;
+  }
+
+  .cm-em {
+    color: #ddca7e;
+  }
+
+  .cm-qualifier {
+    color: #ddca7e;
+  }
+
+  .cm-builtin {
+    color: #ddca7e;
+  }
+}
+
+.CodeMirror-activeline {
+  background-color: yellow;
 }
 </style>
