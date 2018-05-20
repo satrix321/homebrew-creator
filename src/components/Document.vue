@@ -31,7 +31,7 @@ export default {
   mounted: function () {
     this.documentElement = document.querySelector('.document');
     this.documentElement.onscroll = _.debounce(() => {
-      let pageNumber = parseInt(this.documentElement.scrollTop / this.pageHeight);
+      let pageNumber = parseInt((this.documentElement.scrollTop / this.pageHeight) * (100 / this.zoom));
       this.$store.commit('document/setCurrentPage', pageNumber);
     }, 500);
   },
@@ -186,7 +186,7 @@ export default {
       this.pagesTextureUrl = undefined;
     },
     scrollToCursor: function () {
-      this.documentElement.scrollTo(0, this.pageHeight * this.editorCurrentPage + this.pageOffset);
+      this.documentElement.scrollTo(0, (this.pageHeight * this.editorCurrentPage + this.pageOffset) * (this.zoom / 100));
     }
   }
 };
