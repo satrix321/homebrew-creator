@@ -72,6 +72,7 @@
         <button class="btn" @click="insertCustomHandwritingFont"><icon name="font"></icon> Handwriting Font</button>
       </div>
     </div>
+    <button class="btn btnRight" @click="scrollToPage"><icon name="arrows-v"></icon> Locate</button>
   </div>
 </template>
 
@@ -168,6 +169,9 @@ export default {
     },
     insertCustomHandwritingFont: function () {
       this.$emit('insertCustomHandwritingFont');
+    },
+    scrollToPage: function () {
+      this.$emit('scrollToPage');
     }
   }
 };

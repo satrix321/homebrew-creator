@@ -7,6 +7,9 @@ const document = {
     zoom: 100,
     pagesTextureFile: undefined,
     pagesTextureFileChanged: false,
+    currentPage: 0,
+    pageHeight: 1141.42,
+    pageOffset: 40
   },
 
   getters: {
@@ -15,6 +18,9 @@ const document = {
     zoom: state => state.zoom,
     pagesTextureFile: state => state.pagesTextureFile,
     pagesTextureFileChanged: state => state.pagesTextureFileChanged,
+    currentPage: state => state.currentPage,
+    pageHeight: state => state.pageHeight,
+    pageOffset: state => state.pageOffset
   },
 
   actions: {},
@@ -35,6 +41,9 @@ const document = {
     },
     unsetPagesTextureFileChanged (state) {
       state.pagesTextureFileChanged = false;
+    },
+    setCurrentPage (state, currentPage) {
+      state.currentPage = currentPage;
     }
   }
 };

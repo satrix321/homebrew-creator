@@ -1,6 +1,10 @@
 <template>
   <div class="documentContainer">
-    <document-toolbar @zoomChanged="zoomChanged" @setDefaultPagesTexture="setDefaultPagesTexture"></document-toolbar>
+    <document-toolbar 
+      @zoomChanged="zoomChanged" 
+      @setDefaultPagesTexture="setDefaultPagesTexture"
+      @scrollToCursor="scrollToCursor"
+    ></document-toolbar>
     <div class="document">
       <div class="pages" v-html="compiledMarkdown"></div>
     </div>
@@ -10,6 +14,7 @@
 <script>
 import DocumentToolbar from './DocumentToolbar.vue';
 import marked from 'marked';
+import _ from 'lodash';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -19,8 +24,16 @@ export default {
   },
   data: function () {
     return {
-      pagesTextureUrl: undefined
+      pagesTextureUrl: undefined,
+      documentElement: undefined
     };
+  },
+  mounted: function () {
+    this.documentElement = document.querySelector('.document');
+    this.documentElement.onscroll = _.debounce(() => {
+      let pageNumber = parseInt(this.documentElement.scrollTop / this.pageHeight);
+      this.$store.commit('document/setCurrentPage', pageNumber);
+    }, 500);
   },
   computed: {
     ...mapGetters({
@@ -29,7 +42,10 @@ export default {
       notesTexture: 'document/notesTexture',
       zoom: 'document/zoom',
       pagesTextureFile: 'document/pagesTextureFile',
-      pagesTextureFileChanged: 'document/pagesTextureFileChanged'
+      pagesTextureFileChanged: 'document/pagesTextureFileChanged',
+      editorCurrentPage: 'editor/currentPage',
+      pageHeight: 'document/pageHeight',
+      pageOffset: 'document/pageOffset'
     }),
     compiledMarkdown: function () {
       const pageSplitRegex = /\\page(?:\[[\w ]*\])?/g;
@@ -122,13 +138,13 @@ export default {
     }
   },
   methods: {
-    getPagesOptions: function (rawCode) {
+    getPagesOptions: function (code) {
       const pageSplitOptionsRegex = /\\page(?:\[([\w ]*)\])?/g;
       let pageOptions = [];
       let pageOptionsIt;
 
       do {
-        pageOptionsIt = pageSplitOptionsRegex.exec(rawCode);
+        pageOptionsIt = pageSplitOptionsRegex.exec(code);
         if (pageOptionsIt) {
           if (pageOptionsIt[1]) {
             pageOptions.push(pageOptionsIt[1]);
@@ -149,7 +165,7 @@ export default {
       };
 
       reader.readAsDataURL(this.pagesTextureFile);
-      this.$store.commit('unsetPagesTextureFileChanged');
+      this.$store.commit('document/unsetPagesTextureFileChanged');
     },
     zoomChanged: function () {
       let pagesElement = document.querySelector('.document .pages');
@@ -166,8 +182,11 @@ export default {
       }
     },
     setDefaultPagesTexture: function () {
-      this.$store.commit('setPagesTextureFile', undefined);
+      this.$store.commit('document/setPagesTextureFile', undefined);
       this.pagesTextureUrl = undefined;
+    },
+    scrollToCursor: function () {
+      this.documentElement.scrollTo(0, this.pageHeight * this.editorCurrentPage + this.pageOffset);
     }
   }
 };

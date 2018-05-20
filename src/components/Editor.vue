@@ -29,6 +29,7 @@
       @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
+      @scrollToPage="scrollToPage"
       >
     </editor-toolbar>
     <div class="editor">
@@ -45,6 +46,7 @@ import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/addon/search/searchcursor.js';
 import 'codemirror/addon/search/search.js';
 import _ from 'lodash';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Editor',
@@ -58,7 +60,6 @@ export default {
       codeMirror: undefined,
       pageHeight: 1141.42,
       pageOffset: 40,
-      pageLines: [],
       currentLine: 0,
       currentPage: 0,
       cmOptions: {
@@ -72,16 +73,23 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters({
+      pageLines: 'editor/pageLines',
+      documentCurrentPage: 'document/currentPage'
+    }),
+  },
   mounted: function () {
     this.codeMirror = document.querySelector('.CodeMirror').CodeMirror;
   },
   methods: {
     codeChange: _.debounce(function (newCode) {
-      this.pageLines = [];
+      let lines = [];
       let search = this.codeMirror.getSearchCursor('\\page');
       while (search.findNext()) {
-        this.pageLines.push(search.from().line);
+        lines.push(search.from().line);
       }
+      this.$store.commit('editor/pushPageLines', lines);
       this.$store.commit('editor/setRawCode', newCode);
     }, 500),
     cursorPositionChange: _.debounce(function (position) {
@@ -220,6 +228,9 @@ export default {
     insertCustomHandwritingFont: function () {
       let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
       this.insertData(data, this.getCursorPosition());
+    },
+    scrollToPage: function () {
+      this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 0);
     }
   }
 };
