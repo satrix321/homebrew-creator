@@ -162,7 +162,7 @@ Niedawno powiadomiony o zagrożeniu ze strony Mythosu oraz nie nie rozumiejąc g
 
 > ##### Przekonywanie
 >
-> Wzmianka na temat okropności Mythosu jakie księga może zawierać, wspomnienie  o Necronomiconie, **1% do wiedzy o Mythosie**.
+> Wzmianka na temat okropności Mythosu jakie księga może zawierać, wspomnienie o Necronomiconie, **1% do wiedzy o Mythosie**.
 
 > ##### Skradanie się
 >
