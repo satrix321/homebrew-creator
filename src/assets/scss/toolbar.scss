@@ -48,6 +48,10 @@
   > .dropdown {
     float: left;
 
+    &.dropdownRight {
+      float: right;
+    }
+
     %dropdownContent {
       display: none;
       position: absolute;

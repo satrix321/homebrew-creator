@@ -5,14 +5,6 @@
 <template>
   <div class="toolbar">
     <div class="dropdown">
-      <button class="btn"><icon name="header"></icon> Headers</button>
-      <div class="dropdownContent">
-        <button class="btn" @click="insertHeader1"><icon name="header"></icon> Header 1</button>
-        <button class="btn" @click="insertHeader2"><icon name="header"></icon> Header 2</button>
-        <button class="btn" @click="insertHeader3"><icon name="header"></icon> Header 3</button>
-      </div>
-    </div>
-    <div class="dropdown">
       <button class="btn"><icon name="sticky-note"></icon> Notes</button>
       <div class="dropdownContent">
         <button class="btn" @click="insertGreenNote"><icon style="color: rgb(218, 230, 191);" name="sticky-note"></icon> Green</button>
@@ -27,13 +19,6 @@
       <button class="btn"><icon name="table"></icon> Tables</button>
       <div class="dropdownContent">
         <button class="btn" @click="insertCocMonsterTable"><icon name="table"></icon> CoC - Monster Table</button>
-      </div>
-    </div>
-    <div class="dropdown">
-      <button class="btn"><icon name="list"></icon> Lists</button>
-      <div class="dropdownContent">
-        <button class="btn" @click="insertOrderedList"><icon name="list-ol"></icon> Ordered List</button>
-        <button class="btn" @click="insertUnorderedList"><icon name="list-ul"></icon> Unordered List</button>
       </div>
     </div>
     <div class="dropdown">
@@ -73,6 +58,13 @@
       </div>
     </div>
     <button class="btn btnRight" @click="scrollToPage"><icon name="arrows-v"></icon> Locate</button>
+    <div class="dropdown dropdownRight">
+      <button class="btn"><icon name="save"></icon> File</button>
+      <div class="dropdownContent">
+        <button class="btn" @click="loadFile"><icon name="save"></icon> Load File</button>
+        <button class="btn" @click="saveFile"><icon name="save"></icon> Save File</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,15 +78,6 @@ export default {
     Icon
   },
   methods: {
-    insertHeader1: function () {
-      this.$emit('insertHeader1');
-    },
-    insertHeader2: function () {
-      this.$emit('insertHeader2');
-    },
-    insertHeader3: function () {
-      this.$emit('insertHeader3');
-    },
     insertGreenNote: function () {
       this.$emit('insertGreenNote');
     },
@@ -115,12 +98,6 @@ export default {
     },
     insertCocMonsterTable: function () {
       this.$emit('insertCocMonsterTable');
-    },
-    insertOrderedList: function () {
-      this.$emit('insertOrderedList');
-    },
-    insertUnorderedList: function () {
-      this.$emit('insertUnorderedList');
     },
     insertRegularPage: function () {
       this.$emit('insertRegularPage');
@@ -169,6 +146,12 @@ export default {
     },
     insertCustomHandwritingFont: function () {
       this.$emit('insertCustomHandwritingFont');
+    },
+    loadFile: function () {
+      this.$emit('loadFile');
+    },
+    saveFile: function () {
+      this.$emit('saveFile');
     },
     scrollToPage: function () {
       this.$emit('scrollToPage');

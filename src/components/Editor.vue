@@ -1,9 +1,6 @@
 <template>
   <div class="editorContainer">
     <editor-toolbar
-      @insertHeader1="insertHeader1"
-      @insertHeader2="insertHeader2"
-      @insertHeader3="insertHeader3"
       @insertGreenNote="insertGreenNote"
       @insertBrownNote="insertBrownNote"
       @insertPurpleNote="insertPurpleNote"
@@ -11,8 +8,6 @@
       @insertHandwrittenNote="insertHandwrittenNote"
       @insertPhbNote="insertPhbNote"
       @insertCocMonsterTable="insertCocMonsterTable"
-      @insertOrderedList="insertOrderedList"
-      @insertUnorderedList="insertUnorderedList"
       @insertRegularPage="insertRegularPage"
       @insertRelativeImage="insertRelativeImage"
       @insertAbsoluteImage="insertAbsoluteImage"
@@ -29,6 +24,8 @@
       @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
+      @loadFile="loadFile"
+      @saveFile="saveFile"
       @scrollToPage="scrollToPage"
       >
     </editor-toolbar>
@@ -137,18 +134,6 @@ export default {
       let codeMirrorDocument = this.codeMirror.getDoc();
       codeMirrorDocument.replaceRange(data, position);
     },
-    insertHeader1: function () {
-      let data = '# Header';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertHeader2: function () {
-      let data = '## Header';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertHeader3: function () {
-      let data = '### Header';
-      this.insertData(data, this.getCursorPosition());
-    },
     insertGreenNote: function () {
       let data = '> ##### Header\n>\n> Example text.';
       this.insertData(data, this.getCursorPosition());
@@ -175,14 +160,6 @@ export default {
     },
     insertCocMonsterTable: function () {
       let data = '<div markdown="true" class="monsterTable cthulhu">\n>|Monster name|\n>|:-:|\n>\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|\n</div>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertOrderedList: function () {
-      let data = '1. Item\n2. Item\n3. Item';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertUnorderedList: function () {
-      let data = '- Item\n- Item\n- Item';
       this.insertData(data, this.getCursorPosition());
     },
     insertRegularPage: function () {
@@ -248,6 +225,33 @@ export default {
     insertCustomHandwritingFont: function () {
       let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
       this.insertData(data, this.getCursorPosition());
+    },
+    loadFile: function () {
+      let element = document.createElement('input');
+      element.setAttribute('type', 'file');
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.onchange = function () {
+        //element.files[0]
+        console.log(element);
+        document.body.removeChild(element);
+      };
+
+      element.click();
+    },
+    saveFile: function () {
+      let element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.rawCode));
+      element.setAttribute('download', 'homebrew.hmd');
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     },
     scrollToPage: function () {
       this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);
