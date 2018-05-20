@@ -39,14 +39,33 @@
 </template>
 
 <script>
+import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
 import EditorToolbar from './EditorToolbar.vue';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/addon/search/searchcursor.js';
 import 'codemirror/addon/search/search.js';
+import 'codemirror/addon/mode/overlay.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
+
+CodeMirror.defineMode("homebrew-markdown", function(config, parserConfig) {
+  var homebrewOverlay = {
+    /* eslint-disable */
+    token: function(stream) {
+      var ch;
+      if (stream.match("\\page")) {
+        while ((ch = stream.next()) != null && ch != "]") {}
+        return "pageLine";
+      }
+      while (stream.next() != null && !stream.match("\\page", false)) {}
+      return null;
+    }
+    /* eslint-enable */
+  };
+  return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/x-markdown"), homebrewOverlay);
+});
 
 export default {
   name: 'Editor',
@@ -64,7 +83,7 @@ export default {
       currentPage: 0,
       cmOptions: {
         tabSize: 2,
-        mode: 'text/x-markdown',
+        mode: 'homebrew-markdown',
         theme: 'custom',
         lineNumbers: true,
         styleActiveLine: true,
@@ -186,7 +205,7 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     insertTitlePage: function () {
-      let data = '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description';
+      let data = '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description\n';
       this.insertData(data, this.getCursorPosition());
     },
     insertColumnBreak: function () {
@@ -230,7 +249,7 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     scrollToPage: function () {
-      this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 0);
+      this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);
     }
   }
 };
@@ -331,6 +350,10 @@ export default {
 
   .cm-header {
     color: #66D9EF;
+  }
+
+  .cm-pageLine {
+    color: yellow;
   }
 }
 </style>
