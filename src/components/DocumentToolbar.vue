@@ -34,7 +34,7 @@ export default {
     let context = this;
     this.$nextTick(function () {
       document.querySelector('#uploadPagesTextureInput').onchange = function () {
-        context.$store.commit('setPagesTextureFile', this.files[0]);
+        context.$store.commit('document/setPagesTextureFile', this.files[0]);
       };
     });
   },
