@@ -82,7 +82,7 @@ export default {
       while (search.findNext()) {
         this.pageLines.push(search.from().line);
       }
-      this.$store.commit('setRawCode', newCode);
+      this.$store.commit('editor/setRawCode', newCode);
     }, 500),
     cursorPositionChange: _.debounce(function (position) {
       this.currentLine = position.getCursor().line;
@@ -94,7 +94,7 @@ export default {
           i++;
         }
       }
-      this.$store.commit('setCurrentPage', this.currentPage);
+      this.$store.commit('editor/setCurrentPage', this.currentPage);
     }, 200),
     getCursorPosition: function () {
       let codeMirrorDocument = this.codeMirror.getDoc();

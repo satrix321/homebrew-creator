@@ -23,6 +23,14 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      rawCode: 'editor/rawCode',
+      pagesTexture: 'document/pagesTexture',
+      notesTexture: 'document/notesTexture',
+      zoom: 'document/zoom',
+      pagesTextureFile: 'document/pagesTextureFile',
+      pagesTextureFileChanged: 'document/pagesTextureFileChanged'
+    }),
     compiledMarkdown: function () {
       const pageSplitRegex = /\\page(?:\[[\w ]*\])?/g;
       const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g;
@@ -111,15 +119,7 @@ export default {
       pages.appendChild(spacerBlock.cloneNode(true));
 
       return pages.outerHTML;
-    },
-    ...mapGetters({
-      rawCode: 'rawCode',
-      pagesTexture: 'pagesTexture',
-      notesTexture: 'notesTexture',
-      zoom: 'zoom',
-      pagesTextureFile: 'pagesTextureFile',
-      pagesTextureFileChanged: 'pagesTextureFileChanged'
-    })
+    }
   },
   methods: {
     getPagesOptions: function (rawCode) {

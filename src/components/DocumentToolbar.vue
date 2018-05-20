@@ -15,7 +15,7 @@
       </div>
     </div>
     <button class="btn" v-bind:class="{btnClicked: notesTexture}" @click="toggleNotesTexture"><icon name="file"></icon> Notes Texture</button>
-    <button class="btn" @click="scrollToCursor"><icon name="file"></icon> Scroll To</button>
+    <button class="btn" @click="scrollToCursor"><icon name="arrows-v"></icon> Locate</button>
     <button class="btn btnRight">Zoom {{zoom}}%</button>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   mounted: function () {
     let context = this;
     this.$nextTick(function () {
-      document.getElementById('uploadPagesTextureInput').onchange = function () {
+      document.querySelector('#uploadPagesTextureInput').onchange = function () {
         context.$store.commit('setPagesTextureFile', this.files[0]);
       };
     });
@@ -46,22 +46,22 @@ export default {
   },
   computed: {
     ...mapGetters({
-      pagesTexture: 'pagesTexture',
-      notesTexture: 'notesTexture',
-      zoom: 'zoom',
-      currentPage: 'currentPage'
+      pagesTexture: 'document/pagesTexture',
+      notesTexture: 'document/notesTexture',
+      zoom: 'document/zoom',
+      currentPage: 'editor/currentPage'
     })
   },
   methods: {
     zoomIn: function () {
       if (this.zoom < 100) {
-        this.$store.commit('setZoom', this.zoom + 10);
+        this.$store.commit('document/setZoom', this.zoom + 10);
         this.$emit('zoomChanged');
       }
     },
     zoomOut: function () {
       if (this.zoom > 50) {
-        this.$store.commit('setZoom', this.zoom - 10);
+        this.$store.commit('document/setZoom', this.zoom - 10);
         this.$emit('zoomChanged');
       }
     },
@@ -71,18 +71,15 @@ export default {
       input.click();
     },
     togglePagesTexture: function () {
-      this.$store.commit('setPagesTexture', !this.pagesTexture);
+      this.$store.commit('document/setPagesTexture', !this.pagesTexture);
     },
     toggleNotesTexture: function () {
-      this.$store.commit('setNotesTexture', !this.notesTexture);
+      this.$store.commit('document/setNotesTexture', !this.notesTexture);
     },
     setDefaultPagesTexture: function () {
       this.$emit('setDefaultPagesTexture');
     },
     scrollToCursor: function () {
-      console.log(this.pageHeight);
-      console.log(this.currentPage);
-      console.log(this.pageOffset);
       document.querySelector('.document').scrollTo(0, this.pageHeight * this.currentPage + this.pageOffset);
     }
   }
