@@ -251,6 +251,7 @@ export default {
     },
     scrollToPage: function () {
       this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);
+      this.codeMirror.setCursor({line: this.pageLines[this.documentCurrentPage], ch: 0});
     }
   }
 };
@@ -405,9 +406,5 @@ export default {
   .cm-builtin {
     color: #ddca7e;
   }
-}
-
-.CodeMirror-activeline {
-  background-color: yellow;
 }
 </style>
