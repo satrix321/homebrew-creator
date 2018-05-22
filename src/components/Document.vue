@@ -218,7 +218,7 @@ export default {
     .page {
       display: block;
       margin: 0 auto 0.5cm auto;
-      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+      box-shadow: 0  0.5cm rgba(0, 0, 0, 0.5);
       background-color: white;
       position: relative;
       padding-left: 1cm;
