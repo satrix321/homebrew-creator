@@ -24,11 +24,18 @@
       @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
-      @loadFile="loadFile"
-      @saveFile="saveFile"
+      @downloadGDrive="downloadGDrive"
+      @uploadGDDrive="uploadGDDrive"
+      @downloadFile="downloadFile"
+      @uploadFile="uploadFile"
       @scrollToPage="scrollToPage"
       >
     </editor-toolbar>
+    <!--
+    <button id="test1">Test1</button>
+    <button id="test2">Test2</button>
+    <pre id="content"></pre>
+    -->
     <div class="editor">
       <codemirror :value="rawCode" :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     </div>
@@ -226,32 +233,35 @@ export default {
       let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
       this.insertData(data, this.getCursorPosition());
     },
-    loadFile: function () {
-      let element = document.createElement('input');
-      element.setAttribute('type', 'file');
+    downloadGDrive: function () {
 
-      element.style.display = 'none';
-      document.body.appendChild(element);
-
-      element.onchange = function () {
-        //element.files[0]
-        console.log(element);
-        document.body.removeChild(element);
-      };
-
-      element.click();
     },
-    saveFile: function () {
+    uploadGDDrive: function () {
+
+    },
+    downloadFile: function () {
       let element = document.createElement('a');
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.rawCode));
       element.setAttribute('download', 'homebrew.hmd');
-
       element.style.display = 'none';
       document.body.appendChild(element);
-
       element.click();
-
       document.body.removeChild(element);
+    },
+    uploadFile: function () {
+      let element = document.createElement('input');
+      element.setAttribute('type', 'file');
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.onchange = () => {
+        var reader = new FileReader();
+        reader.readAsText(element.files[0]);
+        reader.onload = () => { 
+          this.codeMirror.setValue(reader.result);
+        };
+        document.body.removeChild(element);
+      };
+      element.click();
     },
     scrollToPage: function () {
       this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);

@@ -5,78 +5,74 @@
 <template>
   <div class="toolbar">
     <div class="dropdown">
-      <button class="btn"><icon name="sticky-note"></icon> Notes</button>
+      <button class="btn"><i class="fas fa-sticky-note"></i> Notes</button>
       <div class="dropdownContent">
-        <button class="btn" @click="insertGreenNote"><icon style="color: rgb(218, 230, 191);" name="sticky-note"></icon> Green</button>
-        <button class="btn" @click="insertBrownNote"><icon style="color: rgb(220, 207, 172);" name="sticky-note"></icon> Brown</button>
-        <button class="btn" @click="insertPurpleNote"><icon style="color: rgb(231, 227, 239);" name="sticky-note"></icon> Purple</button>
-        <button class="btn" @click="insertNewspaperNote"><icon style="color: rgb(244, 244, 226)" name="sticky-note"></icon> Newspaper</button>
-        <button class="btn" @click="insertHandwrittenNote"><icon style="color: rgb(244, 244, 236)" name="sticky-note"></icon> Handwritten</button>
-        <button class="btn" @click="insertPhbNote"><icon name="sticky-note"></icon> PHB</button>
+        <button class="btn" @click="insertGreenNote"><i style="color: rgb(218, 230, 191);" class="fas fa-sticky-note"></i> Green</button>
+        <button class="btn" @click="insertBrownNote"><i style="color: rgb(220, 207, 172);" class="fas fa-sticky-note"></i> Brown</button>
+        <button class="btn" @click="insertPurpleNote"><i style="color: rgb(231, 227, 239);" class="fas fa-sticky-note"></i> Purple</button>
+        <button class="btn" @click="insertNewspaperNote"><i style="color: rgb(244, 244, 226)" class="fas fa-sticky-note"></i> Newspaper</button>
+        <button class="btn" @click="insertHandwrittenNote"><i style="color: rgb(244, 244, 236)" class="fas fa-sticky-note"></i> Handwritten</button>
+        <button class="btn" @click="insertPhbNote"><i class="fas fa-sticky-note"></i> PHB</button>
       </div>
     </div>
     <div class="dropdown">
-      <button class="btn"><icon name="table"></icon> Tables</button>
+      <button class="btn"><i class="fas fa-table"></i> Tables</button>
       <div class="dropdownContent">
-        <button class="btn" @click="insertCocMonsterTable"><icon name="table"></icon> CoC - Monster Table</button>
+        <button class="btn" @click="insertCocMonsterTable"><i class="fas fa-table"></i> CoC - Monster Table</button>
       </div>
     </div>
     <div class="dropdown">
-      <button class="btn"><icon name="file"></icon> Pages</button>
+      <button class="btn"><i class="fas fa-file"></i> Pages</button>
       <div class="dropdownContent">
-        <button class="btn" @click="insertRegularPage"><icon name="file"></icon> Regular Page</button>
-        <button class="btn" @click="insertColumnsPage"><icon name="file"></icon> Columns Page</button>
-        <button class="btn" @click="insertTitlePage"><icon name="file"></icon> Title Page</button>
+        <button class="btn" @click="insertRegularPage"><i class="fas fa-file"></i> Regular Page</button>
+        <button class="btn" @click="insertColumnsPage"><i class="fas fa-file"></i> Columns Page</button>
+        <button class="btn" @click="insertTitlePage"><i class="fas fa-file"></i> Title Page</button>
       </div>
     </div>
     <div class="dropdown">
-      <button class="btn"><icon name="image"></icon> Images</button>
+      <button class="btn"><i class="fas fa-image"></i> Images</button>
       <div class="dropdownContent">
-        <button class="btn" @click="insertRelativeImage"><icon name="image"></icon> Relative Image</button>
-        <button class="btn" @click="insertAbsoluteImage"><icon name="image"></icon> Absolute Image</button>
-        <button class="btn" @click="insertFullPageImage"><icon name="file-image-o"></icon> Full Page Image</button>
+        <button class="btn" @click="insertRelativeImage"><i class="fas fa-image"></i> Relative Image</button>
+        <button class="btn" @click="insertAbsoluteImage"><i class="fas fa-image"></i> Absolute Image</button>
+        <button class="btn" @click="insertFullPageImage"><i class="fas fa-file-image"></i> Full Page Image</button>
       </div>
     </div>
     <div class="dropdown">
-      <button class="btn"><icon name="random"></icon> Misc</button>
+      <button class="btn"><i class="fas fa-random"></i> Misc</button>
       <div class="dropdownContent">
-        <button class="btn" @click="insertColumnBreak"><icon name="columns"></icon> Column Break</button>
-        <button class="btn" @click="insertWideBlock"><icon name="arrows-h"></icon> Wide Block</button>
-        <button class="btn" @click="insertVerticalSpacing"><icon name="arrows-v"></icon> Vertical Spacing</button>
+        <button class="btn" @click="insertColumnBreak"><i class="fas fa-columns"></i> Column Break</button>
+        <button class="btn" @click="insertWideBlock"><i class="fas fa-arrows-alt-h"></i> Wide Block</button>
+        <button class="btn" @click="insertVerticalSpacing"><i class="fas fa-arrows-alt-v"></i> Vertical Spacing</button>
       </div>
     </div>
     <div class="dropdown">
-      <button class="btn"><icon name="font"></icon> Fonts</button>
+      <button class="btn"><i class="fas fa-font"></i> Fonts</button>
       <div class="dropdownContent">
-        <button class="btn" @click="insertCustomTitlePageFont"><icon name="font"></icon> Title Font</button>
-        <button class="btn" @click="insertCustomHeadersFont"><icon name="font"></icon> Headers Font</button>
-        <button class="btn" @click="insertCustomNoteHeadersFont"><icon name="font"></icon> Note Headers Font</button>
-        <button class="btn" @click="insertCustomRegularTextFont"><icon name="font"></icon> Regular Text Font</button>
-        <button class="btn" @click="insertCustomNewspaperHeadersFont"><icon name="font"></icon> Newspaper Headers Font</button>
-        <button class="btn" @click="insertCustomNewspaperTextFont"><icon name="font"></icon> Newspaper Text Font</button>
-        <button class="btn" @click="insertCustomHandwritingFont"><icon name="font"></icon> Handwriting Font</button>
+        <button class="btn" @click="insertCustomTitlePageFont"><i class="fas fa-font"></i> Title Font</button>
+        <button class="btn" @click="insertCustomHeadersFont"><i class="fas fa-font"></i> Headers Font</button>
+        <button class="btn" @click="insertCustomNoteHeadersFont"><i class="fas fa-font"></i> Note Headers Font</button>
+        <button class="btn" @click="insertCustomRegularTextFont"><i class="fas fa-font"></i> Regular Text Font</button>
+        <button class="btn" @click="insertCustomNewspaperHeadersFont"><i class="fas fa-font"></i> Newspaper Headers Font</button>
+        <button class="btn" @click="insertCustomNewspaperTextFont"><i class="fas fa-font"></i> Newspaper Text Font</button>
+        <button class="btn" @click="insertCustomHandwritingFont"><i class="fas fa-font"></i> Handwriting Font</button>
       </div>
     </div>
-    <button class="btn btnRight" @click="scrollToPage"><icon name="arrows-v"></icon> Locate</button>
+    <button class="btn btnRight" @click="scrollToPage"><i class="fas fa-arrows-alt-v"></i> Locate</button>
     <div class="dropdown dropdownRight">
-      <button class="btn"><icon name="save"></icon> File</button>
+      <button class="btn"><i class="fas fa-file"></i> File</button>
       <div class="dropdownContent">
-        <button class="btn" @click="loadFile"><icon name="save"></icon> Load File</button>
-        <button class="btn" @click="saveFile"><icon name="save"></icon> Save File</button>
+        <button class="btn" @click="downloadGDrive"><i class="fab fa-google-drive"></i> Download - Google Drive</button>
+        <button class="btn" @click="uploadGDrive"><i class="fab fa-google-drive"></i> Upload - Google Drive</button>
+        <button class="btn" @click="downloadFile"><i class="fas fa-download"></i> Download File</button>
+        <button class="btn" @click="uploadFile"><i class="fas fa-upload"></i> Upload File</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import 'vue-awesome/icons';
-import Icon from 'vue-awesome/components/Icon';
-
 export default {
   name: 'Editor',
-  components: {
-    Icon
-  },
   methods: {
     insertGreenNote: function () {
       this.$emit('insertGreenNote');
@@ -147,11 +143,17 @@ export default {
     insertCustomHandwritingFont: function () {
       this.$emit('insertCustomHandwritingFont');
     },
-    loadFile: function () {
-      this.$emit('loadFile');
+    downloadGDrive: function () {
+      this.$emit('downloadGDrive');
     },
-    saveFile: function () {
-      this.$emit('saveFile');
+    uploadGDDrive: function () {
+      this.$emit('uploadGDDrive');
+    },
+    downloadFile: function () {
+      this.$emit('downloadFile');
+    },
+    uploadFile: function () {
+      this.$emit('uploadFile');
     },
     scrollToPage: function () {
       this.$emit('scrollToPage');

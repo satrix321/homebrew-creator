@@ -4,32 +4,27 @@
 
 <template>
   <div class="toolbar">
-    <button class="btn" @click="zoomIn"><icon name="search-plus"></icon></button>
-    <button class="btn" @click="zoomOut"><icon name="search-minus"></icon></button>
+    <button class="btn" @click="zoomIn"><i class="fas fa-search-plus"></i></button>
+    <button class="btn" @click="zoomOut"><i class="fas fa-search-minus"></i></button>
     <div class="dropdown">
-      <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><icon name="image"></icon> Pages Texture</button>
+      <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
       <div class="dropdownContent">
-        <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><icon name="image"></icon> Toggle Pages Texture</button>
-        <button class="btn" @click="uploadPagesTexture"><icon name="share-square"></icon> Upload Pages Texture<input type="file" id="uploadPagesTextureInput" style="display: none;"></button>
-        <button class="btn" @click="setDefaultPagesTexture"><icon name="times"></icon> Set Default Pages Texture</button>
+        <button class="btn" v-bind:class="{btnClicked: pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Toggle Pages Texture</button>
+        <button class="btn" @click="uploadPagesTexture"><i class="fas fa-share-square"></i> Upload Pages Texture<input type="file" id="uploadPagesTextureInput" style="display: none;"></button>
+        <button class="btn" @click="setDefaultPagesTexture"><i class="fas fa-times"></i> Set Default Pages Texture</button>
       </div>
     </div>
-    <button class="btn" v-bind:class="{btnClicked: notesTexture}" @click="toggleNotesTexture"><icon name="file"></icon> Notes Texture</button>
+    <button class="btn" v-bind:class="{btnClicked: notesTexture}" @click="toggleNotesTexture"><i class="fas fa-file"></i> Notes Texture</button>
     <button class="btn btnRight">Zoom {{zoom}}%</button>
-    <button class="btn btnRight" @click="scrollToCursor"><icon name="arrows-v"></icon> Locate</button>
+    <button class="btn btnRight" @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button>
   </div>
 </template>
 
 <script>
-import 'vue-awesome/icons';
-import Icon from 'vue-awesome/components/Icon';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'Document',
-  components: {
-    Icon
-  },
   mounted: function () {
     let context = this;
     this.$nextTick(function () {
