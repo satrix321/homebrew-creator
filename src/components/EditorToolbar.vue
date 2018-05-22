@@ -61,8 +61,6 @@
     <div class="dropdown dropdownRight">
       <button class="btn"><i class="fas fa-file"></i> File</button>
       <div class="dropdownContent">
-        <button class="btn" @click="downloadGDrive"><i class="fab fa-google-drive"></i> Download - Google Drive</button>
-        <button class="btn" @click="uploadGDrive"><i class="fab fa-google-drive"></i> Upload - Google Drive</button>
         <button class="btn" @click="downloadFile"><i class="fas fa-download"></i> Download File</button>
         <button class="btn" @click="uploadFile"><i class="fas fa-upload"></i> Upload File</button>
       </div>
@@ -142,12 +140,6 @@ export default {
     },
     insertCustomHandwritingFont: function () {
       this.$emit('insertCustomHandwritingFont');
-    },
-    downloadGDrive: function () {
-      this.$emit('downloadGDrive');
-    },
-    uploadGDDrive: function () {
-      this.$emit('uploadGDDrive');
     },
     downloadFile: function () {
       this.$emit('downloadFile');

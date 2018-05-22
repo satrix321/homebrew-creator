@@ -24,8 +24,6 @@
       @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
-      @downloadGDrive="downloadGDrive"
-      @uploadGDDrive="uploadGDDrive"
       @downloadFile="downloadFile"
       @uploadFile="uploadFile"
       @scrollToPage="scrollToPage"
@@ -232,12 +230,6 @@ export default {
     insertCustomHandwritingFont: function () {
       let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
       this.insertData(data, this.getCursorPosition());
-    },
-    downloadGDrive: function () {
-
-    },
-    uploadGDDrive: function () {
-
     },
     downloadFile: function () {
       let element = document.createElement('a');
