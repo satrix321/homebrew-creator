@@ -135,7 +135,7 @@ export default {
 
       pages.appendChild(spacerBlock.cloneNode(true));
 
-      return pages.outerHTML;
+      return pages.innerHTML;
     }
   },
   methods: {
@@ -179,11 +179,13 @@ export default {
         pagesElement.style['-moz-transform-origin'] = '';
         pagesElement.style['transform-origin'] = '';
         pagesElement.style['transform'] = '';
+        //pagesElement.style.zoom = '100%'; // firefox doesn't support this
       } else {
         pagesElement.style['-webkit-transform-origin'] = 'top center';
         pagesElement.style['-moz-transform-origin'] = 'top center';
         pagesElement.style['transform-origin'] = 'top center';
         pagesElement.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
+        //pagesElement.style.zoom = (this.zoom).toFixed(2) + '%'; // firefox doesn't support this
       }
 
       if (this.zoom > this.oldZoom) {
@@ -208,23 +210,24 @@ export default {
 
   .document {
     overflow-y: auto;
-    position: relative;
     height: calc(100vh - 30px);
     width: 100%;
     display: flex;
     justify-content: center;
     background-color: rgb(204, 204, 204);
 
+    * {
+      margin: 0 auto;
+    }
+    
     .page {
-      display: block;
-      margin: 0 0 0.5cm 0;
+      position: relative;
+      margin-bottom: 0.5cm;
       box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
       background-color: white;
       position: relative;
       padding: 1cm;
       box-sizing: border-box;
-      text-align: left;
-      height: 100%;
       z-index: 1;
 
       &[data-size="A4"] {
@@ -301,7 +304,7 @@ export default {
   }
 
   .spacerBlock {
-    width: 100%;
+    width: 21cm;
     height: 50px;
   }
 }
