@@ -217,14 +217,11 @@ export default {
 
     .page {
       display: block;
-      margin: 0 auto 0.5cm auto;
-      box-shadow: 0  0.5cm rgba(0, 0, 0, 0.5);
+      margin: 0 0 0.5cm 0;
+      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
       background-color: white;
       position: relative;
-      padding-left: 1cm;
-      padding-right: 1cm;
-      padding-top: 1cm;
-      padding-bottom: 1cm;
+      padding: 1cm;
       box-sizing: border-box;
       text-align: left;
       height: 100%;
