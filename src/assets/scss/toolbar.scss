@@ -2,6 +2,8 @@
   height: 30px;
   width: 100%;
   background-color: $toolbar-backgroundColor;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   .btn {
     height: 30px;

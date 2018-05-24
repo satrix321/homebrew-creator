@@ -22,6 +22,7 @@ export default {
   components: {
     DocumentToolbar
   },
+  props: ['widthChange'],
   data: function () {
     return {
       pagesTextureUrl: undefined,
@@ -34,6 +35,11 @@ export default {
       let pageNumber = parseInt((this.documentElement.scrollTop / this.pageHeight) * (100 / this.zoom));
       this.$store.commit('document/setCurrentPage', pageNumber);
     }, 500);
+  },
+  watch: {
+    widthChange: function () {
+      this.checkOverflow();
+    }
   },
   computed: {
     ...mapGetters({
@@ -175,21 +181,29 @@ export default {
 
       let pagesElement = document.querySelector('.document .pages');
       if (this.zoom === 100) {
-        pagesElement.style['-webkit-transform-origin'] = '';
-        pagesElement.style['-moz-transform-origin'] = '';
-        pagesElement.style['transform-origin'] = '';
         pagesElement.style['transform'] = '';
         //pagesElement.style.zoom = '100%'; // firefox doesn't support this
       } else {
-        pagesElement.style['-webkit-transform-origin'] = 'top center';
-        pagesElement.style['-moz-transform-origin'] = 'top center';
-        pagesElement.style['transform-origin'] = 'top center';
         pagesElement.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
         //pagesElement.style.zoom = (this.zoom).toFixed(2) + '%'; // firefox doesn't support this
       }
 
       if (this.zoom > this.oldZoom) {
         this.documentElement.scrollTo(0, (this.zoom * this.documentElement.scrollTop) / this.oldZoom);
+      }
+
+      this.checkOverflow();
+    },
+    checkOverflow: function () {
+      let doc = document.querySelector('.document');
+
+      if (doc.clientWidth !== doc.scrollWidth) {
+        if (!doc.classList.contains('overflowFix')) {
+          doc.classList.add('overflowFix');
+        }
+      }
+      else if (doc.classList.contains('overflowFix')) {
+        doc.classList.remove('overflowFix');
       }
     },
     setDefaultPagesTexture: function () {
@@ -216,8 +230,16 @@ export default {
     justify-content: center;
     background-color: rgb(204, 204, 204);
 
-    * {
-      margin: 0 auto;
+    &.overflowFix {
+      display: block;
+
+      .pages {
+        transform-origin: top left;
+      }
+    }
+
+    .pages {
+      transform-origin: top center;
     }
     
     .page {

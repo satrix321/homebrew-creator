@@ -1,11 +1,11 @@
 <template>
   <div class="main">
-    <Split ref="split1" :gutterSize="10" style="height: 100vh;">
+    <Split ref="split1" :gutterSize="10" style="height: 100vh;" @onDrag="onDrag">
       <SplitArea class="editorArea" :size="50">
         <Editor></Editor>
       </SplitArea>
       <SplitArea class="documentArea" :size="50">
-        <Document></Document>
+        <Document :widthChange="widthChange"></Document>
       </SplitArea>
     </Split>
   </div>
@@ -20,6 +20,16 @@ export default {
   components: {
     Editor,
     Document
+  },
+  data: function () {
+    return {
+      widthChange: false
+    };
+  },
+  methods: {
+    onDrag: function () {
+      this.widthChange = !this.widthChange;
+    }
   }
 };
 </script>
