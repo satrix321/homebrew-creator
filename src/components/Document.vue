@@ -35,6 +35,12 @@ export default {
       let pageNumber = parseInt((this.documentElement.scrollTop / this.pageHeight) * (100 / this.zoom));
       this.$store.commit('document/setCurrentPage', pageNumber);
     }, 500);
+
+    window.onbeforeprint = () => {
+      this.$store.commit('document/setOldZoom', this.zoom);
+      this.$store.commit('document/setZoom', 100);
+      this.zoomChanged();
+    };
   },
   watch: {
     widthChange: function () {
