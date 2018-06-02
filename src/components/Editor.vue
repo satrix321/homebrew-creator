@@ -24,16 +24,18 @@
       @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
+      @downloadGDrive="downloadGDrive"
+      @uploadGDDrive="uploadGDDrive"
       @downloadFile="downloadFile"
       @uploadFile="uploadFile"
       @scrollToPage="scrollToPage"
       >
     </editor-toolbar>
-    <!--
-    <button id="test1">Test1</button>
-    <button id="test2">Test2</button>
+    
+    <button id="authorize-button">authorize-button</button>
+    <button id="signout-button">signout-button</button>
     <pre id="content"></pre>
-    -->
+
     <div class="editor">
       <codemirror :value="rawCode" :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     </div>
@@ -230,6 +232,125 @@ export default {
     insertCustomHandwritingFont: function () {
       let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
       this.insertData(data, this.getCursorPosition());
+    },
+    downloadGDrive: function () {
+
+      // Client ID and API key from the Developer Console
+      var CLIENT_ID = '228271316918-k2sarmhfjfi842477oqnnbofunmv7tef.apps.googleusercontent.com';
+      var API_KEY = 'AIzaSyClUHnIHhxGPGKBQaQ9PLuzSDwbGmQ-5MM';
+
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+
+      var authorizeButton = document.getElementById('authorize-button');
+      var signoutButton = document.getElementById('signout-button');
+
+      const script = document.createElement("script");
+      script.src = "https://apis.google.com/js/client.js";
+
+      script.onload = () => {
+        console.log('onload');
+        window.gapi.load('client:auth2', initClient);
+      };
+
+      document.body.appendChild(script);
+      
+
+      /**
+       *  Initializes the API client library and sets up sign-in state
+       *  listeners.
+       */
+      function initClient() {
+        window.gapi.client.init({
+          apiKey: API_KEY,
+          clientId: CLIENT_ID,
+          discoveryDocs: DISCOVERY_DOCS,
+          scope: SCOPES
+        }).then(function () {
+          // Listen for sign-in state changes.
+          window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+          updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
+          authorizeButton.onclick = handleAuthClick;
+          signoutButton.onclick = handleSignoutClick;
+        });
+      }
+
+      /**
+       *  Called when the signed in status changes, to update the UI
+       *  appropriately. After a sign-in, the API is called.
+       */
+      function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+          authorizeButton.style.display = 'none';
+          signoutButton.style.display = 'block';
+          listFiles();
+        } else {
+          authorizeButton.style.display = 'block';
+          signoutButton.style.display = 'none';
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick() {
+        window.gapi.auth2.getAuthInstance().signIn();
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick() {
+        window.gapi.auth2.getAuthInstance().signOut();
+      }
+
+      /**
+       * Append a pre element to the body containing the given message
+       * as its text node. Used to display the results of the API call.
+       *
+       * @param {string} message Text to be placed in pre element.
+       */
+      function appendPre(message) {
+        var pre = document.getElementById('content');
+        var textContent = document.createTextNode(message + '\n');
+        pre.appendChild(textContent);
+      }
+
+      /**
+       * Print files.
+       */
+      function listFiles() {
+        window.gapi.client.drive.files.list({
+          'pageSize': 10,
+          'fields': "nextPageToken, files(id, name)"
+        }).then(function(response) {
+          appendPre('Files:');
+          var files = response.result.files;
+          if (files && files.length > 0) {
+            for (var i = 0; i < files.length; i++) {
+              var file = files[i];
+              appendPre(file.name + ' (' + file.id + ')');
+            }
+          } else {
+            appendPre('No files found.');
+          }
+        });
+      }
+
+
+
+
+
+
+    },
+    uploadGDDrive: function () {
+
     },
     downloadFile: function () {
       let element = document.createElement('a');
