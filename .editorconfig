@@ -1,0 +1,17 @@
+# top-most EditorConfig file
+root = true
+
+# Matches multiple files with brace expansion notation
+# Set default charset
+[**.{js,vue,scss}]
+charset = utf-8
+
+# 2 space indentation
+[src/**.{js,vue,scss}]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either package.json or .travis.yml
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
