@@ -251,8 +251,12 @@ export default {
     },
     uploadGDDrive: function () {
       if (!this.googleDrive.isSignedIn) {
-        this.googleDrive.authenticate();
+        this.googleDrive.authenticate().then(() => {
+          this.googleDrive.uploadFile('t', 't', undefined);
+        });
       }
+
+      this.googleDrive.uploadFile('t', 't', undefined);
     },
     downloadFile: function () {
       let element = document.createElement('a');

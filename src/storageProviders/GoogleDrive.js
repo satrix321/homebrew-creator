@@ -71,7 +71,7 @@ export default class GoogleDrive {
   listFiles(folderId = 'root', pageSize = 1000) {
     return window.gapi.client.drive.files.list({
       'pageSize': pageSize,
-      'fields': 'nextPageToken, files(id, name, fileExtension)',
+      'fields': 'nextPageToken, files(id, name, fileExtension, mimeType)',
       'spaces': 'drive',
       'q': 'trashed = false and "' + folderId + '" in parents and (name contains ".' + this.fileExtension + '" or mimeType = "application/vnd.google-apps.folder")',
     });
@@ -84,4 +84,21 @@ export default class GoogleDrive {
     });
   }
 
+  uploadFile(name, data, fileId = undefined) {
+    if (!fileId) {
+      fileId = window.gapi.client.drive.files.create({
+        resource: {
+          'name': name,
+          'mimeType': 'application/octet-stream'
+        },
+        fields: 'id'
+      }, function(err, file) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('fileId: ', file.id);
+        }
+      });
+    }
+  }
 }
