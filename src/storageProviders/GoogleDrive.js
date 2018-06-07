@@ -84,21 +84,37 @@ export default class GoogleDrive {
     });
   }
 
-  uploadFile(name, data, fileId = undefined) {
-    if (!fileId) {
-      fileId = window.gapi.client.drive.files.create({
+  async uploadFile(name, data, fileId = undefined) {
+    if (fileId === undefined) {
+      await window.gapi.client.drive.files.create({
         resource: {
           'name': name,
           'mimeType': 'application/octet-stream'
         },
         fields: 'id'
-      }, function(err, file) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('fileId: ', file.id);
+      }).then((response) => {
+        switch (response.status) {
+          case 200:
+            fileId = response.result.id;
+            break;
+          default:
+            console.log('Error creating the file, ' + response);
+            break;
         }
       });
     }
+
+    return this.updateFile(data, fileId);
+  }
+
+  updateFile(data, fileId) {
+    return window.gapi.client.request({
+      path: '/upload/drive/v3/files/' + fileId,
+      method: 'PATCH',
+      params: {
+        uploadType: 'media'
+      },
+      body: data
+    });
   }
 }

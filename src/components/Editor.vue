@@ -25,7 +25,7 @@
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
       @downloadGDrive="downloadGDrive"
-      @uploadGDDrive="uploadGDDrive"
+      @uploadGDrive="uploadGDrive"
       @downloadFile="downloadFile"
       @uploadFile="uploadFile"
       @scrollToPage="scrollToPage"
@@ -232,31 +232,39 @@ export default {
       let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
       this.insertData(data, this.getCursorPosition());
     },
-    downloadGDrive: function () {
+    downloadGDrive: async function () {
       if (!this.googleDrive.isSignedIn) {
-        this.googleDrive.authenticate().then(() => {
-          this.googleDrive.listFiles().then((response) => {
-            console.log(response.result.files);
-          });
-        });
-      } else {
-        this.googleDrive.listFiles().then((response) => {
+        await this.googleDrive.authenticate();
+      }
+
+      this.googleDrive.listFiles().then((response) => {
+        if (response.status === 200) {
           console.log(response.result.files);
-        });
+        } else {
+          console.log('error');
+        }
+      });
 
-        this.googleDrive.downloadFile('12Y2xjjC_k7aUMRCngjIcE-2jh9Q8eyFQ').then((response) => {
+      this.googleDrive.downloadFile('12Y2xjjC_k7aUMRCngjIcE-2jh9Q8eyFQ').then((response) => {
+        if (response.status === 200) {
           this.rawCode = decodeURIComponent(escape(response.body));
-        });
-      }
+        } else {
+          console.log('error');
+        }
+      });
     },
-    uploadGDDrive: function () {
+    uploadGDrive: async function () {
       if (!this.googleDrive.isSignedIn) {
-        this.googleDrive.authenticate().then(() => {
-          this.googleDrive.uploadFile('t', 't', undefined);
-        });
+        await this.googleDrive.authenticate();
       }
 
-      this.googleDrive.uploadFile('t', 't', undefined);
+      this.googleDrive.uploadFile('homebrew.hmd', this.rawCode, undefined).then((response) => {
+        if (response.status === 200) {
+          console.log('success');
+        } else {
+          console.log('error');
+        }
+      });
     },
     downloadFile: function () {
       let element = document.createElement('a');

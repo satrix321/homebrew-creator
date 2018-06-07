@@ -147,7 +147,7 @@ export default {
       this.$emit('downloadGDrive');
     },
     uploadGDrive: function () {
-      this.$emit('uploadGDDrive');
+      this.$emit('uploadGDrive');
     },
     downloadFile: function () {
       this.$emit('downloadFile');
