@@ -10,12 +10,6 @@
           <span>{{path}}</span>
         </div>
         <table ref="fileTable">
-          <thead>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </thead>
           <tbody>
             <tr v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
               <td class="iconCol"><i v-bind:class="{'fas fa-folder folderColor': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
@@ -36,7 +30,7 @@
 
 <script>
 export default {
-  name: 'Modal',
+  name: 'FilePickerModal',
   props: ['title'],
   data () {
     return {
@@ -46,7 +40,7 @@ export default {
       visible: false,
       folderMimeType: 'application/vnd.google-apps.folder',
       path: '/',
-      selectedId: undefined,
+      selectedItem: undefined,
       downloadMode: true,
       uploadMode: false
     };
@@ -61,6 +55,7 @@ export default {
     },
     show: async function () {
       if (this.provider) {
+
         await this.provider.listFiles().then((response) => {
           if (response.status === 200) {
             this.fileList = response.result.files;
@@ -69,6 +64,7 @@ export default {
           }
         });
 
+        this.path = '/';
         this.visible = true;
       } else {
         console.log('provider not set');
@@ -78,16 +74,22 @@ export default {
       this.visible = false;
     },
     ok: function () {
-      this.visible = false;
+      if (this.selectedItem && this.selectedItem.querySelector('.mimeCol').innerHTML !== this.folderMimeType) {
+        //this.selectedId
+      }
     },
     goBack: async function () {
       if (this.path !== '/' && this.provider) {
 
         let parentId = undefined;
         if (this.pathIdList.length > 0) {
-          parentId = this.pathIdList.pop();
-        } else {
+          this.pathIdList.pop();
+        }
+        
+        if (this.pathIdList.length == 0) {
           parentId = 'root';
+        } else {
+          parentId = this.pathIdList[this.pathIdList.length - 1];
         }
 
         await this.provider.listFiles(parentId).then((response) => {
@@ -111,31 +113,32 @@ export default {
       }
 
       let clickedRow = event.target.parentElement;
-      this.selectedId = clickedRow.querySelector('.idCol').innerHTML;
+      let selectedId = clickedRow.querySelector('.idCol').innerHTML;
+
+      this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
+
       clickedRow.classList.add("selectedRow");
     },
     itemOpened: async function (event) {
       let clickedRow = event.target.parentElement;
-      this.selectedId = clickedRow.querySelector('.idCol').innerHTML;
-      let selectedFile = this.fileList.find((element) => { return element.id === this.selectedId; });
+      let selectedId = clickedRow.querySelector('.idCol').innerHTML;
+      this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
 
-      if (selectedFile.mimeType === this.folderMimeType && this.provider) {
+      if (this.selectedItem.mimeType === this.folderMimeType && this.provider) {
 
-        if (this.path !== '/') {
-          this.pathIdList.push(this.selectedId);
-        }
+        this.pathIdList.push(selectedId);
 
-        await this.provider.listFiles(this.selectedId).then((response) => {
+        await this.provider.listFiles(selectedId).then((response) => {
           if (response.status === 200) {
+            this.path += this.selectedItem.name + '/';
+            this.selectedItem = undefined;
             this.fileList = response.result.files;
-            this.path += selectedFile.name + '/';
-            console.log(this.fileList);
           } else {
             console.log('error');
           }
         });
       } else if (this.provider) {
-        this.$store.commit('editor/set' + this.provider.getType() + 'FileId', this.selectedId);
+        this.$store.commit('editor/set' + this.provider.getType() + 'FileId', selectedId);
         this.$emit('downloadFile');
         this.visible = false;
       } else {
@@ -178,7 +181,7 @@ export default {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 0;
-    border: 1px solid #888;
+    border: 0;
     width: 900px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     animation-name: animatetop;
@@ -255,7 +258,7 @@ export default {
         }
 
         .iconCol {
-          width: 20px;
+          width: 30px;
           text-align: center;
 
           i {
@@ -264,6 +267,10 @@ export default {
               color: rgb(255, 232, 148);
             }
           }
+        }
+
+        .idCol, .mimeCol {
+          display: none;
         }
       }
     }
