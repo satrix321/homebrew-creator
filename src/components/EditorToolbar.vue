@@ -67,6 +67,7 @@
         <button class="btn" @click="uploadFile"><i class="fas fa-upload"></i> Upload File</button>
       </div>
     </div>
+    <button class="btn btnRight" @click="syncFile"><i class="fas fa-sync"></i> Sync</button>
   </div>
 </template>
 
@@ -142,6 +143,9 @@ export default {
     },
     insertCustomHandwritingFont: function () {
       this.$emit('insertCustomHandwritingFont');
+    },
+    syncFile: function () {
+      this.$emit('syncFile');
     },
     downloadGDrive: function () {
       this.$emit('downloadGDrive');

@@ -24,6 +24,7 @@
       @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
+      @syncFile="syncFile"
       @downloadGDrive="downloadGDrive"
       @uploadGDrive="uploadGDrive"
       @downloadFile="downloadFile"
@@ -36,7 +37,7 @@
       <codemirror :value="rawCode" :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     </div>
 
-    <modal></modal>
+    <file-picker-modal ref="filePicker" title="File Picker" @downloadFile="downloadFileUsingProvider"></file-picker-modal>
 
   </div>
 </template>
@@ -45,7 +46,7 @@
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
 import EditorToolbar from './EditorToolbar.vue';
-import Modal from './Modal.vue';
+import FilePickerModal from './FilePickerModal.vue';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -79,7 +80,7 @@ export default {
   components: {
     codemirror,
     EditorToolbar,
-    Modal
+    FilePickerModal
   },
   data () {
     return {
@@ -97,13 +98,14 @@ export default {
         lineNumbers: true,
         lineWrapping: true
       },
-      googleDrive: new GoogleDrive()
+      googleDrive: new GoogleDrive(),
     };
   },
   computed: {
     ...mapGetters({
       pageLines: 'editor/pageLines',
-      documentCurrentPage: 'document/currentPage'
+      documentCurrentPage: 'document/currentPage',
+      googleDriveFileId: 'editor/googleDriveFileId'
     }),
   },
   mounted: function () {
@@ -236,26 +238,40 @@ export default {
       let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
       this.insertData(data, this.getCursorPosition());
     },
+    syncFile: async function () {
+      if (this.googleDriveFileId) {
+        if (!this.googleDrive.isSignedIn) {
+          await this.googleDrive.authenticate();
+        }
+
+        //upload
+      } else {
+        console.log('file not selected!');
+      }
+    },
+    downloadFileUsingProvider: async function () {
+      if (!this.googleDrive.isSignedIn) {
+        await this.googleDrive.authenticate();
+      }
+
+      if (this.googleDriveFileId) {
+        this.googleDrive.downloadFile(this.googleDriveFileId).then((response) => {
+          if (response.status === 200) {
+            this.rawCode = decodeURIComponent(escape(response.body));
+          } else {
+            console.log('error');
+          }
+        });
+      }
+    },
     downloadGDrive: async function () {
       if (!this.googleDrive.isSignedIn) {
         await this.googleDrive.authenticate();
       }
 
-      this.googleDrive.listFiles().then((response) => {
-        if (response.status === 200) {
-          console.log(response.result.files);
-        } else {
-          console.log('error');
-        }
-      });
-
-      this.googleDrive.downloadFile('12Y2xjjC_k7aUMRCngjIcE-2jh9Q8eyFQ').then((response) => {
-        if (response.status === 200) {
-          this.rawCode = decodeURIComponent(escape(response.body));
-        } else {
-          console.log('error');
-        }
-      });
+      this.$refs.filePicker.setProvider(this.googleDrive);
+      this.$refs.filePicker.setDownloadMode();
+      this.$refs.filePicker.show();
     },
     uploadGDrive: async function () {
       if (!this.googleDrive.isSignedIn) {
@@ -313,7 +329,7 @@ export default {
     border: 0px;
     padding: 0px;
     resize: none;
-    font-family: $site-font;
+    font-family: $site-monoFont;
     font-size: 8pt;  
   }
 }
@@ -321,7 +337,7 @@ export default {
 .cm-s-custom {
   font-size: 1em;
   line-height: 1.5em;
-  font-family: $site-font;
+  font-family: $site-monoFont;
   background: #2a2a2a !important;
   color: #ffffff !important;
 
@@ -343,14 +359,13 @@ export default {
   }
 
   .CodeMirror-activeline-background {
-    background: #3E3D32;
+    background-color: #3E3D32;
   }
 
   .CodeMirror-selected {
-    background: #237CC4;
+    background-color: #237CC4;
   }
 
-  /* default */
   .box pre {
     color: white;
   }

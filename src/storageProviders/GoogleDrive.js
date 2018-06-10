@@ -116,4 +116,8 @@ export default class GoogleDrive {
       body: data
     });
   }
+
+  getType() {
+    return 'GoogleDrive';
+  }
 }
