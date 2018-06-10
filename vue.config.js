@@ -17,6 +17,9 @@ module.exports = {
     } else {
       
     }
+  },
+  devServer: {
+    port: 8010
   }
 }
 /* eslint-enable */

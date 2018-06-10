@@ -98,8 +98,7 @@ export default class GoogleDrive {
             fileId = response.result.id;
             break;
           default:
-            console.log('Error creating the file, ' + response);
-            break;
+            throw 'Error creating the file, ' + response;
         }
       });
     }

@@ -36,6 +36,8 @@
       <codemirror :value="rawCode" :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     </div>
 
+    <modal></modal>
+
   </div>
 </template>
 
@@ -43,6 +45,7 @@
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
 import EditorToolbar from './EditorToolbar.vue';
+import Modal from './Modal.vue';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -75,7 +78,8 @@ export default {
   name: 'Editor',
   components: {
     codemirror,
-    EditorToolbar
+    EditorToolbar,
+    Modal
   },
   data () {
     return {
