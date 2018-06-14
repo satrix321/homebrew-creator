@@ -56,7 +56,7 @@ import 'codemirror/addon/mode/overlay.js';
 import 'codemirror/addon/selection/active-line.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
-import GoogleDrive from '../storageProviders/GoogleDrive';
+import GoogleDriveProvider from '../storageProviders/GoogleDriveProvider';
 
 CodeMirror.defineMode("homebrew-markdown", function(config, parserConfig) {
   var homebrewOverlay = {
@@ -96,7 +96,7 @@ export default {
         lineNumbers: true,
         lineWrapping: true
       },
-      googleDrive: new GoogleDrive(),
+      googleDrive: new GoogleDriveProvider(),
     };
   },
   computed: {

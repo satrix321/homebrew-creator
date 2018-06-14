@@ -138,7 +138,7 @@ export default {
           }
         });
       } else if (this.provider) {
-        this.$store.commit('editor/set' + this.provider.getType() + 'FileId', selectedId);
+        this.$store.commit('editor/set' + this.provider.type + 'FileId', selectedId);
         this.$emit('downloadFile');
         this.visible = false;
       } else {

@@ -1,4 +1,4 @@
-export default class GoogleDrive {
+export default class GoogleDriveProvider {
   // Client ID and API key from the Developer Console
   get clientId() {
     return '228271316918-k2sarmhfjfi842477oqnnbofunmv7tef.apps.googleusercontent.com';
@@ -25,21 +25,21 @@ export default class GoogleDrive {
     return 'hmd';
   }
 
-  getType() {
+  get type() {
     return 'GoogleDrive';
   }
 
   constructor() {
     let scriptElement = document.querySelector('#googleDrive');
     if (!scriptElement) {
-      let scriptElement = document.createElement("script");
-      scriptElement.src = 'https://apis.google.com/js/client.js';
+      let script = document.createElement("script");
+      script.src = 'https://apis.google.com/js/client.js';
 
-      scriptElement.onload = () => {
+      script.onload = () => {
         window.gapi.load('client:auth2', this.initClient.bind(this));
       };
 
-      document.body.appendChild(scriptElement);
+      document.body.appendChild(script);
     } else {
       throw 'Google Drive provider already created';
     }
