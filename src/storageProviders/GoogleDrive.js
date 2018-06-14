@@ -25,6 +25,10 @@ export default class GoogleDrive {
     return 'hmd';
   }
 
+  getType() {
+    return 'GoogleDrive';
+  }
+
   constructor() {
     let scriptElement = document.querySelector('#googleDrive');
     if (!scriptElement) {
@@ -84,9 +88,9 @@ export default class GoogleDrive {
     });
   }
 
-  async uploadFile(name, data, fileId = undefined) {
+  uploadFile(name, data, fileId = undefined) {
     if (fileId === undefined) {
-      await window.gapi.client.drive.files.create({
+      window.gapi.client.drive.files.create({
         resource: {
           'name': name,
           'mimeType': 'application/octet-stream'
@@ -96,14 +100,14 @@ export default class GoogleDrive {
         switch (response.status) {
           case 200:
             fileId = response.result.id;
-            break;
+            return this.updateFile(data, fileId);
           default:
             throw 'Error creating the file, ' + response;
         }
       });
+    } else {
+      return this.updateFile(data, fileId);
     }
-
-    return this.updateFile(data, fileId);
   }
 
   updateFile(data, fileId) {
@@ -115,9 +119,5 @@ export default class GoogleDrive {
       },
       body: data
     });
-  }
-
-  getType() {
-    return 'GoogleDrive';
   }
 }

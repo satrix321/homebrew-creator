@@ -51,7 +51,7 @@ export default {
     },
     setData: function (fileList) {
       this.fileList = fileList;
-      console.log('child ' + this.fileList);
+      //console.log('child ' + this.fileList);
     },
     show: async function () {
       if (this.provider) {
@@ -60,14 +60,14 @@ export default {
           if (response.status === 200) {
             this.fileList = response.result.files;
           } else {
-            console.log('error');
+            //console.log('error');
           }
         });
 
         this.path = '/';
         this.visible = true;
       } else {
-        console.log('provider not set');
+        //console.log('provider not set');
       }
     },
     cancel: function () {
@@ -95,9 +95,9 @@ export default {
         await this.provider.listFiles(parentId).then((response) => {
           if (response.status === 200) {
             this.fileList = response.result.files;
-            console.log(this.fileList);
+            //console.log(this.fileList);
           } else {
-            console.log('error');
+            //console.log('error');
           }
         });
 
@@ -134,7 +134,7 @@ export default {
             this.selectedItem = undefined;
             this.fileList = response.result.files;
           } else {
-            console.log('error');
+            //console.log('error');
           }
         });
       } else if (this.provider) {
@@ -142,7 +142,7 @@ export default {
         this.$emit('downloadFile');
         this.visible = false;
       } else {
-        console.log('provider not set');
+        //console.log('provider not set');
       }
     },
     setDownloadMode: function () {

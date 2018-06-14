@@ -60,17 +60,15 @@ import GoogleDrive from '../storageProviders/GoogleDrive';
 
 CodeMirror.defineMode("homebrew-markdown", function(config, parserConfig) {
   var homebrewOverlay = {
-    /* eslint-disable */
     token: function(stream) {
       var ch;
       if (stream.match("\\page")) {
-        while ((ch = stream.next()) != null && ch != "]") {}
+        while ((ch = stream.next()) != null && ch != "]") { continue; }
         return "pageLine";
       }
-      while (stream.next() != null && !stream.match("\\page", false)) {}
+      while (stream.next() != null && !stream.match("\\page", false)) { continue; }
       return null;
     }
-    /* eslint-enable */
   };
   return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/x-markdown"), homebrewOverlay);
 });
@@ -246,7 +244,7 @@ export default {
 
         //upload
       } else {
-        console.log('file not selected!');
+        //console.log('file not selected!');
       }
     },
     downloadFileUsingProvider: async function () {
@@ -259,7 +257,7 @@ export default {
           if (response.status === 200) {
             this.rawCode = decodeURIComponent(escape(response.body));
           } else {
-            console.log('error');
+            //console.log('error');
           }
         });
       }
@@ -280,9 +278,10 @@ export default {
 
       this.googleDrive.uploadFile('homebrew.hmd', this.rawCode, undefined).then((response) => {
         if (response.status === 200) {
-          console.log('success');
+          //console.log('success');
         } else {
-          console.log('error');
+          alert(response);
+          //console.log('error');
         }
       });
     },
