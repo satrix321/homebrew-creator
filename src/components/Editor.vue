@@ -34,10 +34,10 @@
     </editor-toolbar>
 
     <div class="editor">
-      <codemirror :value="rawCode" :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
+      <codemirror :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     </div>
 
-    <file-picker-modal ref="filePicker" title="File Picker" @downloadFile="downloadFileUsingProvider"></file-picker-modal>
+    <file-picker-modal ref="filePicker" title="File Picker" @downloadFile="downloadFileUsingProvider" @uploadFile="uploadFileUsingProvider"></file-picker-modal>
 
   </div>
 </template>
@@ -82,7 +82,6 @@ export default {
   },
   data () {
     return {
-      rawCode: '\\page[columns]',
       codeMirror: undefined,
       pageHeight: 1141.42,
       pageOffset: 40,
@@ -102,8 +101,10 @@ export default {
   computed: {
     ...mapGetters({
       pageLines: 'editor/pageLines',
+      googleDriveFileId: 'editor/googleDriveFileId',
+      googleDriveFileName: 'editor/googleDriveFileName',
+      rawCode: 'editor/rawCode',
       documentCurrentPage: 'document/currentPage',
-      googleDriveFileId: 'editor/googleDriveFileId'
     }),
   },
   mounted: function () {
@@ -241,10 +242,13 @@ export default {
         if (!this.googleDrive.isSignedIn) {
           await this.googleDrive.authenticate();
         }
-
-        //upload
+        this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId).then((response) => {
+          if (response.status !== 200) {
+            alert(response)
+          }
+        });
       } else {
-        //console.log('file not selected!');
+        alert('file not selected!');
       }
     },
     downloadFileUsingProvider: async function () {
@@ -255,9 +259,24 @@ export default {
       if (this.googleDriveFileId) {
         this.googleDrive.downloadFile(this.googleDriveFileId).then((response) => {
           if (response.status === 200) {
-            this.rawCode = decodeURIComponent(escape(response.body));
+            this.codeMirror.setValue(decodeURIComponent(escape(response.body)));
           } else {
-            //console.log('error');
+            alert(response);
+          }
+        });
+      }
+    },
+    uploadFileUsingProvider: async function () {
+      if (!this.googleDrive.isSignedIn) {
+        await this.googleDrive.authenticate();
+      }
+
+      if (this.googleDriveFileId) {
+        this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId)
+      } else {
+        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode)).then((response) => {
+          if (response.status !== 200) {
+            alert(response);
           }
         });
       }
@@ -276,12 +295,13 @@ export default {
         await this.googleDrive.authenticate();
       }
 
-      this.googleDrive.uploadFile('homebrew.hmd', this.rawCode, undefined).then((response) => {
-        if (response.status === 200) {
-          //console.log('success');
-        } else {
+      this.$refs.filePicker.setProvider(this.googleDrive);
+      this.$refs.filePicker.setUploadMode(encodeURIComponent(this.rawCode));
+      this.$refs.filePicker.show();
+
+      this.googleDrive.uploadFile('homebrew.hmd', encodeURIComponent(this.rawCode)).then((response) => {
+        if (response.status !== 200) {
           alert(response);
-          //console.log('error');
         }
       });
     },
@@ -310,8 +330,10 @@ export default {
       element.click();
     },
     scrollToPage: function () {
-      this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);
-      this.codeMirror.setCursor({line: this.pageLines[this.documentCurrentPage], ch: 0});
+      if (this.pageLines[this.documentCurrentPage]) {
+        this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);
+        this.codeMirror.setCursor({line: this.pageLines[this.documentCurrentPage], ch: 0});
+      }
     }
   }
 };

@@ -2,17 +2,19 @@ const editor = {
   namespaced: true,
   
   state: {
-    rawCode: '\\page[columns]',
+    rawCode: '',
     currentPage: 0,
     pageLines: [],
-    googleDriveFileId: undefined
+    googleDriveFileId: undefined,
+    googleDriveFileName: undefined
   },
 
   getters: {
     rawCode: state => state.rawCode,
     currentPage: state => state.currentPage,
     pageLines: state => state.pageLines,
-    googleDriveFileId: state => state.googleDriveFileId
+    googleDriveFileId: state => state.googleDriveFileId,
+    googleDriveFileName: state => state.googleDriveFileName
   },
 
   mutations: {
@@ -28,6 +30,9 @@ const editor = {
     },
     setGoogleDriveFileId (state, fileId) {
       state.googleDriveFileId = fileId;
+    },
+    setGoogleDriveFileName (state, fileName) {
+      state.googleDriveFileName = fileName;
     }
   }
 };

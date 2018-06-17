@@ -37,4 +37,12 @@
   &.btnRight {
     float: right;
   }
+
+  &:disabled {
+    color: $btn-colorDisabled;
+
+    &:hover {
+      background-color: $btn-backgroundColor;
+    }
+  }
 }

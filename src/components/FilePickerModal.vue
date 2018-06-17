@@ -9,18 +9,22 @@
           <button class="btn" @click="goBack"><i class="fas fa-arrow-up"></i></button>
           <span>{{path}}</span>
         </div>
-        <table ref="fileTable">
-          <tbody>
-            <tr v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
-              <td class="iconCol"><i v-bind:class="{'fas fa-folder folderColor': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
-              <td class="nameCol">{{file.name}}</td>
-              <td class="idCol">{{file.id}}</td>
-              <th class="mimeCol">{{file.mimeType}}</th>
-            </tr>
-          </tbody>
-        </table>
+        <div class="tableDiv">
+          <table ref="fileTable">
+            <tbody>
+              <tr v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
+                <td class="iconCol"><i v-bind:class="{'fas fa-folder folderColor': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
+                <td class="nameCol">{{file.name}}</td>
+                <td class="idCol">{{file.id}}</td>
+                <th class="mimeCol">{{file.mimeType}}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div class="modalFooter">
+        <input v-if="this.uploadMode" ref="fileName" class="input fileName">
+        <input v-if="this.uploadMode" class="input fileExtension" value=".hmd" disabled="disabled">
         <button class="btn btnRight" @click="ok">OK</button>
         <button class="btn btnRight" @click="cancel">Cancel</button>
       </div>
@@ -42,7 +46,8 @@ export default {
       path: '/',
       selectedItem: undefined,
       downloadMode: true,
-      uploadMode: false
+      uploadMode: false,
+      data: undefined
     };
   },
   methods: {
@@ -51,31 +56,42 @@ export default {
     },
     setData: function (fileList) {
       this.fileList = fileList;
-      //console.log('child ' + this.fileList);
+    },
+    clearSelection: function () {
+      let selectedItem = this.$refs.fileTable.querySelector('.selectedRow');
+      if (selectedItem) {
+        selectedItem.classList = [];
+      }
     },
     show: async function () {
       if (this.provider) {
+
+        this.clearSelection();
 
         await this.provider.listFiles().then((response) => {
           if (response.status === 200) {
             this.fileList = response.result.files;
           } else {
-            //console.log('error');
+            alert(response);
           }
         });
 
         this.path = '/';
         this.visible = true;
       } else {
-        //console.log('provider not set');
+        alert('Storage provider not set!');
       }
     },
     cancel: function () {
       this.visible = false;
     },
     ok: function () {
-      if (this.selectedItem && this.selectedItem.querySelector('.mimeCol').innerHTML !== this.folderMimeType) {
-        //this.selectedId
+      if (this.selectedItem.mimeType === this.folderMimeType && this.provider) {
+        this.openFolder();
+      } else if (this.provider) {
+        this.downloadFile();
+      } else {
+        alert('Storage provider not set!');
       }
     },
     goBack: async function () {
@@ -95,9 +111,8 @@ export default {
         await this.provider.listFiles(parentId).then((response) => {
           if (response.status === 200) {
             this.fileList = response.result.files;
-            //console.log(this.fileList);
           } else {
-            //console.log('error');
+            alert(response);
           }
         });
 
@@ -107,10 +122,7 @@ export default {
       }
     },
     itemSelected: function (event) {
-      let selectedItem = this.$refs.fileTable.querySelector('.selectedRow');
-      if (selectedItem) {
-        selectedItem.classList = [];
-      }
+      this.clearSelection();
 
       let clickedRow = event.target.parentElement;
       let selectedId = clickedRow.querySelector('.idCol').innerHTML;
@@ -118,6 +130,15 @@ export default {
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
 
       clickedRow.classList.add("selectedRow");
+
+      if (this.uploadMode) {
+        console.log(this.selectedItem.name)
+        if (this.selectedItem.name.includes('.')) {
+          this.$refs.fileName.value = this.selectedItem.name.split('.')[0];
+        } else {
+          this.$refs.fileName.value = this.selectedItem.name;
+        }
+      }
     },
     itemOpened: async function (event) {
       let clickedRow = event.target.parentElement;
@@ -125,33 +146,56 @@ export default {
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
 
       if (this.selectedItem.mimeType === this.folderMimeType && this.provider) {
-
-        this.pathIdList.push(selectedId);
-
-        await this.provider.listFiles(selectedId).then((response) => {
-          if (response.status === 200) {
-            this.path += this.selectedItem.name + '/';
-            this.selectedItem = undefined;
-            this.fileList = response.result.files;
-          } else {
-            //console.log('error');
-          }
-        });
+        this.openFolder();
       } else if (this.provider) {
-        this.$store.commit('editor/set' + this.provider.type + 'FileId', selectedId);
-        this.$emit('downloadFile');
-        this.visible = false;
+        if (this.downloadMode) {
+          this.downloadFile();
+        } else {
+          this.uploadFile();
+        }
       } else {
-        //console.log('provider not set');
+        alert('Storage provider not set!');
       }
+    },
+    openFolder: async function () {
+      this.pathIdList.push(this.selectedItem.id);
+
+      await this.provider.listFiles(this.selectedItem.id).then((response) => {
+        if (response.status === 200) {
+          this.path += this.selectedItem.name + '/';
+          this.selectedItem = undefined;
+          this.fileList = response.result.files;
+        } else {
+          alert(response);
+        }
+      });
+    },
+    downloadFile: function () {
+      this.$store.commit('editor/set' + this.provider.type + 'FileId', this.selectedItem.id);
+      this.$emit('downloadFile');
+      this.visible = false;
+    },
+    uploadFile: function () {
+      if (this.selectedItem.name.includes('.') && this.selectedItem.name.split('.')[0] === this.$refs.filName.value) {
+        this.$store.commit('editor/set' + this.provider.type + 'FileId', this.selectedItem.id);
+      } else {
+        this.$store.commit('editor/set' + this.provider.type + 'FileName', this.$refs.filName.value + '.hmd');
+        
+        // check if file name set
+        // check if extension present
+      }
+
+      this.$emit('uploadFile');
+      this.visible = false;
     },
     setDownloadMode: function () {
       this.downloadMode = true;
       this.uploadMode = false;
     },
-    setUploadMode: function () {
+    setUploadMode: function (data) {
       this.downloadMode = false;
       this.uploadMode = true;
+      this.data = data;
     }
   }
 };
@@ -159,6 +203,7 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/button.scss';
+@import "@/assets/scss/input.scss";
 
 .modal {
   display: none;
@@ -179,7 +224,7 @@ export default {
   .modalContent {
     position: relative;
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 5% auto 0 auto;
     padding: 0;
     border: 0;
     width: 900px;
@@ -238,10 +283,15 @@ export default {
         }
       }
 
+      .tableDiv {
+        height: 450px;
+        overflow-y:scroll;
+      }
+
       table {
         width: 100%;
         border-collapse: separate;
-        border-spacing: 0;
+        border-spacing: 0; 
 
         tr {
           vertical-align: middle;

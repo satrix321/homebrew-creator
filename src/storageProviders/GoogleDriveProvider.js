@@ -69,6 +69,7 @@ export default class GoogleDriveProvider {
   }
 
   signout() {
+    //window.gapi.auth2.getAuthInstance().disconnect();
     return window.gapi.auth2.getAuthInstance().signOut();
   }
 
@@ -88,26 +89,25 @@ export default class GoogleDriveProvider {
     });
   }
 
-  uploadFile(name, data, fileId = undefined) {
-    if (fileId === undefined) {
-      window.gapi.client.drive.files.create({
-        resource: {
-          'name': name,
-          'mimeType': 'application/octet-stream'
-        },
-        fields: 'id'
-      }).then((response) => {
-        switch (response.status) {
-          case 200:
-            fileId = response.result.id;
-            return this.updateFile(data, fileId);
-          default:
-            throw 'Error creating the file, ' + response;
-        }
-      });
-    } else {
-      return this.updateFile(data, fileId);
-    }
+  async uploadFile(name, data) {
+    let fileId;
+    await window.gapi.client.drive.files.create({
+      resource: {
+        'name': name,
+        'mimeType': 'application/octet-stream'
+      },
+      fields: 'id'
+    }).then((response) => {
+      switch (response.status) {
+        case 200:
+          fileId = response.result.id;
+          break;
+        default:
+          throw 'Error creating the file, ' + response;
+      }
+    });
+
+    return this.updateFile(data, fileId);
   }
 
   updateFile(data, fileId) {
