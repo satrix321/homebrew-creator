@@ -259,7 +259,7 @@ export default {
       if (this.googleDriveFileId) {
         this.googleDrive.downloadFile(this.googleDriveFileId).then((response) => {
           if (response.status === 200) {
-            this.codeMirror.setValue(decodeURIComponent(escape(response.body)));
+            this.codeMirror.setValue(decodeURIComponent(response.body));
           } else {
             alert(response);
           }
