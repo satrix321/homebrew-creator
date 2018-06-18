@@ -24,19 +24,21 @@
       @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
+      @syncFile="syncFile"
+      @downloadGDrive="downloadGDrive"
+      @uploadGDrive="uploadGDrive"
       @downloadFile="downloadFile"
       @uploadFile="uploadFile"
       @scrollToPage="scrollToPage"
       >
     </editor-toolbar>
-    <!--
-    <button id="test1">Test1</button>
-    <button id="test2">Test2</button>
-    <pre id="content"></pre>
-    -->
+
     <div class="editor">
-      <codemirror :value="rawCode" :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
+      <codemirror :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     </div>
+
+    <file-picker-modal ref="filePicker" title="File Picker" @downloadFile="downloadFileUsingProvider" @uploadFile="uploadFileUsingProvider"></file-picker-modal>
+
   </div>
 </template>
 
@@ -44,6 +46,7 @@
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
 import EditorToolbar from './EditorToolbar.vue';
+import FilePickerModal from './FilePickerModal.vue';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -53,20 +56,19 @@ import 'codemirror/addon/mode/overlay.js';
 import 'codemirror/addon/selection/active-line.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
+import GoogleDriveProvider from '../storageProviders/GoogleDriveProvider';
 
 CodeMirror.defineMode("homebrew-markdown", function(config, parserConfig) {
   var homebrewOverlay = {
-    /* eslint-disable */
     token: function(stream) {
       var ch;
       if (stream.match("\\page")) {
-        while ((ch = stream.next()) != null && ch != "]") {}
+        while ((ch = stream.next()) != null && ch != "]") { continue; }
         return "pageLine";
       }
-      while (stream.next() != null && !stream.match("\\page", false)) {}
+      while (stream.next() != null && !stream.match("\\page", false)) { continue; }
       return null;
     }
-    /* eslint-enable */
   };
   return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/x-markdown"), homebrewOverlay);
 });
@@ -75,11 +77,11 @@ export default {
   name: 'Editor',
   components: {
     codemirror,
-    EditorToolbar
+    EditorToolbar,
+    FilePickerModal
   },
   data () {
     return {
-      rawCode: '\\page[columns]',
       codeMirror: undefined,
       pageHeight: 1141.42,
       pageOffset: 40,
@@ -92,13 +94,17 @@ export default {
         theme: 'custom',
         lineNumbers: true,
         lineWrapping: true
-      }
+      },
+      googleDrive: new GoogleDriveProvider(),
     };
   },
   computed: {
     ...mapGetters({
       pageLines: 'editor/pageLines',
-      documentCurrentPage: 'document/currentPage'
+      googleDriveFileId: 'editor/googleDriveFileId',
+      googleDriveFileName: 'editor/googleDriveFileName',
+      rawCode: 'editor/rawCode',
+      documentCurrentPage: 'document/currentPage',
     }),
   },
   mounted: function () {
@@ -231,6 +237,70 @@ export default {
       let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
       this.insertData(data, this.getCursorPosition());
     },
+    syncFile: async function () {
+      if (this.googleDriveFileId) {
+        if (!this.googleDrive.isSignedIn) {
+          await this.googleDrive.authenticate();
+        }
+        this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId).then((response) => {
+          if (response.status !== 200) {
+            alert(response)
+          }
+        });
+      } else {
+        alert('file not selected!');
+      }
+    },
+    downloadFileUsingProvider: async function () {
+      if (!this.googleDrive.isSignedIn) {
+        await this.googleDrive.authenticate();
+      }
+
+      if (this.googleDriveFileId) {
+        this.googleDrive.downloadFile(this.googleDriveFileId).then((response) => {
+          if (response.status === 200) {
+            this.codeMirror.setValue(decodeURIComponent(escape(response.body)));
+          } else {
+            alert(response);
+          }
+        });
+      }
+    },
+    uploadFileUsingProvider: async function () {
+      if (!this.googleDrive.isSignedIn) {
+        await this.googleDrive.authenticate();
+      }
+
+      if (this.googleDriveFileId) {
+        this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId)
+      } else {
+        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode)).then((response) => {
+          if (response.status !== 200) {
+            alert(response);
+          } else {
+            this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
+          }
+        });
+      }
+    },
+    downloadGDrive: async function () {
+      if (!this.googleDrive.isSignedIn) {
+        await this.googleDrive.authenticate();
+      }
+
+      this.$refs.filePicker.setProvider(this.googleDrive);
+      this.$refs.filePicker.setDownloadMode();
+      this.$refs.filePicker.show();
+    },
+    uploadGDrive: async function () {
+      if (!this.googleDrive.isSignedIn) {
+        await this.googleDrive.authenticate();
+      }
+
+      this.$refs.filePicker.setProvider(this.googleDrive);
+      this.$refs.filePicker.setUploadMode(encodeURIComponent(this.rawCode));
+      this.$refs.filePicker.show();
+    },
     downloadFile: function () {
       let element = document.createElement('a');
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.rawCode));
@@ -256,8 +326,10 @@ export default {
       element.click();
     },
     scrollToPage: function () {
-      this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);
-      this.codeMirror.setCursor({line: this.pageLines[this.documentCurrentPage], ch: 0});
+      if (this.pageLines[this.documentCurrentPage]) {
+        this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);
+        this.codeMirror.setCursor({line: this.pageLines[this.documentCurrentPage], ch: 0});
+      }
     }
   }
 };
@@ -274,7 +346,7 @@ export default {
     border: 0px;
     padding: 0px;
     resize: none;
-    font-family: $site-font;
+    font-family: $site-monoFont;
     font-size: 8pt;  
   }
 }
@@ -282,7 +354,7 @@ export default {
 .cm-s-custom {
   font-size: 1em;
   line-height: 1.5em;
-  font-family: $site-font;
+  font-family: $site-monoFont;
   background: #2a2a2a !important;
   color: #ffffff !important;
 
@@ -304,14 +376,13 @@ export default {
   }
 
   .CodeMirror-activeline-background {
-    background: #3E3D32;
+    background-color: #3E3D32;
   }
 
   .CodeMirror-selected {
-    background: #237CC4;
+    background-color: #237CC4;
   }
 
-  /* default */
   .box pre {
     color: white;
   }

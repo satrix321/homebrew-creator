@@ -1,0 +1,48 @@
+.btn {
+  height: 30px;
+  border: 0;
+  padding: 0 8px 0 8px;
+  color: white;
+  background-color: $btn-backgroundColor;
+  outline: none;
+  float: left;
+  font-family: $site-monoFont;
+  font-size: 9pt;  
+
+  &:hover {
+    background-color: $btn-backgroundColorHover;
+    cursor: pointer;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:active {
+    background-color: $btn-backgroundColorActive;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+
+  &.btnClicked {
+    background-color: $btn-backgroundColorClicked;
+
+    &:hover {
+      background-color: $btn-backgroundColorHover;
+    }
+  }
+
+  &.btnRight {
+    float: right;
+  }
+
+  &:disabled {
+    color: $btn-colorDisabled;
+
+    &:hover {
+      background-color: $btn-backgroundColor;
+    }
+  }
+}

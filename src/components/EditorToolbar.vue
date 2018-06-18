@@ -61,16 +61,26 @@
     <div class="dropdown dropdownRight">
       <button class="btn"><i class="fas fa-file"></i> File</button>
       <div class="dropdownContent">
+        <button class="btn" @click="downloadGDrive"><i class="fab fa-google-drive"></i> Download - Google Drive</button>
+        <button class="btn" @click="uploadGDrive"><i class="fab fa-google-drive"></i> Upload - Google Drive</button>
         <button class="btn" @click="downloadFile"><i class="fas fa-download"></i> Download File</button>
         <button class="btn" @click="uploadFile"><i class="fas fa-upload"></i> Upload File</button>
       </div>
     </div>
+    <button class="btn btnRight" @click="syncFile" :disabled="!this.googleDriveFileId"><i class="fas fa-sync"></i> Sync</button>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Editor',
+  computed: {
+    ...mapGetters({
+      googleDriveFileId: 'editor/googleDriveFileId'
+    })
+  },
   methods: {
     insertGreenNote: function () {
       this.$emit('insertGreenNote');
@@ -140,6 +150,15 @@ export default {
     },
     insertCustomHandwritingFont: function () {
       this.$emit('insertCustomHandwritingFont');
+    },
+    syncFile: function () {
+      this.$emit('syncFile');
+    },
+    downloadGDrive: function () {
+      this.$emit('downloadGDrive');
+    },
+    uploadGDrive: function () {
+      this.$emit('uploadGDrive');
     },
     downloadFile: function () {
       this.$emit('downloadFile');
