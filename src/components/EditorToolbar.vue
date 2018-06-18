@@ -67,7 +67,7 @@
         <button class="btn" @click="uploadFile"><i class="fas fa-upload"></i> Upload File</button>
       </div>
     </div>
-    <button class="btn btnRight" @click="syncFile" :disabled="fileIdSet === false"><i class="fas fa-sync"></i> Sync</button>
+    <button class="btn btnRight" @click="syncFile" :disabled="!this.googleDriveFileId"><i class="fas fa-sync"></i> Sync</button>
   </div>
 </template>
 
@@ -76,11 +76,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'Editor',
-  data () {
-    return {
-      fileIdSet: false
-    }
-  },
   computed: {
     ...mapGetters({
       googleDriveFileId: 'editor/googleDriveFileId'

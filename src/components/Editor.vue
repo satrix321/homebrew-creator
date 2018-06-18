@@ -277,6 +277,8 @@ export default {
         this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode)).then((response) => {
           if (response.status !== 200) {
             alert(response);
+          } else {
+            this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
           }
         });
       }
@@ -298,12 +300,6 @@ export default {
       this.$refs.filePicker.setProvider(this.googleDrive);
       this.$refs.filePicker.setUploadMode(encodeURIComponent(this.rawCode));
       this.$refs.filePicker.show();
-
-      this.googleDrive.uploadFile('homebrew.hmd', encodeURIComponent(this.rawCode)).then((response) => {
-        if (response.status !== 200) {
-          alert(response);
-        }
-      });
     },
     downloadFile: function () {
       let element = document.createElement('a');

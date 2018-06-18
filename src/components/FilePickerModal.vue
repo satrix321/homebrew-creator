@@ -86,12 +86,30 @@ export default {
       this.visible = false;
     },
     ok: function () {
-      if (this.selectedItem.mimeType === this.folderMimeType && this.provider) {
-        this.openFolder();
-      } else if (this.provider) {
-        this.downloadFile();
+      if (!this.provider) {
+        alert('Provider not set!');
+        return;
+      }
+
+      if (this.downloadMode) {
+        if (!this.selectedItem) {
+          alert('File not selected!');
+          return;
+        }
+
+        if (this.selectedItem.mimeType === this.folderMimeType) {
+          this.openFolder();
+        } else {
+          this.downloadFile();
+        }
+
       } else {
-        alert('Storage provider not set!');
+        if (!this.selectedItem && !this.$refs.fileName) {
+          alert('Select a file or provide a name for a new file!');
+          return;
+        }
+
+        this.uploadFile();
       }
     },
     goBack: async function () {
@@ -131,8 +149,7 @@ export default {
 
       clickedRow.classList.add("selectedRow");
 
-      if (this.uploadMode) {
-        console.log(this.selectedItem.name)
+      if (this.uploadMode && this.selectedItem.mimeType !== this.folderMimeType) {
         if (this.selectedItem.name.includes('.')) {
           this.$refs.fileName.value = this.selectedItem.name.split('.')[0];
         } else {
@@ -176,13 +193,37 @@ export default {
       this.visible = false;
     },
     uploadFile: function () {
-      if (this.selectedItem.name.includes('.') && this.selectedItem.name.split('.')[0] === this.$refs.filName.value) {
-        this.$store.commit('editor/set' + this.provider.type + 'FileId', this.selectedItem.id);
+
+      if (this.selectedItem) {
+
+        if (this.selectedItem.mimeType === this.folderMimeType) {
+          if (this.$refs.fileName.value) {
+            let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
+            this.$store.commit('editor/set' + this.provider.type + 'FileName', fileName);    
+          } else {
+            alert('Select a file with .hmd extension');
+            return;
+          }
+        } else {
+          if (this.$refs.fileName.value && (this.$refs.fileName.value + '.' + this.provider.fileExtension === this.selectedItem.name)) {
+            this.$store.commit('editor/set' + this.provider.type + 'FileId', this.selectedItem.id);
+          } else if (this.$refs.fileName.value) {
+            let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
+            this.$store.commit('editor/set' + this.provider.type + 'FileName', fileName);    
+          } else {
+            alert('Select a file with .hmd extenion');
+            return;
+          }
+        }
+
       } else {
-        this.$store.commit('editor/set' + this.provider.type + 'FileName', this.$refs.filName.value + '.hmd');
-        
-        // check if file name set
-        // check if extension present
+        if (this.$refs.fileName.value && this.$refs.fileName.value !== '') {
+          let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
+          this.$store.commit('editor/set' + this.provider.type + 'FileName', fileName);
+        } else {
+          alert('Please provide file name');
+          return;
+        }
       }
 
       this.$emit('uploadFile');
