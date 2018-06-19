@@ -269,7 +269,8 @@ export default {
       }
 
       &.page.pagesTexture {
-        background-image: url('../assets/imgs/texture_02.jpg');
+        background-image: url('../assets/imgs/texture_01.jpg');
+        background-size: 100% 100%;
       }
 
       * {
@@ -295,6 +296,7 @@ export default {
         text-shadow: 0.1px 0.1px #000;
         font-size: 9pt;
         line-height: 1.25;
+        text-align: justify;
       }
 
       > hr {
