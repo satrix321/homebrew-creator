@@ -8,7 +8,7 @@ To avoid any display problems you should use Chrome browser, otherwise some thin
 
 ## Live preview
 
-> http://satrix321.github.io/PHB_PDF_Generator/index.html
+> http://satrix321.github.io/HomebrewCreator/index.html
 
 ## Build Setup
 
