@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <Split ref="split1" :gutterSize="10" style="height: 100vh;" @onDrag="onDrag">
+    <Split ref="split1" :gutterSize="10" style="height: 100vh;" @onDrag="splitDrag">
       <SplitArea class="editorArea" :size="50">
         <Editor></Editor>
       </SplitArea>
@@ -27,7 +27,7 @@ export default {
     };
   },
   methods: {
-    onDrag: function () {
+    splitDrag: function () {
       this.widthChange = !this.widthChange;
     }
   }

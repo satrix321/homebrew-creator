@@ -41,6 +41,8 @@ export default {
       this.$store.commit('document/setZoom', 100);
       this.zoomChanged();
     };
+
+    window.addEventListener('resize', this.checkOverflow);
   },
   watch: {
     widthChange: function () {
