@@ -6,7 +6,8 @@ const editor = {
     currentPage: 0,
     pageLines: [],
     googleDriveFileId: undefined,
-    googleDriveFileName: undefined
+    googleDriveFileName: undefined,
+    googleDriveParentId: undefined
   },
 
   getters: {
@@ -14,7 +15,8 @@ const editor = {
     currentPage: state => state.currentPage,
     pageLines: state => state.pageLines,
     googleDriveFileId: state => state.googleDriveFileId,
-    googleDriveFileName: state => state.googleDriveFileName
+    googleDriveFileName: state => state.googleDriveFileName,
+    googleDriveParentId: state => state.googleDriveParentId
   },
 
   mutations: {
@@ -33,6 +35,9 @@ const editor = {
     },
     setGoogleDriveFileName (state, fileName) {
       state.googleDriveFileName = fileName;
+    },
+    setGoogleDriveParentId (state, parentId) {
+      state.googleDriveParentId = parentId;
     }
   }
 };

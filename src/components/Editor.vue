@@ -103,6 +103,7 @@ export default {
       pageLines: 'editor/pageLines',
       googleDriveFileId: 'editor/googleDriveFileId',
       googleDriveFileName: 'editor/googleDriveFileName',
+      googleDriveParentId: 'editor/googleDriveParentId',
       rawCode: 'editor/rawCode',
       documentCurrentPage: 'document/currentPage',
     }),
@@ -273,6 +274,14 @@ export default {
 
       if (this.googleDriveFileId) {
         this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId)
+      } else if (this.googleDriveParentId) {
+        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode), this.googleDriveParentId).then((response) => {
+          if (response.status !== 200) {
+            alert(response);
+          } else {
+            this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
+          }
+        });
       } else {
         this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode)).then((response) => {
           if (response.status !== 200) {
@@ -298,7 +307,7 @@ export default {
       }
 
       this.$refs.filePicker.setProvider(this.googleDrive);
-      this.$refs.filePicker.setUploadMode(encodeURIComponent(this.rawCode));
+      this.$refs.filePicker.setUploadMode();
       this.$refs.filePicker.show();
     },
     downloadFile: function () {

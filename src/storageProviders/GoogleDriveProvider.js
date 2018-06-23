@@ -89,12 +89,13 @@ export default class GoogleDriveProvider {
     });
   }
 
-  async uploadFile(name, data) {
+  async uploadFile(name, data, parentId = 'root') {
     let fileId;
     await window.gapi.client.drive.files.create({
       resource: {
         'name': name,
-        'mimeType': 'application/octet-stream'
+        'mimeType': 'application/octet-stream',
+        'parents': [parentId]
       },
       fields: 'id'
     }).then((response) => {
