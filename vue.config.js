@@ -9,17 +9,14 @@ module.exports = {
       }
     }
   },
-  configureWebpack: config => {
-    if (process.env.NODE_ENV === 'production') {
-      output: {
-        config.output.publicPath = '/PHB_PDF_Generator/';
-      }
-    } else {
-      
-    }
+  configureWebpack: {
+    devtool: 'source-map'
   },
   devServer: {
     port: 8080
-  }
+  },
+  baseUrl: process.env.NODE_ENV === 'production'
+    ? '/HomebrewCreator/'
+    : '/'
 }
 /* eslint-enable */
