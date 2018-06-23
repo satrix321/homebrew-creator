@@ -46,8 +46,7 @@ export default {
       path: '/',
       selectedItem: undefined,
       downloadMode: true,
-      uploadMode: false,
-      data: undefined
+      uploadMode: false
     };
   },
   methods: {
@@ -63,10 +62,16 @@ export default {
         selectedItem.classList = [];
       }
     },
+    clearFileName: function () {
+      if (this.$refs.fileName) {
+        this.$refs.fileName.value = '';
+      }
+    },
     show: async function () {
       if (this.provider) {
 
         this.clearSelection();
+        this.clearFileName();
 
         await this.provider.listFiles().then((response) => {
           if (response.status === 200) {
@@ -233,10 +238,9 @@ export default {
       this.downloadMode = true;
       this.uploadMode = false;
     },
-    setUploadMode: function (data) {
+    setUploadMode: function () {
       this.downloadMode = false;
       this.uploadMode = true;
-      this.data = data;
     }
   }
 };
