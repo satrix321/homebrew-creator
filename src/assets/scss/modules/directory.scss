@@ -1,0 +1,15 @@
+.directory {
+  padding: 5px 0;
+  display: flex;
+  flex-direction: row;
+
+  .directory-back {
+    width: 30px;
+    height: 30px;
+  }
+
+  .directory-path {
+    margin-left: 10px;
+    align-self: center;
+  }
+}

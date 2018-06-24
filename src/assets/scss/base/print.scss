@@ -8,10 +8,7 @@
     display: none !important;
     height: 0 !important;
   }
-  .editor > textarea {
-    display: none !important;
-  }
-  .editorArea {
+  .split-editor {
     display: none !important;
     height: 0 !important;
     float: none !important;
@@ -20,7 +17,7 @@
     display: none !important;
     height: 0 !important;
   }
-  .documentArea {
+  .split-document {
     width: 100% !important;
     float: none !important;
   }

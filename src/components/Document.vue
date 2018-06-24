@@ -3,8 +3,7 @@
     <document-toolbar 
       @zoomChanged="zoomChanged" 
       @setDefaultPagesTexture="setDefaultPagesTexture"
-      @scrollToCursor="scrollToCursor"
-    ></document-toolbar>
+      @scrollToCursor="scrollToCursor"/>
     <div class="document">
       <div class="pages" v-html="compiledMarkdown"></div>
     </div>
@@ -18,17 +17,17 @@ import _ from 'lodash';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Document',
+  name: 'DocumentItem',
   components: {
     DocumentToolbar
   },
-  props: ['widthChange'],
   data: function () {
     return {
       pagesTextureUrl: undefined,
       documentElement: undefined
     };
   },
+  props: ['eventBus'],
   mounted: function () {
     this.documentElement = document.querySelector('.document');
     this.documentElement.onscroll = _.debounce(() => {
@@ -36,17 +35,16 @@ export default {
       this.$store.commit('document/setCurrentPage', pageNumber);
     }, 500);
 
-    window.onbeforeprint = () => {
-      this.$store.commit('document/setOldZoom', this.zoom);
-      this.$store.commit('document/setZoom', 100);
-      this.zoomChanged();
-    };
+    if (this.eventBus) {
+      this.eventBus.$on('resize', () => {
+        this.checkOverflow();
+      });
 
-    window.addEventListener('resize', this.checkOverflow);
-  },
-  watch: {
-    widthChange: function () {
-      this.checkOverflow();
+      this.eventBus.$on('onBeforePrint', () => {
+        this.$store.commit('document/setOldZoom', this.zoom);
+        this.$store.commit('document/setZoom', 100);
+        this.zoomChanged();
+      });
     }
   },
   computed: {

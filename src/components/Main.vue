@@ -1,40 +1,51 @@
 <template>
   <div class="main">
-    <Split ref="split1" :gutterSize="10" style="height: 100vh;" @onDrag="splitDrag">
-      <SplitArea class="editorArea" :size="50">
-        <Editor></Editor>
-      </SplitArea>
-      <SplitArea class="documentArea" :size="50">
-        <Document :widthChange="widthChange"></Document>
-      </SplitArea>
-    </Split>
+    <split :gutterSize="10" style="height: 100vh;" @onDrag="splitDrag">
+      <split-area class="split-editor" :size="50">
+        <editor-item/>
+      </split-area>
+      <split-area class="split-document" :size="50">
+        <document-item :eventBus="documentEventBus"/>
+      </split-area>
+    </split>
   </div>
 </template>
 
 <script>
-import Editor from './Editor.vue';
-import Document from './Document.vue';
+import EditorItem from './Editor.vue';
+import DocumentItem from './Document.vue';
+import Vue from 'vue';
 
 export default {
   name: 'Main',
   components: {
-    Editor,
-    Document
+    EditorItem,
+    DocumentItem
   },
   data: function () {
     return {
-      widthChange: false
+      documentEventBus: new Vue()
     };
+  },
+  created: function () {
+    window.addEventListener('resize', this.windowResized);
+    window.onbeforeprint = this.onBeforePrint;
   },
   methods: {
     splitDrag: function () {
-      this.widthChange = !this.widthChange;
+      this.documentEventBus.$emit('resize');
+    },
+    windowResized: function () {
+      this.documentEventBus.$emit('resize');
+    },
+    onBeforePrint: function () {
+      this.documentEventBus.$emit('onBeforePrint');
     }
   }
 };
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/fonts.scss";
-@import "@/assets/scss/print.scss";
+@import "@/assets/scss/base/fonts.scss";
+@import "@/assets/scss/base/print.scss";
 </style>

@@ -1,32 +1,34 @@
 <template>
-  <div class="modal" v-bind:class="{modalShow: visible}">
-    <div class="modalContent">
-      <div class="modalHeader">
-        <h2>{{title}}</h2>
+  <div class="modal" v-bind:class="{'is-visible': visible}">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">{{title}}</h2>
       </div>
-      <div class="modalBody">
-        <div class="pathDiv">
-          <button class="btn" @click="goBack"><i class="fas fa-arrow-up"></i></button>
-          <span>{{path}}</span>
+      <div class="modal-body">
+        <div class="directory">
+          <button class="btn directory-back" @click="goBack"><i class="fas fa-arrow-up"></i></button>
+          <span class="directory-path">{{path}}</span>
         </div>
-        <div class="tableDiv" @click="itemDeselected">
-          <table ref="fileTable">
-            <tbody>
-              <tr v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
-                <td class="iconCol"><i v-bind:class="{'fas fa-folder folderColor': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
-                <td class="nameCol">{{file.name}}</td>
-                <td class="idCol">{{file.id}}</td>
-                <th class="mimeCol">{{file.mimeType}}</th>
-              </tr>
-            </tbody>
-          </table>
+        <div class="filelist">
+          <div class="filelist-container">
+            <table class="filelist-table" ref="fileTable" @click="itemDeselected">
+              <tbody>
+                <tr class="filelist-row" v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
+                  <td class="filelist-col-icon"><i v-bind:class="{'fas fa-folder': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
+                  <td class="filelist-col-name">{{file.name}}</td>
+                  <td class="filelist-col-id">{{file.id}}</td>
+                  <th class="filelist-col-mime">{{file.mimeType}}</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div class="modalFooter">
-        <input v-if="this.uploadMode" ref="fileName" class="input fileName">
-        <input v-if="this.uploadMode" class="input fileExtension" value=".hmd" disabled="disabled">
-        <button class="btn btnRight" @click="ok">OK</button>
-        <button class="btn btnRight" @click="cancel">Cancel</button>
+      <div class="modal-footer">
+        <input v-if="this.uploadMode" ref="fileName" class="input input-file-name">
+        <input v-if="this.uploadMode" class="input input-file-extension" value=".hmd" disabled="disabled">
+        <button class="btn btn-right" @click="ok">OK</button>
+        <button class="btn btn-right" @click="cancel">Cancel</button>
       </div>
     </div>
   </div>
@@ -79,9 +81,9 @@ export default {
       }
     },
     clearSelection: function () {
-      let selectedItem = this.$refs.fileTable.querySelector('.selectedRow');
+      let selectedItem = this.$refs.fileTable.querySelector('tr.is-selected');
       if (selectedItem) {
-        selectedItem.classList = [];
+        selectedItem.classList.remove('is-selected');
       }
       this.selectedItem = undefined;
     },
@@ -170,9 +172,9 @@ export default {
       this.clearSelection();
 
       let clickedRow = event.target.parentElement;
-      let selectedId = clickedRow.querySelector('.idCol').innerHTML;
+      let selectedId = clickedRow.querySelector('.filelist-col-id').innerHTML;
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
-      clickedRow.classList.add("selectedRow");
+      clickedRow.classList.add("is-selected");
 
       if (this.uploadMode && this.selectedItem.mimeType !== this.folderMimeType) {
         if (this.selectedItem.name.length > 4 && this.selectedItem.name.substring(this.selectedItem.name.length - 4) === '.' + this.provider.fileExtension) {
@@ -196,7 +198,7 @@ export default {
       }
 
       let clickedRow = event.target.parentElement;
-      let selectedId = clickedRow.querySelector('.idCol').innerHTML;
+      let selectedId = clickedRow.querySelector('.filelist-col-id').innerHTML;
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
 
       if (this.selectedItem.mimeType === this.folderMimeType) {
@@ -301,147 +303,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/button.scss';
-@import "@/assets/scss/input.scss";
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 100;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.4);
-  font-family: $site-monoFont;
-
-  &.modalShow {
-    display: initial;
-  }
-
-  .modalContent {
-    position: relative;
-    background-color: #fefefe;
-    margin: 5% auto 0 auto;
-    padding: 0;
-    border: 0;
-    width: 900px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    animation-name: animatetop;
-    animation-duration: 0.4s;
-
-    @keyframes animatetop {
-      from {top: -300px; opacity: 0}
-      to {top: 0; opacity: 1}
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-
-      &:hover,
-      &:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
-    }
-
-    .modalHeader {
-      padding: 2px 16px;
-      background-color: $toolbar-backgroundColor;
-      color: white;
-
-      h2 {
-        margin: 15px 0;
-      }
-    }
-
-    .modalBody {
-      padding: 10px;
-      background-color: #2a2a2a;
-      color: white;
-
-      .pathDiv {
-        padding: 5px 0;
-        display: flex;
-        flex-direction: row;
-
-        button {
-          width: 30px;
-          height: 30px;
-        }
-
-        span {
-          margin-left: 10px;
-          align-self: center;
-
-        }
-      }
-
-      .tableDiv {
-        height: 450px;
-        overflow-y:scroll;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0; 
-
-        tr {
-          vertical-align: middle;
-          height: 30px;
-
-          &.selectedRow {
-            background-color: $btn-backgroundColorActive;
-          }
-
-          &:hover {
-            cursor: pointer;
-            background-color: $btn-backgroundColorHover;
-          }
-        }
-
-        .iconCol {
-          width: 30px;
-          text-align: center;
-
-          i {
-
-            &.folderColor {
-              color: rgb(255, 232, 148);
-            }
-          }
-        }
-
-        .idCol, .mimeCol {
-          display: none;
-        }
-      }
-    }
-
-    .modalFooter {
-      padding: 10px;
-      background-color: $toolbar-backgroundColor;
-      color: white;
-
-      .btn {
-        margin: 0 5px;
-        width: 100px;
-      }
-
-      &::after {
-        content: " ";
-        display: block; 
-        height: 0; 
-        clear: both;
-      }
-    }
-
-  }
-}
+@import '@/assets/scss/modules/button.scss';
+@import '@/assets/scss/modules/input.scss';
+@import '@/assets/scss/modules/modal.scss';
+@import '@/assets/scss/modules/directory.scss';
+@import '@/assets/scss/modules/filelist.scss';
 </style>

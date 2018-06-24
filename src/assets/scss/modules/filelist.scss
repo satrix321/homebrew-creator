@@ -1,0 +1,39 @@
+.filelist {
+  .filelist-container {
+    height: 450px;
+    overflow-y:scroll;
+  }
+
+  .filelist-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0; 
+
+    .filelist-row {
+      vertical-align: middle;
+      height: 30px;
+
+      &.is-selected {
+        background-color: $btn-backgroundColorActive;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $btn-backgroundColorHover;
+      }
+    }
+
+    .filelist-col-icon {
+      width: 30px;
+      text-align: center;
+
+      .fas.fa-folder {
+        color: rgb(255, 232, 148);
+      }
+    }
+
+    .filelist-col-id, .filelist-col-mime {
+      display: none;
+    }
+  }
+}
