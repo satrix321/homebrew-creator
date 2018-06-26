@@ -1,9 +1,9 @@
-.pageFooter {
+.page-footer {
   position: absolute;
   bottom: 0;
   left: 0;
 
-  > .background {
+  > .is-textured {
     position: absolute;
     width: 21cm;
     height: 1cm;
@@ -13,14 +13,7 @@
     background-size: 21cm 1cm;
   }
 
-  &.even > .background {
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-  }
-
-  > .pageNumber {
+  > .page-number {
     position: absolute;
     bottom: 0.2cm;
     font-family: 'headers';
@@ -29,7 +22,16 @@
     left: 20.3cm;
   }
 
-  &.even > .pageNumber {
-    left: 0.5cm;
+  &.is-even {
+    > .is-textured {
+      -moz-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
+    }
+
+    > .page-number {
+      left: 0.5cm;  
+    }
   }
 }

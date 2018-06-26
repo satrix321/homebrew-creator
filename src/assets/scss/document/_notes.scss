@@ -1,4 +1,4 @@
-&.notesTexture > blockquote {
+&.notes-are-textured > blockquote {
   background-color: rgb(218, 230, 191);
 
   > blockquote {
@@ -9,12 +9,12 @@
     }
   }
   
-  &.newspaperNote,
-  &.handwrittenNote {
+  &.note-newspaper,
+  &.note-handwritten {
     background-color: #f4f4e2;
   }
 
-  &.phbNote {
+  &.note-phb {
     background-color: rgb(250, 247, 234);
   }
 }
@@ -73,7 +73,7 @@
     font-size: 9pt;
   }
 
-  &.newspaperNote {
+  &.note-newspaper {
     h5 {
       font-family: 'newspaper-headers';
       text-align: center;
@@ -91,13 +91,13 @@
     }
   }
 
-  &.handwrittenNote p {
+  &.note-handwritten p {
     font-family: 'handwriting';
     font-size: 12pt;
     color: black;
   }
 
-  &.phbNote {
+  &.note-phb {
     border-style: solid;
     border-width: 7px;
     border-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAMAAADG+c2+AAAAM1BMVEUAAAAAAAAAAAAkAAA1GwA0GgA5GgA5GwA4HgA7HgA5HgA7HgA7HwA7HgA8HgA7HgA8HwDn6RpAAAAAEHRSTlMAAQcHMDExQ1ZW1dXY3t7+02zZCAAAAKNJREFUWMPt2LEOwyAMBNCkSXGpKfb/f20G3AGUiWOJdNlueYrt6di2J3xHrmZF9mVCdnd3T/NgCO+ItUWdB0P4RrQWfR4chOVggUcu/cgCH0X6o+ynuivg3QjIAm8FggQJEiRIkCBBggQJEoTApO56An15EFIrVgJ4vaAtlnlwEKKbGrLATlgOxg9XeORfv9IMH+Xzb7tSzGo+gL7chNcjXpUulIwXVrjWS+0AAAAASUVORK5CYII=") 12 round;

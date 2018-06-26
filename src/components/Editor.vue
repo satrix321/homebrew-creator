@@ -153,19 +153,19 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     insertNewspaperNote: function () {
-      let data = '<blockquote markdown="true" class="newspaperNote">\n##### headline\n\narticle_content\n</blockquote>';
+      let data = '<blockquote markdown="true" class="note-newspaper">\n##### headline\n\narticle_content\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertHandwrittenNote: function () {
-      let data = '<blockquote markdown="true" class="handwrittenNote">\nnote_content\n</blockquote>';
+      let data = '<blockquote markdown="true" class="note-handwritten">\nnote_content\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertPhbNote: function () {
-      let data = '<blockquote markdown="true" class="phbNote">\n##### header\n\nnote_content\n</blockquote>';
+      let data = '<blockquote markdown="true" class="note-phb">\n##### header\n\nnote_content\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertCocMonsterTable: function () {
-      let data = '<div markdown="true" class="monsterTable cthulhu">\n>|Monster name|\n>|:-:|\n>\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|\n</div>';
+      let data = '<div markdown="true" class="table-monster table-monster-cthulhu">\n>|Monster name|\n>|:-:|\n>\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|\n</div>';
       this.insertData(data, this.getCursorPosition());
     },
     insertRegularPage: function () {
@@ -177,11 +177,11 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     insertAbsoluteImage: function () {
-      let data = '<img class="absoluteImage" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>';
+      let data = '<img class="page-image-absolute" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>';
       this.insertData(data, this.getCursorPosition());
     },
     insertFullPageImage: function () {
-      let data = '<img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg"/>';
+      let data = '<img class="page-image-fullpage" src="https://i.imgur.com/PNpQjCA.jpg"/>';
       this.insertData(data, this.getCursorPosition());
     },
     insertColumnsPage: function () {
@@ -197,7 +197,7 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     insertWideBlock: function () {
-      let data = '<div markdown="true" class="wideBlock">\nwide_block\n</div>';
+      let data = '<div markdown="true" class="page-wide-block">\nwide_block\n</div>';
       this.insertData(data, this.getCursorPosition());
     },
     insertVerticalSpacing: function () {
