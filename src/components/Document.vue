@@ -5,7 +5,7 @@
       @setDefaultPagesTexture="setDefaultPagesTexture"
       @scrollToCursor="scrollToCursor"/>
     <div ref="pagesContainer" class="document-pages-container">
-      <div ref="pages" class="document-pages" v-html="compiledMarkdown"></div>
+      <div @change="checkOverflow" ref="pages" class="document-pages" v-html="compiledMarkdown"></div>
     </div>
   </div>
 </template>
@@ -225,110 +225,5 @@ export default {
 </script>
 
 <style lang="scss">
-.document {
-  height: 100%;
-  overflow: hidden;
-
-  .document-pages-container {
-    overflow-y: auto;
-    height: calc(100vh - 30px);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: rgb(204, 204, 204);
-
-    &.document-overflow-fix {
-      display: block;
-
-      .document-pages {
-        transform-origin: top left;
-      }
-    }
-
-    .document-pages {
-      transform-origin: top center;
-    }
-  }
-}
-
-.page {
-  position: relative;
-  margin-bottom: 0.5cm;
-  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-  background-color: white;
-  position: relative;
-  padding: 1cm;
-  box-sizing: border-box;
-  z-index: 1;
-  width: 21cm;
-  height: 29.7cm;
-
-  &.is-textured {
-    background-image: url('../assets/imgs/texture_01.jpg');
-    background-size: 100% 100%;
-  }
-
-  * {
-    margin-top: 0 !important;
-  }
-
-  &.columns {
-    -moz-column-count: 2 !important;
-    -webkit-column-count: 2 !important;
-    column-count: 2 !important;
-    column-fill: auto;
-    -webkit-column-gap: 16px;
-    -moz-column-gap: 16px;
-    column-gap: 16px;
-    > blockquote {
-      border-top-style: inset;
-    }
-  }
-
-  p, td {
-    font-family: 'regular-text';
-    text-shadow: 0.1px 0.1px #000;
-    font-size: 9pt;
-    line-height: 1.25;
-    text-align: justify;
-  }
-
-  > hr {
-    display: none !important;
-  }
-
-  > pre {
-    break-after: column;
-  }
-
-  > .page-px-spacer {
-    height: 1px;
-    visibility: hidden;
-  }
-
-  > .page-wide-block {
-    column-span: all;
-    -webkit-column-span: all;
-  }
-
-  @import "@/assets/scss/document/_headers.scss";
-
-  @import "@/assets/scss/document/_lists.scss";
-  
-  @import "@/assets/scss/document/_titlePages.scss";
-
-  @import "@/assets/scss/document/_images.scss";
-
-  @import "@/assets/scss/document/_notes.scss";
-
-  @import "@/assets/scss/document/_footer.scss";
-
-  @import "@/assets/scss/document/_monsterTables.scss";
-}
-
-.document-pages-spacer {
-  width: 21cm;
-  height: 50px;
-}
-
+@import "@/assets/scss/modules/document.scss";
 </style>
