@@ -1,5 +1,6 @@
 <template>
-  <div class="editorContainer">
+  <div class="editor">
+    <div ref="progress" class="progress"><i class="progress-icon fas fa-spinner fa-5x"></i></div>
     <editor-toolbar
       @insertGreenNote="insertGreenNote"
       @insertBrownNote="insertBrownNote"
@@ -29,16 +30,9 @@
       @uploadGDrive="uploadGDrive"
       @downloadFile="downloadFile"
       @uploadFile="uploadFile"
-      @scrollToPage="scrollToPage"
-      >
-    </editor-toolbar>
-
-    <div class="editor">
-      <codemirror :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
-    </div>
-
+      @scrollToPage="scrollToPage"/>
+    <codemirror :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     <file-picker-modal ref="filePicker" title="File Picker" @downloadFile="downloadFileUsingProvider" @uploadFile="uploadFileUsingProvider"></file-picker-modal>
-
   </div>
 </template>
 
@@ -56,25 +50,10 @@ import 'codemirror/addon/mode/overlay.js';
 import 'codemirror/addon/selection/active-line.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
-import GoogleDriveProvider from '../storageProviders/GoogleDriveProvider';
-
-CodeMirror.defineMode("homebrew-markdown", function(config, parserConfig) {
-  var homebrewOverlay = {
-    token: function(stream) {
-      var ch;
-      if (stream.match("\\page")) {
-        while ((ch = stream.next()) != null && ch != "]") { continue; }
-        return "pageLine";
-      }
-      while (stream.next() != null && !stream.match("\\page", false)) { continue; }
-      return null;
-    }
-  };
-  return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/x-markdown"), homebrewOverlay);
-});
+import GoogleDriveProvider from '@/storageProviders/GoogleDriveProvider';
 
 export default {
-  name: 'Editor',
+  name: 'EditorItem',
   components: {
     codemirror,
     EditorToolbar,
@@ -107,6 +86,22 @@ export default {
       rawCode: 'editor/rawCode',
       documentCurrentPage: 'document/currentPage',
     }),
+  },
+  beforeCreate: function () {
+    CodeMirror.defineMode("homebrew-markdown", function(config, parserConfig) {
+      var homebrewOverlay = {
+        token: function(stream) {
+          var ch;
+          if (stream.match("\\page")) {
+            while ((ch = stream.next()) != null && ch != "]") { continue; }
+            return "pageLine";
+          }
+          while (stream.next() != null && !stream.match("\\page", false)) { continue; }
+          return null;
+        }
+      };
+      return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/x-markdown"), homebrewOverlay);
+    });
   },
   mounted: function () {
     this.codeMirror = document.querySelector('.CodeMirror').CodeMirror;
@@ -159,19 +154,19 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     insertNewspaperNote: function () {
-      let data = '<blockquote markdown="true" class="newspaperNote">\n##### headline\n\narticle_content\n</blockquote>';
+      let data = '<blockquote markdown="true" class="note-newspaper">\n##### headline\n\narticle_content\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertHandwrittenNote: function () {
-      let data = '<blockquote markdown="true" class="handwrittenNote">\nnote_content\n</blockquote>';
+      let data = '<blockquote markdown="true" class="note-handwritten">\nnote_content\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertPhbNote: function () {
-      let data = '<blockquote markdown="true" class="phbNote">\n##### header\n\nnote_content\n</blockquote>';
+      let data = '<blockquote markdown="true" class="note-phb">\n##### header\n\nnote_content\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertCocMonsterTable: function () {
-      let data = '<div markdown="true" class="monsterTable cthulhu">\n>|Monster name|\n>|:-:|\n>\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|\n</div>';
+      let data = '<div markdown="true" class="table-monster table-monster-cthulhu">\n>|Monster name|\n>|:-:|\n>\n>||||||\n>|:-:|:-:|:-:|:-:|:-:|\n>|**STR 55** |**CON 20** |**SIZ 50** |**INT 0**  |**POW 5**  |\n>|**DEX 15** |**MOV 5**  |-          |-          |**HP 7**   |\n>\n>|Weapons|Damage bonus|\n>|:-:|:-:|\n>|Knife 65%, **1d4**|**-**|\n>\n>|Skills|\n>|:-:|\n>|Sanity loss **1/1d6**|\n</div>';
       this.insertData(data, this.getCursorPosition());
     },
     insertRegularPage: function () {
@@ -183,11 +178,11 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     insertAbsoluteImage: function () {
-      let data = '<img class="absoluteImage" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>';
+      let data = '<img class="page-image-absolute" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>';
       this.insertData(data, this.getCursorPosition());
     },
     insertFullPageImage: function () {
-      let data = '<img class="absoluteImage fullPageImage" src="https://i.imgur.com/PNpQjCA.jpg"/>';
+      let data = '<img class="page-image-fullpage" src="https://i.imgur.com/PNpQjCA.jpg"/>';
       this.insertData(data, this.getCursorPosition());
     },
     insertColumnsPage: function () {
@@ -203,7 +198,7 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     insertWideBlock: function () {
-      let data = '<div markdown="true" class="wideBlock">\nwide_block\n</div>';
+      let data = '<div markdown="true" class="page-wide-block">\nwide_block\n</div>';
       this.insertData(data, this.getCursorPosition());
     },
     insertVerticalSpacing: function () {
@@ -240,75 +235,119 @@ export default {
     },
     syncFile: async function () {
       if (this.googleDriveFileId) {
+        this.$refs.progress.classList.add('is-visible');
+
         if (!this.googleDrive.isSignedIn) {
           await this.googleDrive.authenticate();
         }
-        this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId).then((response) => {
-          if (response.status !== 200) {
-            alert(response)
-          }
-        });
+
+        this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId)
+          .then((response) => {
+            if (response.status !== 200) {
+              alert(response);
+            }
+            this.$refs.progress.classList.remove('is-visible');
+          })
+          .catch((error) => {
+            alert(error);
+            this.$refs.progress.classList.remove('is-visible');
+          });
+
       } else {
         alert('file not selected!');
       }
     },
     downloadFileUsingProvider: async function () {
-      if (!this.googleDrive.isSignedIn) {
-        await this.googleDrive.authenticate();
-      }
-
       if (this.googleDriveFileId) {
-        this.googleDrive.downloadFile(this.googleDriveFileId).then((response) => {
-          if (response.status === 200) {
-            this.codeMirror.setValue(decodeURIComponent(response.body));
-          } else {
-            alert(response);
-          }
-        });
+        this.$refs.progress.classList.add('is-visible');
+
+        if (!this.googleDrive.isSignedIn) {
+          await this.googleDrive.authenticate();
+        }
+
+        this.googleDrive.downloadFile(this.googleDriveFileId)
+          .then((response) => {
+            if (response.status === 200) {
+              this.codeMirror.setValue(decodeURIComponent(response.body));
+            } else {
+              alert(response);
+            }
+            this.$refs.progress.classList.remove('is-visible');
+          })
+          .catch((error) => {
+            alert(error);
+            this.$refs.progress.classList.remove('is-visible');
+          });
       }
     },
     uploadFileUsingProvider: async function () {
+      this.$refs.progress.classList.add('is-visible');
+
       if (!this.googleDrive.isSignedIn) {
         await this.googleDrive.authenticate();
       }
 
       if (this.googleDriveFileId) {
         this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId)
+          .then((response) => {
+            if (response.status !== 200) {
+              alert(response);
+            }
+            this.$refs.progress.classList.remove('is-visible');
+          })
+          .catch((error) => {
+            alert(error);
+            this.$refs.progress.classList.remove('is-visible');
+          });
       } else if (this.googleDriveParentId) {
-        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode), this.googleDriveParentId).then((response) => {
-          if (response.status !== 200) {
-            alert(response);
-          } else {
-            this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
-          }
-        });
+        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode), this.googleDriveParentId)
+          .then((response) => {
+            if (response.status !== 200) {
+              alert(response);
+            } else {
+              this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
+            }
+            this.$refs.progress.classList.remove('is-visible');
+          })
+          .catch((error) => {
+            alert(error);
+            this.$refs.progress.classList.remove('is-visible');
+          });
       } else {
-        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode)).then((response) => {
-          if (response.status !== 200) {
-            alert(response);
-          } else {
-            this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
-          }
-        });
+        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode))
+          .then((response) => {
+            if (response.status !== 200) {
+              alert(response);
+            } else {
+              this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
+            }
+            this.$refs.progress.classList.remove('is-visible');
+          })
+          .catch((error) => {
+            alert(error);
+            this.$refs.progress.classList.remove('is-visible');
+          });
       }
     },
     downloadGDrive: async function () {
+      this.$refs.progress.classList.add('is-visible');
       if (!this.googleDrive.isSignedIn) {
         await this.googleDrive.authenticate();
       }
-
       this.$refs.filePicker.setProvider(this.googleDrive);
       this.$refs.filePicker.setDownloadMode();
       this.$refs.filePicker.show();
+      this.$refs.progress.classList.remove('is-visible');
     },
     uploadGDrive: async function () {
+      this.$refs.progress.classList.add('is-visible');
       if (!this.googleDrive.isSignedIn) {
         await this.googleDrive.authenticate();
       }
-
       this.$refs.filePicker.setProvider(this.googleDrive);
       this.$refs.filePicker.setUploadMode();
       this.$refs.filePicker.show();
+      this.$refs.progress.classList.remove('is-visible');
     },
     downloadFile: function () {
       let element = document.createElement('a');
@@ -345,152 +384,6 @@ export default {
 </script>
 
 <style lang="scss">
-.editorContainer {
-  height: 100%;
-
-  .CodeMirror {
-    height: calc(100vh - 30px);
-    width: 100%;
-    margin: 0px;
-    border: 0px;
-    padding: 0px;
-    resize: none;
-    font-family: $site-monoFont;
-    font-size: 8pt;  
-  }
-}
-
-.cm-s-custom {
-  font-size: 1em;
-  line-height: 1.5em;
-  font-family: $site-monoFont;
-  background: #2a2a2a !important;
-  color: #ffffff !important;
-
-  .CodeMirror-lines {
-    padding: 8px 0;
-  }
-
-  .CodeMirror-gutters {
-    box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
-    background-color: #2a2a2a;
-    padding-right: 10px;
-    z-index: 3;
-    border: none;
-  }
-
-  div.CodeMirror-cursor {
-    border-left: 3px solid #ffffff;
-  }
-
-  .CodeMirror-activeline-background {
-    background-color: #3E3D32;
-  }
-
-  .CodeMirror-selected {
-    background-color: #237CC4;
-  }
-
-  .box pre {
-    color: white;
-  }
-
-  .cm-comment {
-    color: #B8FF9A;
-  }
-  
-  .cm-string {
-    color: #FF9F9A;
-  }
-
-  .cm-string-2 {
-    color: #FFFFFF;
-  }
-
-  .cm-number {
-    color: #66D9EF;
-  }
-
-  .cm-atom {
-    color: #66D9EF;
-  }
-
-  .cm-def {
-    font-style: italic;
-    color: #FD971F;
-  }
-
-  .cm-variable {
-    color: #ddca7e;
-  }
-  
-  .cm-variable-2 {
-    color: #F29C00;
-  }
-
-  .cm-property {
-    color: #66D9EF;
-  }
-
-  .cm-keyword {
-    color: #ddca7e;
-  }
-
-  .cm-atom {
-    color: #ddca7e;
-  }
-
-  .cm-operator {
-    color: #cccccc;
-  }
-
-  .CodeMirror-linenumber {
-    color: #B8FF9A;
-  }
-
-  .cm-quote {
-    color: #B8FF9A;
-  }
-
-  .cm-header {
-    color: #66D9EF;
-  }
-
-  .cm-pageLine {
-    color: yellow;
-  }
-
-  .cm-unit {
-    color: #d0782a;
-  }
-
-  .cm-meta {
-    color: #9a8297;
-  }
-
-  .cm-tag {
-    color: #D043E0;
-  }
-
-  .cm-attribute {
-    color: #ddca7e;
-  }
-
-  .cm-strong {
-    color: #ddca7e;
-  }
-
-  .cm-em {
-    color: #ddca7e;
-  }
-
-  .cm-qualifier {
-    color: #ddca7e;
-  }
-
-  .cm-builtin {
-    color: #ddca7e;
-  }
-}
+@import "@/assets/scss/modules/codemirror.scss";
+@import "@/assets/scss/modules/progress.scss";
 </style>

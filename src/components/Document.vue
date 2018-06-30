@@ -1,12 +1,11 @@
 <template>
-  <div class="documentContainer">
+  <div class="document">
     <document-toolbar 
       @zoomChanged="zoomChanged" 
       @setDefaultPagesTexture="setDefaultPagesTexture"
-      @scrollToCursor="scrollToCursor"
-    ></document-toolbar>
-    <div class="document">
-      <div class="pages" v-html="compiledMarkdown"></div>
+      @scrollToCursor="scrollToCursor"/>
+    <div ref="pagesContainer" class="document-pages-container">
+      <div @change="checkOverflow" ref="pages" class="document-pages" v-html="compiledMarkdown"></div>
     </div>
   </div>
 </template>
@@ -18,35 +17,34 @@ import _ from 'lodash';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Document',
+  name: 'DocumentItem',
   components: {
     DocumentToolbar
   },
-  props: ['widthChange'],
   data: function () {
     return {
       pagesTextureUrl: undefined,
       documentElement: undefined
     };
   },
+  props: ['eventBus'],
   mounted: function () {
-    this.documentElement = document.querySelector('.document');
-    this.documentElement.onscroll = _.debounce(() => {
-      let pageNumber = parseInt((this.documentElement.scrollTop / this.pageHeight) * (100 / this.zoom));
+    let pagesContainer = this.$refs.pagesContainer;
+    pagesContainer.onscroll = _.debounce(() => {
+      let pageNumber = parseInt((pagesContainer.scrollTop / this.pageHeight) * (100 / this.zoom));
       this.$store.commit('document/setCurrentPage', pageNumber);
     }, 500);
 
-    window.onbeforeprint = () => {
-      this.$store.commit('document/setOldZoom', this.zoom);
-      this.$store.commit('document/setZoom', 100);
-      this.zoomChanged();
-    };
+    if (this.eventBus) {
+      this.eventBus.$on('resize', () => {
+        this.checkOverflow();
+      });
 
-    window.addEventListener('resize', this.checkOverflow);
-  },
-  watch: {
-    widthChange: function () {
-      this.checkOverflow();
+      this.eventBus.$on('onBeforePrint', () => {
+        this.$store.commit('document/setOldZoom', this.zoom);
+        this.$store.commit('document/setZoom', 100);
+        this.zoomChanged();
+      });
     }
   },
   computed: {
@@ -74,19 +72,18 @@ export default {
         this.loadPagesTexture();
       }
 
-      let spacerBlock = document.createElement('div');
-      spacerBlock.className = 'spacerBlock';
+      let spacer = document.createElement('div');
+      spacer.className = 'document-pages-spacer';
 
       let pages = document.createElement('div');
-      pages.appendChild(spacerBlock);
+      pages.appendChild(spacer);
 
       for (let i = 1; i < pagesRawInput.length; i++) {
         let page = document.createElement('div');
         page.classList.add('page');
-        page.dataset.size = 'A4';
 
-        if (this.pagesTexture) page.classList.add('pagesTexture');
-        if (this.notesTexture) page.classList.add('notesTexture');
+        if (this.pagesTexture) page.classList.add('is-textured');
+        if (this.notesTexture) page.classList.add('notes-are-textured');
         if (pagesOptions[i - 1] !== null) {
           let classNames = pagesOptions[i - 1].split(' ');
           for (let j = 0; j < classNames.length; j++) {
@@ -99,7 +96,7 @@ export default {
         }
 
         let pxSpacer = document.createElement('div');
-        pxSpacer.className = 'pxSpacer';
+        pxSpacer.className = 'page-px-spacer';
         pxSpacer.innerText = '_';
 
         page.appendChild(pxSpacer);
@@ -108,7 +105,7 @@ export default {
         if (currentIndex < pagesRawInput[i].length) {
           let pageMarkdownContainer = document.createElement('div');
           let pageMarkdown = marked(pagesRawInput[i].substring(currentIndex, pagesRawInput[i].length));
-          pageMarkdown.replace(preElementRegex, "<pre><code></code></pre><div class='pxSpacer'>_</div>");
+          pageMarkdown.replace(preElementRegex, "<pre><code></code></pre><div class='page-px-spacer'>_</div>");
           pageMarkdownContainer.innerHTML = pageMarkdown;
 
           let elements = pageMarkdownContainer.querySelectorAll('*[markdown]');
@@ -122,19 +119,19 @@ export default {
 
         if (!(pagesOptions[i - 1] !== null && pagesOptions[i - 1].includes('title'))) {
           let footer = document.createElement('div');
-          footer.classList.add('pageFooter');
+          footer.classList.add('page-footer');
           if (pageNum % 2 === 1) {
-            footer.classList.add('odd');
+            footer.classList.add('is-odd');
           } else {
-            footer.classList.add('even');
+            footer.classList.add('is-even');
           }
           footer.dataset.page = pageNum;
 
           let backgroundElement = document.createElement('div');
-          backgroundElement.className = 'background';
+          backgroundElement.className = 'is-textured';
 
           let pageNumberElement = document.createElement('p');
-          pageNumberElement.className = 'pageNumber';
+          pageNumberElement.className = 'page-number';
           pageNumberElement.innerText = pageNum;
 
           footer.appendChild(backgroundElement);
@@ -147,7 +144,7 @@ export default {
         pages.appendChild(page);
       }
 
-      pages.appendChild(spacerBlock.cloneNode(true));
+      pages.appendChild(spacer.cloneNode(true));
 
       return pages.innerHTML;
     }
@@ -183,35 +180,37 @@ export default {
       this.$store.commit('document/unsetPagesTextureFileChanged');
     },
     zoomChanged: function () {
+      let pagesContainer = this.$refs.pagesContainer;
+      let pages = this.$refs.pages;
+
       if (this.oldZoom > this.zoom) {
-        this.documentElement.scrollTo(0, (this.zoom * this.documentElement.scrollTop) / this.oldZoom);
+        pagesContainer.scrollTo(0, (this.zoom * pagesContainer.scrollTop) / this.oldZoom);
       }
 
-      let pagesElement = document.querySelector('.document .pages');
       if (this.zoom === 100) {
-        pagesElement.style['transform'] = '';
-        //pagesElement.style.zoom = '100%'; // firefox doesn't support this
+        pages.style['transform'] = '';
+        //pages.style.zoom = '100%'; // firefox doesn't support this
       } else {
-        pagesElement.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
-        //pagesElement.style.zoom = (this.zoom).toFixed(2) + '%'; // firefox doesn't support this
+        pages.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
+        //pages.style.zoom = (this.zoom).toFixed(2) + '%'; // firefox doesn't support this
       }
 
       if (this.zoom > this.oldZoom) {
-        this.documentElement.scrollTo(0, (this.zoom * this.documentElement.scrollTop) / this.oldZoom);
+        pagesContainer.scrollTo(0, (this.zoom * pagesContainer.scrollTop) / this.oldZoom);
       }
 
       this.checkOverflow();
     },
     checkOverflow: function () {
-      let doc = document.querySelector('.document');
+      let pagesContainer = this.$refs.pagesContainer;
 
-      if (doc.clientWidth !== doc.scrollWidth) {
-        if (!doc.classList.contains('overflowFix')) {
-          doc.classList.add('overflowFix');
+      if (pagesContainer.clientWidth !== pagesContainer.scrollWidth) {
+        if (!pagesContainer.classList.contains('document-overflow-fix')) {
+          pagesContainer.classList.add('document-overflow-fix');
         }
       }
-      else if (doc.classList.contains('overflowFix')) {
-        doc.classList.remove('overflowFix');
+      else if (pagesContainer.classList.contains('document-overflow-fix')) {
+        pagesContainer.classList.remove('document-overflow-fix');
       }
     },
     setDefaultPagesTexture: function () {
@@ -219,126 +218,12 @@ export default {
       this.pagesTextureUrl = undefined;
     },
     scrollToCursor: function () {
-      this.documentElement.scrollTo(0, (this.pageHeight * this.editorCurrentPage + this.pageOffset) * (this.zoom / 100));
+      this.$refs.pagesContainer.scrollTo(0, (this.pageHeight * this.editorCurrentPage + this.pageOffset) * (this.zoom / 100));
     }
   }
 };
 </script>
 
 <style lang="scss">
-.documentContainer {
-  height: 100%;
-  overflow: hidden;
-
-  .document {
-    overflow-y: auto;
-    height: calc(100vh - 30px);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: rgb(204, 204, 204);
-
-    &.overflowFix {
-      display: block;
-
-      .pages {
-        transform-origin: top left;
-      }
-    }
-
-    .pages {
-      transform-origin: top center;
-    }
-    
-    .page {
-      position: relative;
-      margin-bottom: 0.5cm;
-      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-      background-color: white;
-      position: relative;
-      padding: 1cm;
-      box-sizing: border-box;
-      z-index: 1;
-
-      &[data-size="A4"] {
-        width: 21cm;
-        height: 29.7cm;
-
-        &[data-layout="portrait"] {
-          width: 29.7cm;
-          height: 21cm;
-        }
-      }
-
-      &.page.pagesTexture {
-        background-image: url('../assets/imgs/texture_01.jpg');
-        background-size: 100% 100%;
-      }
-
-      * {
-        margin-top: 0 !important;
-      }
-
-      &.columns {
-        -moz-column-count: 2 !important;
-        -webkit-column-count: 2 !important;
-        column-count: 2 !important;
-        column-fill: auto;
-        -webkit-column-gap: 16px;
-        -moz-column-gap: 16px;
-        column-gap: 16px;
-        >blockquote {
-          border-top-style: inset;
-        }
-      }
-
-      p,
-      td {
-        font-family: 'regular-text';
-        text-shadow: 0.1px 0.1px #000;
-        font-size: 9pt;
-        line-height: 1.25;
-        text-align: justify;
-      }
-
-      > hr {
-        display: none !important;
-      }
-
-      > pre {
-        break-after: column;
-      }
-
-      > .pxSpacer {
-        height: 1px;
-        visibility: hidden;
-      }
-
-      > .wideBlock {
-        column-span: all;
-        -webkit-column-span: all;
-      }
-
-      @import "@/assets/scss/document/_headers.scss";
-
-      @import "@/assets/scss/document/_lists.scss";
-      
-      @import "@/assets/scss/document/_titlePages.scss";
-
-      @import "@/assets/scss/document/_images.scss";
-
-      @import "@/assets/scss/document/_notes.scss";
-
-      @import "@/assets/scss/document/_footer.scss";
-
-      @import "@/assets/scss/document/_monsterTables.scss";
-    }
-  }
-
-  .spacerBlock {
-    width: 21cm;
-    height: 50px;
-  }
-}
-
+@import "@/assets/scss/modules/document.scss";
 </style>

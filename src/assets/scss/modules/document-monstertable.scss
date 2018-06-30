@@ -1,4 +1,4 @@
-.monsterTable {
+.table-monster {
   blockquote {
     margin-left: 0;
     margin-right: 0;
@@ -8,7 +8,7 @@
     border-bottom: 5px solid black;
     page-break-inside: avoid;
   }
-  &.cthulhu {
+  &.table-monster-cthulhu {
     > blockquote {
       > table {
         width: 100%;
@@ -51,8 +51,8 @@
     }
   }
 }
-&.notesTexture >.monsterTable {
-  &.cthulhu {
+&.notes-are-textured >.table-monster {
+  &.table-monster-cthulhu {
     > blockquote {
       > table {
         background-color: #ffbcbc;

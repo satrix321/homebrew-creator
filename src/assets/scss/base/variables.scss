@@ -1,11 +1,12 @@
-@import "@/assets/scss/reset.scss";
-@import "@/assets/scss/mixins.scss";
+@import "@/assets/scss/base/reset.scss";
+@import "@/assets/scss/base/mixins.scss";
 
-$toolbar-backgroundColor: #414141;
+$toolbar-backgroundColor: #363636;
 $btn-backgroundColor: #4b4b4b;
 $btn-backgroundColorHover: #737373;
 $btn-backgroundColorActive: #5f5f5f;
 $btn-backgroundColorClicked: #191919;
 $btn-colorDisabled: #909090;
 
+$site-font: Arial;
 $site-monoFont: 'Fira Mono', monospace;

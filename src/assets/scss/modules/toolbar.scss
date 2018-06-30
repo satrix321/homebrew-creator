@@ -11,11 +11,11 @@
   > .dropdown {
     float: left;
 
-    &.dropdownRight {
+    &.dropdown-right {
       float: right;
     }
 
-    %dropdownContent {
+    %dropdown-content {
       display: none;
       position: absolute;
       background-color: $toolbar-backgroundColor;
@@ -26,8 +26,8 @@
       overflow: visible;
     }
 
-    .dropdownContent {
-      @extend %dropdownContent;
+    .dropdown-content {
+      @extend %dropdown-content;
 
       .btn {
         float: none;
@@ -36,17 +36,17 @@
         text-align: left;
       }
 
-      > .dropdown > .dropdownContent {
-        @extend %dropdownContent;
+      > .dropdown > .dropdown-content {
+        @extend %dropdown-content;
         left: 30px;
         width: auto;
       }
     }
 
-    &:hover > .dropdownContent {
+    &:hover > .dropdown-content {
       display: block;
 
-      > .dropdown:hover > .dropdownContent {
+      > .dropdown:hover > .dropdown-content {
         display: block;
       }
     }
