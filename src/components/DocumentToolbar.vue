@@ -3,6 +3,13 @@
     <button class="btn" @click="zoomIn"><i class="fas fa-search-plus"></i></button>
     <button class="btn" @click="zoomOut"><i class="fas fa-search-minus"></i></button>
     <div class="dropdown">
+      <button class="btn"><i class="fas fa-image"></i> Theme</button>
+      <div class="dropdown-content">
+        <button class="btn" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</button>
+        <button class="btn" @click="toggleCthulhuTheme"><i class="fas fa-image"></i> Cthulhu</button>
+      </div>
+    </div>
+    <div class="dropdown">
       <button class="btn" :class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
       <div class="dropdown-content">
         <button class="btn" :class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Toggle Pages Texture</button>
@@ -50,6 +57,12 @@ export default {
         this.$store.commit('document/setZoom', this.zoom - 10);
         this.$emit('zoomChanged');
       }
+    },
+    toggleDefaultTheme: function () {
+      this.$emit('toggleDefaultTheme');
+    },
+    toggleCthulhuTheme: function () {
+      this.$emit('toggleCthulhuTheme');
     },
     uploadPagesTexture: function () {
       let input = document.getElementById('uploadPagesTextureInput');
