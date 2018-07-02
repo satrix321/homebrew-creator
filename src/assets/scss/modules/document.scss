@@ -53,9 +53,6 @@
     -webkit-column-gap: 16px;
     -moz-column-gap: 16px;
     column-gap: 16px;
-    > blockquote {
-      border-top-style: inset;
-    }
   }
 
   p, td {
@@ -84,13 +81,13 @@
     -webkit-column-span: all;
   }
 
-  @import "document-header.scss";
-  @import "document-list.scss";
-  @import "document-titlepage.scss";
-  @import "document-image.scss";
-  @import "document-note.scss";
-  @import "document-footer.scss";
-  @import "document-monstertable.scss";
+  @import "submodules/_document-header.scss";
+  @import "submodules/_document-list.scss";
+  @import "submodules/_document-titlepage.scss";
+  @import "submodules/_document-image.scss";
+  @import "submodules/_document-note.scss";
+  @import "submodules/_document-footer.scss";
+  @import "submodules/_document-monstertable.scss";
 }
 
 .document-pages-spacer {

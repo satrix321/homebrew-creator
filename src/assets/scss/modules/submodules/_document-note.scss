@@ -1,21 +1,37 @@
-&.notes-are-textured > blockquote {
-  background-color: rgb(218, 230, 191);
-
+&.notes-are-textured {
   > blockquote {
-    background-color: rgb(220, 207, 172);
+    background-color: rgb(218, 230, 191);
 
     > blockquote {
-      background-color: rgb(231, 227, 239);
+      background-color: rgb(220, 207, 172);
+
+      > blockquote {
+        background-color: rgb(231, 227, 239);
+      }
+    }
+    
+    &.note-newspaper,
+    &.note-handwritten {
+      background-color: #f4f4e2;
+    }
+
+    &.note-phb {
+      background-color: rgb(250, 247, 234);
     }
   }
-  
-  &.note-newspaper,
-  &.note-handwritten {
-    background-color: #f4f4e2;
-  }
 
-  &.note-phb {
-    background-color: rgb(250, 247, 234);
+  &.theme-cthulhu {
+    > blockquote {
+      background-color: rgba(0, 0, 0, 0.07);
+
+      > blockquote {
+        background-color: initial;
+
+        > blockquote {
+          background-color: initial;
+        }
+      }
+    }
   }
 }
 
@@ -27,6 +43,7 @@
   border-top: 5px solid black;
   border-bottom: 5px solid black;
   page-break-inside: avoid;
+  border-top-style: inset;
 
   > blockquote {
     margin: 0;
@@ -102,5 +119,40 @@
     border-width: 7px;
     border-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAMAAADG+c2+AAAAM1BMVEUAAAAAAAAAAAAkAAA1GwA0GgA5GgA5GwA4HgA7HgA5HgA7HgA7HwA7HgA8HgA7HgA8HwDn6RpAAAAAEHRSTlMAAQcHMDExQ1ZW1dXY3t7+02zZCAAAAKNJREFUWMPt2LEOwyAMBNCkSXGpKfb/f20G3AGUiWOJdNlueYrt6di2J3xHrmZF9mVCdnd3T/NgCO+ItUWdB0P4RrQWfR4chOVggUcu/cgCH0X6o+ynuivg3QjIAm8FggQJEiRIkCBBggQJEoTApO56An15EFIrVgJ4vaAtlnlwEKKbGrLATlgOxg9XeORfv9IMH+Xzb7tSzGo+gL7chNcjXpUulIwXVrjWS+0AAAAASUVORK5CYII=") 12 round;
     border-image-outset: 4px;
+  }
+}
+
+&.theme-cthulhu > blockquote {
+  border-radius: 25px;
+  border: none;
+
+  &::before {
+    display: block;
+    content: '';
+    height: 50px;
+    background-image: url('../assets/imgs/cthulhu_note_hr.png');
+    background-repeat: no-repeat;
+    background-position: center; 
+  }
+
+  &::after {
+    display: block;
+    content: '';
+    height: 50px;
+    background-image: url('../assets/imgs/cthulhu_note_hr.png');
+    background-repeat: no-repeat;
+    background-position: center; 
+    transform: rotate(180deg);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 16pt;
+    font-weight: 600;
+    font-family: 'headers';
+    text-transform: uppercase;
+    color: #6a1c0f;
+    padding-top: 0;
+    margin-bottom: 5px;
   }
 }
