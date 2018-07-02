@@ -3,14 +3,14 @@
     <button class="btn" @click="zoomIn"><i class="fas fa-search-plus"></i></button>
     <button class="btn" @click="zoomOut"><i class="fas fa-search-minus"></i></button>
     <div class="dropdown">
-      <button class="btn" v-bind:class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
+      <button class="btn" :class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
       <div class="dropdown-content">
-        <button class="btn" v-bind:class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Toggle Pages Texture</button>
+        <button class="btn" :class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Toggle Pages Texture</button>
         <button class="btn" @click="uploadPagesTexture"><i class="fas fa-share-square"></i> Upload Pages Texture<input type="file" ref="uploadPagesTextureInput" style="display: none;"></button>
         <button class="btn" @click="setDefaultPagesTexture"><i class="fas fa-times"></i> Set Default Pages Texture</button>
       </div>
     </div>
-    <button class="btn" v-bind:class="{'is-clicked': notesTexture}" @click="toggleNotesTexture"><i class="fas fa-file"></i> Notes Texture</button>
+    <button class="btn" :class="{'is-clicked': notesTexture}" @click="toggleNotesTexture"><i class="fas fa-file"></i> Notes Texture</button>
     <button class="btn btn-right">Zoom {{zoom}}%</button>
     <button class="btn btn-right" @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button>
   </div>

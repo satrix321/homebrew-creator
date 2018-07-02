@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" v-bind:class="{'is-visible': visible}">
+  <div class="modal" :class="{'is-visible': visible}">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title">{{title}}</h2>
@@ -14,7 +14,7 @@
             <table class="filelist-table" ref="fileTable" @click="itemDeselected">
               <tbody>
                 <tr class="filelist-row" v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
-                  <td class="filelist-col-icon"><i v-bind:class="{'fas fa-folder': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
+                  <td class="filelist-col-icon"><i :class="{'fas fa-folder': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
                   <td class="filelist-col-name">{{file.name}}</td>
                   <td class="filelist-col-id">{{file.id}}</td>
                   <th class="filelist-col-mime">{{file.mimeType}}</th>
