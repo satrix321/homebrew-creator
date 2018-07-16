@@ -61,7 +61,7 @@ export default {
       pageOffset: 'document/pageOffset'
     }),
     compiledMarkdown: function () {
-      const pageSplitRegex = /\\page(?:\[[\w ]*\])?/g;
+      const pageSplitRegex = /\\page(?:\[[\w -]*\])?/g;
       const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g;
 
       let pagesOptions = this.getPagesOptions(this.rawCode);
@@ -151,7 +151,7 @@ export default {
   },
   methods: {
     getPagesOptions: function (code) {
-      const pageSplitOptionsRegex = /\\page(?:\[([\w ]*)\])?/g;
+      const pageSplitOptionsRegex = /\\page(?:\[([\w -]*)\])?/g;
       let pageOptions = [];
       let pageOptionsIt;
 
