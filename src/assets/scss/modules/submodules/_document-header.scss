@@ -24,3 +24,31 @@ h3 {
   font-size: 16pt;
   border-bottom: 1px solid rgb(201, 173, 105);
 }
+
+&.theme-cthulhu {
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
+  }
+
+  h1, h2, h3 {
+    &::first-letter {
+      font-size: 100%;
+    }
+  }
+
+  h3, h4, h5, h6 {
+    text-transform: initial;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  h2 {
+    font-size: 18pt;
+  }
+
+  h3 {
+    font-size: 14pt;
+  }
+}
