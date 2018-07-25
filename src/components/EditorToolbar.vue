@@ -3,12 +3,12 @@
     <div class="dropdown">
       <button class="btn"><i class="fas fa-sticky-note"></i> Notes</button>
       <div class="dropdown-content">
-        <button class="btn" @click="insertGreenNote"><i style="color: rgb(218, 230, 191);" class="fas fa-sticky-note"></i> Green</button>
-        <button class="btn" @click="insertBrownNote"><i style="color: rgb(220, 207, 172);" class="fas fa-sticky-note"></i> Brown</button>
-        <button class="btn" @click="insertPurpleNote"><i style="color: rgb(231, 227, 239);" class="fas fa-sticky-note"></i> Purple</button>
+        <button class="btn" @click="insertPrimaryNote"><i style="color: rgb(218, 230, 191);" class="fas fa-sticky-note"></i> Primary</button>
+        <button class="btn" @click="insertSecondaryNote"><i style="color: rgb(220, 207, 172);" class="fas fa-sticky-note"></i> Secondary</button>
+        <button class="btn" @click="insertTertiaryNote"><i style="color: rgb(231, 227, 239);" class="fas fa-sticky-note"></i> Tertiary</button>
         <button class="btn" @click="insertNewspaperNote"><i style="color: rgb(244, 244, 226)" class="fas fa-sticky-note"></i> Newspaper</button>
         <button class="btn" @click="insertHandwrittenNote"><i style="color: rgb(244, 244, 236)" class="fas fa-sticky-note"></i> Handwritten</button>
-        <button class="btn" @click="insertPhbNote"><i class="fas fa-sticky-note"></i> PHB</button>
+        <!--<button class="btn" @click="insertPhbNote"><i class="fas fa-sticky-note"></i> PHB</button>-->
       </div>
     </div>
     <div class="dropdown">
@@ -78,14 +78,14 @@ export default {
     })
   },
   methods: {
-    insertGreenNote: function () {
-      this.$emit('insertGreenNote');
+    insertPrimaryNote: function () {
+      this.$emit('insertPrimaryNote');
     },
-    insertBrownNote: function () {
-      this.$emit('insertBrownNote');
+    insertSecondaryNote: function () {
+      this.$emit('insertSecondaryNote');
     },
-    insertPurpleNote: function () {
-      this.$emit('insertPurpleNote');
+    insertTertiaryNote: function () {
+      this.$emit('insertTertiaryNote');
     },
     insertNewspaperNote: function () {
       this.$emit('insertNewspaperNote');

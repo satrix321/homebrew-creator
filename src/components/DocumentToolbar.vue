@@ -5,8 +5,8 @@
     <div class="dropdown">
       <button class="btn"><i class="fas fa-image"></i> Theme</button>
       <div class="dropdown-content">
-        <button class="btn" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</button>
-        <button class="btn" @click="toggleCthulhuTheme"><i class="fas fa-image"></i> Cthulhu</button>
+        <button class="btn" :class="{'is-clicked': theme === 'theme-default'}" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</button>
+        <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu'}" @click="toggleCthulhuTheme"><i class="fas fa-image"></i> Cthulhu</button>
       </div>
     </div>
     <div class="dropdown">
@@ -28,6 +28,14 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'Document',
+  computed: {
+    ...mapGetters({
+      pagesTexture: 'document/pagesTexture',
+      notesTexture: 'document/notesTexture',
+      zoom: 'document/zoom',
+      theme: 'document/theme'
+    })
+  },
   mounted: function () {
     let context = this;
     this.$nextTick(function () {
@@ -35,13 +43,6 @@ export default {
         context.$store.commit('document/setPagesTextureFile', this.files[0]);
       };
     });
-  },
-  computed: {
-    ...mapGetters({
-      pagesTexture: 'document/pagesTexture',
-      notesTexture: 'document/notesTexture',
-      zoom: 'document/zoom'
-    })
   },
   methods: {
     zoomIn: function () {

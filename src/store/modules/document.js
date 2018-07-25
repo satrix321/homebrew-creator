@@ -8,6 +8,7 @@ const document = {
     zoom: 100,
     pagesTextureFile: undefined,
     pagesTextureFileChanged: false,
+    theme: 'theme-default',
     currentPage: 0,
     pageHeight: 1141.42,
     pageOffset: 40
@@ -20,6 +21,7 @@ const document = {
     zoom: state => state.zoom,
     pagesTextureFile: state => state.pagesTextureFile,
     pagesTextureFileChanged: state => state.pagesTextureFileChanged,
+    theme: state => state.theme,
     currentPage: state => state.currentPage,
     pageHeight: state => state.pageHeight,
     pageOffset: state => state.pageOffset
@@ -46,6 +48,9 @@ const document = {
     },
     unsetPagesTextureFileChanged (state) {
       state.pagesTextureFileChanged = false;
+    },
+    setTheme (state, theme) {
+      state.theme = theme;
     },
     setCurrentPage (state, currentPage) {
       state.currentPage = currentPage;

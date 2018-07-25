@@ -3,6 +3,8 @@
     <document-toolbar 
       @zoomChanged="zoomChanged" 
       @setDefaultPagesTexture="setDefaultPagesTexture"
+      @toggleDefaultTheme="toggleDefaultTheme"
+      @toggleCthulhuTheme="toggleCthulhuTheme"
       @scrollToCursor="scrollToCursor"/>
     <div ref="pagesContainer" class="document-pages-container">
       <div @change="checkOverflow" ref="pages" class="document-pages" v-html="compiledMarkdown"></div>
@@ -56,6 +58,7 @@ export default {
       zoom: 'document/zoom',
       pagesTextureFile: 'document/pagesTextureFile',
       pagesTextureFileChanged: 'document/pagesTextureFileChanged',
+      theme: 'document/theme',
       editorCurrentPage: 'editor/currentPage',
       pageHeight: 'document/pageHeight',
       pageOffset: 'document/pageOffset'
@@ -92,6 +95,7 @@ export default {
             }
           }
         }
+        page.classList.add(this.theme);
 
         if (this.pagesTexture && this.pagesTextureUrl !== undefined) {
           page.style.backgroundImage = 'url(\'' + this.pagesTextureUrl + '\')';
@@ -221,6 +225,12 @@ export default {
     },
     scrollToCursor: function () {
       this.$refs.pagesContainer.scrollTo(0, (this.pageHeight * this.editorCurrentPage + this.pageOffset) * (this.zoom / 100));
+    },
+    toggleDefaultTheme: function () {
+      this.$store.commit('document/setTheme', 'theme-default');
+    },
+    toggleCthulhuTheme: function () {
+      this.$store.commit('document/setTheme', 'theme-cthulhu');
     }
   }
 };

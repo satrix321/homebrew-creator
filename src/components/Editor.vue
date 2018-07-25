@@ -2,9 +2,9 @@
   <div class="editor">
     <div ref="progress" class="progress"><i class="progress-icon fas fa-spinner fa-5x"></i></div>
     <editor-toolbar
-      @insertGreenNote="insertGreenNote"
-      @insertBrownNote="insertBrownNote"
-      @insertPurpleNote="insertPurpleNote"
+      @insertPrimaryNote="insertPrimaryNote"
+      @insertSecondaryNote="insertSecondaryNote"
+      @insertTertiaryNote="insertTertiaryNote"
       @insertNewspaperNote="insertNewspaperNote"
       @insertHandwrittenNote="insertHandwrittenNote"
       @insertPhbNote="insertPhbNote"
@@ -141,15 +141,15 @@ export default {
       let codeMirrorDocument = this.codeMirror.getDoc();
       codeMirrorDocument.replaceRange(data, position);
     },
-    insertGreenNote: function () {
+    insertPrimaryNote: function () {
       let data = '> ##### Header\n>\n> Example text.';
       this.insertData(data, this.getCursorPosition());
     },
-    insertBrownNote: function () {
+    insertSecondaryNote: function () {
       let data = '>> ##### Header\n>>\n>> Example text.';
       this.insertData(data, this.getCursorPosition());
     },
-    insertPurpleNote: function () {
+    insertTertiaryNote: function () {
       let data = '>>> ##### Header\n>>>\n>>> Example text.';
       this.insertData(data, this.getCursorPosition());
     },
