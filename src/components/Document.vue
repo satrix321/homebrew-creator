@@ -87,7 +87,9 @@ export default {
         if (pagesOptions[i - 1] !== null) {
           let classNames = pagesOptions[i - 1].split(' ');
           for (let j = 0; j < classNames.length; j++) {
-            page.classList.add(classNames[j]);
+            if (classNames[j].length > 0) {
+              page.classList.add(classNames[j]);
+            }
           }
         }
 
