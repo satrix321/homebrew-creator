@@ -84,6 +84,9 @@ export default {
       for (let i = 1; i < pagesRawInput.length; i++) {
         let page = document.createElement('div');
         page.classList.add('page');
+        if (i % 2 === 0) {
+          page.classList.add('is-inverted');
+        }
 
         if (this.pagesTexture) page.classList.add('is-textured');
         if (this.notesTexture) page.classList.add('notes-are-textured');
@@ -99,6 +102,18 @@ export default {
 
         if (this.pagesTexture && this.pagesTextureUrl !== undefined) {
           page.style.backgroundImage = 'url(\'' + this.pagesTextureUrl + '\')';
+        }
+
+        if (!(pagesOptions[i - 1] !== null && pagesOptions[i - 1].includes('title'))) {
+          let header = document.createElement('div');
+          header.classList.add('page-header');
+
+          let backgroundElement = document.createElement('div');
+          backgroundElement.className = 'is-textured';
+
+          header.appendChild(backgroundElement);
+
+          page.appendChild(header);
         }
 
         let pxSpacer = document.createElement('div');

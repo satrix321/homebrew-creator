@@ -37,8 +37,12 @@
   height: 29.7cm;
 
   &.is-textured {
-    background-image: url('../assets/imgs/texture_01.jpg');
+    background-image: url('../assets/imgs/texture_cthulhu_01.jpg');
     background-size: 100% 100%;
+
+    &.is-inverted {
+      background-image: url('../assets/imgs/texture_cthulhu_01_inverted.jpg');
+    }
   }
 
   * {
