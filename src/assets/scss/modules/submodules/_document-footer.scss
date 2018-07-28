@@ -9,7 +9,15 @@
     height: 1cm;
     bottom: 0;
     left: 0;
-    background-image: url('../assets/imgs/footer_01.png');
+
+    &.theme-default {
+      background-image: url('../assets/imgs/footer_01.png'); 
+    }
+
+    &.theme-cthulhu {
+      
+    }
+
     background-size: 21cm 1cm;
   }
 

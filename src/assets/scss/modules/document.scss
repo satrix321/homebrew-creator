@@ -37,11 +37,24 @@
   height: 29.7cm;
 
   &.is-textured {
-    background-image: url('../assets/imgs/texture_cthulhu_01.jpg');
     background-size: 100% 100%;
 
+    &.theme-default {
+      background-image: url('../assets/imgs/texture_02.jpg');
+    }
+
+    &.theme-cthulhu {
+      background-image: url('../assets/imgs/texture_cthulhu_01.jpg');
+    }
+
     &.is-inverted {
-      background-image: url('../assets/imgs/texture_cthulhu_01_inverted.jpg');
+      &.theme-default {
+        background-image: url('../assets/imgs/texture_02.jpg');
+      }
+
+      &.theme-cthulhu {
+        background-image: url('../assets/imgs/texture_cthulhu_01_inverted.jpg');
+      }
     }
   }
 
@@ -85,6 +98,7 @@
     -webkit-column-span: all;
   }
 
+  @import "submodules/_document-text.scss";
   @import "submodules/_document-header.scss";
   @import "submodules/_document-list.scss";
   @import "submodules/_document-titlepage.scss";

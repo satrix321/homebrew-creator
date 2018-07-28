@@ -109,7 +109,8 @@ export default {
           header.classList.add('page-header');
 
           let backgroundElement = document.createElement('div');
-          backgroundElement.className = 'is-textured';
+          backgroundElement.classList.add(this.theme);
+          backgroundElement.classList.add('is-textured');
 
           header.appendChild(backgroundElement);
 
@@ -149,10 +150,12 @@ export default {
           footer.dataset.page = pageNum;
 
           let backgroundElement = document.createElement('div');
-          backgroundElement.className = 'is-textured';
+          backgroundElement.classList.add(this.theme);
+          backgroundElement.classList.add('is-textured');
 
           let pageNumberElement = document.createElement('p');
-          pageNumberElement.className = 'page-number';
+          pageNumberElement.classList.add(this.theme);
+          pageNumberElement.classList.add('page-number');
           pageNumberElement.innerText = pageNum;
 
           footer.appendChild(backgroundElement);
