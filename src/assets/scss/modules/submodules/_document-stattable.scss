@@ -1,0 +1,33 @@
+.table-stat {
+  blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    page-break-inside: avoid;
+  }
+  &.table-stat-cthulhu > blockquote {
+    border: none;
+    table {
+      width: 100%;
+      
+      &:not(:first-child):not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      th {
+        font-size: 11pt;
+        font-family: 'regular-text';
+        text-align: left;
+        color: rgb(106, 28, 15);
+      }
+      td {
+        font-size: 9pt;
+        font-family: 'regular-text';
+      }
+    }
+  }
+}
+&.notes-are-textured > .table-stat {
+  &.table-stat-cthulhu > blockquote > table { 
+    
+  }
+}

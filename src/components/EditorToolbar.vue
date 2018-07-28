@@ -14,7 +14,7 @@
     <div class="dropdown">
       <button class="btn"><i class="fas fa-table"></i> Tables</button>
       <div class="dropdown-content">
-        <button class="btn" @click="insertCocMonsterTable"><i class="fas fa-table"></i> CoC - Monster Table</button>
+        <button class="btn" @click="insertCocStatTable"><i class="fas fa-table"></i> CoC - Stat Table</button>
       </div>
     </div>
     <div class="dropdown">
@@ -96,8 +96,8 @@ export default {
     insertPhbNote: function () {
       this.$emit('insertPhbNote');
     },
-    insertCocMonsterTable: function () {
-      this.$emit('insertCocMonsterTable');
+    insertCocStatTable: function () {
+      this.$emit('insertCocStatTable');
     },
     insertRegularPage: function () {
       this.$emit('insertRegularPage');
