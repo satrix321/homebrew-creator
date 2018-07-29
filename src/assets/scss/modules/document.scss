@@ -30,11 +30,21 @@
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   background-color: white;
   position: relative;
-  padding: 1cm;
   box-sizing: border-box;
   z-index: 1;
   width: 21cm;
   height: 29.7cm;
+
+  padding: 1cm;
+  &.theme-cthulhu-1:not(.title) {
+    padding-top: 1.6cm;
+  }
+  &.theme-cthulhu-2:not(.title) {
+    padding-top: 2.5cm;
+    padding-left: 1.5cm;
+    padding-right: 1.5cm;
+    padding-bottom: 2cm;
+  }
 
   &.is-textured {
     background-size: 100% 100%;
@@ -43,8 +53,12 @@
       background-image: url('../assets/imgs/texture_02.jpg');
     }
 
-    &.theme-cthulhu {
+    &.theme-cthulhu-1 {
       background-image: url('../assets/imgs/texture_cthulhu_01.jpg');
+    }
+
+    &.theme-cthulhu-2 {
+      background-image: url('../assets/imgs/texture_cthulhu_02.jpg');
     }
 
     &.is-inverted {
@@ -52,8 +66,12 @@
         background-image: url('../assets/imgs/texture_02.jpg');
       }
 
-      &.theme-cthulhu {
+      &.theme-cthulhu-1 {
         background-image: url('../assets/imgs/texture_cthulhu_01_inverted.jpg');
+      }
+
+      &.theme-cthulhu-2 {
+        background-image: url('../assets/imgs/texture_cthulhu_02_inverted.jpg');
       }
     }
   }
@@ -62,10 +80,20 @@
     margin-top: 0 !important;
   }
 
-  &.columns {
+  &.columns-2 {
     -moz-column-count: 2 !important;
     -webkit-column-count: 2 !important;
     column-count: 2 !important;
+    column-fill: auto;
+    -webkit-column-gap: 16px;
+    -moz-column-gap: 16px;
+    column-gap: 16px;
+  }
+
+  &.columns-3 {
+    -moz-column-count: 3 !important;
+    -webkit-column-count: 3 !important;
+    column-count: 3 !important;
     column-fill: auto;
     -webkit-column-gap: 16px;
     -moz-column-gap: 16px;

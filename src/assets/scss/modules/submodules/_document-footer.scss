@@ -14,7 +14,11 @@
       background-image: url('../assets/imgs/footer_01.png'); 
     }
 
-    &.theme-cthulhu {
+    &.theme-cthulhu-1 {
+      
+    }
+
+    &.theme-cthulhu-2 {
       
     }
 
@@ -28,6 +32,26 @@
     color: rgb(160, 141, 93);
     font-size: 12pt;
     left: 20.3cm;
+
+    &.theme-cthulhu-1 {
+      bottom: 0;
+      left: 10.5cm;
+      -moz-transform: translate(-50%);
+      -o-transform: translate(-50%);
+      -webkit-transform: translate(-50%);
+      transform: translate(-50%);
+      color: black;
+    }
+
+    &.theme-cthulhu-2 {
+      bottom: 0.8cm;
+      left: 10.45cm;
+      -moz-transform: translate(-50%);
+      -o-transform: translate(-50%);
+      -webkit-transform: translate(-50%);
+      transform: translate(-50%);
+      color: black;
+    }
   }
 
   &.is-even {
@@ -39,7 +63,27 @@
     }
 
     > .page-number {
-      left: 0.5cm;  
+      left: 0.5cm;
+
+      &.theme-cthulhu-1 {
+        bottom: 0;
+        left: 10.5cm;
+        -moz-transform: translate(-50%);
+        -o-transform: translate(-50%);
+        -webkit-transform: translate(-50%);
+        transform: translate(-50%);
+        color: black;
+      }
+
+      &.theme-cthulhu-2 {
+        bottom: 0.8cm;
+        left: 10.5cm;
+        -moz-transform: translate(-50%);
+        -o-transform: translate(-50%);
+        -webkit-transform: translate(-50%);
+        transform: translate(-50%);
+        color: black;
+      }
     }
   }
 }

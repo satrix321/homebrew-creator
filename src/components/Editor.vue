@@ -13,7 +13,8 @@
       @insertRelativeImage="insertRelativeImage"
       @insertAbsoluteImage="insertAbsoluteImage"
       @insertFullPageImage="insertFullPageImage"
-      @insertColumnsPage="insertColumnsPage"
+      @insertTwoColumnPage="insertTwoColumnPage"
+      @insertThreeColumnPage="insertThreeColumnPage"
       @insertTitlePage="insertTitlePage"
       @insertColumnBreak="insertColumnBreak"
       @insertWideBlock="insertWideBlock"
@@ -185,8 +186,12 @@ export default {
       let data = '<img class="page-image-fullpage" src="https://i.imgur.com/PNpQjCA.jpg"/>';
       this.insertData(data, this.getCursorPosition());
     },
-    insertColumnsPage: function () {
-      let data = '\\page[columns]';
+    insertTwoColumnPage: function () {
+      let data = '\\page[columns-2]';
+      this.insertData(data, this.getCursorPosition());
+    },
+    insertThreeColumnPage: function () {
+      let data = '\\page[columns-3]';
       this.insertData(data, this.getCursorPosition());
     },
     insertTitlePage: function () {

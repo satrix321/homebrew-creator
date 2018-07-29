@@ -21,7 +21,8 @@
       <button class="btn"><i class="fas fa-file"></i> Pages</button>
       <div class="dropdown-content">
         <button class="btn" @click="insertRegularPage"><i class="fas fa-file"></i> Regular Page</button>
-        <button class="btn" @click="insertColumnsPage"><i class="fas fa-file"></i> Columns Page</button>
+        <button class="btn" @click="insertTwoColumnPage"><i class="fas fa-file"></i> Two Column Page</button>
+        <button class="btn" @click="insertThreeColumnPage"><i class="fas fa-file"></i> Three Column Page</button>
         <button class="btn" @click="insertTitlePage"><i class="fas fa-file"></i> Title Page</button>
       </div>
     </div>
@@ -111,8 +112,11 @@ export default {
     insertFullPageImage: function () {
       this.$emit('insertFullPageImage');
     },
-    insertColumnsPage: function () {
-      this.$emit('insertColumnsPage');
+    insertTwoColumnPage: function () {
+      this.$emit('insertTwoColumnPage');
+    },
+    insertThreeColumnPage: function () {
+      this.$emit('insertThreeColumnPage');
     },
     insertTitlePage: function () {
       this.$emit('insertTitlePage');

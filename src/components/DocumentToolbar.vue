@@ -6,17 +6,11 @@
       <button class="btn"><i class="fas fa-image"></i> Theme</button>
       <div class="dropdown-content">
         <button class="btn" :class="{'is-clicked': theme === 'theme-default'}" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</button>
-        <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu'}" @click="toggleCthulhuTheme"><i class="fas fa-image"></i> Cthulhu</button>
+        <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu-1'}" @click="toggleCthulhu1Theme"><i class="fas fa-image"></i> Cthulhu 1</button>
+        <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu-2'}" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</button>
       </div>
     </div>
-    <div class="dropdown">
-      <button class="btn" :class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
-      <div class="dropdown-content">
-        <button class="btn" :class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Toggle Pages Texture</button>
-        <button class="btn" @click="uploadPagesTexture"><i class="fas fa-share-square"></i> Upload Pages Texture<input type="file" ref="uploadPagesTextureInput" style="display: none;"></button>
-        <button class="btn" @click="setDefaultPagesTexture"><i class="fas fa-times"></i> Set Default Pages Texture</button>
-      </div>
-    </div>
+    <button class="btn" :class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
     <button class="btn" :class="{'is-clicked': notesTexture}" @click="toggleNotesTexture"><i class="fas fa-file"></i> Notes Texture</button>
     <button class="btn btn-right">Zoom {{zoom}}%</button>
     <button class="btn btn-right" @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button>
@@ -36,14 +30,6 @@ export default {
       theme: 'document/theme'
     })
   },
-  mounted: function () {
-    let context = this;
-    this.$nextTick(function () {
-      this.$refs.uploadPagesTextureInput.onchange = function () {
-        context.$store.commit('document/setPagesTextureFile', this.files[0]);
-      };
-    });
-  },
   methods: {
     zoomIn: function () {
       if (this.zoom < 100) {
@@ -60,24 +46,19 @@ export default {
       }
     },
     toggleDefaultTheme: function () {
-      this.$emit('toggleDefaultTheme');
+      this.$store.commit('document/setTheme', 'theme-default');
     },
-    toggleCthulhuTheme: function () {
-      this.$emit('toggleCthulhuTheme');
+    toggleCthulhu1Theme: function () {
+      this.$store.commit('document/setTheme', 'theme-cthulhu-1');
     },
-    uploadPagesTexture: function () {
-      let input = document.getElementById('uploadPagesTextureInput');
-      input.value = '';
-      input.click();
+    toggleCthulhu2Theme: function () {
+      this.$store.commit('document/setTheme', 'theme-cthulhu-2');
     },
     togglePagesTexture: function () {
       this.$store.commit('document/setPagesTexture', !this.pagesTexture);
     },
     toggleNotesTexture: function () {
       this.$store.commit('document/setNotesTexture', !this.notesTexture);
-    },
-    setDefaultPagesTexture: function () {
-      this.$emit('setDefaultPagesTexture');
     },
     scrollToCursor: function () {
       this.$emit('scrollToCursor');

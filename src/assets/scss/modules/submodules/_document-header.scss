@@ -5,20 +5,22 @@
 
   > .is-textured {
     position: absolute;
-    width: 21cm;
-    height: 1cm;
-    top: 0;
-    left: 0;
 
     &.theme-default {
 
     }
 
-    &.theme-cthulhu {
+    &.theme-cthulhu-1 {
       background-image: url('../assets/imgs/header_cthulhu_01.png');      
+      background-size: 21cm 10px;
+      width: 21cm;
+      height: 10px;
+      top: 1cm;
     }
 
-    background-size: 21cm 1cm;
+    &.theme-cthulhu-2 {
+      
+    }
   }
 
   &.is-even {
