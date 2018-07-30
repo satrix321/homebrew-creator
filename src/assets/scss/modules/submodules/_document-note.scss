@@ -16,9 +16,14 @@ blockquote {
     background-color: rgb(231, 227, 239);
   }
 
-  .note-newspaper,
+  .note-newspaper {
+    background-color: #F4DCC0;
+  }
+
   .note-handwritten {
-    background-color: #f4f4e2;
+    background-image: url('../assets/imgs/note_texture_cthulhu_02.jpg');
+    background-repeat: no-repeat;
+    background-position: center; 
   }
 
   .note-phb {
@@ -43,6 +48,10 @@ blockquote {
     .note-tertiary {
       background-color: #F4EEC8;
     }
+
+    .note-newspaper {
+      background-image: none !important;
+    }
   }
 
   &.theme-cthulhu-2 {
@@ -56,6 +65,11 @@ blockquote {
 
     .note-tertiary {
       background-color: rgba(0, 0, 0, 0.07);
+    }
+
+    .note-newspaper {
+      background-image: none !important;
+      background-color: #F4DCC0 !important;
     }
   }
 }
@@ -105,7 +119,6 @@ blockquote {
   h1 {
     font-family: 'newspaper-headers';
     text-align: center;
-    text-decoration: underline;
     font-size: 18pt;
     text-transform: uppercase;
     color: black;
@@ -236,6 +249,25 @@ blockquote {
       background-repeat: no-repeat;
       background-position: center; 
       transform: rotate(180deg);
+    }
+  }
+
+  .note-newspaper, .note-handwritten {
+    border-radius: 0px;
+    border: 20px solid transparent;
+    border-image: url('../assets/imgs/note_border_cthulhu_01.png') 41 round;
+    clip-path: polygon(
+      0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
+      calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
+      100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
+      13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+
+    &::before {
+      display: none;
+    }
+  
+    &::after {
+      display: none;
     }
   }
 }
