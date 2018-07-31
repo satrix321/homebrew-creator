@@ -86,6 +86,7 @@ export default {
       googleDriveParentId: 'editor/googleDriveParentId',
       rawCode: 'editor/rawCode',
       documentCurrentPage: 'document/currentPage',
+      theme: 'document/theme'
     }),
   },
   beforeCreate: function () {
@@ -273,7 +274,9 @@ export default {
         this.googleDrive.downloadFile(this.googleDriveFileId)
           .then((response) => {
             if (response.status === 200) {
-              this.codeMirror.setValue(decodeURIComponent(response.body));
+              let data = JSON.parse(decodeURIComponent(response.body));
+              this.codeMirror.setValue(data.data);
+              this.$store.commit('document/setTheme', data.theme);
             } else {
               alert(response);
             }
@@ -292,8 +295,12 @@ export default {
         await this.googleDrive.authenticate();
       }
 
+      let data = {};
+      data.data = this.rawCode;
+      data.theme = this.theme;
+
       if (this.googleDriveFileId) {
-        this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId)
+        this.googleDrive.updateFile(encodeURIComponent(JSON.stringify(data)), this.googleDriveFileId)
           .then((response) => {
             if (response.status !== 200) {
               alert(response);
@@ -305,7 +312,7 @@ export default {
             this.$refs.progress.classList.remove('is-visible');
           });
       } else if (this.googleDriveParentId) {
-        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode), this.googleDriveParentId)
+        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(JSON.stringify(data)), this.googleDriveParentId)
           .then((response) => {
             if (response.status !== 200) {
               alert(response);
@@ -319,7 +326,7 @@ export default {
             this.$refs.progress.classList.remove('is-visible');
           });
       } else {
-        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(this.rawCode))
+        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(JSON.stringify(data)))
           .then((response) => {
             if (response.status !== 200) {
               alert(response);
@@ -355,8 +362,12 @@ export default {
       this.$refs.progress.classList.remove('is-visible');
     },
     downloadFile: function () {
+      let data = {};
+      data.data = this.rawCode;
+      data.theme = this.theme;
+
       let element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.rawCode));
+      element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)));
       element.setAttribute('download', 'homebrew.hmd');
       element.style.display = 'none';
       document.body.appendChild(element);
@@ -371,8 +382,10 @@ export default {
       element.onchange = () => {
         var reader = new FileReader();
         reader.readAsText(element.files[0]);
-        reader.onload = () => { 
-          this.codeMirror.setValue(reader.result);
+        reader.onload = () => {
+          let data = JSON.parse(reader.result);
+          this.codeMirror.setValue(data.data);
+          this.$store.commit('document/setTheme', data.theme);
         };
         document.body.removeChild(element);
       };
