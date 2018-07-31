@@ -8,20 +8,27 @@
     border: none;
     table {
       width: 100%;
-      
-      &:not(:first-child):not(:last-child) {
-        margin-bottom: 10px;
+
+      &:first-child {
+        border-spacing: 0;
       }
 
       th {
-        font-size: 11pt;
+        font-size: 12pt;
         font-family: 'regular-text';
         text-align: left;
         color: rgb(106, 28, 15);
+        padding: 0;
       }
       td {
         font-size: 9pt;
         font-family: 'regular-text';
+      }
+
+      &:nth-child(2) {
+        td {
+          font-size: 10pt;
+        }
       }
     }
   }
