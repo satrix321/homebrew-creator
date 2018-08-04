@@ -14,6 +14,7 @@
     <button class="btn" :class="{'is-clicked': notesTexture}" @click="toggleNotesTexture"><i class="fas fa-file"></i> Notes Texture</button>
     <button class="btn btn-right">Zoom {{zoom}}%</button>
     <button class="btn btn-right" @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button>
+    <button class="btn btn-right" @click="getPDF"><i class="fas fa-file-pdf"></i> Get PDF</button>
   </div>
 </template>
 
@@ -62,6 +63,9 @@ export default {
     },
     scrollToCursor: function () {
       this.$emit('scrollToCursor');
+    },
+    getPDF: function () {
+      this.$emit('getPDF');
     }
   }
 };

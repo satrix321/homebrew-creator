@@ -2,7 +2,8 @@
   <div class="document">
     <document-toolbar 
       @zoomChanged="zoomChanged"
-      @scrollToCursor="scrollToCursor"/>
+      @scrollToCursor="scrollToCursor"
+      @getPDF="getPDF"/>
     <div ref="pagesContainer" class="document-pages-container">
       <div @change="checkOverflow" ref="pages" class="document-pages" v-html="compiledMarkdown"></div>
     </div>
@@ -263,6 +264,9 @@ export default {
     scrollToCursor: function () {
       this.$refs.pagesContainer.scrollTo(0, (this.pageHeight * this.editorCurrentPage + this.pageOffset) * (this.zoom / 100));
     },
+    getPDF: function () {
+      window.print();
+    }
   }
 };
 </script>
