@@ -156,11 +156,11 @@ export default {
       this.insertData(data, this.getCursorPosition());
     },
     insertNewspaperNote: function () {
-      let data = '<blockquote markdown="true" class="note-newspaper">\n##### headline\n\narticle_content\n</blockquote>';
+      let data = '<blockquote markdown="true" class="note-newspaper">\n# headline\n\narticle_content\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertHandwrittenNote: function () {
-      let data = '<blockquote markdown="true" class="note-handwritten">\nnote_content\n</blockquote>';
+      let data = '<blockquote markdown="true" class="note-handwritten">\nHandwritten note\n\n<p style="float: right;">John Doe</p>\n<div style="clear: both;"/>\n</blockquote>';
       this.insertData(data, this.getCursorPosition());
     },
     insertPhbNote: function () {
