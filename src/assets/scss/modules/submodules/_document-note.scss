@@ -163,7 +163,7 @@ blockquote {
 
   .note-primary {
     border: 20px solid transparent;
-    border-image: url('../assets/imgs/note_border_cthulhu_01.png') 41 round;
+    border-image: url('../assets/imgs/note_border_cthulhu_01.png') 41;
     clip-path: polygon(
       0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
       calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
