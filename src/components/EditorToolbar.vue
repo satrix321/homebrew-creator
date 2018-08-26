@@ -14,7 +14,7 @@
     <div class="dropdown">
       <button class="btn"><i class="fas fa-table"></i> Tables</button>
       <div class="dropdown-content">
-        <button class="btn" @click="insertCocStatTable"><i class="fas fa-table"></i> CoC - Stat Table</button>
+        <button class="btn" @click="insertCocStatTable"><i class="fas fa-table"></i> Call of Cthulhu - Stat Table</button>
       </div>
     </div>
     <div class="dropdown">
