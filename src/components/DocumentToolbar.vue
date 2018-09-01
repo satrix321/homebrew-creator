@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     zoomIn: function () {
-      if (this.zoom < 100) {
+      if (this.zoom < 150) {
         this.$store.commit('document/setOldZoom', this.zoom);
         this.$store.commit('document/setZoom', this.zoom + 10);
         this.$emit('zoomChanged');
