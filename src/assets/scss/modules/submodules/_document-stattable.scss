@@ -5,12 +5,10 @@
     page-break-inside: avoid;
   }
   &.table-stat-cthulhu > blockquote {
-    background-color: rgba(255,255,255, 0.4);
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-    border: 3px solid black;
+    border: 2px solid black;
 
     table {
-      width: 100%;
+      width: calc(100% + 1px);
       border-collapse: collapse;
 
       &:first-child {
@@ -19,13 +17,22 @@
         th {
           padding: 0 5px;
         }
+
+        td {
+          padding: 0;
+        }
       }
 
       &:nth-child(n+2) {
-        margin-bottom: 10px;
 
-        tbody tr:nth-child(odd) {
-          background-color: rgba(224, 199, 136, 0.4);
+        tbody {
+          tr:nth-child(odd) {
+            background-color: rgba(224, 199, 136, 0.4);
+          }
+
+          tr:nth-child(even) {
+            background-color: inherit;
+          }
         }
 
         td {
@@ -51,7 +58,7 @@
         font-size: 12pt;
         font-family: 'regular-text';
         text-align: left;
-        color: rgb(106, 28, 15);
+        color: #DED7CC;
         padding: 0;
       }
       td {
