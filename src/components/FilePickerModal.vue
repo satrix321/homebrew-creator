@@ -174,7 +174,7 @@ export default {
       let clickedRow = event.target.parentElement;
       let selectedId = clickedRow.querySelector('.filelist-col-id').innerHTML;
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
-      clickedRow.classList.add("is-selected");
+      clickedRow.classList.add('is-selected');
 
       if (this.uploadMode && this.selectedItem.mimeType !== this.folderMimeType) {
         if (this.selectedItem.name.length > 4 && this.selectedItem.name.substring(this.selectedItem.name.length - 4) === '.' + this.provider.fileExtension) {

@@ -32,7 +32,7 @@ export default class GoogleDriveProvider {
   constructor() {
     let scriptElement = document.querySelector('#googleDrive');
     if (!scriptElement) {
-      let script = document.createElement("script");
+      let script = document.createElement('script');
       script.src = 'https://apis.google.com/js/client.js';
 
       script.onload = () => {

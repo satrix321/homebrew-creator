@@ -90,19 +90,19 @@ export default {
     }),
   },
   beforeCreate: function () {
-    CodeMirror.defineMode("homebrew-markdown", function(config, parserConfig) {
+    CodeMirror.defineMode('homebrew-markdown', function(config, parserConfig) {
       var homebrewOverlay = {
         token: function(stream) {
           var ch;
-          if (stream.match("\\page")) {
-            while ((ch = stream.next()) != null && ch != "]") { continue; }
-            return "pageLine";
+          if (stream.match('\\page')) {
+            while ((ch = stream.next()) != null && ch != ']') { continue; }
+            return 'pageLine';
           }
-          while (stream.next() != null && !stream.match("\\page", false)) { continue; }
+          while (stream.next() != null && !stream.match('\\page', false)) { continue; }
           return null;
         }
       };
-      return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/x-markdown"), homebrewOverlay);
+      return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || 'text/x-markdown'), homebrewOverlay);
     });
   },
   mounted: function () {

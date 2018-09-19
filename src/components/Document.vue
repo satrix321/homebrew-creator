@@ -129,7 +129,7 @@ export default {
         if (currentIndex < pagesRawInput[pageNumber].length) {
           let pageMarkdownContainer = document.createElement('div');
           let pageMarkdown = marked(pagesRawInput[pageNumber].substring(currentIndex, pagesRawInput[pageNumber].length));
-          pageMarkdown.replace(preElementRegex, "<pre><code></code></pre><div class='page-px-spacer'>_</div>");
+          pageMarkdown.replace(preElementRegex, '<pre><code></code></pre><div class=\'page-px-spacer\'>_</div>');
           pageMarkdownContainer.innerHTML = pageMarkdown;
 
           let elements = pageMarkdownContainer.querySelectorAll('*[markdown]');
