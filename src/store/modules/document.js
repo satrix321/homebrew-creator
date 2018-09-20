@@ -16,7 +16,7 @@ const document = {
 
     theme: 'theme-default',
 
-    currentPage: 0,
+    currentPageNumber: 0,
 
     pageHeightPx: 1141.42,
     pageOffsetPx: 40
@@ -34,7 +34,7 @@ const document = {
 
     theme: state => state.theme,
 
-    currentPage: state => state.currentPage,
+    currentPageNumber: state => state.currentPageNumber,
 
     pageHeightPx: state => state.pageHeightPx,
     pageOffsetPx: state => state.pageOffsetPx
@@ -42,7 +42,7 @@ const document = {
 
   actions: {
     zoomIn (context) {
-      context.commit('setZoom', context.state.zoom + zoomIncrement);
+      context.commit(' ', context.state.zoom + zoomIncrement);
     },
     zoomOut (context) {
       context.commit('setZoom', context.state.zoom - zoomIncrement);
@@ -84,8 +84,8 @@ const document = {
       state.theme = theme;
     },
 
-    setCurrentPage (state, currentPage) {
-      state.currentPage = currentPage;
+    setCurrentPageNumber (state, currentPageNumber) {
+      state.currentPageNumber = currentPageNumber;
     }
   }
 };

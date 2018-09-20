@@ -3,7 +3,7 @@ const editor = {
   
   state: {
     rawCode: '',
-    currentPage: 0,
+    currentPageNumber: 0,
     pageLines: [],
     googleDriveFileId: undefined,
     googleDriveFileName: undefined,
@@ -12,7 +12,7 @@ const editor = {
 
   getters: {
     rawCode: state => state.rawCode,
-    currentPage: state => state.currentPage,
+    currentPageNumber: state => state.currentPageNumber,
     pageLines: state => state.pageLines,
     googleDriveFileId: state => state.googleDriveFileId,
     googleDriveFileName: state => state.googleDriveFileName,
@@ -23,8 +23,8 @@ const editor = {
     setRawCode (state, rawCode) {
       state.rawCode = rawCode;
     },
-    setCurrentPage (state, currentPage) {
-      state.currentPage = currentPage;
+    setCurrentPageNumber (state, currentPageNumber) {
+      state.currentPageNumber = currentPageNumber;
     },
     pushPageLines (state, pageLines) {
       state.pageLines = [];

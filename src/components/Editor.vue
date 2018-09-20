@@ -64,7 +64,7 @@ export default {
     return {
       codeMirror: undefined,
       currentLine: 0,
-      currentPage: 0,
+      currentPageNumber: 0,
       cmOptions: {
         styleActiveLine: true,
         tabSize: 2,
@@ -83,7 +83,7 @@ export default {
       googleDriveFileName: 'editor/googleDriveFileName',
       googleDriveParentId: 'editor/googleDriveParentId',
       rawCode: 'editor/rawCode',
-      documentCurrentPage: 'document/currentPage',
+      documentCurrentPageNumber: 'document/currentPageNumber',
       theme: 'document/theme'
     }),
   },
@@ -118,15 +118,15 @@ export default {
     }, 500),
     cursorPositionChange: _.debounce(function (position) {
       this.currentLine = position.getCursor().line;
-      this.currentPage = 0;
+      this.currentPageNumber = 0;
       if (this.pageLines.length > 1) {
         let i = 1;
         while(this.currentLine >= this.pageLines[i]) {
-          this.currentPage++;
+          this.currentPageNumber++;
           i++;
         }
       }
-      this.$store.commit('editor/setCurrentPage', this.currentPage);
+      this.$store.commit('editor/setCurrentPageNumber', this.currentPageNumber);
     }, 200),
     getCursorPosition: function () {
       let codeMirrorDocument = this.codeMirror.getDoc();
@@ -390,9 +390,9 @@ export default {
       element.click();
     },
     scrollToPage: function () {
-      if (this.pageLines[this.documentCurrentPage]) {
-        this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPage], char: 0}, 100);
-        this.codeMirror.setCursor({line: this.pageLines[this.documentCurrentPage], ch: 0});
+      if (this.pageLines[this.documentCurrentPageNumber] !== undefined) {
+        this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPageNumber], char: 0}, 100);
+        this.codeMirror.setCursor({line: this.pageLines[this.documentCurrentPageNumber], ch: 0});
       }
     }
   }

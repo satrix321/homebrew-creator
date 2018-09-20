@@ -33,7 +33,7 @@ export default {
     let pagesContainer = this.$refs.pagesContainer;
     pagesContainer.onscroll = _.debounce(() => {
       let pageNumber = parseInt((pagesContainer.scrollTop / this.pageHeightPx) * (100 / this.zoom));
-      this.$store.commit('document/setCurrentPage', pageNumber);
+      this.$store.commit('document/setCurrentPageNumber', pageNumber);
     }, 500);
 
     if (this.eventBus) {
@@ -57,7 +57,7 @@ export default {
       pagesTextureFile: 'document/pagesTextureFile',
       pagesTextureFileChanged: 'document/pagesTextureFileChanged',
       theme: 'document/theme',
-      editorCurrentPage: 'editor/currentPage',
+      editorCurrentPageNumber: 'editor/currentPageNumber',
       pageHeightPx: 'document/pageHeightPx',
       pageOffsetPx: 'document/pageOffsetPx'
     }),
@@ -268,7 +268,7 @@ export default {
       this.pagesTextureUrl = undefined;
     },
     scrollToCursor: function () {
-      this.$refs.pagesContainer.scrollTo(0, (this.pageHeightPx * this.editorCurrentPage + this.pageOffsetPx) * (this.zoom / 100));
+      this.$refs.pagesContainer.scrollTo(0, (this.pageHeightPx * this.editorCurrentPageNumber + this.pageOffsetPx) * (this.zoom / 100));
     },
     getPDF: function () {
       window.print();
