@@ -34,16 +34,14 @@ export default {
   methods: {
     zoomIn: function () {
       if (this.zoom < 150) {
-        this.$store.commit('document/setOldZoom', this.zoom);
-        this.$store.commit('document/setZoom', this.zoom + 10);
-        this.$emit('zoomChanged');
+        this.$store.dispatch('document/zoomIn');
+        this.$emit('zoomIn');
       }
     },
     zoomOut: function () {
       if (this.zoom > 50) {
-        this.$store.commit('document/setOldZoom', this.zoom);
-        this.$store.commit('document/setZoom', this.zoom - 10);
-        this.$emit('zoomChanged');
+        this.$store.dispatch('document/zoomOut');
+        this.$emit('zoomOut');
       }
     },
     toggleDefaultTheme: function () {

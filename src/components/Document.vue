@@ -1,7 +1,8 @@
 <template>
   <div class="document">
     <document-toolbar 
-      @zoomChanged="zoomChanged"
+      @zoomIn="zoomIn"
+      @zoomOut="zoomOut"
       @scrollToCursor="scrollToCursor"
       @getPDF="getPDF"/>
     <div ref="pagesContainer" class="document-pages-container">
@@ -41,8 +42,7 @@ export default {
       });
 
       this.eventBus.$on('onBeforePrint', () => {
-        this.$store.commit('document/setOldZoom', this.zoom);
-        this.$store.commit('document/setZoom', 100);
+        this.$store.commit('document/setDefaultZoom');
         this.zoomChanged();
       });
     }
@@ -222,6 +222,12 @@ export default {
 
       reader.readAsDataURL(this.pagesTextureFile);
       this.$store.commit('document/unsetPagesTextureFileChanged');
+    },
+    zoomIn: function () {
+      this.zoomChanged();
+    },
+    zoomOut: function () {
+      this.zoomChanged();
     },
     zoomChanged: function () {
       let pagesContainer = this.$refs.pagesContainer;

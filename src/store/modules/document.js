@@ -1,3 +1,6 @@
+const zoomIncrement = 10;
+const zoomDefault = 100;
+
 const document = {
   namespaced: true,
   
@@ -37,7 +40,14 @@ const document = {
     pageOffsetPx: state => state.pageOffsetPx
   },
 
-  actions: {},
+  actions: {
+    zoomIn (context) {
+      context.commit('setZoom', context.state.zoom + zoomIncrement);
+    },
+    zoomOut (context) {
+      context.commit('setZoom', context.state.zoom - zoomIncrement);
+    }
+  },
 
   mutations: {
     enablePageTextures (state) {
@@ -53,11 +63,13 @@ const document = {
       state.noteTexturesEnabled = false;
     },
 
-    setOldZoom (state, oldZoom) {
-      state.oldZoom = oldZoom;
-    },
     setZoom (state, zoom) {
+      state.oldZoom = state.zoom;
       state.zoom = zoom;
+    },
+    setDefaultZoom (state) {
+      state.oldZoom = state.zoom;
+      state.zoom = zoomDefault;
     },
 
     setPagesTextureFile (state, pagesTextureFile) {
