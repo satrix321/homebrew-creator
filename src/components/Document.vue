@@ -31,7 +31,7 @@ export default {
   mounted: function () {
     let pagesContainer = this.$refs.pagesContainer;
     pagesContainer.onscroll = _.debounce(() => {
-      let pageNumber = parseInt((pagesContainer.scrollTop / this.pageHeight) * (100 / this.zoom));
+      let pageNumber = parseInt((pagesContainer.scrollTop / this.pageHeightPx) * (100 / this.zoom));
       this.$store.commit('document/setCurrentPage', pageNumber);
     }, 500);
 
@@ -50,16 +50,16 @@ export default {
   computed: {
     ...mapGetters({
       rawCode: 'editor/rawCode',
-      pagesTexture: 'document/pagesTexture',
-      notesTexture: 'document/notesTexture',
+      pageTexturesEnabled: 'document/pageTexturesEnabled',
+      noteTexturesEnabled: 'document/noteTexturesEnabled',
       oldZoom: 'document/oldZoom',
       zoom: 'document/zoom',
       pagesTextureFile: 'document/pagesTextureFile',
       pagesTextureFileChanged: 'document/pagesTextureFileChanged',
       theme: 'document/theme',
       editorCurrentPage: 'editor/currentPage',
-      pageHeight: 'document/pageHeight',
-      pageOffset: 'document/pageOffset'
+      pageHeightPx: 'document/pageHeightPx',
+      pageOffsetPx: 'document/pageOffsetPx'
     }),
     compiledMarkdown: function () {
       const pageSplitRegex = /\\page(?:\[[\w -]*\])?/g;
@@ -68,7 +68,7 @@ export default {
       let pagesOptions = this.getPagesOptions(this.rawCode);
       let pagesRawInput = this.rawCode.split(pageSplitRegex);
 
-      if (this.pagesTexture && this.pagesTextureFile !== undefined && (this.pagesTextureUrl === undefined || this.pagesTextureFileChanged)) {
+      if (this.pageTexturesEnabled && this.pagesTextureFile !== undefined && (this.pagesTextureUrl === undefined || this.pagesTextureFileChanged)) {
         this.loadPagesTexture();
       }
 
@@ -85,8 +85,8 @@ export default {
           page.classList.add('is-inverted');
         }
 
-        if (this.pagesTexture) page.classList.add('is-textured');
-        if (this.notesTexture) page.classList.add('notes-are-textured');
+        if (this.pageTexturesEnabled) page.classList.add('is-textured');
+        if (this.noteTexturesEnabled) page.classList.add('notes-are-textured');
         if (pagesOptions[pageNumber - 1] !== null) {
           let classNames = pagesOptions[pageNumber - 1].split(' ');
           for (let i = 0; i < classNames.length; i++) {
@@ -97,7 +97,7 @@ export default {
         }
         page.classList.add(this.theme);
 
-        if (this.pagesTexture && this.pagesTextureUrl !== undefined) {
+        if (this.pageTexturesEnabled && this.pagesTextureUrl !== undefined) {
           page.style.backgroundImage = 'url(\'' + this.pagesTextureUrl + '\')';
         }
 
@@ -262,7 +262,7 @@ export default {
       this.pagesTextureUrl = undefined;
     },
     scrollToCursor: function () {
-      this.$refs.pagesContainer.scrollTo(0, (this.pageHeight * this.editorCurrentPage + this.pageOffset) * (this.zoom / 100));
+      this.$refs.pagesContainer.scrollTo(0, (this.pageHeightPx * this.editorCurrentPage + this.pageOffsetPx) * (this.zoom / 100));
     },
     getPDF: function () {
       window.print();

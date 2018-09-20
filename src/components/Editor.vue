@@ -63,8 +63,6 @@ export default {
   data () {
     return {
       codeMirror: undefined,
-      pageHeight: 1141.42,
-      pageOffset: 40,
       currentLine: 0,
       currentPage: 0,
       cmOptions: {

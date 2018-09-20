@@ -10,8 +10,8 @@
         <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu-2'}" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</button>
       </div>
     </div>
-    <button class="btn" :class="{'is-clicked': pagesTexture}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
-    <button class="btn" :class="{'is-clicked': notesTexture}" @click="toggleNotesTexture"><i class="fas fa-file"></i> Notes Texture</button>
+    <button class="btn" :class="{'is-clicked': pageTexturesEnabled}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
+    <button class="btn" :class="{'is-clicked': noteTexturesEnabled}" @click="toggleNotesTexture"><i class="fas fa-file"></i> Notes Texture</button>
     <button class="btn btn-right">Zoom {{zoom}}%</button>
     <button class="btn btn-right" @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button>
     <button class="btn btn-right" @click="getPDF"><i class="fas fa-file-pdf"></i> Get PDF</button>
@@ -25,8 +25,8 @@ export default {
   name: 'Document',
   computed: {
     ...mapGetters({
-      pagesTexture: 'document/pagesTexture',
-      notesTexture: 'document/notesTexture',
+      pageTexturesEnabled: 'document/pageTexturesEnabled',
+      noteTexturesEnabled: 'document/noteTexturesEnabled',
       zoom: 'document/zoom',
       theme: 'document/theme'
     })
@@ -56,10 +56,10 @@ export default {
       this.$store.commit('document/setTheme', 'theme-cthulhu-2');
     },
     togglePagesTexture: function () {
-      this.$store.commit('document/setPagesTexture', !this.pagesTexture);
+      this.pageTexturesEnabled ? this.$store.commit('document/disablePageTextures') : this.$store.commit('document/enablePageTextures');
     },
     toggleNotesTexture: function () {
-      this.$store.commit('document/setNotesTexture', !this.notesTexture);
+      this.noteTexturesEnabled ? this.$store.commit('document/disableNoteTextures') : this.$store.commit('document/enableNoteTextures');
     },
     scrollToCursor: function () {
       this.$emit('scrollToCursor');
