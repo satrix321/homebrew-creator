@@ -63,7 +63,7 @@ export default {
   data () {
     return {
       codeMirror: undefined,
-      currentLine: 0,
+      currentLineNumber: 0,
       currentPageNumber: 0,
       cmOptions: {
         styleActiveLine: true,
@@ -117,11 +117,11 @@ export default {
       this.$store.commit('editor/setRawCode', newCode);
     }, 500),
     cursorPositionChange: _.debounce(function (position) {
-      this.currentLine = position.getCursor().line;
+      this.currentLineNumber = position.getCursor().line;
       this.currentPageNumber = 0;
       if (this.pageLines.length > 1) {
         let i = 1;
-        while(this.currentLine >= this.pageLines[i]) {
+        while(this.currentLineNumber >= this.pageLines[i]) {
           this.currentPageNumber++;
           i++;
         }
