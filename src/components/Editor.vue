@@ -245,7 +245,11 @@ export default {
           await this.googleDrive.authenticate();
         }
 
-        this.googleDrive.updateFile(encodeURIComponent(this.rawCode), this.googleDriveFileId)
+        let data = {};
+        data.data = this.rawCode;
+        data.theme = this.theme;
+
+        this.googleDrive.updateFile(encodeURIComponent(JSON.stringify(data)), this.googleDriveFileId)
           .then((response) => {
             if (response.status !== 200) {
               alert(response);
