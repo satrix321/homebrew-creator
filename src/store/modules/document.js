@@ -42,7 +42,7 @@ const document = {
 
   actions: {
     zoomIn (context) {
-      context.commit(' ', context.state.zoom + zoomIncrement);
+      context.commit('setZoom', context.state.zoom + zoomIncrement);
     },
     zoomOut (context) {
       context.commit('setZoom', context.state.zoom - zoomIncrement);
