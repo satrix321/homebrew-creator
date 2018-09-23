@@ -238,11 +238,17 @@ export default {
       }
 
       if (this.zoom === 100) {
-        pages.style['transform'] = '';
-        //pages.style.zoom = '100%'; // firefox doesn't support this
+        if (window.chrome) {
+          pages.style.zoom = '100%'; // firefox doesn't support this
+        } else {
+          pages.style['transform'] = '';
+        }
       } else {
-        pages.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
-        //pages.style.zoom = (this.zoom).toFixed(2) + '%'; // firefox doesn't support this
+        if (window.chrome) {
+          pages.style.zoom = (this.zoom).toFixed(2) + '%'; // firefox doesn't support this
+        } else {
+          pages.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
+        }
       }
 
       if (this.zoom > this.oldZoom) {

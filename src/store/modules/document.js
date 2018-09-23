@@ -8,8 +8,8 @@ const document = {
     pageTexturesEnabled: true,
     noteTexturesEnabled: true,
 
-    oldZoom: 100,
-    zoom: 100,
+    oldZoom: zoomDefault,
+    zoom: zoomDefault,
 
     pagesTextureFile: undefined,
     pagesTextureFileChanged: false,
