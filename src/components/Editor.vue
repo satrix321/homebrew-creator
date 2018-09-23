@@ -32,7 +32,7 @@
       @downloadFile="downloadFile"
       @uploadFile="uploadFile"
       @scrollToPage="scrollToPage"/>
-    <codemirror :options="cmOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
+    <codemirror :options="codeMirrorOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
     <file-picker-modal ref="filePicker" title="File Picker" @downloadFile="downloadFileUsingProvider" @uploadFile="uploadFileUsingProvider"></file-picker-modal>
   </div>
 </template>
@@ -40,8 +40,8 @@
 <script>
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
-import EditorToolbar from './EditorToolbar.vue';
-import FilePickerModal from './FilePickerModal.vue';
+import EditorToolbar from '@/components/EditorToolbar.vue';
+import FilePickerModal from '@/components/FilePickerModal.vue';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -63,9 +63,7 @@ export default {
   data () {
     return {
       codeMirror: undefined,
-      currentLineNumber: 0,
-      currentPageNumber: 0,
-      cmOptions: {
+      codeMirrorOptions: {
         styleActiveLine: true,
         tabSize: 2,
         mode: 'homebrew-markdown',
@@ -78,13 +76,45 @@ export default {
   },
   computed: {
     ...mapGetters({
-      pageLines: 'editor/pageLines',
+      pageBreakIndexes: 'editor/pageBreakIndexes',
+      rawCode: 'editor/rawCode',
+
       googleDriveFileId: 'filepicker/googleDriveFileId',
       googleDriveFileName: 'filepicker/googleDriveFileName',
       googleDriveParentId: 'filepicker/googleDriveParentId',
-      rawCode: 'editor/rawCode',
+      
       documentCurrentPageNumber: 'document/currentPageNumber',
-      theme: 'document/theme'
+      theme: 'document/theme',
+
+      primaryNoteSnippet: 'editorSnippets/primaryNoteSnippet',
+      secondaryNoteSnippet: 'editorSnippets/secondaryNoteSnippet',
+      tertiaryNoteSnippet: 'editorSnippets/tertiaryNoteSnippet',
+      newspaperNoteSnippet: 'editorSnippets/newspaperNoteSnippet',
+      handwrittenNoteSnippet: 'editorSnippets/handwrittenNoteSnippet',
+      phbNoteSnippet: 'editorSnippets/phbNoteSnippet',
+
+      cthulhuStatTable: 'editorSnippets/cthulhuStatTable',
+
+      regularPageSnippet: 'editorSnippets/regularPageSnippet',
+      twoColumnPageSnippet: 'editorSnippets/twoColumnPageSnippet',
+      threeColumnPageSnippet: 'editorSnippets/threeColumnPageSnippet',
+      titlePageSnippet: 'editorSnippets/titlePageSnippet',
+
+      relativeImageSnippet: 'editorSnippets/relativeImageSnippet',
+      absoluteImageSnippet: 'editorSnippets/absoluteImageSnippet',
+      fullPageImageSnippet: 'editorSnippets/fullPageImageSnippet',
+
+      columnBreakSnippet: 'editorSnippets/columnBreakSnippet',
+      wideBlockSnippet: 'editorSnippets/wideBlockSnippet',
+      verticalSpacingSnippet: 'editorSnippets/verticalSpacingSnippet',
+
+      customTitlePageFontSnippet: 'editorSnippets/customTitlePageFontSnippet',
+      customHeadersFontSnippet: 'editorSnippets/customHeadersFontSnippet',
+      customNoteHeadersFontSnippet: 'editorSnippets/customNoteHeadersFontSnippet',
+      customRegularTextFontSnippet: 'editorSnippets/customRegularTextFontSnippet',
+      customNewspaperHeadersFontSnippet: 'editorSnippets/customNewspaperHeadersFontSnippet',
+      customNewspaperTextFontSnippet: 'editorSnippets/customNewspaperTextFontSnippet',
+      customHandwritingFontSnippet: 'editorSnippets/customHandwritingFontSnippet'
     }),
   },
   beforeCreate: function () {
@@ -113,24 +143,23 @@ export default {
       while (search.findNext()) {
         lines.push(search.from().line);
       }
-      this.$store.commit('editor/pushPageLines', lines);
+      this.$store.commit('editor/setPageBreakIndexes', lines);
       this.$store.commit('editor/setRawCode', newCode);
     }, 500),
     cursorPositionChange: _.debounce(function (position) {
-      this.currentLineNumber = position.getCursor().line;
-      this.currentPageNumber = 0;
-      if (this.pageLines.length > 1) {
+      let currentLineNumber = position.getCursor().line;
+      let currentPageNumber = 0;
+      if (this.pageBreakIndexes.length > 1) {
         let i = 1;
-        while(this.currentLineNumber >= this.pageLines[i]) {
-          this.currentPageNumber++;
+        while(currentLineNumber >= this.pageBreakIndexes[i]) {
+          currentPageNumber++;
           i++;
         }
       }
-      this.$store.commit('editor/setCurrentPageNumber', this.currentPageNumber);
+      this.$store.commit('editor/setCurrentPageNumber', currentPageNumber);
     }, 200),
     getCursorPosition: function () {
-      let codeMirrorDocument = this.codeMirror.getDoc();
-      let cursor = codeMirrorDocument.getCursor();
+      let cursor = this.codeMirror.getDoc().getCursor();
       let position = {
         line: cursor.line,
         ch: cursor.position
@@ -138,104 +167,37 @@ export default {
       return position;
     },
     insertData: function (data, position) {
-      let codeMirrorDocument = this.codeMirror.getDoc();
-      codeMirrorDocument.replaceRange(data, position);
+      this.codeMirror.getDoc().replaceRange(data, position);
     },
-    insertPrimaryNote: function () {
-      let data = '> ##### Header\n>\n> Example text.';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertSecondaryNote: function () {
-      let data = '>> ##### Header\n>>\n>> Example text.';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertTertiaryNote: function () {
-      let data = '>>> ##### Header\n>>>\n>>> Example text.';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertNewspaperNote: function () {
-      let data = '<blockquote markdown="true" class="note-newspaper">\n# headline\n\narticle_content\n</blockquote>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertHandwrittenNote: function () {
-      let data = '<blockquote markdown="true" class="note-handwritten">\nHandwritten note\n\n<p style="float: right;">John Doe</p>\n<div style="clear: both;"/>\n</blockquote>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertPhbNote: function () {
-      let data = '<blockquote markdown="true" class="note-phb">\n##### header\n\nnote_content\n</blockquote>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertCocStatTable: function () {
-      let data = '<div markdown="true" class="table-stat table-stat-cthulhu">\n>|JOSH WINSCOTT, *damned by his legacy*|\n>|-|\n>\n>||||||\n>|-|-|-|-|-|\n>|**STR** 00|**CON** 00|**SIZ** 00|**DEX** 00|**INT** 00|\n>|**APP** 00|**POW** 00|**EDU** 00|**SAN** 00|**HP** 00|\n>|**DB** 0|**Build** 0|**Move** 0|**MP** 00|-|\n>\n>|*Combat*||\n>|-|-|\n>|Knife|00% (00/00), damage **0**|\n>|Dodge|00% (00/00)|\n>\n>|*Skills*|\n>|-|\n>|Climb 00%, Credit Rating 00%, Fast Talk 00%, History 00%, Jump 00%, Library Use 00%, Occult 00%.|\n>|**Languages:** English 00%, French 00%.|\n</div>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertRegularPage: function () {
-      let data = '\\page';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertRelativeImage: function () {
-      let data = '![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Image")';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertAbsoluteImage: function () {
-      let data = '<img class="page-image-absolute" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertFullPageImage: function () {
-      let data = '<img class="page-image-fullpage" src="https://i.imgur.com/PNpQjCA.jpg"/>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertTwoColumnPage: function () {
-      let data = '\\page[columns-2]';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertThreeColumnPage: function () {
-      let data = '\\page[columns-3]';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertTitlePage: function () {
-      let data = '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description\n';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertColumnBreak: function () {
-      let data = '```\n```';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertWideBlock: function () {
-      let data = '<div markdown="true" class="page-wide-block">\nwide_block\n</div>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertVerticalSpacing: function () {
-      let data = '<div style="height: 350px;"></div>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertCustomTitlePageFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "titlePage";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertCustomHeadersFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "headers";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertCustomNoteHeadersFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "headers-blockquotes";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertCustomRegularTextFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "regular-text";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertCustomNewspaperHeadersFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "newspaper-headers";\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: local("Arial");}\n</style>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertCustomNewspaperTextFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "newspaper-text";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
-      this.insertData(data, this.getCursorPosition());
-    },
-    insertCustomHandwritingFont: function () {
-      let data = '<style>\n@font-face {\n\tfont-family: "handwriting";\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: local("Arial");}\n</style>';
-      this.insertData(data, this.getCursorPosition());
+    insertPrimaryNote: function () { this.insertData(this.primaryNoteSnippet, this.getCursorPosition()); },
+    insertSecondaryNote: function () { this.insertData(this.secondaryNoteSnippet, this.getCursorPosition()); },
+    insertTertiaryNote: function () { this.insertData(this.tertiaryNoteSnippet, this.getCursorPosition()); },
+    insertNewspaperNote: function () { this.insertData(this.newspaperNoteSnippet, this.getCursorPosition()); },
+    insertHandwrittenNote: function () { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
+    insertPhbNote: function () { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
+    insertCocStatTable: function () { this.insertData(this.cthulhuStatTable, this.getCursorPosition()); },
+    insertRegularPage: function () { this.insertData(this.regularPageSnippet, this.getCursorPosition()); },
+    insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
+    insertThreeColumnPage: function () { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },
+    insertTitlePage: function () { this.insertData(this.titlePageSnippet, this.getCursorPosition()); },
+    insertRelativeImage: function () { this.insertData(this.relativeImageSnippet, this.getCursorPosition()); },
+    insertAbsoluteImage: function () { this.insertData(this.absoluteImageSnippet, this.getCursorPosition()); },
+    insertFullPageImage: function () { this.insertData(this.fullPageImageSnippet, this.getCursorPosition()); },
+    insertColumnBreak: function () { this.insertData(this.columnBreakSnippet, this.getCursorPosition()); },
+    insertWideBlock: function () { this.insertData(this.wideBlockSnippet, this.getCursorPosition()); },
+    insertVerticalSpacing: function () { this.insertData(this.verticalSpacingSnippet, this.getCursorPosition()); },
+    insertCustomTitlePageFont: function () { this.insertData(this.customTitlePageFontSnippet, this.getCursorPosition()); },
+    insertCustomHeadersFont: function () { this.insertData(this.customHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomNoteHeadersFont: function () { this.insertData(this.customNoteHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomRegularTextFont: function () { this.insertData(this.customRegularTextFontSnippet, this.getCursorPosition()); },
+    insertCustomNewspaperHeadersFont: function () { this.insertData(this.customNewspaperHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomNewspaperTextFont: function () { this.insertData(this.customNewspaperTextFontSnippet, this.getCursorPosition()); },
+    insertCustomHandwritingFont: function () { this.insertData(this.customHandwritingFontSnippet, this.getCursorPosition()); },
+    scrollToPage: function () {
+      if (this.pageBreakIndexes[this.documentCurrentPageNumber] !== undefined) {
+        this.codeMirror.scrollIntoView({line: this.pageBreakIndexes[this.documentCurrentPageNumber], char: 0}, 100);
+        this.codeMirror.setCursor({line: this.pageBreakIndexes[this.documentCurrentPageNumber], ch: 0});
+      }
     },
     syncFile: async function () {
       if (this.googleDriveFileId) {
@@ -392,12 +354,6 @@ export default {
         document.body.removeChild(element);
       };
       element.click();
-    },
-    scrollToPage: function () {
-      if (this.pageLines[this.documentCurrentPageNumber] !== undefined) {
-        this.codeMirror.scrollIntoView({line: this.pageLines[this.documentCurrentPageNumber], char: 0}, 100);
-        this.codeMirror.setCursor({line: this.pageLines[this.documentCurrentPageNumber], ch: 0});
-      }
     }
   }
 };

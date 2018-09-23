@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import DocumentToolbar from './DocumentToolbar.vue';
+import DocumentToolbar from '@/components/DocumentToolbar.vue';
 import marked from 'marked';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
@@ -49,7 +49,9 @@ export default {
   },
   computed: {
     ...mapGetters({
+      editorCurrentPageNumber: 'editor/currentPageNumber',
       rawCode: 'editor/rawCode',
+
       pageTexturesEnabled: 'document/pageTexturesEnabled',
       noteTexturesEnabled: 'document/noteTexturesEnabled',
       oldZoom: 'document/oldZoom',
@@ -57,7 +59,6 @@ export default {
       pagesTextureFile: 'document/pagesTextureFile',
       pagesTextureFileChanged: 'document/pagesTextureFileChanged',
       theme: 'document/theme',
-      editorCurrentPageNumber: 'editor/currentPageNumber',
       pageHeightPx: 'document/pageHeightPx',
       pageOffsetPx: 'document/pageOffsetPx'
     }),

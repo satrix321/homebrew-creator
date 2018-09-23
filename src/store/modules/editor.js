@@ -3,16 +3,14 @@ const editor = {
   
   state: {
     rawCode: '',
-
     currentPageNumber: 0,
-
-    pageLines: [],
+    pageBreakIndexes: [],
   },
 
   getters: {
     rawCode: state => state.rawCode,
     currentPageNumber: state => state.currentPageNumber,
-    pageLines: state => state.pageLines,
+    pageBreakIndexes: state => state.pageBreakIndexes,
   },
 
   mutations: {
@@ -22,9 +20,9 @@ const editor = {
     setCurrentPageNumber (state, currentPageNumber) {
       state.currentPageNumber = currentPageNumber;
     },
-    pushPageLines (state, pageLines) {
-      state.pageLines = [];
-      state.pageLines.push(...pageLines);
+    setPageBreakIndexes (state, pageBreakIndexes) {
+      state.pageBreakIndexes = [];
+      state.pageBreakIndexes.push(...pageBreakIndexes);
     }
   }
 };

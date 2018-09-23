@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import EditorItem from './Editor.vue';
-import DocumentItem from './Document.vue';
+import EditorItem from '@/components/Editor';
+import DocumentItem from '@/components/Document';
 import Vue from 'vue';
 
 export default {
