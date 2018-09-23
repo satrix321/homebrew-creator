@@ -75,7 +75,7 @@ export default {
   name: 'Editor',
   computed: {
     ...mapGetters({
-      googleDriveFileId: 'editor/googleDriveFileId'
+      googleDriveFileId: 'filepicker/googleDriveFileId'
     })
   },
   methods: {

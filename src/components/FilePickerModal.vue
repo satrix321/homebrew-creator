@@ -232,7 +232,7 @@ export default {
         return;
       }
 
-      this.$store.commit('editor/set' + this.provider.type + 'FileId', this.selectedItem.id);
+      this.$store.commit('filepicker/set' + this.provider.type + 'FileId', this.selectedItem.id);
       this.$emit('downloadFile');
     },
     uploadFile: function () {
@@ -245,12 +245,12 @@ export default {
         if (this.selectedItem.mimeType === this.folderMimeType) {
           if (this.$refs.fileName.value) {
             let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
-            this.$store.commit('editor/set' + this.provider.type + 'FileId', this.selectedItem.id);
-            this.$store.commit('editor/set' + this.provider.type + 'FileName', fileName);
+            this.$store.commit('filepicker/set' + this.provider.type + 'FileId', this.selectedItem.id);
+            this.$store.commit('filepicker/set' + this.provider.type + 'FileName', fileName);
             if (this.pathIdList.length > 0) {
-              this.$store.commit('editor/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
+              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
             } else {
-              this.$store.commit('editor/set' + this.provider.type + 'ParentId', undefined);
+              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', undefined);
             }
           } else {
             alert('Select a file with .' + this.provider.fileExtension + ' extension');
@@ -258,21 +258,21 @@ export default {
           }
         } else {
           if (this.$refs.fileName.value && (this.$refs.fileName.value + '.' + this.provider.fileExtension === this.selectedItem.name)) {
-            this.$store.commit('editor/set' + this.provider.type + 'FileId', this.selectedItem.id);
-            this.$store.commit('editor/set' + this.provider.type + 'FileName', undefined);
+            this.$store.commit('filepicker/set' + this.provider.type + 'FileId', this.selectedItem.id);
+            this.$store.commit('filepicker/set' + this.provider.type + 'FileName', undefined);
             if (this.pathIdList.length > 0) {
-              this.$store.commit('editor/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
+              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
             } else {
-              this.$store.commit('editor/set' + this.provider.type + 'ParentId', undefined);
+              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', undefined);
             }
           } else if (this.$refs.fileName.value) {
             let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
-            this.$store.commit('editor/set' + this.provider.type + 'FileId', undefined);
-            this.$store.commit('editor/set' + this.provider.type + 'FileName', fileName);
+            this.$store.commit('filepicker/set' + this.provider.type + 'FileId', undefined);
+            this.$store.commit('filepicker/set' + this.provider.type + 'FileName', fileName);
             if (this.pathIdList.length > 0) {
-              this.$store.commit('editor/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
+              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
             } else {
-              this.$store.commit('editor/set' + this.provider.type + 'ParentId', undefined);
+              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', undefined);
             }
           } else {
             alert('Select a file with .' + this.provider.fileExtension + ' extenion');
@@ -283,12 +283,12 @@ export default {
       } else {
         if (this.$refs.fileName.value && this.$refs.fileName.value !== '') {
           let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
-          this.$store.commit('editor/set' + this.provider.type + 'FileId', undefined);
-          this.$store.commit('editor/set' + this.provider.type + 'FileName', fileName);
+          this.$store.commit('filepicker/set' + this.provider.type + 'FileId', undefined);
+          this.$store.commit('filepicker/set' + this.provider.type + 'FileName', fileName);
           if (this.pathIdList.length > 0) {
-            this.$store.commit('editor/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
+            this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
           } else {
-            this.$store.commit('editor/set' + this.provider.type + 'ParentId', undefined);
+            this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', undefined);
           }
         } else {
           alert('Please provide file name');

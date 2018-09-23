@@ -79,9 +79,9 @@ export default {
   computed: {
     ...mapGetters({
       pageLines: 'editor/pageLines',
-      googleDriveFileId: 'editor/googleDriveFileId',
-      googleDriveFileName: 'editor/googleDriveFileName',
-      googleDriveParentId: 'editor/googleDriveParentId',
+      googleDriveFileId: 'filepicker/googleDriveFileId',
+      googleDriveFileName: 'filepicker/googleDriveFileName',
+      googleDriveParentId: 'filepicker/googleDriveParentId',
       rawCode: 'editor/rawCode',
       documentCurrentPageNumber: 'document/currentPageNumber',
       theme: 'document/theme'
@@ -319,7 +319,7 @@ export default {
             if (response.status !== 200) {
               alert(response);
             } else {
-              this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
+              this.$store.commit('filepicker/set' + this.googleDrive.type + 'FileId', response.result.id);
             }
             this.$refs.progress.classList.remove('is-visible');
           })
@@ -333,7 +333,7 @@ export default {
             if (response.status !== 200) {
               alert(response);
             } else {
-              this.$store.commit('editor/set' + this.googleDrive.type + 'FileId', response.result.id);
+              this.$store.commit('filepicker/set' + this.googleDrive.type + 'FileId', response.result.id);
             }
             this.$refs.progress.classList.remove('is-visible');
           })
