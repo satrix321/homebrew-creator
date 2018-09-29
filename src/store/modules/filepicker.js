@@ -2,26 +2,26 @@ const filepicker = {
   namespaced: true,
   
   state: {
-    googleDriveFileId: undefined,
-    googleDriveFileName: undefined,
-    googleDriveParentId: undefined
+    fileId: undefined,
+    fileName: undefined,
+    fileParentId: undefined
   },
 
   getters: {
-    googleDriveFileId: state => state.googleDriveFileId,
-    googleDriveFileName: state => state.googleDriveFileName,
-    googleDriveParentId: state => state.googleDriveParentId
+    fileId: state => state.fileId,
+    fileName: state => state.fileName,
+    fileParentId: state => state.fileParentId
   },
 
   mutations: {
-    setGoogleDriveFileId (state, fileId) {
-      state.googleDriveFileId = fileId;
+    setFileId (state, fileId) {
+      state.fileId = fileId;
     },
-    setGoogleDriveFileName (state, fileName) {
-      state.googleDriveFileName = fileName;
+    setFileName (state, fileName) {
+      state.fileName = fileName;
     },
-    setGoogleDriveParentId (state, parentId) {
-      state.googleDriveParentId = parentId;
+    setFileParentId (state, fileParentId) {
+      state.fileParentId = fileParentId;
     }
   }
 };

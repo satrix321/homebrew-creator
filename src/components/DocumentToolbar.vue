@@ -10,8 +10,8 @@
         <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu-2'}" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</button>
       </div>
     </div>
-    <button class="btn" :class="{'is-clicked': pageTexturesEnabled}" @click="togglePagesTexture"><i class="fas fa-image"></i> Pages Texture</button>
-    <button class="btn" :class="{'is-clicked': noteTexturesEnabled}" @click="toggleNotesTexture"><i class="fas fa-file"></i> Notes Texture</button>
+    <button class="btn" :class="{'is-clicked': pageTexturesEnabled}" @click="togglePageTextures"><i class="fas fa-image"></i> Pages Texture</button>
+    <button class="btn" :class="{'is-clicked': noteTexturesEnabled}" @click="toggleNoteTextures"><i class="fas fa-file"></i> Notes Texture</button>
     <button class="btn btn-right">Zoom {{zoom}}%</button>
     <button class="btn btn-right" @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button>
     <button class="btn btn-right" @click="getPDF"><i class="fas fa-file-pdf"></i> Get PDF</button>
@@ -33,16 +33,12 @@ export default {
   },
   methods: {
     zoomIn: function () {
-      if (this.zoom < 150) {
-        this.$store.dispatch('document/zoomIn');
-        this.$emit('zoomIn');
-      }
+      this.$store.dispatch('document/zoomIn');
+      this.$emit('zoomIn');
     },
     zoomOut: function () {
-      if (this.zoom > 50) {
-        this.$store.dispatch('document/zoomOut');
-        this.$emit('zoomOut');
-      }
+      this.$store.dispatch('document/zoomOut');
+      this.$emit('zoomOut');
     },
     toggleDefaultTheme: function () {
       this.$store.commit('document/setTheme', 'theme-default');
@@ -53,11 +49,11 @@ export default {
     toggleCthulhu2Theme: function () {
       this.$store.commit('document/setTheme', 'theme-cthulhu-2');
     },
-    togglePagesTexture: function () {
-      this.pageTexturesEnabled ? this.$store.commit('document/disablePageTextures') : this.$store.commit('document/enablePageTextures');
+    togglePageTextures: function () {
+      this.$store.commit('document/togglePageTextures');
     },
-    toggleNotesTexture: function () {
-      this.noteTexturesEnabled ? this.$store.commit('document/disableNoteTextures') : this.$store.commit('document/enableNoteTextures');
+    toggleNoteTextures: function () {
+      this.$store.commit('document/toggleNoteTextures');
     },
     scrollToCursor: function () {
       this.$emit('scrollToCursor');

@@ -1,15 +1,15 @@
-.filelist {
-  .filelist-container {
+.filepicker {
+  .filepicker-container {
     height: 450px;
     overflow-y:scroll;
   }
 
-  .filelist-table {
+  .filepicker-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0; 
 
-    .filelist-row {
+    .filepicker-row {
       vertical-align: middle;
       height: 30px;
 
@@ -23,7 +23,7 @@
       }
     }
 
-    .filelist-col-icon {
+    .filepicker-col-icon {
       width: 30px;
       text-align: center;
 
@@ -32,7 +32,7 @@
       }
     }
 
-    .filelist-col-id, .filelist-col-mime {
+    .filepicker-col-id, .filepicker-col-mime {
       display: none;
     }
   }

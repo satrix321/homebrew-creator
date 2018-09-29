@@ -58,13 +58,13 @@
     <div class="dropdown dropdown-right">
       <button class="btn"><i class="fas fa-file"></i> File</button>
       <div class="dropdown-content">
-        <button class="btn" @click="downloadGDrive"><i class="fab fa-google-drive"></i> Download - Google Drive</button>
-        <button class="btn" @click="uploadGDrive"><i class="fab fa-google-drive"></i> Upload - Google Drive</button>
+        <button class="btn" @click="downloadGoogleDriveFile"><i class="fab fa-google-drive"></i> Download - Google Drive</button>
+        <button class="btn" @click="uploadGoogleDriveFile"><i class="fab fa-google-drive"></i> Upload - Google Drive</button>
         <button class="btn" @click="downloadFile"><i class="fas fa-download"></i> Download File</button>
         <button class="btn" @click="uploadFile"><i class="fas fa-upload"></i> Upload File</button>
       </div>
     </div>
-    <button class="btn btn-right" @click="syncFile" :disabled="!this.googleDriveFileId"><i class="fas fa-sync"></i> Sync</button>
+    <button class="btn btn-right" @click="syncFile" :disabled="!this.storageProviderFileId"><i class="fas fa-sync"></i> Sync</button>
   </div>
 </template>
 
@@ -75,100 +75,40 @@ export default {
   name: 'Editor',
   computed: {
     ...mapGetters({
-      googleDriveFileId: 'filepicker/googleDriveFileId'
+      storageProviderFileId: 'filepicker/fileId'
     })
   },
   methods: {
-    insertPrimaryNote: function () {
-      this.$emit('insertPrimaryNote');
-    },
-    insertSecondaryNote: function () {
-      this.$emit('insertSecondaryNote');
-    },
-    insertTertiaryNote: function () {
-      this.$emit('insertTertiaryNote');
-    },
-    insertNewspaperNote: function () {
-      this.$emit('insertNewspaperNote');
-    },
-    insertHandwrittenNote: function () {
-      this.$emit('insertHandwrittenNote');
-    },
-    insertPhbNote: function () {
-      this.$emit('insertPhbNote');
-    },
-    insertCocStatTable: function () {
-      this.$emit('insertCocStatTable');
-    },
-    insertRegularPage: function () {
-      this.$emit('insertRegularPage');
-    },
-    insertRelativeImage: function () {
-      this.$emit('insertRelativeImage');
-    },
-    insertAbsoluteImage: function () {
-      this.$emit('insertAbsoluteImage');
-    },
-    insertFullPageImage: function () {
-      this.$emit('insertFullPageImage');
-    },
-    insertTwoColumnPage: function () {
-      this.$emit('insertTwoColumnPage');
-    },
-    insertThreeColumnPage: function () {
-      this.$emit('insertThreeColumnPage');
-    },
-    insertTitlePage: function () {
-      this.$emit('insertTitlePage');
-    },
-    insertColumnBreak: function () {
-      this.$emit('insertColumnBreak');
-    },
-    insertWideBlock: function () {
-      this.$emit('insertWideBlock');
-    },
-    insertVerticalSpacing: function () {
-      this.$emit('insertVerticalSpacing');
-    },
-    insertCustomTitlePageFont: function () {
-      this.$emit('insertCustomTitlePageFont');
-    },
-    insertCustomHeadersFont: function () {
-      this.$emit('insertCustomHeadersFont');
-    },
-    insertCustomNoteHeadersFont: function () {
-      this.$emit('insertCustomNoteHeadersFont');
-    },
-    insertCustomRegularTextFont: function () {
-      this.$emit('insertCustomRegularTextFont');
-    },
-    insertCustomNewspaperHeadersFont: function () {
-      this.$emit('insertCustomNewspaperHeadersFont');
-    },
-    insertCustomNewspaperTextFont: function () {
-      this.$emit('insertCustomNewspaperTextFont');
-    },
-    insertCustomHandwritingFont: function () {
-      this.$emit('insertCustomHandwritingFont');
-    },
-    syncFile: function () {
-      this.$emit('syncFile');
-    },
-    downloadGDrive: function () {
-      this.$emit('downloadGDrive');
-    },
-    uploadGDrive: function () {
-      this.$emit('uploadGDrive');
-    },
-    downloadFile: function () {
-      this.$emit('downloadFile');
-    },
-    uploadFile: function () {
-      this.$emit('uploadFile');
-    },
-    scrollToPage: function () {
-      this.$emit('scrollToPage');
-    }
+    insertPrimaryNote: function () { this.$emit('insertPrimaryNote'); },
+    insertSecondaryNote: function () { this.$emit('insertSecondaryNote'); },
+    insertTertiaryNote: function () { this.$emit('insertTertiaryNote'); },
+    insertNewspaperNote: function () { this.$emit('insertNewspaperNote'); },
+    insertHandwrittenNote: function () { this.$emit('insertHandwrittenNote'); },
+    insertPhbNote: function () { this.$emit('insertPhbNote'); },
+    insertCocStatTable: function () { this.$emit('insertCocStatTable'); },
+    insertRegularPage: function () { this.$emit('insertRegularPage'); },
+    insertRelativeImage: function () { this.$emit('insertRelativeImage'); },
+    insertAbsoluteImage: function () { this.$emit('insertAbsoluteImage'); },
+    insertFullPageImage: function () { this.$emit('insertFullPageImage'); },
+    insertTwoColumnPage: function () { this.$emit('insertTwoColumnPage'); },
+    insertThreeColumnPage: function () { this.$emit('insertThreeColumnPage'); },
+    insertTitlePage: function () { this.$emit('insertTitlePage'); },
+    insertColumnBreak: function () { this.$emit('insertColumnBreak'); },
+    insertWideBlock: function () { this.$emit('insertWideBlock'); },
+    insertVerticalSpacing: function () { this.$emit('insertVerticalSpacing'); },
+    insertCustomTitlePageFont: function () { this.$emit('insertCustomTitlePageFont'); },
+    insertCustomHeadersFont: function () { this.$emit('insertCustomHeadersFont'); },
+    insertCustomNoteHeadersFont: function () { this.$emit('insertCustomNoteHeadersFont'); },
+    insertCustomRegularTextFont: function () { this.$emit('insertCustomRegularTextFont'); },
+    insertCustomNewspaperHeadersFont: function () { this.$emit('insertCustomNewspaperHeadersFont'); },
+    insertCustomNewspaperTextFont: function () { this.$emit('insertCustomNewspaperTextFont'); },
+    insertCustomHandwritingFont: function () { this.$emit('insertCustomHandwritingFont'); },
+    syncFile: function () { this.$emit('syncFile'); },
+    downloadGoogleDriveFile: function () { this.$emit('downloadGoogleDriveFile'); },
+    uploadGoogleDriveFile: function () { this.$emit('uploadGoogleDriveFile'); },
+    downloadFile: function () { this.$emit('downloadFile'); },
+    uploadFile: function () { this.$emit('uploadFile'); },
+    scrollToPage: function () { this.$emit('scrollToPage'); }
   }
 };
 </script>

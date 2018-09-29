@@ -24,12 +24,12 @@ export default {
   },
   data: function () {
     return {
-      pagesTextureUrl: undefined,
       documentElement: undefined
     };
   },
   props: ['eventBus'],
   mounted: function () {
+    // calculate current page on scroll
     let pagesContainer = this.$refs.pagesContainer;
     pagesContainer.onscroll = _.debounce(() => {
       let pageNumber = parseInt((pagesContainer.scrollTop / this.pageHeightPx) * (100 / this.zoom));
@@ -45,6 +45,8 @@ export default {
         this.$store.commit('document/setDefaultZoom');
         this.zoomChanged();
       });
+    } else {
+      console.error('event bus (Main <-> Document) not instantiated');
     }
   },
   computed: {
@@ -54,11 +56,12 @@ export default {
 
       pageTexturesEnabled: 'document/pageTexturesEnabled',
       noteTexturesEnabled: 'document/noteTexturesEnabled',
+
       oldZoom: 'document/oldZoom',
       zoom: 'document/zoom',
-      pagesTextureFile: 'document/pagesTextureFile',
-      pagesTextureFileChanged: 'document/pagesTextureFileChanged',
+
       theme: 'document/theme',
+
       pageHeightPx: 'document/pageHeightPx',
       pageOffsetPx: 'document/pageOffsetPx'
     }),
@@ -69,7 +72,7 @@ export default {
       let pagesOptions = this.getPagesOptions(this.rawCode);
       let pagesRawInput = this.rawCode.split(pageSplitRegex);
 
-      if (this.pageTexturesEnabled && this.pagesTextureFile !== undefined && (this.pagesTextureUrl === undefined || this.pagesTextureFileChanged)) {
+      if (this.pageTexturesEnabled && this.pageTextureFile !== undefined && this.pageTextureFileChanged) {
         this.loadPagesTexture();
       }
 
@@ -97,10 +100,6 @@ export default {
           }
         }
         page.classList.add(this.theme);
-
-        if (this.pageTexturesEnabled && this.pagesTextureUrl !== undefined) {
-          page.style.backgroundImage = 'url(\'' + this.pagesTextureUrl + '\')';
-        }
 
         if (!(pagesOptions[pageNumber - 1] !== null && pagesOptions[pageNumber - 1].includes('title'))) {
           let header = document.createElement('div');
@@ -213,17 +212,6 @@ export default {
 
       return pageOptions;
     },
-    loadPagesTexture: function () {
-      let context = this;
-      let reader = new FileReader();
-
-      reader.onload = function (event) {
-        context.pagesTextureUrl = event.target.result;
-      };
-
-      reader.readAsDataURL(this.pagesTextureFile);
-      this.$store.commit('document/unsetPagesTextureFileChanged');
-    },
     zoomIn: function () {
       this.zoomChanged();
     },
@@ -265,14 +253,9 @@ export default {
         if (!pagesContainer.classList.contains('document-overflow-fix')) {
           pagesContainer.classList.add('document-overflow-fix');
         }
-      }
-      else if (pagesContainer.classList.contains('document-overflow-fix')) {
+      } else if (pagesContainer.classList.contains('document-overflow-fix')) {
         pagesContainer.classList.remove('document-overflow-fix');
       }
-    },
-    setDefaultPagesTexture: function () {
-      this.$store.commit('document/setPagesTextureFile', undefined);
-      this.pagesTextureUrl = undefined;
     },
     scrollToCursor: function () {
       this.$refs.pagesContainer.scrollTo(0, (this.pageHeightPx * this.editorCurrentPageNumber + this.pageOffsetPx) * (this.zoom / 100));

@@ -27,13 +27,18 @@
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
       @insertCustomHandwritingFont="insertCustomHandwritingFont"
       @syncFile="syncFile"
-      @downloadGDrive="downloadGDrive"
-      @uploadGDrive="uploadGDrive"
+      @downloadGoogleDriveFile="downloadGoogleDriveFile"
+      @uploadGoogleDriveFile="uploadGoogleDriveFile"
       @downloadFile="downloadFile"
       @uploadFile="uploadFile"
       @scrollToPage="scrollToPage"/>
-    <codemirror :options="codeMirrorOptions" @input="codeChange" @cursorActivity="cursorPositionChange"></codemirror>
-    <file-picker-modal ref="filePicker" title="File Picker" @downloadFile="downloadFileUsingProvider" @uploadFile="uploadFileUsingProvider"></file-picker-modal>
+    <codemirror ref="editor" :options="codeMirrorOptions" 
+      @input="codeChange" 
+      @cursorActivity="cursorPositionChange"/>
+    <file-picker-modal ref="filePicker" title="File Picker" 
+      @downloadFile="downloadFileUsingProvider" 
+      @uploadFile="uploadFileUsingProvider"
+      @signOut="signOutFromProvider"/>
   </div>
 </template>
 
@@ -71,7 +76,7 @@ export default {
         lineNumbers: true,
         lineWrapping: true
       },
-      googleDrive: new GoogleDriveProvider(),
+      storageProvider: undefined,
     };
   },
   computed: {
@@ -79,9 +84,9 @@ export default {
       pageBreakIndexes: 'editor/pageBreakIndexes',
       rawCode: 'editor/rawCode',
 
-      googleDriveFileId: 'filepicker/googleDriveFileId',
-      googleDriveFileName: 'filepicker/googleDriveFileName',
-      googleDriveParentId: 'filepicker/googleDriveParentId',
+      storageProviderFileId: 'filepicker/fileId',
+      storageProviderFileName: 'filepicker/fileName',
+      storageProviderFileParentId: 'filepicker/fileParentId',
       
       documentCurrentPageNumber: 'document/currentPageNumber',
       theme: 'document/theme',
@@ -118,6 +123,7 @@ export default {
     }),
   },
   beforeCreate: function () {
+    // highlight new page lines
     CodeMirror.defineMode('homebrew-markdown', function(config, parserConfig) {
       var homebrewOverlay = {
         token: function(stream) {
@@ -132,28 +138,27 @@ export default {
       };
       return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || 'text/x-markdown'), homebrewOverlay);
     });
+
   },
   mounted: function () {
-    this.codeMirror = document.querySelector('.CodeMirror').CodeMirror;
+    this.codeMirror = this.$refs.editor.codemirror;
   },
   methods: {
-    codeChange: _.debounce(function (newCode) {
-      let lines = [];
+    codeChange: _.debounce(function (rawCode) {
+      let pageBreakIndexes = [];
       let search = this.codeMirror.getSearchCursor('\\page');
       while (search.findNext()) {
-        lines.push(search.from().line);
+        pageBreakIndexes.push(search.from().line);
       }
-      this.$store.commit('editor/setPageBreakIndexes', lines);
-      this.$store.commit('editor/setRawCode', newCode);
+      this.$store.commit('editor/setPageBreakIndexes', pageBreakIndexes);
+      this.$store.commit('editor/setRawCode', rawCode);
     }, 500),
     cursorPositionChange: _.debounce(function (position) {
       let currentLineNumber = position.getCursor().line;
       let currentPageNumber = 0;
       if (this.pageBreakIndexes.length > 1) {
-        let i = 1;
-        while(currentLineNumber >= this.pageBreakIndexes[i]) {
+        for (let i = 1; currentLineNumber >= this.pageBreakIndexes[i]; i++) {
           currentPageNumber++;
-          i++;
         }
       }
       this.$store.commit('editor/setCurrentPageNumber', currentPageNumber);
@@ -200,18 +205,18 @@ export default {
       }
     },
     syncFile: async function () {
-      if (this.googleDriveFileId) {
+      if (this.storageProviderFileId) {
         this.$refs.progress.classList.add('is-visible');
 
-        if (!this.googleDrive.isSignedIn) {
-          await this.googleDrive.authenticate();
+        if (!this.storageProvider.isSignedIn) {
+          await this.storageProvider.authenticate();
         }
 
         let data = {};
         data.data = this.rawCode;
         data.theme = this.theme;
 
-        this.googleDrive.updateFile(encodeURIComponent(JSON.stringify(data)), this.googleDriveFileId)
+        this.storageProvider.updateFile(encodeURIComponent(JSON.stringify(data)), this.storageProviderFileId)
           .then((response) => {
             if (response.status !== 200) {
               alert(response);
@@ -228,14 +233,14 @@ export default {
       }
     },
     downloadFileUsingProvider: async function () {
-      if (this.googleDriveFileId) {
+      if (this.storageProviderFileId) {
         this.$refs.progress.classList.add('is-visible');
 
-        if (!this.googleDrive.isSignedIn) {
-          await this.googleDrive.authenticate();
+        if (!this.storageProvider.isSignedIn) {
+          await this.storageProvider.authenticate();
         }
 
-        this.googleDrive.downloadFile(this.googleDriveFileId)
+        this.storageProvider.downloadFile(this.storageProviderFileId)
           .then((response) => {
             if (response.status === 200) {
               let data = JSON.parse(decodeURIComponent(response.body));
@@ -255,16 +260,16 @@ export default {
     uploadFileUsingProvider: async function () {
       this.$refs.progress.classList.add('is-visible');
 
-      if (!this.googleDrive.isSignedIn) {
-        await this.googleDrive.authenticate();
+      if (!this.storageProvider.isSignedIn) {
+        await this.storageProvider.authenticate();
       }
 
       let data = {};
       data.data = this.rawCode;
       data.theme = this.theme;
 
-      if (this.googleDriveFileId) {
-        this.googleDrive.updateFile(encodeURIComponent(JSON.stringify(data)), this.googleDriveFileId)
+      if (this.storageProviderFileId) {
+        this.storageProvider.updateFile(encodeURIComponent(JSON.stringify(data)), this.storageProviderFileId)
           .then((response) => {
             if (response.status !== 200) {
               alert(response);
@@ -275,13 +280,13 @@ export default {
             alert(error);
             this.$refs.progress.classList.remove('is-visible');
           });
-      } else if (this.googleDriveParentId) {
-        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(JSON.stringify(data)), this.googleDriveParentId)
+      } else if (this.storageProviderFileParentId) {
+        this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)), this.storageProviderFileParentId)
           .then((response) => {
             if (response.status !== 200) {
               alert(response);
             } else {
-              this.$store.commit('filepicker/set' + this.googleDrive.type + 'FileId', response.result.id);
+              this.$store.commit('filepicker/setFileId', response.result.id);
             }
             this.$refs.progress.classList.remove('is-visible');
           })
@@ -290,12 +295,12 @@ export default {
             this.$refs.progress.classList.remove('is-visible');
           });
       } else {
-        this.googleDrive.uploadFile(this.googleDriveFileName, encodeURIComponent(JSON.stringify(data)))
+        this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)))
           .then((response) => {
             if (response.status !== 200) {
               alert(response);
             } else {
-              this.$store.commit('filepicker/set' + this.googleDrive.type + 'FileId', response.result.id);
+              this.$store.commit('filepicker/setFileId', response.result.id);
             }
             this.$refs.progress.classList.remove('is-visible');
           })
@@ -305,22 +310,60 @@ export default {
           });
       }
     },
-    downloadGDrive: async function () {
+    signOutFromProvider: function () {
       this.$refs.progress.classList.add('is-visible');
-      if (!this.googleDrive.isSignedIn) {
-        await this.googleDrive.authenticate();
+      this.$refs.filePicker.close();
+
+      try {
+        this.storageProvider.signOut();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.$refs.progress.classList.remove('is-visible');
       }
-      this.$refs.filePicker.setProvider(this.googleDrive);
+
+      return;
+    },
+    downloadGoogleDriveFile: async function () {
+      this.$refs.progress.classList.add('is-visible');
+
+      try {
+        if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
+          this.storageProvider = new GoogleDriveProvider();
+          await this.storageProvider.load();
+          await this.storageProvider.authenticate();
+        } else if (!this.storageProvider.isSignedIn) {
+          await this.storageProvider.authenticate();
+        }
+      } catch (error) {
+        console.error(error);
+        this.$refs.progress.classList.remove('is-visible');
+        return;
+      }
+
+      this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setDownloadMode();
       this.$refs.filePicker.show();
       this.$refs.progress.classList.remove('is-visible');
     },
-    uploadGDrive: async function () {
+    uploadGoogleDriveFile: async function () {
       this.$refs.progress.classList.add('is-visible');
-      if (!this.googleDrive.isSignedIn) {
-        await this.googleDrive.authenticate();
+      
+      try {
+        if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
+          this.storageProvider = new GoogleDriveProvider();
+          await this.storageProvider.load();
+          await this.storageProvider.authenticate();
+        } else if (!this.storageProvider.isSignedIn) {
+          await this.storageProvider.authenticate();
+        }
+      } catch (error) {
+        console.error(error);
+        this.$refs.progress.classList.remove('is-visible');
+        return;
       }
-      this.$refs.filePicker.setProvider(this.googleDrive);
+
+      this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setUploadMode();
       this.$refs.filePicker.show();
       this.$refs.progress.classList.remove('is-visible');

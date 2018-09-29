@@ -1,5 +1,7 @@
 const zoomIncrement = 10;
 const zoomDefault = 100;
+const zoomMax = 150;
+const zoomMin = 50;
 
 const document = {
   namespaced: true,
@@ -10,9 +12,6 @@ const document = {
 
     oldZoom: zoomDefault,
     zoom: zoomDefault,
-
-    pagesTextureFile: undefined,
-    pagesTextureFileChanged: false,
 
     theme: 'theme-default',
 
@@ -29,9 +28,6 @@ const document = {
     oldZoom: state => state.oldZoom,
     zoom: state => state.zoom,
 
-    pagesTextureFile: state => state.pagesTextureFile,
-    pagesTextureFileChanged: state => state.pagesTextureFileChanged,
-
     theme: state => state.theme,
 
     currentPageNumber: state => state.currentPageNumber,
@@ -42,25 +38,23 @@ const document = {
 
   actions: {
     zoomIn (context) {
-      context.commit('setZoom', context.state.zoom + zoomIncrement);
+      if (context.state.zoom + zoomIncrement <= zoomMax) {
+        context.commit('setZoom', context.state.zoom + zoomIncrement);
+      }
     },
     zoomOut (context) {
-      context.commit('setZoom', context.state.zoom - zoomIncrement);
+      if (context.state.zoom - zoomIncrement >= zoomMin) {
+        context.commit('setZoom', context.state.zoom - zoomIncrement);
+      }
     }
   },
 
   mutations: {
-    enablePageTextures (state) {
-      state.pageTexturesEnabled = true;
+    togglePageTextures (state) {
+      state.pageTexturesEnabled = !state.pageTexturesEnabled;
     },
-    disablePageTextures (state) {
-      state.pageTexturesEnabled = false;
-    },
-    enableNoteTextures (state) {
-      state.noteTexturesEnabled = true;
-    },
-    disableNoteTextures (state) {
-      state.noteTexturesEnabled = false;
+    toggleNoteTextures (state) {
+      state.noteTexturesEnabled = !state.noteTexturesEnabled;
     },
 
     setZoom (state, zoom) {
@@ -70,14 +64,6 @@ const document = {
     setDefaultZoom (state) {
       state.oldZoom = state.zoom;
       state.zoom = zoomDefault;
-    },
-
-    setPagesTextureFile (state, pagesTextureFile) {
-      state.pagesTextureFile = pagesTextureFile;
-      state.pagesTextureFileChanged = true;
-    },
-    unsetPagesTextureFileChanged (state) {
-      state.pagesTextureFileChanged = false;
     },
 
     setTheme (state, theme) {

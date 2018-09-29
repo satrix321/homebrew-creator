@@ -2,22 +2,24 @@
   <div class="modal" :class="{'is-visible': visible}">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title">{{title}}</h2>
+        <h2 class="modal-title">
+          {{title}} - {{downloadMode ? 'Download' : ''}}{{uploadMode ? 'Upload' : ''}}
+        </h2>
       </div>
       <div class="modal-body">
         <div class="directory">
           <button class="btn directory-back" @click="goBack"><i class="fas fa-arrow-up"></i></button>
           <span class="directory-path">{{path}}</span>
         </div>
-        <div class="filelist">
-          <div class="filelist-container">
-            <table class="filelist-table" ref="fileTable" @click="itemDeselected">
+        <div class="filepicker">
+          <div class="filepicker-container">
+            <table class="filepicker-table" ref="fileTable" @click="itemDeselected">
               <tbody>
-                <tr class="filelist-row" v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
-                  <td class="filelist-col-icon"><i :class="{'fas fa-folder': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
-                  <td class="filelist-col-name">{{file.name}}</td>
-                  <td class="filelist-col-id">{{file.id}}</td>
-                  <th class="filelist-col-mime">{{file.mimeType}}</th>
+                <tr class="filepicker-row" v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
+                  <td class="filepicker-col-icon"><i :class="{'fas fa-folder': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
+                  <td class="filepicker-col-name">{{file.name}}</td>
+                  <td class="filepicker-col-id">{{file.id}}</td>
+                  <th class="filepicker-col-mime">{{file.mimeType}}</th>
                 </tr>
               </tbody>
             </table>
@@ -29,6 +31,7 @@
         <input v-if="this.uploadMode" class="input input-file-extension" value=".hmd" disabled="disabled">
         <button class="btn btn-right" @click="ok">OK</button>
         <button class="btn btn-right" @click="cancel">Cancel</button>
+        <button class="btn btn-left" @click="signOut">Sign Out</button>
       </div>
     </div>
   </div>
@@ -172,7 +175,7 @@ export default {
       this.clearSelection();
 
       let clickedRow = event.target.parentElement;
-      let selectedId = clickedRow.querySelector('.filelist-col-id').innerHTML;
+      let selectedId = clickedRow.querySelector('.filepicker-col-id').innerHTML;
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
       clickedRow.classList.add('is-selected');
 
@@ -198,7 +201,7 @@ export default {
       }
 
       let clickedRow = event.target.parentElement;
-      let selectedId = clickedRow.querySelector('.filelist-col-id').innerHTML;
+      let selectedId = clickedRow.querySelector('.filepicker-col-id').innerHTML;
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
 
       if (this.selectedItem.mimeType === this.folderMimeType) {
@@ -232,7 +235,7 @@ export default {
         return;
       }
 
-      this.$store.commit('filepicker/set' + this.provider.type + 'FileId', this.selectedItem.id);
+      this.$store.commit('filepicker/setFileId', this.selectedItem.id);
       this.$emit('downloadFile');
     },
     uploadFile: function () {
@@ -245,12 +248,12 @@ export default {
         if (this.selectedItem.mimeType === this.folderMimeType) {
           if (this.$refs.fileName.value) {
             let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
-            this.$store.commit('filepicker/set' + this.provider.type + 'FileId', this.selectedItem.id);
-            this.$store.commit('filepicker/set' + this.provider.type + 'FileName', fileName);
+            this.$store.commit('filepicker/setFileId', this.selectedItem.id);
+            this.$store.commit('filepicker/setFileName', fileName);
             if (this.pathIdList.length > 0) {
-              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
+              this.$store.commit('filepicker/setFileParentId', this.pathIdList[this.pathIdList.length - 1]);
             } else {
-              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', undefined);
+              this.$store.commit('filepicker/setFileParentId', undefined);
             }
           } else {
             alert('Select a file with .' + this.provider.fileExtension + ' extension');
@@ -258,21 +261,21 @@ export default {
           }
         } else {
           if (this.$refs.fileName.value && (this.$refs.fileName.value + '.' + this.provider.fileExtension === this.selectedItem.name)) {
-            this.$store.commit('filepicker/set' + this.provider.type + 'FileId', this.selectedItem.id);
-            this.$store.commit('filepicker/set' + this.provider.type + 'FileName', undefined);
+            this.$store.commit('filepicker/setFileId', this.selectedItem.id);
+            this.$store.commit('filepicker/setFileName', undefined);
             if (this.pathIdList.length > 0) {
-              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
+              this.$store.commit('filepicker/setFileParentId', this.pathIdList[this.pathIdList.length - 1]);
             } else {
-              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', undefined);
+              this.$store.commit('filepicker/setFileParentId', undefined);
             }
           } else if (this.$refs.fileName.value) {
             let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
-            this.$store.commit('filepicker/set' + this.provider.type + 'FileId', undefined);
-            this.$store.commit('filepicker/set' + this.provider.type + 'FileName', fileName);
+            this.$store.commit('filepicker/setFileId', undefined);
+            this.$store.commit('filepicker/setFileName', fileName);
             if (this.pathIdList.length > 0) {
-              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
+              this.$store.commit('filepicker/setFileParentId', this.pathIdList[this.pathIdList.length - 1]);
             } else {
-              this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', undefined);
+              this.$store.commit('filepicker/setFileParentId', undefined);
             }
           } else {
             alert('Select a file with .' + this.provider.fileExtension + ' extenion');
@@ -283,12 +286,12 @@ export default {
       } else {
         if (this.$refs.fileName.value && this.$refs.fileName.value !== '') {
           let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
-          this.$store.commit('filepicker/set' + this.provider.type + 'FileId', undefined);
-          this.$store.commit('filepicker/set' + this.provider.type + 'FileName', fileName);
+          this.$store.commit('filepicker/setFileId', undefined);
+          this.$store.commit('filepicker/setFileName', fileName);
           if (this.pathIdList.length > 0) {
-            this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', this.pathIdList[this.pathIdList.length - 1]);
+            this.$store.commit('filepicker/setFileParentId', this.pathIdList[this.pathIdList.length - 1]);
           } else {
-            this.$store.commit('filepicker/set' + this.provider.type + 'ParentId', undefined);
+            this.$store.commit('filepicker/setFileParentId', undefined);
           }
         } else {
           alert('Please provide file name');
@@ -297,6 +300,9 @@ export default {
       }
 
       this.$emit('uploadFile');
+    },
+    signOut: function () {
+      this.$emit('signOut');
     }
   }
 };
@@ -307,5 +313,5 @@ export default {
 @import '@/assets/scss/modules/input.scss';
 @import '@/assets/scss/modules/modal.scss';
 @import '@/assets/scss/modules/directory.scss';
-@import '@/assets/scss/modules/filelist.scss';
+@import '@/assets/scss/modules/filepicker.scss';
 </style>
