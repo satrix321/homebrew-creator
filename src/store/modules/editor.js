@@ -3,22 +3,23 @@ const editor = {
   
   state: {
     rawCode: '',
-    currentPageNumber: 0,
+    currentPageIndex: 0,
     pageBreakIndexes: [],
   },
 
   getters: {
     rawCode: state => state.rawCode,
-    currentPageNumber: state => state.currentPageNumber,
+    currentPageIndex: state => state.currentPageIndex,
     pageBreakIndexes: state => state.pageBreakIndexes,
+    pageCount: state => state.pageBreakIndexes.length
   },
 
   mutations: {
     setRawCode (state, rawCode) {
       state.rawCode = rawCode;
     },
-    setCurrentPageNumber (state, currentPageNumber) {
-      state.currentPageNumber = currentPageNumber;
+    setCurrentPageIndex (state, currentPageIndex) {
+      state.currentPageIndex = currentPageIndex;
     },
     setPageBreakIndexes (state, pageBreakIndexes) {
       state.pageBreakIndexes = [];

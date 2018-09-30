@@ -8,11 +8,28 @@
   overflow-y: hidden;
   clear: both;
 
+  > .btn {
+    border-right: 1px solid black;
+    &.btn-right {
+      border-right: initial;
+      border-left: 1px solid black;
+    }
+  }
+
   > .dropdown {
     float: left;
 
     &.dropdown-right {
       float: right;
+
+      > .btn {
+        border-left: 1px solid black;
+        border-right: initial;
+      }
+    }
+
+    > .btn {
+      border-right: 1px solid black;
     }
 
     %dropdown-content {
@@ -34,6 +51,11 @@
         display: block;
         width: 100%;
         text-align: left;
+        border-bottom: 1px solid black;
+
+        &:first-child {
+          border-top: 1px solid black;
+        }
       }
 
       > .dropdown > .dropdown-content {

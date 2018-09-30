@@ -100,7 +100,7 @@ export default {
       storageProviderFileName: 'filepicker/fileName',
       storageProviderFileParentId: 'filepicker/fileParentId',
       
-      documentCurrentPageNumber: 'document/currentPageNumber',
+      documentCurrentPageIndex: 'document/currentPageIndex',
       theme: 'document/theme',
 
       primaryNoteSnippet: 'editorSnippets/primaryNoteSnippet',
@@ -170,14 +170,14 @@ export default {
       this.$store.commit('editor/setRawCode', rawCode);
     }, 500),
     cursorPositionChange: _.debounce(function (position) {
-      let currentLineNumber = position.getCursor().line;
-      let currentPageNumber = 0;
+      let currentLineIndex = position.getCursor().line;
+      let currentPageIndex = 0;
       if (this.pageBreakIndexes.length > 1) {
-        for (let i = 1; currentLineNumber >= this.pageBreakIndexes[i]; i++) {
-          currentPageNumber++;
+        for (let i = 1; currentLineIndex >= this.pageBreakIndexes[i]; i++) {
+          currentPageIndex++;
         }
       }
-      this.$store.commit('editor/setCurrentPageNumber', currentPageNumber);
+      this.$store.commit('editor/setCurrentPageIndex', currentPageIndex);
     }, 200),
     getCursorPosition: function () {
       let cursor = this.codeMirror.getDoc().getCursor();
@@ -222,9 +222,9 @@ export default {
     insertCustomNewspaperTextFont: function () { this.insertData(this.customNewspaperTextFontSnippet, this.getCursorPosition()); },
     insertCustomHandwritingFont: function () { this.insertData(this.customHandwritingFontSnippet, this.getCursorPosition()); },
     scrollToPage: function () {
-      if (this.pageBreakIndexes[this.documentCurrentPageNumber] !== undefined) {
-        this.codeMirror.scrollIntoView({line: this.pageBreakIndexes[this.documentCurrentPageNumber], char: 0}, 100);
-        this.codeMirror.setCursor({line: this.pageBreakIndexes[this.documentCurrentPageNumber], ch: 0});
+      if (this.pageBreakIndexes[this.documentCurrentPageIndex] !== undefined) {
+        this.codeMirror.scrollIntoView({line: this.pageBreakIndexes[this.documentCurrentPageIndex], char: 0}, 100);
+        this.codeMirror.setCursor({line: this.pageBreakIndexes[this.documentCurrentPageIndex], ch: 0});
       }
     },
     syncFile: async function () {

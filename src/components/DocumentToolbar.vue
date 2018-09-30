@@ -1,7 +1,5 @@
 <template>
   <div class="toolbar">
-    <button class="btn" @click="zoomIn"><i class="fas fa-search-plus"></i></button>
-    <button class="btn" @click="zoomOut"><i class="fas fa-search-minus"></i></button>
     <div class="dropdown">
       <button class="btn"><i class="fas fa-image"></i> Theme</button>
       <div class="dropdown-content">
@@ -12,7 +10,17 @@
     </div>
     <button class="btn" :class="{'is-clicked': pageTexturesEnabled}" @click="togglePageTextures"><i class="fas fa-image"></i> Pages Texture</button>
     <button class="btn" :class="{'is-clicked': noteTexturesEnabled}" @click="toggleNoteTextures"><i class="fas fa-file"></i> Notes Texture</button>
-    <button class="btn btn-right">Zoom {{zoom}}%</button>
+    <div class="dropdown dropdown-right">
+      <button class="btn">Zoom {{zoom}}%</button>
+      <div class="dropdown-content">
+        <button class="btn" @click="setZoom(50)">50%</button>
+        <button class="btn" @click="setZoom(100)">100%</button>
+        <button class="btn" @click="setZoom(150)">150%</button>
+      </div>
+    </div>
+    <button class="btn btn-right" @click="zoomIn"><i class="fas fa-search-plus"></i></button>
+    <button class="btn btn-right" @click="zoomOut"><i class="fas fa-search-minus"></i></button>
+    <button class="btn btn-right">Page {{pageCount > 0 ? documentCurrentPageNumber : 0}}/{{pageCount}}</button>
     <button class="btn btn-right" @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button>
     <button class="btn btn-right" @click="getPDF"><i class="fas fa-file-pdf"></i> Get PDF</button>
   </div>
@@ -28,17 +36,24 @@ export default {
       pageTexturesEnabled: 'document/pageTexturesEnabled',
       noteTexturesEnabled: 'document/noteTexturesEnabled',
       zoom: 'document/zoom',
-      theme: 'document/theme'
+      theme: 'document/theme',
+
+      documentCurrentPageNumber: 'document/currentPageNumber',
+      pageCount: 'editor/pageCount'
     })
   },
   methods: {
+    setZoom: function (zoom) {
+      this.$store.dispatch('document/setZoom', zoom);
+      this.$emit('zoomChanged');
+    },
     zoomIn: function () {
       this.$store.dispatch('document/zoomIn');
-      this.$emit('zoomIn');
+      this.$emit('zoomChanged');
     },
     zoomOut: function () {
       this.$store.dispatch('document/zoomOut');
-      this.$emit('zoomOut');
+      this.$emit('zoomChanged');
     },
     toggleDefaultTheme: function () {
       this.$store.commit('document/setTheme', 'theme-default');

@@ -15,7 +15,7 @@ const document = {
 
     theme: 'theme-default',
 
-    currentPageNumber: 0,
+    currentPageIndex: 0,
 
     pageHeightPx: 1141.42,
     pageOffsetPx: 40
@@ -30,13 +30,17 @@ const document = {
 
     theme: state => state.theme,
 
-    currentPageNumber: state => state.currentPageNumber,
+    currentPageIndex: state => state.currentPageIndex,
+    currentPageNumber: state => state.currentPageIndex + 1,
 
     pageHeightPx: state => state.pageHeightPx,
     pageOffsetPx: state => state.pageOffsetPx
   },
 
   actions: {
+    setZoom (context, zoom) {
+      context.commit('setZoom', zoom);
+    },
     zoomIn (context) {
       if (context.state.zoom + zoomIncrement <= zoomMax) {
         context.commit('setZoom', context.state.zoom + zoomIncrement);
@@ -70,8 +74,8 @@ const document = {
       state.theme = theme;
     },
 
-    setCurrentPageNumber (state, currentPageNumber) {
-      state.currentPageNumber = currentPageNumber;
+    setCurrentPageIndex (state, currentPageIndex) {
+      state.currentPageIndex = currentPageIndex;
     }
   }
 };

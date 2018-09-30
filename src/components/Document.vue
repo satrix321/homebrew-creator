@@ -1,8 +1,7 @@
 <template>
   <div class="document">
     <document-toolbar 
-      @zoomIn="zoomIn"
-      @zoomOut="zoomOut"
+      @zoomChanged="zoomChanged"
       @scrollToCursor="scrollToCursor"
       @getPDF="getPDF"/>
     <div ref="pagesContainer" class="document-pages-container">
@@ -33,8 +32,8 @@ export default {
     let pagesContainer = this.$refs.pagesContainer;
     pagesContainer.onscroll = _.debounce(() => {
       let pageNumber = parseInt((pagesContainer.scrollTop / this.pageHeightPx) * (100 / this.zoom));
-      this.$store.commit('document/setCurrentPageNumber', pageNumber);
-    }, 500);
+      this.$store.commit('document/setCurrentPageIndex', pageNumber);
+    }, 100);
 
     if (this.eventBus) {
       this.eventBus.$on('resize', () => {
@@ -51,7 +50,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      editorCurrentPageNumber: 'editor/currentPageNumber',
+      editorCurrentPageIndex: 'editor/currentPageIndex',
+
       rawCode: 'editor/rawCode',
 
       pageTexturesEnabled: 'document/pageTexturesEnabled',
@@ -212,12 +212,6 @@ export default {
 
       return pageOptions;
     },
-    zoomIn: function () {
-      this.zoomChanged();
-    },
-    zoomOut: function () {
-      this.zoomChanged();
-    },
     zoomChanged: function () {
       let pagesContainer = this.$refs.pagesContainer;
       let pages = this.$refs.pages;
@@ -258,7 +252,7 @@ export default {
       }
     },
     scrollToCursor: function () {
-      this.$refs.pagesContainer.scrollTo(0, (this.pageHeightPx * this.editorCurrentPageNumber + this.pageOffsetPx) * (this.zoom / 100));
+      this.$refs.pagesContainer.scrollTo(0, (this.pageHeightPx * this.editorCurrentPageIndex + this.pageOffsetPx) * (this.zoom / 100));
     },
     getPDF: function () {
       window.print();
