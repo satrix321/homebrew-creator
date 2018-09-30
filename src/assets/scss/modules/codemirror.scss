@@ -43,15 +43,15 @@
   }
 
   .CodeMirror-search-match {
-    background: lightblue;
-    border-top: 1px solid deepskyblue;
-    border-bottom: 1px solid deepskyblue;
+    background: deepskyblue;
   }
 
   .CodeMirror-search-match-new-page {
-    background: gold;
-    border-top: 1px solid orange;
-    border-bottom: 1px solid orange;
+    background: orange;
+  }
+
+  .CodeMirror-selection-highlight-scrollbar {
+    background: green;
   }
 
   div.CodeMirror-cursor {
@@ -63,7 +63,7 @@
   }
 
   .CodeMirror-selected {
-    background-color: #237CC4;
+    background-color: darkgreen;
   }
 
   .box pre {
@@ -73,6 +73,10 @@
   .cm-new-page-line {
     background-color: rgba(255, 255, 255, 0.3);
     color: yellow;
+  }
+
+  .cm-matchhighlight {
+    background-color: rgba(255, 255, 255, 0.3);
   }
 
   .cm-comment {
@@ -145,7 +149,7 @@
   }
 
   .cm-tag {
-    color: #D043E0;
+    color: #ee8ff8;
   }
 
   .cm-attribute {

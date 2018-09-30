@@ -58,6 +58,7 @@ import 'codemirror/addon/mode/overlay.js';
 import 'codemirror/addon/selection/active-line.js';
 import 'codemirror/addon/scroll/annotatescrollbar.js';
 import 'codemirror/addon/search/matchesonscrollbar.js';
+import 'codemirror/addon/search/match-highlighter.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 import GoogleDriveProvider from '@/storageProviders/GoogleDriveProvider';
@@ -78,7 +79,8 @@ export default {
         mode: 'homebrew-markdown',
         theme: 'custom',
         lineNumbers: true,
-        lineWrapping: true
+        lineWrapping: true,
+        highlightSelectionMatches: { annotateScrollbar: true },
       },
       storageProvider: undefined,
     };
