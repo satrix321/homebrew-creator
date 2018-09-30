@@ -35,6 +35,18 @@
     }
   }
 
+  .CodeMirror-search-field {
+    background: #6e6e6e;
+    border-color: #6e6e6e;
+    border-style: initial;
+    color: white;
+    padding: 5px;
+  }
+
+  .CodeMirror-search-hint {
+    color: #dddddd !important;
+  }
+
   .CodeMirror-search-match,
   .CodeMirror-search-match-new-page {
     -moz-box-sizing: border-box;
