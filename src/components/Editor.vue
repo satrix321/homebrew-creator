@@ -59,6 +59,7 @@ import 'codemirror/addon/selection/active-line.js';
 import 'codemirror/addon/scroll/annotatescrollbar.js';
 import 'codemirror/addon/search/matchesonscrollbar.js';
 import 'codemirror/addon/search/match-highlighter.js';
+import 'codemirror/addon/comment/comment.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 import GoogleDriveProvider from '@/storageProviders/GoogleDriveProvider';
@@ -81,6 +82,11 @@ export default {
         lineNumbers: true,
         lineWrapping: true,
         highlightSelectionMatches: { annotateScrollbar: true },
+      },
+      codeMirrorCommentOptions: {
+        blockCommentStart: '<!--',
+        blockCommentEnd: '-->',
+        fullLines: false
       },
       storageProvider: undefined,
     };
@@ -145,11 +151,13 @@ export default {
       return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || 'text/x-markdown'), homebrewOverlay);
     });
     CodeMirror.keyMap.default['Ctrl-G'] = 'jumpToLine';
-
   },
   mounted: function () {
     this.codeMirror = this.$refs.editor.codemirror;
     this.codeMirror.showMatchesOnScrollbar('\\page', false, { className: 'CodeMirror-search-match-new-page' });
+    this.$refs.editor.codemirror.setOption('extraKeys', {
+      'Ctrl-/': this.commentText.bind(this)
+    });
   },
   methods: {
     codeChange: _.debounce(function (rawCode) {
@@ -178,6 +186,13 @@ export default {
         ch: cursor.position
       };
       return position;
+    },
+    commentText: function () {
+      let from = this.codeMirror.getCursor(true);
+      let to = this.codeMirror.getCursor(false);
+      if (!this.codeMirror.uncomment(from, to, this.codeMirrorCommentOptions)) {
+        this.codeMirror.blockComment(from, to, this.codeMirrorCommentOptions);
+      }
     },
     insertData: function (data, position) {
       this.codeMirror.getDoc().replaceRange(data, position);
