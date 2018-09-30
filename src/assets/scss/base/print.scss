@@ -1,4 +1,8 @@
 @media print {
+  // for default Google Chrome print settings
+  @page {
+    margin: 0;
+  }
   body, .page {
     margin: 0 !important;
     box-shadow: none !important;
