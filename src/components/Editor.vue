@@ -50,10 +50,14 @@ import FilePickerModal from '@/components/FilePickerModal.vue';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
+import 'codemirror/addon/dialog/dialog.js';
 import 'codemirror/addon/search/searchcursor.js';
 import 'codemirror/addon/search/search.js';
+import 'codemirror/addon/search/jump-to-line.js';
 import 'codemirror/addon/mode/overlay.js';
 import 'codemirror/addon/selection/active-line.js';
+import 'codemirror/addon/scroll/annotatescrollbar.js';
+import 'codemirror/addon/search/matchesonscrollbar.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 import GoogleDriveProvider from '@/storageProviders/GoogleDriveProvider';
@@ -130,7 +134,7 @@ export default {
           var ch;
           if (stream.match('\\page')) {
             while ((ch = stream.next()) != null && ch != ']') { continue; }
-            return 'pageLine';
+            return 'line-cm-new-page-line';
           }
           while (stream.next() != null && !stream.match('\\page', false)) { continue; }
           return null;
@@ -138,10 +142,12 @@ export default {
       };
       return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || 'text/x-markdown'), homebrewOverlay);
     });
+    CodeMirror.keyMap.default['Ctrl-G'] = 'jumpToLine';
 
   },
   mounted: function () {
     this.codeMirror = this.$refs.editor.codemirror;
+    this.codeMirror.showMatchesOnScrollbar('\\page', false, { className: 'CodeMirror-search-match-new-page' });
   },
   methods: {
     codeChange: _.debounce(function (rawCode) {
