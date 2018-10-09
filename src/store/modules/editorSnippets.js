@@ -9,7 +9,7 @@ const editorSnippets = {
     handwrittenNoteSnippet: '<blockquote markdown="true" class="note-handwritten">\nHandwritten note\n\n<p style="float: right;">John Doe</p>\n<div style="clear: both;"/>\n</blockquote>\n',
     phbNoteSnippet: '<blockquote markdown="true" class="note-phb">\n##### header\n\nnote_content\n</blockquote>\n',
 
-    cthulhuStatTable: '<div markdown="true" class="table-stat table-stat-cthulhu">\n>|JOSH WINSCOTT, *damned by his legacy*|\n>|-|\n>\n>||||||\n>|-|-|-|-|-|\n>|**STR** 00|**CON** 00|**SIZ** 00|**DEX** 00|**INT** 00|\n>|**APP** 00|**POW** 00|**EDU** 00|**SAN** 00|**HP** 00|\n>|**DB** 0|**Build** 0|**Move** 0|**MP** 00|-|\n>\n>|*Combat*||\n>|-|-|\n>|Knife|00% (00/00), damage **0**|\n>|Dodge|00% (00/00)|\n>\n>|*Skills*|\n>|-|\n>|Climb 00%, Credit Rating 00%, Fast Talk 00%, History 00%, Jump 00%, Library Use 00%, Occult 00%.|\n>|**Languages:** English 00%, French 00%.|\n</div>\n',
+    cthulhuStatTable: '<div markdown="true" class="table-stat table-stat-cthulhu">\n|JOSH WINSCOTT, *damned by his legacy*|\n|-|\n\n||||||\n|-|-|-|-|-|\n|**STR** 00|**CON** 00|**SIZ** 00|**DEX** 00|**INT** 00|\n|**APP** 00|**POW** 00|**EDU** 00|**SAN** 00|**HP** 00|\n|**DB** 0|**Build** 0|**Move** 0|**MP** 00|-|\n\n|*Combat*||\n|-|-|\n|Knife|00% (00/00), damage **0**|\n|Dodge|00% (00/00)|\n\n|*Skills*|\n|-|\n|Climb 00%, Credit Rating 00%, Fast Talk 00%, History 00%, Jump 00%, Library Use 00%, Occult 00%.|\n|**Languages:** English 00%, French 00%.|\n</div>\n',
 
     regularPageSnippet: '\\page\n',
     twoColumnPageSnippet: '\\page[columns-2]\n',

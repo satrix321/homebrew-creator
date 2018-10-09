@@ -1,11 +1,8 @@
 .table-stat {
-  blockquote {
-    margin-left: 0;
-    margin-right: 0;
-    page-break-inside: avoid;
-  }
-  &.table-stat-cthulhu > blockquote {
-    border: 2px solid black;
+  margin-bottom: 12px;
+
+  &.table-stat-cthulhu {
+    border: 0px solid black;
 
     table {
       width: calc(100% + 1px);
@@ -15,7 +12,7 @@
         border-spacing: 0;
 
         th {
-          padding: 0 5px;
+          padding: 3px 5px;
         }
 
         td {
@@ -23,8 +20,18 @@
         }
       }
 
-      &:nth-child(n+2) {
+      &:nth-child(2) {
+        th {
+          padding: 0px 5px;
+        }
 
+        td {
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+
+      &:nth-child(n+2) {
         tbody {
           tr:nth-child(odd) {
             background-color: rgba(224, 199, 136, 0.4);
@@ -34,19 +41,15 @@
             background-color: inherit;
           }
         }
-
-        td {
-          padding: 0 5px;
-        }
-
-        th {
-          padding: 0 5px;
-        }
       }
 
       &:nth-child(n+3) {
+        th {
+          padding: 3px 5px;
+        }
         td {
-          padding: 0 10px;
+          padding-left: 10px;
+          padding-right: 10px;
         }
       }
 
