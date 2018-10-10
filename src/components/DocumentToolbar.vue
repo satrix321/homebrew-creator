@@ -8,8 +8,13 @@
         <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu-2'}" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</button>
       </div>
     </div>
-    <button class="btn" :class="{'is-clicked': pageTexturesEnabled}" @click="togglePageTextures"><i class="fas fa-image"></i> Pages Texture</button>
-    <button class="btn" :class="{'is-clicked': noteTexturesEnabled}" @click="toggleNoteTextures"><i class="fas fa-file"></i> Notes Texture</button>
+    <div class="dropdown">
+      <button class="btn"><i class="fas fa-image"></i> Textures</button>
+      <div class="dropdown-content">
+        <button class="btn" :class="{'is-clicked': pageTexturesEnabled}" @click="togglePageTextures"><i class="fas fa-image"></i> Pages</button>
+        <button class="btn" :class="{'is-clicked': noteTexturesEnabled}" @click="toggleNoteTextures"><i class="fas fa-file"></i> Notes</button>
+      </div>
+    </div>
     <div class="dropdown dropdown-right">
       <button class="btn">Zoom {{zoom}}%</button>
       <div class="dropdown-content">
