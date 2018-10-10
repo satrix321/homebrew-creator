@@ -45,6 +45,9 @@
       padding: 2px 16px;
       background-color: $toolbar-backgroundColor;
       color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
       .modal-title {
         margin: 15px 0;

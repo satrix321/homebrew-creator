@@ -5,6 +5,7 @@
         <h2 class="modal-title">
           {{title}} - {{downloadMode ? 'Download' : ''}}{{uploadMode ? 'Upload' : ''}}
         </h2>
+        <button class="btn btn-right" @click="signOut"><i class="fas fa-sign-in-alt"></i></button>
       </div>
       <div class="modal-body">
         <div class="directory">
@@ -31,7 +32,6 @@
         <input v-if="this.uploadMode" class="input input-file-extension" value=".hmd" disabled="disabled">
         <button class="btn btn-right" @click="ok">OK</button>
         <button class="btn btn-right" @click="cancel">Cancel</button>
-        <button class="btn btn-left" @click="signOut">Sign Out</button>
       </div>
     </div>
   </div>
