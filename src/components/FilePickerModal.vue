@@ -5,7 +5,10 @@
         <h2 class="modal-title">
           {{title}} - {{downloadMode ? 'Download' : ''}}{{uploadMode ? 'Upload' : ''}}
         </h2>
-        <button class="btn btn-right" @click="signOut"><i class="fas fa-sign-in-alt"></i></button>
+        <div style="display: grid; grid-column-gap: 5px; grid-template-columns: auto auto;">
+          <button class="btn btn-right btn-icon" @click="signOut"><i class="fas fa-sign-in-alt"></i></button>
+          <button class="btn btn-right btn-icon" @click="cancel"><i class="fas fa-times"></i></button>
+        </div>
       </div>
       <div class="modal-body">
         <div class="directory">

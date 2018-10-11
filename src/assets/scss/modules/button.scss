@@ -38,6 +38,11 @@
     float: right;
   }
 
+  &.btn-icon {
+    width: 30px;
+    height: 30px;
+  }
+
   &:disabled {
     color: $btn-colorDisabled;
 
