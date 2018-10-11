@@ -221,17 +221,9 @@ export default {
       }
 
       if (this.zoom === 100) {
-        if (window.chrome) {
-          pages.style.zoom = '100%'; // firefox doesn't support this
-        } else {
-          pages.style['transform'] = '';
-        }
+        pages.style['transform'] = '';
       } else {
-        if (window.chrome) {
-          pages.style.zoom = (this.zoom).toFixed(2) + '%'; // firefox doesn't support this
-        } else {
-          pages.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
-        }
+        pages.style['transform'] = 'scale(' + (this.zoom / 100).toFixed(2) + ')';
       }
 
       if (this.zoom > this.oldZoom) {
