@@ -235,7 +235,7 @@ export default {
     checkOverflow: function () {
       let pagesContainer = this.$refs.pagesContainer;
 
-      if (pagesContainer.clientWidth !== pagesContainer.scrollWidth) {
+      if (pagesContainer.clientWidth < pagesContainer.scrollWidth) {
         if (!pagesContainer.classList.contains('document-overflow-fix')) {
           pagesContainer.classList.add('document-overflow-fix');
         }
