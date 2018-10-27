@@ -51,28 +51,28 @@
     background-size: 100% 100%;
 
     &.theme-default {
-      background-image: url('../assets/imgs/texture_02.jpg');
+      background-image: url('../assets/images/texture_02.jpg');
     }
 
     &.theme-cthulhu-1 {
-      background-image: url('../assets/imgs/texture_cthulhu_01.jpg');
+      background-image: url('../assets/images/texture_cthulhu_01.jpg');
     }
 
     &.theme-cthulhu-2 {
-      background-image: url('../assets/imgs/texture_cthulhu_02.jpg');
+      background-image: url('../assets/images/texture_cthulhu_02.jpg');
     }
 
     &.is-inverted {
       &.theme-default {
-        background-image: url('../assets/imgs/texture_02.jpg');
+        background-image: url('../assets/images/texture_02.jpg');
       }
 
       &.theme-cthulhu-1 {
-        background-image: url('../assets/imgs/texture_cthulhu_01_inverted.jpg');
+        background-image: url('../assets/images/texture_cthulhu_01_inverted.jpg');
       }
 
       &.theme-cthulhu-2 {
-        background-image: url('../assets/imgs/texture_cthulhu_02_inverted.jpg');
+        background-image: url('../assets/images/texture_cthulhu_02_inverted.jpg');
       }
     }
   }

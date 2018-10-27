@@ -21,7 +21,7 @@ blockquote {
   }
 
   .note-handwritten {
-    background-image: url('../assets/imgs/note_texture_cthulhu_02.jpg');
+    background-image: url('../assets/images/note_texture_cthulhu_02.jpg');
     background-repeat: no-repeat;
     background-position: center; 
   }
@@ -32,13 +32,13 @@ blockquote {
 
   &.theme-cthulhu-1 {
     .note-primary {
-      background-image: url('../assets/imgs/note_texture_cthulhu_02.jpg');
+      background-image: url('../assets/images/note_texture_cthulhu_02.jpg');
       background-repeat: no-repeat;
       background-position: center; 
     }
 
     .note-secondary {
-      background-image: url('../assets/imgs/note_texture_cthulhu_01.jpg');
+      background-image: url('../assets/images/note_texture_cthulhu_01.jpg');
       background-repeat: no-repeat;
       background-position: center; 
       background-size: 100% 100%;
@@ -184,7 +184,7 @@ blockquote {
 
   .note-primary {
     border: 20px solid transparent;
-    border-image: url('../assets/imgs/note_border_cthulhu_01.png') 41;
+    border-image: url('../assets/images/note_border_cthulhu_01.png') 41;
     clip-path: polygon(
       0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
       calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
@@ -214,7 +214,7 @@ blockquote {
       display: block;
       content: '';
       height: 50px;
-      background-image: url('../assets/imgs/cthulhu_note_hr_01_wide.png');
+      background-image: url('../assets/images/cthulhu_note_hr_01_wide.png');
       background-repeat: no-repeat;
       background-position: center; 
     }
@@ -223,7 +223,7 @@ blockquote {
       display: block;
       content: '';
       height: 50px;
-      background-image: url('../assets/imgs/cthulhu_note_hr_01_wide.png');
+      background-image: url('../assets/images/cthulhu_note_hr_01_wide.png');
       background-repeat: no-repeat;
       background-position: center; 
       transform: rotate(180deg);
@@ -232,7 +232,7 @@ blockquote {
 
   .note-tertiary {
     border: 20px solid transparent;
-    border-image: url('../assets/imgs/note_border_cthulhu_01.png') 41;
+    border-image: url('../assets/images/note_border_cthulhu_01.png') 41;
     clip-path: polygon(
       0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
       calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
@@ -267,7 +267,7 @@ blockquote {
       display: block;
       content: '';
       height: 50px;
-      background-image: url('../assets/imgs/cthulhu_note_hr_02_wide.png');
+      background-image: url('../assets/images/cthulhu_note_hr_02_wide.png');
       background-repeat: no-repeat;
       background-position: center; 
     }
@@ -276,7 +276,7 @@ blockquote {
       display: block;
       content: '';
       height: 50px;
-      background-image: url('../assets/imgs/cthulhu_note_hr_02_wide.png');
+      background-image: url('../assets/images/cthulhu_note_hr_02_wide.png');
       background-repeat: no-repeat;
       background-position: center; 
       transform: rotate(180deg);
@@ -286,7 +286,7 @@ blockquote {
   .note-newspaper, .note-handwritten {
     border-radius: 0px;
     border: 20px solid transparent;
-    border-image: url('../assets/imgs/note_border_cthulhu_01.png') 41;
+    border-image: url('../assets/images/note_border_cthulhu_01.png') 41;
     clip-path: polygon(
       0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
       calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
@@ -307,20 +307,20 @@ blockquote {
   &.theme-cthulhu-1 {
     .note-secondary {
       &::before {
-        background-image: url('../assets/imgs/cthulhu_note_hr_01.png');  
+        background-image: url('../assets/images/cthulhu_note_hr_01.png');  
       }
       &::after {
-        background-image: url('../assets/imgs/cthulhu_note_hr_01.png');  
+        background-image: url('../assets/images/cthulhu_note_hr_01.png');  
       }
     }
   }
   &.theme-cthulhu-2 {
     .note-primary, .note-secondary, .note-tertiary {
       &::before {
-        background-image: url('../assets/imgs/cthulhu_note_hr_02.png');  
+        background-image: url('../assets/images/cthulhu_note_hr_02.png');  
       }
       &::after {
-        background-image: url('../assets/imgs/cthulhu_note_hr_02.png');  
+        background-image: url('../assets/images/cthulhu_note_hr_02.png');  
       }
     }
   }
