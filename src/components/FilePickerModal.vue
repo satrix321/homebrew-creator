@@ -311,7 +311,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/scss/modules/button.scss';
 @import '@/assets/scss/modules/input.scss';
 @import '@/assets/scss/modules/modal.scss';
