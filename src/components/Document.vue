@@ -5,16 +5,19 @@
       @scrollToCursor="scrollToCursor"
       @getPDF="getPDF"/>
     <div ref="pagesContainer" class="document-pages-container">
-      <div @change="checkOverflow" ref="pages" class="document-pages" v-html="compiledMarkdown"></div>
+      <div @change="checkOverflow" ref="pages" class="document-pages"></div>
     </div>
   </div>
 </template>
 
 <script>
-import DocumentToolbar from '@/components/DocumentToolbar.vue';
-import marked from 'marked';
+import DocumentToolbar from '@/components/DocumentToolbar';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
+
+import Vue from 'vue';
+import Spacer from '@/components/documentComponents/Spacer';
+import Page from '@/components/documentComponents/Page';
 
 export default {
   name: 'DocumentItem',
@@ -23,7 +26,10 @@ export default {
   },
   data: function () {
     return {
-      documentElement: undefined
+      createdComponents: [],
+
+      SpacerClass: Vue.extend(Spacer),
+      PageClass: Vue.extend(Page)
     };
   },
   props: ['eventBus'],
@@ -48,6 +54,58 @@ export default {
       console.error('event bus (Main <-> Document) not instantiated');
     }
   },
+  watch: {
+    rawCode: function () {
+      while (this.createdComponents.length > 0) {
+        let component = this.createdComponents.pop();
+        component.$destroy();
+        component.$el.remove();
+      }
+
+      if (this.$refs.pages) {
+        const pageSplitRegex = /\\page(?:\[[\w -]*\])?/g;
+        const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g;
+
+        let pagesOptions = this.getPagesOptions(this.rawCode);
+        let pagesRawInput = this.rawCode.split(pageSplitRegex);
+
+        if (this.pageTexturesEnabled && this.pageTextureFile !== undefined && this.pageTextureFileChanged) {
+          this.loadPagesTexture();
+        }
+
+        let pages = document.createElement('div');
+
+        let spacerComponent = new this.SpacerClass();
+        spacerComponent.$mount();
+        this.createdComponents.push(spacerComponent);
+        pages.appendChild(spacerComponent.$el);
+
+        for (let pageNumber = 1; pageNumber < pagesRawInput.length; pageNumber++) {
+          let page = new this.PageClass({
+            propsData: { 
+              pageNumber: pageNumber,
+              pageTexturesEnabled: this.pageTexturesEnabled,
+              noteTexturesEnabled: this.noteTexturesEnabled,
+              pageOptions: pagesOptions[pageNumber - 1],
+              pageTheme: this.theme,
+              textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length)
+            }
+          });
+          page.$slots.default = [ 'Click me!' ];
+          page.$mount();
+          this.createdComponents.push(page);
+          pages.appendChild(page.$el);
+        }
+
+        spacerComponent = new this.SpacerClass();
+        spacerComponent.$mount();
+        this.createdComponents.push(spacerComponent);
+        pages.appendChild(spacerComponent.$el);
+        
+        this.$refs.pages.innerHTML = pages.innerHTML;
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       editorCurrentPageIndex: 'editor/currentPageIndex',
@@ -64,134 +122,7 @@ export default {
 
       pageHeightPx: 'document/pageHeightPx',
       pageOffsetPx: 'document/pageOffsetPx'
-    }),
-    compiledMarkdown: function () {
-      const pageSplitRegex = /\\page(?:\[[\w -]*\])?/g;
-      const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g;
-
-      let pagesOptions = this.getPagesOptions(this.rawCode);
-      let pagesRawInput = this.rawCode.split(pageSplitRegex);
-
-      if (this.pageTexturesEnabled && this.pageTextureFile !== undefined && this.pageTextureFileChanged) {
-        this.loadPagesTexture();
-      }
-
-      let spacer = document.createElement('div');
-      spacer.className = 'document-pages-spacer';
-
-      let pages = document.createElement('div');
-      pages.appendChild(spacer);
-
-      for (let pageNumber = 1; pageNumber < pagesRawInput.length; pageNumber++) {
-        let page = document.createElement('div');
-        page.classList.add('page');
-        if (pageNumber % 2 === 0) {
-          page.classList.add('is-inverted');
-        }
-
-        if (this.pageTexturesEnabled) page.classList.add('is-textured');
-        if (this.noteTexturesEnabled) page.classList.add('notes-are-textured');
-        if (pagesOptions[pageNumber - 1] !== null) {
-          let classNames = pagesOptions[pageNumber - 1].split(' ');
-          for (let i = 0; i < classNames.length; i++) {
-            if (classNames[i].length > 0) {
-              page.classList.add(classNames[i]);
-            }
-          }
-        }
-        page.classList.add(this.theme);
-
-        if (!(pagesOptions[pageNumber - 1] !== null && pagesOptions[pageNumber - 1].includes('title'))) {
-          let header = document.createElement('div');
-          header.classList.add('page-header');
-          if (pageNumber % 2 === 1) {
-            header.classList.add('is-odd');
-          } else {
-            header.classList.add('is-even');
-          }
-
-          let backgroundElement = document.createElement('div');
-          backgroundElement.classList.add(this.theme);
-          backgroundElement.classList.add('is-textured');
-
-          header.appendChild(backgroundElement);
-
-          page.appendChild(header);
-        }
-
-        let pxSpacer = document.createElement('div');
-        pxSpacer.className = 'page-px-spacer';
-        pxSpacer.innerText = '_';
-
-        page.appendChild(pxSpacer);
-
-        let currentIndex = 0;
-        if (currentIndex < pagesRawInput[pageNumber].length) {
-          let pageMarkdownContainer = document.createElement('div');
-          let pageMarkdown = marked(pagesRawInput[pageNumber].substring(currentIndex, pagesRawInput[pageNumber].length));
-          pageMarkdown.replace(preElementRegex, '<pre><code></code></pre><div class=\'page-px-spacer\'>_</div>');
-          pageMarkdownContainer.innerHTML = pageMarkdown;
-
-          let elements = pageMarkdownContainer.querySelectorAll('*[markdown]');
-          for (let i = 0; i < elements.length; i++) {
-            let innerHTML = elements[i].innerHTML.replace(/&gt;/g, '>');
-            elements[i].innerHTML = marked(innerHTML);
-          }
-
-          let blockquotesLevel1 = pageMarkdownContainer.querySelectorAll(':scope > blockquote');
-          for (let i = 0; i < blockquotesLevel1.length; i++) {
-            let blockquotesLevel2 = blockquotesLevel1[i].querySelectorAll(':scope > blockquote');
-            if (blockquotesLevel2.length > 0) {
-              for (let j = 0; j < blockquotesLevel2.length; j++) {
-                let blockquotesLevel3 = blockquotesLevel2[j].querySelectorAll(':scope > blockquote');
-                if (blockquotesLevel3.length > 0) {
-                  for (let k = 0; k < blockquotesLevel3.length; k++) {
-                    blockquotesLevel3[k].classList.add('note-tertiary');
-                  }
-                } else {
-                  blockquotesLevel2[j].classList.add('note-secondary');
-                }
-              }
-            } else {
-              blockquotesLevel1[i].classList.add('note-primary');
-            }
-          }
-
-          page.innerHTML += pageMarkdownContainer.innerHTML;
-        }
-
-        if (!(pagesOptions[pageNumber - 1] !== null && pagesOptions[pageNumber - 1].includes('title'))) {
-          let footer = document.createElement('div');
-          footer.classList.add('page-footer');
-          if (pageNumber % 2 === 1) {
-            footer.classList.add('is-odd');
-          } else {
-            footer.classList.add('is-even');
-          }
-          footer.dataset.page = pageNumber;
-
-          let backgroundElement = document.createElement('div');
-          backgroundElement.classList.add(this.theme);
-          backgroundElement.classList.add('is-textured');
-
-          let pageNumberElement = document.createElement('p');
-          pageNumberElement.classList.add(this.theme);
-          pageNumberElement.classList.add('page-number');
-          pageNumberElement.innerText = pageNumber;
-
-          footer.appendChild(backgroundElement);
-          footer.appendChild(pageNumberElement);
-
-          page.appendChild(footer);
-        }
-
-        pages.appendChild(page);
-      }
-
-      pages.appendChild(spacer.cloneNode(true));
-
-      return pages.innerHTML;
-    }
+    })
   },
   methods: {
     getPagesOptions: function (code) {
@@ -234,13 +165,14 @@ export default {
     },
     checkOverflow: function () {
       let pagesContainer = this.$refs.pagesContainer;
-
-      if (pagesContainer.clientWidth < pagesContainer.scrollWidth) {
-        if (!pagesContainer.classList.contains('document-overflow-fix')) {
-          pagesContainer.classList.add('document-overflow-fix');
+      if (pagesContainer) {
+        if (pagesContainer.clientWidth < pagesContainer.scrollWidth) {
+          if (!pagesContainer.classList.contains('document-overflow-fix')) {
+            pagesContainer.classList.add('document-overflow-fix');
+          }
+        } else if (pagesContainer.classList.contains('document-overflow-fix')) {
+          pagesContainer.classList.remove('document-overflow-fix');
         }
-      } else if (pagesContainer.classList.contains('document-overflow-fix')) {
-        pagesContainer.classList.remove('document-overflow-fix');
       }
     },
     scrollToCursor: function () {
