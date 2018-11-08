@@ -5,7 +5,18 @@
       @scrollToCursor="scrollToCursor"
       @getPDF="getPDF"/>
     <div ref="pagesContainer" class="document-pages-container">
-      <div @change="checkOverflow" ref="pages" class="document-pages"></div>
+      <div @change="checkOverflow" ref="pages" class="document-pages">
+        <spacer/>
+        <page v-for="page in pages" :key="page.key"
+          :pageNumber="page.pageNumber"
+          :pageTexturesEnabled="page.pageTexturesEnabled"
+          :noteTexturesEnabled="page.noteTexturesEnabled"
+          :pageOptions="page.pageOptions"
+          :pageTheme="page.pageTheme"
+          :textData="page.textData"
+        />
+        <spacer/>
+      </div>
     </div>
   </div>
 </template>
@@ -22,10 +33,14 @@ import Page from '@/components/documentComponents/Page';
 export default {
   name: 'DocumentItem',
   components: {
-    DocumentToolbar
+    DocumentToolbar,
+    Spacer,
+    Page
   },
   data: function () {
     return {
+      pageSplitRegex: /\\page(?:\[[\w -]*\])?/g,
+      
       createdComponents: [],
 
       SpacerClass: Vue.extend(Spacer),
@@ -54,58 +69,6 @@ export default {
       console.error('event bus (Main <-> Document) not instantiated');
     }
   },
-  watch: {
-    rawCode: function () {
-      while (this.createdComponents.length > 0) {
-        let component = this.createdComponents.pop();
-        component.$destroy();
-        component.$el.remove();
-      }
-
-      if (this.$refs.pages) {
-        const pageSplitRegex = /\\page(?:\[[\w -]*\])?/g;
-        const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g;
-
-        let pagesOptions = this.getPagesOptions(this.rawCode);
-        let pagesRawInput = this.rawCode.split(pageSplitRegex);
-
-        if (this.pageTexturesEnabled && this.pageTextureFile !== undefined && this.pageTextureFileChanged) {
-          this.loadPagesTexture();
-        }
-
-        let pages = document.createElement('div');
-
-        let spacerComponent = new this.SpacerClass();
-        spacerComponent.$mount();
-        this.createdComponents.push(spacerComponent);
-        pages.appendChild(spacerComponent.$el);
-
-        for (let pageNumber = 1; pageNumber < pagesRawInput.length; pageNumber++) {
-          let page = new this.PageClass({
-            propsData: { 
-              pageNumber: pageNumber,
-              pageTexturesEnabled: this.pageTexturesEnabled,
-              noteTexturesEnabled: this.noteTexturesEnabled,
-              pageOptions: pagesOptions[pageNumber - 1],
-              pageTheme: this.theme,
-              textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length)
-            }
-          });
-          page.$slots.default = [ 'Click me!' ];
-          page.$mount();
-          this.createdComponents.push(page);
-          pages.appendChild(page.$el);
-        }
-
-        spacerComponent = new this.SpacerClass();
-        spacerComponent.$mount();
-        this.createdComponents.push(spacerComponent);
-        pages.appendChild(spacerComponent.$el);
-        
-        this.$refs.pages.innerHTML = pages.innerHTML;
-      }
-    }
-  },
   computed: {
     ...mapGetters({
       editorCurrentPageIndex: 'editor/currentPageIndex',
@@ -122,7 +85,28 @@ export default {
 
       pageHeightPx: 'document/pageHeightPx',
       pageOffsetPx: 'document/pageOffsetPx'
-    })
+    }),
+    pages: function () {
+      const pagesOptions = this.getPagesOptions(this.rawCode);
+      const pagesRawInput = this.rawCode.split(this.pageSplitRegex);
+
+      const pagesArray = [];
+
+      for (let pageNumber = 1; pageNumber < pagesRawInput.length; pageNumber++) {
+        let page = {
+          pageNumber: pageNumber,
+          pageTexturesEnabled: this.pageTexturesEnabled,
+          noteTexturesEnabled: this.noteTexturesEnabled,
+          pageOptions: pagesOptions[pageNumber - 1],
+          pageTheme: this.theme,
+          textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length)
+        };
+        page.key = JSON.stringify(page);
+        pagesArray.push(page);
+      }
+
+      return pagesArray;
+    }
   },
   methods: {
     getPagesOptions: function (code) {
