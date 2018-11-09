@@ -62,23 +62,53 @@ export default {
   },
   methods: {
     compileMarkdown: function () {
-      let stack = [];
+      const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g;
+      let pageMarkdown = marked(this.textData);
+      
+      pageMarkdown.replace(preElementRegex, '<pre><code></code></pre><div class=\'page-px-spacer\'>_</div>');
+      this.$refs.pageContent.innerHTML = pageMarkdown;
 
-      let tokens = marked.lexer(this.textData);
-      for (let token of tokens) {
-        console.log(token);
-        if (token.type === 'space') continue;
-        if (token.type === 'paragraph') {
-          let paragraph = new this.PageParagraphClass();
-          paragraph.$slots.default = [token.text];
-          paragraph.$mount();
-          this.createdComponents.push(paragraph);
+      let elements = this.$refs.pageContent.querySelectorAll('*[markdown]');
+      for (let i = 0; i < elements.length; i++) {
+        let innerHTML = elements[i].innerHTML.replace(/&gt;/g, '>');
+        elements[i].innerHTML = marked(innerHTML);
+      }
 
-          if (stack.length === 0) {
-            this.$refs.pageContent.appendChild(paragraph.$el);
+      let blockquotesLevel1 = this.$refs.pageContent.querySelectorAll(':scope > blockquote');
+      for (let i = 0; i < blockquotesLevel1.length; i++) {
+        let blockquotesLevel2 = blockquotesLevel1[i].querySelectorAll(':scope > blockquote');
+        if (blockquotesLevel2.length > 0) {
+          for (let j = 0; j < blockquotesLevel2.length; j++) {
+            let blockquotesLevel3 = blockquotesLevel2[j].querySelectorAll(':scope > blockquote');
+            if (blockquotesLevel3.length > 0) {
+              for (let k = 0; k < blockquotesLevel3.length; k++) {
+                blockquotesLevel3[k].classList.add('note-tertiary');
+              }
+            } else {
+              blockquotesLevel2[j].classList.add('note-secondary');
+            }
           }
+        } else {
+          blockquotesLevel1[i].classList.add('note-primary');
         }
       }
+
+      // let stack = [];
+      // let tokens = marked.lexer(this.textData);
+      // for (let token of tokens) {
+      //   console.log(token);
+      //   if (token.type === 'space') continue;
+      //   if (token.type === 'paragraph') {
+      //     let paragraph = new this.PageParagraphClass();
+      //     paragraph.$slots.default = [token.text];
+      //     paragraph.$mount();
+      //     this.createdComponents.push(paragraph);
+
+      //     if (stack.length === 0) {
+      //       this.$refs.pageContent.appendChild(paragraph.$el);
+      //     }
+      //   }
+      // }
 
     }
   }

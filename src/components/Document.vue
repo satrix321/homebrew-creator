@@ -23,12 +23,12 @@
 
 <script>
 import DocumentToolbar from '@/components/DocumentToolbar';
+import Spacer from '@/components/documentComponents/Spacer';
+import Page from '@/components/documentComponents/Page';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 
 import Vue from 'vue';
-import Spacer from '@/components/documentComponents/Spacer';
-import Page from '@/components/documentComponents/Page';
 
 export default {
   name: 'DocumentItem',
@@ -40,11 +40,7 @@ export default {
   data: function () {
     return {
       pageSplitRegex: /\\page(?:\[[\w -]*\])?/g,
-      
-      createdComponents: [],
-
-      SpacerClass: Vue.extend(Spacer),
-      PageClass: Vue.extend(Page)
+      pages: []
     };
   },
   props: ['eventBus'],
@@ -85,14 +81,20 @@ export default {
 
       pageHeightPx: 'document/pageHeightPx',
       pageOffsetPx: 'document/pageOffsetPx'
-    }),
-    pages: function () {
+    })
+  },
+  watch: {
+    rawCode: function () {
       const pagesOptions = this.getPagesOptions(this.rawCode);
       const pagesRawInput = this.rawCode.split(this.pageSplitRegex);
+      const numberOfPages = pagesRawInput.length - 1;
 
-      const pagesArray = [];
+      while (numberOfPages < this.pages.length) {
+        this.pages.pop();
+      }
 
-      for (let pageNumber = 1; pageNumber < pagesRawInput.length; pageNumber++) {
+      let pageNumber = 1;
+      while (pageNumber < pagesRawInput.length) {
         let page = {
           pageNumber: pageNumber,
           pageTexturesEnabled: this.pageTexturesEnabled,
@@ -102,10 +104,17 @@ export default {
           textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length)
         };
         page.key = JSON.stringify(page);
-        pagesArray.push(page);
+
+        if (!this.pages[pageNumber - 1] || this.pages[pageNumber - 1].key !== page.key) {
+          Vue.set(this.pages, pageNumber - 1, page);
+        }
+
+        pageNumber++;
       }
 
-      return pagesArray;
+      console.log(pagesRawInput);
+
+      this.checkOverflow();
     }
   },
   methods: {
