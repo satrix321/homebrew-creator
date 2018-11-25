@@ -81,7 +81,7 @@
     margin-top: 0 !important;
   }
 
-  &.columns-2 {
+  &.columns-2 .page-content {
     -moz-column-count: 2 !important;
     -webkit-column-count: 2 !important;
     column-count: 2 !important;
@@ -91,7 +91,7 @@
     column-gap: 16px;
   }
 
-  &.columns-3 {
+  &.columns-3 .page-content {
     -moz-column-count: 3 !important;
     -webkit-column-count: 3 !important;
     column-count: 3 !important;
@@ -108,22 +108,25 @@
     text-align: justify;
   }
 
-  > hr {
-    display: none !important;
-  }
+  .page-content {
 
-  > pre {
-    break-after: column;
-  }
+    > hr {
+      display: none !important;
+    }
 
-  > .page-px-spacer {
-    height: 1px;
-    visibility: hidden;
-  }
+    > pre {
+      break-after: column;
+    }
 
-  > .page-wide-block {
-    column-span: all;
-    -webkit-column-span: all;
+    > .page-px-spacer {
+      height: 1px;
+      visibility: hidden;
+    }
+
+    > .page-wide-block {
+      column-span: all;
+      -webkit-column-span: all;
+    }
   }
 
   @import "submodules/_document-text.scss";

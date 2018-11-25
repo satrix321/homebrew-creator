@@ -1,8 +1,8 @@
 <template>
   <div :class="classList">
     <page-header v-if="headerVisible" :pageNumber="pageNumber" :pageTheme="pageTheme"></page-header>
-    <div class="page-px-spacer">_</div>
-    <div ref="pageContent"></div>
+    <div class="page-px-spacer"/>
+    <div class="page-content" ref="pageContent"></div>
     <page-footer v-if="footerVisible" :pageNumber="pageNumber" :pageTheme="pageTheme"></page-footer>
   </div>
 </template>
@@ -17,6 +17,8 @@ import Vue from 'vue';
 import PageParagraph from '@/components/documentComponents/PageParagraph';
 import PageThematicBreak from '@/components/documentComponents/PageThematicBreak';
 import PageHeading from '@/components/documentComponents/PageHeading';
+import PageColumnBreak from '@/components/documentComponents/PageColumnBreak';
+import PageNote from '@/components/documentComponents/PageNote';
 
 export default {
   name: 'Page',
@@ -27,9 +29,8 @@ export default {
   props: ['pageNumber', 'pageTexturesEnabled', 'noteTexturesEnabled', 'pageOptions', 'pageTheme', 'textData'],
   data: function () {
     return {
-      classList: [
-        'page'
-      ],
+      classList: ['page'],
+
       headerVisible: true,
       footerVisible: true,
 
@@ -37,7 +38,9 @@ export default {
 
       PageParagraphClass: Vue.extend(PageParagraph),
       PageThematicBreakClass: Vue.extend(PageThematicBreak),
-      PageHeadingClass: Vue.extend(PageHeading)
+      PageHeadingClass: Vue.extend(PageHeading),
+      PageColumnBreakClass: Vue.extend(PageColumnBreak),
+      PageNoteClass: Vue.extend(PageNote)
     };
   },
   created: function () {
@@ -65,6 +68,15 @@ export default {
     }
   },
   methods: {
+    countOccurrences: function (array, item) {
+      let occurrences = 0;
+      for (let value of array) {
+        if (value === item) {
+          occurrences++;
+        }
+      }
+      return occurrences;
+    },
     compileMarkdown: function () {
       // const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g;
       // let pageMarkdown = marked(this.textData);
@@ -134,6 +146,14 @@ export default {
             break;
           }
           case 'code': {
+            let columnBreak = new this.PageColumnBreakClass();
+            columnBreak.$mount();
+            this.createdComponents.push(columnBreak);
+            if (tokenStack.length === 0) {
+              this.$refs.pageContent.appendChild(columnBreak.$el);
+            } else {
+              componentStack.push(columnBreak);
+            }
             break;
           }
           case 'table': {
@@ -141,6 +161,61 @@ export default {
           }
           case 'blockquote_start': {
             tokenStack.push('blockquote_start');
+            break;
+          }
+          case 'blockquote_end': {
+            let startOccurrences = this.countOccurrences(tokenStack, 'blockquote_start');
+            if (startOccurrences > 1) {
+              let endOccurrences = this.countOccurrences(tokenStack, 'blockquote_end') + 1;
+              console.log(startOccurrences);
+              console.log(endOccurrences);
+              if (startOccurrences > endOccurrences) {
+                tokenStack.push('blockquote_end');
+                break;
+              } else if (startOccurrences < endOccurrences) {
+                console.error('blockquote tags error');
+              }
+            }
+
+            let tokenPopCount = 0;
+            while (tokenPopCount !== startOccurrences) {
+              if (tokenStack[tokenStack.length - 1] === 'blockquote_start') {
+                tokenPopCount++;
+              }
+              tokenStack.pop();
+            }
+
+            let noteType;
+            switch (startOccurrences) {
+              case 1: {
+                noteType = 'note-primary';
+                break;
+              }
+              case 2: {
+                noteType = 'note-secondary';
+                break;
+              }
+              case 3: {
+                noteType = 'note-tertiary';
+                break;
+              }
+            }
+
+            let note = new this.PageNoteClass({
+              propsData: { 
+                noteType: noteType,
+                components: componentStack 
+              }
+            });
+
+            note.$mount();
+            this.createdComponents.push(note);
+            if (tokenStack.length === 0) {
+              this.$refs.pageContent.appendChild(note.$el);
+            } else {
+              componentStack.push(note);
+            }
+
             break;
           }
           case 'list_start': {
@@ -171,22 +246,6 @@ export default {
           }
         }
       }
-      
-
-
-      // for (let token of tokens) {
-      //   console.log(token);
-
-      //   if (token.type === 'space') continue;
-      //   if (token.type === 'paragraph') {
-      //     let paragraph = new this.PageParagraphClass();
-      //     paragraph.$slots.default = [token.text];
-      //     paragraph.$mount();
-      //     this.createdComponents.push(paragraph);
-      //     this.$refs.pageContent.appendChild(paragraph.$el);
-      //   }
-      // }
-
 
     }
   }

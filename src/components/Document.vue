@@ -112,8 +112,6 @@ export default {
         pageNumber++;
       }
 
-      console.log(pagesRawInput);
-
       this.checkOverflow();
     }
   },
