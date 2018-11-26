@@ -19,6 +19,8 @@ import PageThematicBreak from '@/components/documentComponents/PageThematicBreak
 import PageHeading from '@/components/documentComponents/PageHeading';
 import PageColumnBreak from '@/components/documentComponents/PageColumnBreak';
 import PageNote from '@/components/documentComponents/PageNote';
+import PageTable from '@/components/documentComponents/PageTable';
+import PageHtml from '@/components/documentComponents/PageHtml';
 
 export default {
   name: 'Page',
@@ -40,7 +42,9 @@ export default {
       PageThematicBreakClass: Vue.extend(PageThematicBreak),
       PageHeadingClass: Vue.extend(PageHeading),
       PageColumnBreakClass: Vue.extend(PageColumnBreak),
-      PageNoteClass: Vue.extend(PageNote)
+      PageNoteClass: Vue.extend(PageNote),
+      PageTableClass: Vue.extend(PageTable),
+      PageHtmlClass: Vue.extend(PageHtml)
     };
   },
   created: function () {
@@ -78,41 +82,13 @@ export default {
       return occurrences;
     },
     compileMarkdown: function () {
-      // const preElementRegex = /<pre>[\w\W]*<code>[\w\W]*<\/code>[\w\W]*<\/pre>/g;
-      // let pageMarkdown = marked(this.textData);
-      
-      // pageMarkdown.replace(preElementRegex, '<pre><code></code></pre><div class=\'page-px-spacer\'>_</div>');
-      // this.$refs.pageContent.innerHTML = pageMarkdown;
-
-      // let elements = this.$refs.pageContent.querySelectorAll('*[markdown]');
-      // for (let i = 0; i < elements.length; i++) {
-      //   let innerHTML = elements[i].innerHTML.replace(/&gt;/g, '>');
-      //   elements[i].innerHTML = marked(innerHTML);
-      // }
-
-      // let blockquotesLevel1 = this.$refs.pageContent.querySelectorAll(':scope > blockquote');
-      // for (let i = 0; i < blockquotesLevel1.length; i++) {
-      //   let blockquotesLevel2 = blockquotesLevel1[i].querySelectorAll(':scope > blockquote');
-      //   if (blockquotesLevel2.length > 0) {
-      //     for (let j = 0; j < blockquotesLevel2.length; j++) {
-      //       let blockquotesLevel3 = blockquotesLevel2[j].querySelectorAll(':scope > blockquote');
-      //       if (blockquotesLevel3.length > 0) {
-      //         for (let k = 0; k < blockquotesLevel3.length; k++) {
-      //           blockquotesLevel3[k].classList.add('note-tertiary');
-      //         }
-      //       } else {
-      //         blockquotesLevel2[j].classList.add('note-secondary');
-      //       }
-      //     }
-      //   } else {
-      //     blockquotesLevel1[i].classList.add('note-primary');
-      //   }
-      // }
+      for (let i = 0; i < this.createdComponents.length; i++) {
+        this.createdComponents[i].$destroy();
+      }
+      this.createdComponents = [];
 
       let tokens = marked.lexer(this.textData);
       let tokenStack = [];
-
-      console.table(tokens);
 
       let componentStack = [];
       for (let token of tokens) {
@@ -157,6 +133,20 @@ export default {
             break;
           }
           case 'table': {
+            let table = new this.PageTableClass({
+              propsData: {
+                headers: token.header,
+                align: token.align,
+                cells: token.cells
+              }
+            });
+            table.$mount();
+            this.createdComponents.push(table);
+            if (tokenStack.length === 0) {
+              this.$refs.pageContent.appendChild(table.$el);
+            } else {
+              componentStack.push(table);
+            }
             break;
           }
           case 'blockquote_start': {
@@ -167,8 +157,6 @@ export default {
             let startOccurrences = this.countOccurrences(tokenStack, 'blockquote_start');
             if (startOccurrences > 1) {
               let endOccurrences = this.countOccurrences(tokenStack, 'blockquote_end') + 1;
-              console.log(startOccurrences);
-              console.log(endOccurrences);
               if (startOccurrences > endOccurrences) {
                 tokenStack.push('blockquote_end');
                 break;
@@ -208,6 +196,8 @@ export default {
               }
             });
 
+            componentStack = [];
+
             note.$mount();
             this.createdComponents.push(note);
             if (tokenStack.length === 0) {
@@ -227,6 +217,18 @@ export default {
             break;
           }
           case 'html': {
+            let htmlBlock = new this.PageHtmlClass({
+              propsData: {
+                html: token.text
+              }
+            });
+            htmlBlock.$mount();
+            this.createdComponents.push(htmlBlock);
+            if (tokenStack.length === 0) {
+              this.$refs.pageContent.appendChild(htmlBlock.$el);
+            } else {
+              componentStack.push(htmlBlock);
+            }
             break;
           }
           case 'paragraph': {
