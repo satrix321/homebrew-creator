@@ -21,6 +21,7 @@ import PageColumnBreak from '@/components/documentComponents/PageColumnBreak';
 import PageNote from '@/components/documentComponents/PageNote';
 import PageTable from '@/components/documentComponents/PageTable';
 import PageHtml from '@/components/documentComponents/PageHtml';
+import PageList from '@/components/documentComponents/PageList';
 
 export default {
   name: 'Page',
@@ -44,7 +45,8 @@ export default {
       PageColumnBreakClass: Vue.extend(PageColumnBreak),
       PageNoteClass: Vue.extend(PageNote),
       PageTableClass: Vue.extend(PageTable),
-      PageHtmlClass: Vue.extend(PageHtml)
+      PageHtmlClass: Vue.extend(PageHtml),
+      PageListClass: Vue.extend(PageList)
     };
   },
   created: function () {
@@ -89,6 +91,9 @@ export default {
 
       let tokens = marked.lexer(this.textData);
       let tokenStack = [];
+      let listTypes = [];
+
+      console.table(tokens);
 
       let componentStack = [];
       for (let token of tokens) {
@@ -209,11 +214,49 @@ export default {
             break;
           }
           case 'list_start': {
+            listTypes.push(token.ordered ? 'ordered' : 'unordered');
             tokenStack.push('list_start');
             break;
           }
           case 'list_item_start': {
             tokenStack.push('list_item_start');
+            break;
+          }
+          case 'list_item_end': {
+            let tokenPopCount = 0;
+            while (tokenPopCount !== 1) {
+              if (tokenStack[tokenStack.length - 1] === 'list_item_start') {
+                tokenPopCount++;
+              }
+              tokenStack.pop();
+            }
+            break;
+          }
+          case 'list_end': {
+            let list = new this.PageListClass({
+              propsData: {
+                listType: listTypes.pop(),
+                listComponents: componentStack
+              }
+            });
+
+            let tokenPopCount = 0;
+            while (tokenPopCount !== 1) {
+              if (tokenStack[tokenStack.length - 1] === 'list_start') {
+                tokenPopCount++;
+              }
+              tokenStack.pop();
+            }
+
+            componentStack = [];
+
+            list.$mount();
+            this.createdComponents.push(list);
+            if (tokenStack.length === 0) {
+              this.$refs.pageContent.appendChild(list.$el);
+            } else {
+              componentStack.push(list);
+            }
             break;
           }
           case 'html': {
@@ -231,6 +274,7 @@ export default {
             }
             break;
           }
+          case 'text' :
           case 'paragraph': {
             let paragraph = new this.PageParagraphClass();
             paragraph.$slots.default = [token.text];
@@ -241,9 +285,6 @@ export default {
             } else {
               componentStack.push(paragraph);
             }
-            break;
-          }
-          case 'text': {
             break;
           }
         }
