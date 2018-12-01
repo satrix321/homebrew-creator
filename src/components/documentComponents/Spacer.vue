@@ -9,4 +9,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.document-pages-spacer {
+  width: 21cm;
+  height: 50px;
+}
 </style>

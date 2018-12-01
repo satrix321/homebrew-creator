@@ -1,7 +1,6 @@
 <template>
   <div :class="classList">
     <page-header v-if="headerVisible" :pageNumber="pageNumber" :pageTheme="pageTheme"></page-header>
-    <div class="page-px-spacer"/>
     <div class="page-content" ref="pageContent"></div>
     <page-footer v-if="footerVisible" :pageNumber="pageNumber" :pageTheme="pageTheme"></page-footer>
   </div>
@@ -93,6 +92,7 @@ export default {
       let tokenStack = [];
       let listTypes = [];
       let componentStack = [];
+      console.table(tokens);
       componentStack.last = function () {
         if (this.length > 0) {
           return this[this.length - 1];
@@ -373,6 +373,10 @@ export default {
     -moz-column-count: 3 !important;
     -webkit-column-count: 3 !important;
     column-count: 3 !important;
+  }
+
+  .page-content {
+    height: 100%;
   }
 }
 </style>

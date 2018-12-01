@@ -28,4 +28,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+p {
+  font-family: 'regular-text';
+  font-size: 9pt;
+  line-height: 1.25;
+  text-align: justify;
+}
 </style>

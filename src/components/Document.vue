@@ -84,7 +84,13 @@ export default {
     })
   },
   watch: {
-    rawCode: function () {
+    rawCode: function () { this.createPages(); },
+    pageTexturesEnabled: function () { this.createPages(); },
+    noteTexturesEnabled: function () { this.createPages(); },
+    theme: function () { this.createPages(); }
+  },
+  methods: {
+    createPages: function () {
       const pagesOptions = this.getPagesOptions(this.rawCode);
       const pagesRawInput = this.rawCode.split(this.pageSplitRegex);
       const numberOfPages = pagesRawInput.length - 1;
@@ -113,9 +119,7 @@ export default {
       }
 
       this.checkOverflow();
-    }
-  },
-  methods: {
+    },
     getPagesOptions: function (code) {
       const pageSplitOptionsRegex = /\\page(?:\[([\w -]*)\])?/g;
       let pageOptions = [];
@@ -178,4 +182,30 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/modules/document.scss";
+.document {
+  height: 100%;
+  overflow: hidden;
+
+  .document-pages-container {
+    overflow-y: auto;
+    height: calc(100vh - 30px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(204, 204, 204);
+
+    &.document-overflow-fix {
+      display: block;
+
+      .document-pages {
+        transform-origin: top left;
+      }
+    }
+
+    .document-pages {
+      transform-origin: top center;
+      max-width: 21cm;
+    }
+  }
+}
 </style>

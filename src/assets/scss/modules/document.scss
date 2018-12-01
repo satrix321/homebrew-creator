@@ -1,63 +1,9 @@
-.document {
-  height: 100%;
-  overflow: hidden;
-
-  .document-pages-container {
-    overflow-y: auto;
-    height: calc(100vh - 30px);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: rgb(204, 204, 204);
-
-    &.document-overflow-fix {
-      display: block;
-
-      .document-pages {
-        transform-origin: top left;
-      }
-    }
-
-    .document-pages {
-      transform-origin: top center;
-      max-width: 21cm;
-    }
-  }
-}
-
-.document-pages-spacer {
-  width: 21cm;
-  height: 50px;
-}
-
 .page {
   * {
     margin-top: 0 !important;
   }
 
-  p, td {
-    font-family: 'regular-text';
-    font-size: 9pt;
-    line-height: 1.25;
-    text-align: justify;
-  }
-
   .page-content {
-    height: 100%;
-
-    > hr {
-      display: none !important;
-    }
-
-    > pre {
-      break-after: column;
-    }
-
-    > .page-px-spacer {
-      height: 1px;
-      visibility: hidden;
-    }
-
     > .page-wide-block {
       column-span: all;
       -webkit-column-span: all;
