@@ -92,10 +92,14 @@ export default {
       let tokens = marked.lexer(this.textData);
       let tokenStack = [];
       let listTypes = [];
-
-      console.table(tokens);
-
       let componentStack = [];
+      componentStack.last = function () {
+        if (this.length > 0) {
+          return this[this.length - 1];
+        }
+        return undefined;
+      };
+
       for (let token of tokens) {
         switch (token.type) {
           case 'space': {
@@ -122,7 +126,7 @@ export default {
             if (tokenStack.length === 0) {
               this.$refs.pageContent.appendChild(heading.$el);
             } else {
-              componentStack.push(heading);
+              componentStack.last().push(heading);
             }
             break;
           }
@@ -133,7 +137,7 @@ export default {
             if (tokenStack.length === 0) {
               this.$refs.pageContent.appendChild(columnBreak.$el);
             } else {
-              componentStack.push(columnBreak);
+              componentStack.last().push(columnBreak);
             }
             break;
           }
@@ -150,11 +154,14 @@ export default {
             if (tokenStack.length === 0) {
               this.$refs.pageContent.appendChild(table.$el);
             } else {
-              componentStack.push(table);
+              componentStack.last().push(table);
             }
             break;
           }
           case 'blockquote_start': {
+            if (tokenStack.length === 0 || tokenStack[tokenStack.length - 1] !== 'blockquote_start') {
+              componentStack.push([]);
+            }
             tokenStack.push('blockquote_start');
             break;
           }
@@ -197,18 +204,16 @@ export default {
             let note = new this.PageNoteClass({
               propsData: { 
                 noteType: noteType,
-                components: componentStack 
+                components: componentStack.pop()
               }
             });
-
-            componentStack = [];
 
             note.$mount();
             this.createdComponents.push(note);
             if (tokenStack.length === 0) {
               this.$refs.pageContent.appendChild(note.$el);
             } else {
-              componentStack.push(note);
+              componentStack.last().push(note);
             }
 
             break;
@@ -216,6 +221,7 @@ export default {
           case 'list_start': {
             listTypes.push(token.ordered ? 'ordered' : 'unordered');
             tokenStack.push('list_start');
+            componentStack.push([]);
             break;
           }
           case 'list_item_start': {
@@ -236,7 +242,7 @@ export default {
             let list = new this.PageListClass({
               propsData: {
                 listType: listTypes.pop(),
-                listComponents: componentStack
+                listComponents: componentStack.pop()
               }
             });
 
@@ -248,14 +254,12 @@ export default {
               tokenStack.pop();
             }
 
-            componentStack = [];
-
             list.$mount();
             this.createdComponents.push(list);
             if (tokenStack.length === 0) {
               this.$refs.pageContent.appendChild(list.$el);
             } else {
-              componentStack.push(list);
+              componentStack.last().push(list);
             }
             break;
           }
@@ -270,20 +274,21 @@ export default {
             if (tokenStack.length === 0) {
               this.$refs.pageContent.appendChild(htmlBlock.$el);
             } else {
-              componentStack.push(htmlBlock);
+              componentStack.last().push(htmlBlock);
             }
             break;
           }
           case 'text' :
           case 'paragraph': {
-            let paragraph = new this.PageParagraphClass();
-            paragraph.$slots.default = [token.text];
+            let paragraph = new this.PageParagraphClass({
+              propsData: { text: token.text }
+            });
             paragraph.$mount();
             this.createdComponents.push(paragraph);
             if (tokenStack.length === 0) {
               this.$refs.pageContent.appendChild(paragraph.$el);
             } else {
-              componentStack.push(paragraph);
+              componentStack.last().push(paragraph);
             }
             break;
           }
@@ -296,4 +301,78 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page {
+  position: relative;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  background-color: white;
+  position: relative;
+  box-sizing: border-box;
+  z-index: 1;
+  width: 21cm;
+  height: 29.7cm;
+  padding: 1cm;
+
+  &.theme-cthulhu-1:not(.title) {
+    padding-top: 1.6cm;
+  }
+  &.theme-cthulhu-2:not(.title) {
+    padding-top: 2.5cm;
+    padding-left: 1.5cm;
+    padding-right: 1.5cm;
+    padding-bottom: 2cm;
+  }
+
+  &.is-textured {
+    background-size: 100% 100%;
+
+    &.theme-default {
+      background-image: url('../../assets/images/texture_02.jpg');
+    }
+
+    &.theme-cthulhu-1 {
+      background-image: url('../../assets/images/texture_cthulhu_01.jpg');
+    }
+
+    &.theme-cthulhu-2 {
+      background-image: url('../../assets/images/texture_cthulhu_02.jpg');
+    }
+
+    &.is-inverted {
+      &.theme-default {
+        background-image: url('../../assets/images/texture_02.jpg');
+      }
+
+      &.theme-cthulhu-1 {
+        background-image: url('../../assets/images/texture_cthulhu_01_inverted.jpg');
+      }
+
+      &.theme-cthulhu-2 {
+        background-image: url('../../assets/images/texture_cthulhu_02_inverted.jpg');
+      }
+    }
+  }
+
+  &.columns-2,
+  &.columns-3 {
+    .page-content {
+      column-fill: auto;
+      -webkit-column-gap: 16px;
+      -moz-column-gap: 16px;
+      column-gap: 16px;  
+    }
+  }
+
+  &.columns-2 .page-content {
+    -moz-column-count: 2 !important;
+    -webkit-column-count: 2 !important;
+    column-count: 2 !important;
+  }
+
+  &.columns-3 .page-content {
+    -moz-column-count: 3 !important;
+    -webkit-column-count: 3 !important;
+    column-count: 3 !important;
+  }
+}
 </style>
