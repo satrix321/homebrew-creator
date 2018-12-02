@@ -14,7 +14,8 @@ export default {
       validator: function (value) {
         return [1, 2, 3, 4, 5, 6].indexOf(value) !== -1;
       }
-    }
+    },
+    theme: { type: String, requried: true }
   },
   data () {
     return {

@@ -6,14 +6,10 @@
 export default {
   name: 'PageNote',
   props: {
-    noteType: {
-      type: String,
-      required: true
-    },
-    components: {
-      type: Array,
-      required: true
-    }
+    noteType: { type: String, required: true },
+    components: { type: Array, required: true },
+    theme: { type: String, required: true },
+    texturesEnabled: { type: Boolean, required: true }
   },
   data: function () {
     return {

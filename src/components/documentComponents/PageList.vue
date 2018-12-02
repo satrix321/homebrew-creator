@@ -12,7 +12,8 @@ export default {
   name: 'PageList',
   props: {
     listType: { type: String, required: true },
-    listComponents: { type: Array, required: true }
+    listComponents: { type: Array, required: true },
+    theme: { type: String, required: true }
   },
   mounted: function () {
     switch (this.listType) {

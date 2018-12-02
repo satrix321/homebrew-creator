@@ -4,7 +4,10 @@
 
 <script>
 export default {
-  name: 'PageThematicBreak'
+  name: 'PageThematicBreak',
+  props: {
+    theme: { type: String, required: true }
+  }
 };
 </script>
 

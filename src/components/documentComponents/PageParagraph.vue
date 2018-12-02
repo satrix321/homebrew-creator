@@ -7,7 +7,8 @@
 export default {
   name: 'PageParagraph',
   props: {
-    text: { type: String, required: true }
+    text: { type: String, required: true },
+    theme: { type: String, required: true }
   },
   computed: {
     processedText: function () {

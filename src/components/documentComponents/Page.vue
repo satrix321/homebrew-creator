@@ -1,5 +1,5 @@
 <template>
-  <div :class="classList">
+  <div class="page" :class="classList">
     <page-header v-if="headerVisible" :pageNumber="pageNumber" :pageTheme="pageTheme"></page-header>
     <div class="page-content" ref="pageContent"></div>
     <page-footer v-if="footerVisible" :pageNumber="pageNumber" :pageTheme="pageTheme"></page-footer>
@@ -28,10 +28,17 @@ export default {
     PageHeader,
     PageFooter
   },
-  props: ['pageNumber', 'pageTexturesEnabled', 'noteTexturesEnabled', 'pageOptions', 'pageTheme', 'textData'],
+  props: {
+    pageNumber: { type: Number, required: true },
+    pageTexturesEnabled: { type: Boolean, required: true },
+    noteTexturesEnabled: { type: Boolean, required: true },
+    pageTheme: { type: String, required: true },
+    textData: { type: String, required: true },
+    pageOptions: { type: String, required: false }
+  },
   data: function () {
     return {
-      classList: ['page'],
+      classList: [],
 
       headerVisible: true,
       footerVisible: true,
@@ -92,7 +99,6 @@ export default {
       let tokenStack = [];
       let listTypes = [];
       let componentStack = [];
-      console.table(tokens);
       componentStack.last = function () {
         if (this.length > 0) {
           return this[this.length - 1];
@@ -106,19 +112,21 @@ export default {
             continue;
           }
           case 'hr': {
-            let thematicBreak = new this.PageThematicBreakClass();
+            let thematicBreak = new this.PageThematicBreakClass({
+              propsData: { theme: this.pageTheme }
+            });
             this.createdComponents.push(thematicBreak);
             thematicBreak.$mount();
             if (tokenStack.length === 0) {
               this.$refs.pageContent.appendChild(thematicBreak.$el);
             } else {
-              componentStack.push(thematicBreak);
+              componentStack.last().push(thematicBreak);
             }
             break;
           }
           case 'heading': {
             let heading = new this.PageHeadingClass({
-              propsData: { depth: token.depth }
+              propsData: { depth: token.depth, theme: this.pageTheme }
             });
             heading.$slots.default = [token.text];
             heading.$mount();
@@ -146,7 +154,8 @@ export default {
               propsData: {
                 headers: token.header,
                 align: token.align,
-                cells: token.cells
+                cells: token.cells,
+                theme: this.pageTheme
               }
             });
             table.$mount();
@@ -204,7 +213,9 @@ export default {
             let note = new this.PageNoteClass({
               propsData: { 
                 noteType: noteType,
-                components: componentStack.pop()
+                components: componentStack.pop(),
+                theme: this.pageTheme,
+                texturesEnabled: this.noteTexturesEnabled
               }
             });
 
@@ -242,7 +253,8 @@ export default {
             let list = new this.PageListClass({
               propsData: {
                 listType: listTypes.pop(),
-                listComponents: componentStack.pop()
+                listComponents: componentStack.pop(),
+                theme: this.pageTheme
               }
             });
 
@@ -266,7 +278,8 @@ export default {
           case 'html': {
             let htmlBlock = new this.PageHtmlClass({
               propsData: {
-                html: token.text
+                html: token.text,
+                theme: this.pageTheme
               }
             });
             htmlBlock.$mount();
@@ -281,7 +294,10 @@ export default {
           case 'text' :
           case 'paragraph': {
             let paragraph = new this.PageParagraphClass({
-              propsData: { text: token.text }
+              propsData: { 
+                text: token.text,
+                theme: this.pageTheme
+              }
             });
             paragraph.$mount();
             this.createdComponents.push(paragraph);

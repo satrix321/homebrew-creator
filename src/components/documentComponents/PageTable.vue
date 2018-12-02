@@ -24,7 +24,8 @@ export default {
   props: {
     headers: { type: Array, required: true },
     align: { type: Array, required: true },
-    cells: { type: Array, required: true }
+    cells: { type: Array, required: true },
+    theme: { type: String, required: true }
   },
   computed: {
     processedHeaders: function () {
