@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import marked from 'marked';
+import parser from '@/modules/parser';
 
 import PageHeader from '@/components/documentComponents/PageHeader';
 import PageFooter from '@/components/documentComponents/PageFooter';
@@ -95,222 +95,16 @@ export default {
       }
       this.createdComponents = [];
 
-      let tokens = marked.lexer(this.textData);
-      let tokenStack = [];
-      let listTypes = [];
-      let componentStack = [];
-      componentStack.last = function () {
-        if (this.length > 0) {
-          return this[this.length - 1];
-        }
-        return undefined;
-      };
+      let result = parser(this.textData, this.pageTheme, this.noteTexturesEnabled);
+      this.createdComponents = result.createdComponents;
 
-      for (let token of tokens) {
-        switch (token.type) {
-          case 'space': {
-            continue;
-          }
-          case 'hr': {
-            let thematicBreak = new this.PageThematicBreakClass({
-              propsData: { theme: this.pageTheme }
-            });
-            this.createdComponents.push(thematicBreak);
-            thematicBreak.$mount();
-            if (tokenStack.length === 0) {
-              this.$refs.pageContent.appendChild(thematicBreak.$el);
-            } else {
-              componentStack.last().push(thematicBreak);
-            }
-            break;
-          }
-          case 'heading': {
-            let heading = new this.PageHeadingClass({
-              propsData: { depth: token.depth, theme: this.pageTheme }
-            });
-            heading.$slots.default = [token.text];
-            heading.$mount();
-            this.createdComponents.push(heading);
-            if (tokenStack.length === 0) {
-              this.$refs.pageContent.appendChild(heading.$el);
-            } else {
-              componentStack.last().push(heading);
-            }
-            break;
-          }
-          case 'code': {
-            let columnBreak = new this.PageColumnBreakClass();
-            columnBreak.$mount();
-            this.createdComponents.push(columnBreak);
-            if (tokenStack.length === 0) {
-              this.$refs.pageContent.appendChild(columnBreak.$el);
-            } else {
-              componentStack.last().push(columnBreak);
-            }
-            break;
-          }
-          case 'table': {
-            let table = new this.PageTableClass({
-              propsData: {
-                headers: token.header,
-                align: token.align,
-                cells: token.cells,
-                theme: this.pageTheme
-              }
-            });
-            table.$mount();
-            this.createdComponents.push(table);
-            if (tokenStack.length === 0) {
-              this.$refs.pageContent.appendChild(table.$el);
-            } else {
-              componentStack.last().push(table);
-            }
-            break;
-          }
-          case 'blockquote_start': {
-            if (tokenStack.length === 0 || tokenStack[tokenStack.length - 1] !== 'blockquote_start') {
-              componentStack.push([]);
-            }
-            tokenStack.push('blockquote_start');
-            break;
-          }
-          case 'blockquote_end': {
-            let startOccurrences = this.countOccurrences(tokenStack, 'blockquote_start');
-            if (startOccurrences > 1) {
-              let endOccurrences = this.countOccurrences(tokenStack, 'blockquote_end') + 1;
-              if (startOccurrences > endOccurrences) {
-                tokenStack.push('blockquote_end');
-                break;
-              } else if (startOccurrences < endOccurrences) {
-                console.error('blockquote tags error');
-              }
-            }
-
-            let tokenPopCount = 0;
-            while (tokenPopCount !== startOccurrences) {
-              if (tokenStack[tokenStack.length - 1] === 'blockquote_start') {
-                tokenPopCount++;
-              }
-              tokenStack.pop();
-            }
-
-            let noteType;
-            switch (startOccurrences) {
-              case 1: {
-                noteType = 'note-primary';
-                break;
-              }
-              case 2: {
-                noteType = 'note-secondary';
-                break;
-              }
-              case 3: {
-                noteType = 'note-tertiary';
-                break;
-              }
-            }
-
-            let note = new this.PageNoteClass({
-              propsData: { 
-                noteType: noteType,
-                components: componentStack.pop(),
-                theme: this.pageTheme,
-                texturesEnabled: this.noteTexturesEnabled
-              }
-            });
-
-            note.$mount();
-            this.createdComponents.push(note);
-            if (tokenStack.length === 0) {
-              this.$refs.pageContent.appendChild(note.$el);
-            } else {
-              componentStack.last().push(note);
-            }
-
-            break;
-          }
-          case 'list_start': {
-            listTypes.push(token.ordered ? 'ordered' : 'unordered');
-            tokenStack.push('list_start');
-            componentStack.push([]);
-            break;
-          }
-          case 'list_item_start': {
-            tokenStack.push('list_item_start');
-            break;
-          }
-          case 'list_item_end': {
-            let tokenPopCount = 0;
-            while (tokenPopCount !== 1) {
-              if (tokenStack[tokenStack.length - 1] === 'list_item_start') {
-                tokenPopCount++;
-              }
-              tokenStack.pop();
-            }
-            break;
-          }
-          case 'list_end': {
-            let list = new this.PageListClass({
-              propsData: {
-                listType: listTypes.pop(),
-                listComponents: componentStack.pop(),
-                theme: this.pageTheme
-              }
-            });
-
-            let tokenPopCount = 0;
-            while (tokenPopCount !== 1) {
-              if (tokenStack[tokenStack.length - 1] === 'list_start') {
-                tokenPopCount++;
-              }
-              tokenStack.pop();
-            }
-
-            list.$mount();
-            this.createdComponents.push(list);
-            if (tokenStack.length === 0) {
-              this.$refs.pageContent.appendChild(list.$el);
-            } else {
-              componentStack.last().push(list);
-            }
-            break;
-          }
-          case 'html': {
-            let htmlBlock = new this.PageHtmlClass({
-              propsData: {
-                html: token.text,
-                theme: this.pageTheme
-              }
-            });
-            htmlBlock.$mount();
-            this.createdComponents.push(htmlBlock);
-            if (tokenStack.length === 0) {
-              this.$refs.pageContent.appendChild(htmlBlock.$el);
-            } else {
-              componentStack.last().push(htmlBlock);
-            }
-            break;
-          }
-          case 'text' :
-          case 'paragraph': {
-            let paragraph = new this.PageParagraphClass({
-              propsData: { 
-                text: token.text,
-                theme: this.pageTheme
-              }
-            });
-            paragraph.$mount();
-            this.createdComponents.push(paragraph);
-            if (tokenStack.length === 0) {
-              this.$refs.pageContent.appendChild(paragraph.$el);
-            } else {
-              componentStack.last().push(paragraph);
-            }
-            break;
-          }
-        }
+      for (let component of this.createdComponents) {
+        component.$mount();
       }
 
+      for (let outputComponent of result.outputComponents) {
+        this.$refs.pageContent.appendChild(outputComponent.$el);
+      }
     }
   }
 };
