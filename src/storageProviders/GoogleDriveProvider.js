@@ -31,7 +31,7 @@ export default class GoogleDriveProvider extends StorageProvider {
   async load() {
     gapi.load('client:auth2', this.initClient.bind(this));
 
-    while (!gapi.auth2.getAuthInstance()) {
+    while (!gapi.auth2 || !gapi.auth2.getAuthInstance()) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
   }
