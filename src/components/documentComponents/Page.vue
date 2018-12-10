@@ -24,7 +24,8 @@ export default {
     noteTexturesEnabled: { type: Boolean, required: true },
     pageTheme: { type: String, required: true },
     textData: { type: String, required: true },
-    pageOptions: { type: String, required: false }
+    pageOptions: { type: String, required: false },
+    columns: { type: Number }
   },
   data: function () {
     return {
@@ -75,8 +76,9 @@ export default {
         this.createdComponents[i].$destroy();
       }
       this.createdComponents = [];
+      console.log(this.columns);
 
-      let result = parser(this.textData, this.pageTheme, this.noteTexturesEnabled);
+      let result = parser(this.textData, this.pageTheme, this.noteTexturesEnabled, this.columns);
       this.createdComponents = result.createdComponents;
 
       for (let component of this.createdComponents) {
@@ -104,10 +106,10 @@ export default {
   height: 29.7cm;
   padding: 1cm;
 
-  &.theme-cthulhu-1:not(.title) {
+  &.theme--cthulhu-1:not(.title) {
     padding-top: 1.6cm;
   }
-  &.theme-cthulhu-2:not(.title) {
+  &.theme--cthulhu-2:not(.title) {
     padding-top: 2.5cm;
     padding-left: 1.5cm;
     padding-right: 1.5cm;
@@ -117,28 +119,28 @@ export default {
   &.is-textured {
     background-size: 100% 100%;
 
-    &.theme-default {
+    &.theme--default {
       background-image: url('../../assets/images/texture_02.jpg');
     }
 
-    &.theme-cthulhu-1 {
+    &.theme--cthulhu-1 {
       background-image: url('../../assets/images/texture_cthulhu_01.jpg');
     }
 
-    &.theme-cthulhu-2 {
+    &.theme--cthulhu-2 {
       background-image: url('../../assets/images/texture_cthulhu_02.jpg');
     }
 
     &.is-inverted {
-      &.theme-default {
+      &.theme--default {
         background-image: url('../../assets/images/texture_02.jpg');
       }
 
-      &.theme-cthulhu-1 {
+      &.theme--cthulhu-1 {
         background-image: url('../../assets/images/texture_cthulhu_01_inverted.jpg');
       }
 
-      &.theme-cthulhu-2 {
+      &.theme--cthulhu-2 {
         background-image: url('../../assets/images/texture_cthulhu_02_inverted.jpg');
       }
     }

@@ -13,7 +13,7 @@ const document = {
     oldZoom: zoomDefault,
     zoom: zoomDefault,
 
-    theme: 'theme-default',
+    theme: 'theme--default',
 
     currentPageIndex: 0,
 

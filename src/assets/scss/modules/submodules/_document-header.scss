@@ -6,11 +6,11 @@
   > .is-textured {
     position: absolute;
 
-    &.theme-default {
+    &.theme--default {
 
     }
 
-    &.theme-cthulhu-1 {
+    &.theme--cthulhu-1 {
       background-image: url('../assets/images/header_cthulhu_01.png');      
       background-size: 21cm 10px;
       width: 21cm;
@@ -18,7 +18,7 @@
       top: 1cm;
     }
 
-    &.theme-cthulhu-2 {
+    &.theme--cthulhu-2 {
       
     }
   }

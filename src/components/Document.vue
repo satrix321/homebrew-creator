@@ -14,6 +14,7 @@
           :pageOptions="page.pageOptions"
           :pageTheme="page.pageTheme"
           :textData="page.textData"
+          :columns="page.columns"
         />
         <spacer/>
       </div>
@@ -101,13 +102,20 @@ export default {
 
       let pageNumber = 1;
       while (pageNumber < pagesRawInput.length) {
+        let columns;
+        let columnsOption = pagesOptions[pageNumber - 1].match(/columns-([0-9])/);
+        if (columnsOption) {
+          columns = Number(columnsOption[1]);
+        }
+
         let page = {
           pageNumber: pageNumber,
           pageTexturesEnabled: this.pageTexturesEnabled,
           noteTexturesEnabled: this.noteTexturesEnabled,
           pageOptions: pagesOptions[pageNumber - 1],
           pageTheme: this.theme,
-          textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length)
+          textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length),
+          columns: columns
         };
         page.key = JSON.stringify(page);
 

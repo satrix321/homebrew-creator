@@ -3,9 +3,9 @@
     <div class="dropdown">
       <button class="btn"><i class="fas fa-image"></i> Theme</button>
       <div class="dropdown-content">
-        <button class="btn" :class="{'is-clicked': theme === 'theme-default'}" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</button>
-        <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu-1'}" @click="toggleCthulhu1Theme"><i class="fas fa-image"></i> Cthulhu 1</button>
-        <button class="btn" :class="{'is-clicked': theme === 'theme-cthulhu-2'}" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</button>
+        <button class="btn" :class="{'is-clicked': theme === 'theme--default'}" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</button>
+        <button class="btn" :class="{'is-clicked': theme === 'theme--cthulhu-1'}" @click="toggleCthulhu1Theme"><i class="fas fa-image"></i> Cthulhu 1</button>
+        <button class="btn" :class="{'is-clicked': theme === 'theme--cthulhu-2'}" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</button>
       </div>
     </div>
     <div class="dropdown">
@@ -61,13 +61,13 @@ export default {
       this.$emit('zoomChanged');
     },
     toggleDefaultTheme: function () {
-      this.$store.commit('document/setTheme', 'theme-default');
+      this.$store.commit('document/setTheme', 'theme--default');
     },
     toggleCthulhu1Theme: function () {
-      this.$store.commit('document/setTheme', 'theme-cthulhu-1');
+      this.$store.commit('document/setTheme', 'theme--cthulhu-1');
     },
     toggleCthulhu2Theme: function () {
-      this.$store.commit('document/setTheme', 'theme-cthulhu-2');
+      this.$store.commit('document/setTheme', 'theme--cthulhu-2');
     },
     togglePageTextures: function () {
       this.$store.commit('document/togglePageTextures');

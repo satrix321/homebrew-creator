@@ -28,7 +28,7 @@ function countOccurrences (array, item) {
   return occurrences;
 }
 
-let parse = function (markdown, pageTheme, noteTexturesEnabled) {
+let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
   let createdComponents = [];
   let outputComponents = [];
 
@@ -134,15 +134,15 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled) {
         let noteType;
         switch (startOccurrences) {
           case 1: {
-            noteType = 'note-primary';
+            noteType = 'note--primary';
             break;
           }
           case 2: {
-            noteType = 'note-secondary';
+            noteType = 'note--secondary';
             break;
           }
           case 3: {
-            noteType = 'note-tertiary';
+            noteType = 'note--tertiary';
             break;
           }
         }
@@ -152,7 +152,8 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled) {
             noteType: noteType,
             components: componentStack.pop(),
             theme: pageTheme,
-            texturesEnabled: noteTexturesEnabled
+            texturesEnabled: noteTexturesEnabled,
+            columns: columns
           }
         });
 
