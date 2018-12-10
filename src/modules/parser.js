@@ -214,7 +214,8 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled) {
         let htmlBlock = new PageHtmlClass({
           propsData: {
             html: token.text,
-            theme: pageTheme
+            theme: pageTheme,
+            noteTexturesEnabled: noteTexturesEnabled
           }
         });
         createdComponents.push(htmlBlock);

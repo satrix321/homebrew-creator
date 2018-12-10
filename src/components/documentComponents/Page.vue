@@ -12,16 +12,6 @@ import parser from '@/modules/parser';
 import PageHeader from '@/components/documentComponents/PageHeader';
 import PageFooter from '@/components/documentComponents/PageFooter';
 
-import Vue from 'vue';
-import PageParagraph from '@/components/documentComponents/PageParagraph';
-import PageThematicBreak from '@/components/documentComponents/PageThematicBreak';
-import PageHeading from '@/components/documentComponents/PageHeading';
-import PageColumnBreak from '@/components/documentComponents/PageColumnBreak';
-import PageNote from '@/components/documentComponents/PageNote';
-import PageTable from '@/components/documentComponents/PageTable';
-import PageHtml from '@/components/documentComponents/PageHtml';
-import PageList from '@/components/documentComponents/PageList';
-
 export default {
   name: 'Page',
   components: {
@@ -43,16 +33,7 @@ export default {
       headerVisible: true,
       footerVisible: true,
 
-      createdComponents: [],
-
-      PageParagraphClass: Vue.extend(PageParagraph),
-      PageThematicBreakClass: Vue.extend(PageThematicBreak),
-      PageHeadingClass: Vue.extend(PageHeading),
-      PageColumnBreakClass: Vue.extend(PageColumnBreak),
-      PageNoteClass: Vue.extend(PageNote),
-      PageTableClass: Vue.extend(PageTable),
-      PageHtmlClass: Vue.extend(PageHtml),
-      PageListClass: Vue.extend(PageList)
+      createdComponents: []
     };
   },
   created: function () {
