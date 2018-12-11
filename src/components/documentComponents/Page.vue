@@ -13,7 +13,7 @@ import PageHeader from '@/components/documentComponents/PageHeader';
 import PageFooter from '@/components/documentComponents/PageFooter';
 
 export default {
-  name: 'Page',
+  name: 'PageItem',
   components: {
     PageHeader,
     PageFooter
@@ -25,7 +25,8 @@ export default {
     pageTheme: { type: String, required: true },
     textData: { type: String, required: true },
     pageOptions: { type: String, required: false },
-    columns: { type: Number }
+    columnCount: { type: Number, required: true },
+    isTitlePage: { type: Boolean, required: true }
   },
   data: function () {
     return {
@@ -76,9 +77,13 @@ export default {
         this.createdComponents[i].$destroy();
       }
       this.createdComponents = [];
-      console.log(this.columns);
 
-      let result = parser(this.textData, this.pageTheme, this.noteTexturesEnabled, this.columns);
+      let result = parser(this.textData, { 
+        theme: this.pageTheme,
+        noteTexturesEnabled: this.noteTexturesEnabled,
+        columnCount: this.columnCount,
+        isTitlePage: this.isTitlePage
+      });
       this.createdComponents = result.createdComponents;
 
       for (let component of this.createdComponents) {

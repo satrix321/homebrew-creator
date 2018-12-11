@@ -10,7 +10,7 @@ export default {
     components: { type: Array, required: true },
     theme: { type: String, required: true },
     texturesEnabled: { type: Boolean, required: true },
-    columns: {}
+    columnCount: {}
   },
   data: function () {
     return {
@@ -25,8 +25,8 @@ export default {
     if (this.texturesEnabled) {
       this.classList.push('note--textured');
     }
-    if (this.columns) {
-      this.classList.push('note--columns-' + this.columns);
+    if (this.columnCount) {
+      this.classList.push('note--columns-' + this.columnCount);
     }
 
     for (let component of this.components) {
@@ -62,26 +62,13 @@ export default {
         calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
         100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
         13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
-
-      p, h1, h2, h3, h4, h5, h6 {
-        color: black;
-      }
     }
     &.theme--cthulhu-2 {
       background-color: rgba(0, 0, 0, 0.07);
       border-radius: 25px;
       border: none;
-      &::before {
-        display: block;
-        content: '';
-        height: 50px;
-        background-image: url('../../assets/images/cthulhu_note_hr_02_wide.png');
-        background-repeat: no-repeat;
-        background-position: center; 
-      }
-      &.note--columns-2::before {
-        background-image: url('../../assets/images/cthulhu_note_hr_02.png');
-      }
+      padding: 0 20px;
+      &::before,
       &::after {
         display: block;
         content: '';
@@ -89,10 +76,18 @@ export default {
         background-image: url('../../assets/images/cthulhu_note_hr_02_wide.png');
         background-repeat: no-repeat;
         background-position: center; 
+        background-size: cover;
+      }
+      &::after {
         transform: rotate(180deg);
       }
+      &.note--columns-2::before,
       &.note--columns-2::after {
         background-image: url('../../assets/images/cthulhu_note_hr_02.png');
+      }
+      &.note--columns-3::before,
+      &.note--columns-3::after {
+        background-image: url('../../assets/images/cthulhu_note_hr_02_narrow.png');
       }
     }
   }
@@ -112,57 +107,54 @@ export default {
       background-size: 100% 100%;
       box-shadow: 3px 3px 5px rgba(0, 0, 0, .5);
       border-radius: 25px;
-      border: none;
-      &::before {
-        display: block;
-        content: '';
-        height: 50px;
-        background-image: url('../../assets/images/cthulhu_note_hr_01_wide.png');
-        background-repeat: no-repeat;
-        background-position: center; 
-      }
-      &.note--columns-2::before {
-        background-image: url('../../assets/images/cthulhu_note_hr_01.png');
-      }
+      padding: 0 20px;
+      &::before,
       &::after {
         display: block;
         content: '';
         height: 50px;
         background-image: url('../../assets/images/cthulhu_note_hr_01_wide.png');
         background-repeat: no-repeat;
-        background-position: center; 
+        background-position: center;
+        background-size: cover;
+      }
+      &::after {
         transform: rotate(180deg);
       }
+      &.note--columns-2::before,
       &.note--columns-2::after {
-        background-image: url('../../assets/images/cthulhu_note_hr_01.png');  
+        background-image: url('../../assets/images/cthulhu_note_hr_01.png');
+      }
+      &.note--columns-3::before,
+      &.note--columns-3::after {
+        background-image: url('../../assets/images/cthulhu_note_hr_01_narrow.png');
       }
     }
     &.theme--cthulhu-2 {
       background-color: rgba(0, 0, 0, 0.07);
       border-radius: 25px;
       border: none;
-      &::before {
-        display: block;
-        content: '';
-        height: 50px;
-        background-image: url('../../assets/images/cthulhu_note_hr_02_wide.png');
-        background-repeat: no-repeat;
-        background-position: center; 
-      }
-      &.note--columns-2::before {
-        background-image: url('../../assets/images/cthulhu_note_hr_02.png');
-      }
+      padding: 0 20px;
+      &::before,
       &::after {
         display: block;
         content: '';
         height: 50px;
         background-image: url('../../assets/images/cthulhu_note_hr_02_wide.png');
         background-repeat: no-repeat;
-        background-position: center; 
+        background-position: center;
+        background-size: cover;
+      }
+      &::after {
         transform: rotate(180deg);
       }
+      &.note--columns-2::before,
       &.note--columns-2::after {
         background-image: url('../../assets/images/cthulhu_note_hr_02.png');
+      }
+      &.note--columns-3::before,
+      &.note--columns-3::after {
+        background-image: url('../../assets/images/cthulhu_note_hr_02_narrow.png');
       }
     }
   }
@@ -189,45 +181,29 @@ export default {
       background-color: rgba(0, 0, 0, 0.07);
       border-radius: 25px;
       border: none;
-      &::before {
-        display: block;
-        content: '';
-        height: 50px;
-        background-image: url('../../assets/images/cthulhu_note_hr_02_wide.png');
-        background-repeat: no-repeat;
-        background-position: center; 
-      }
-      &.note--columns-2::before {
-        background-image: url('../../assets/images/cthulhu_note_hr_02.png');
-      }
+      padding: 0 20px;
+      &::before,
       &::after {
         display: block;
         content: '';
         height: 50px;
         background-image: url('../../assets/images/cthulhu_note_hr_02_wide.png');
         background-repeat: no-repeat;
-        background-position: center; 
+        background-position: center;
+        background-size: cover;
+      }
+      &::after { 
         transform: rotate(180deg);
       }
+      &.note--columns-2::before,
       &.note--columns-2::after {
         background-image: url('../../assets/images/cthulhu_note_hr_02.png');
       }
+      &.note--columns-3::before,
+      &.note--columns-3::after {
+        background-image: url('../../assets/images/cthulhu_note_hr_02_narrow.png');
+      }
     }
-  }
-
-  h1 {
-    text-align: center;
-    font-size: 16pt;
-    font-weight: 600;
-    font-family: 'headers';
-    text-transform: uppercase;
-    color: #6a1c0f;
-    margin-bottom: 5px;
-  }
-
-  p {
-    font-family: 'regular-text';
-    font-size: 9pt;
   }
 }
 </style>

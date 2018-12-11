@@ -1,6 +1,6 @@
 <template>
   <div class="document">
-    <document-toolbar 
+    <the-document-toolbar 
       @zoomChanged="zoomChanged"
       @scrollToCursor="scrollToCursor"
       @getPDF="getPDF"/>
@@ -14,7 +14,8 @@
           :pageOptions="page.pageOptions"
           :pageTheme="page.pageTheme"
           :textData="page.textData"
-          :columns="page.columns"
+          :columnCount="page.columnCount"
+          :isTitlePage="page.isTitlePage"
         />
         <spacer/>
       </div>
@@ -23,7 +24,7 @@
 </template>
 
 <script>
-import DocumentToolbar from '@/components/DocumentToolbar';
+import TheDocumentToolbar from '@/components/TheDocumentToolbar';
 import Spacer from '@/components/documentComponents/Spacer';
 import Page from '@/components/documentComponents/Page';
 import _ from 'lodash';
@@ -32,9 +33,9 @@ import { mapGetters } from 'vuex';
 import Vue from 'vue';
 
 export default {
-  name: 'DocumentItem',
+  name: 'TheDocument',
   components: {
-    DocumentToolbar,
+    TheDocumentToolbar,
     Spacer,
     Page
   },
@@ -102,10 +103,16 @@ export default {
 
       let pageNumber = 1;
       while (pageNumber < pagesRawInput.length) {
-        let columns;
-        let columnsOption = pagesOptions[pageNumber - 1].match(/columns-([0-9])/);
-        if (columnsOption) {
-          columns = Number(columnsOption[1]);
+
+        let columnCount = 1;
+        let isTitlePage = false;
+        if (pagesOptions[pageNumber - 1]) {
+          let columnsOption = pagesOptions[pageNumber - 1].match(/columns-([0-9])/);
+          if (columnsOption) {
+            columnCount = Number(columnsOption[1]);
+          }
+
+          isTitlePage = pagesOptions[pageNumber - 1].match(/title/) ? true : false;
         }
 
         let page = {
@@ -115,7 +122,8 @@ export default {
           pageOptions: pagesOptions[pageNumber - 1],
           pageTheme: this.theme,
           textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length),
-          columns: columns
+          columnCount: columnCount,
+          isTitlePage: isTitlePage
         };
         page.key = JSON.stringify(page);
 

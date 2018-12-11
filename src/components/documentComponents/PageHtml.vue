@@ -22,7 +22,10 @@ export default {
     this.$refs.content.innerHTML = this.html;
     let markdownBlocks = this.$refs.content.querySelectorAll('[markdown="1"]');
     for (let block of markdownBlocks) {
-      let result = parser(block.innerHTML, this.theme, this.noteTexturesEnabled);
+      let result = parser(block.innerHTML, {
+        theme: this.theme, 
+        noteTexturesEnabled: this.noteTexturesEnabled
+      });
       this.createdComponents = result.createdComponents;
 
       for (let component of this.createdComponents) {

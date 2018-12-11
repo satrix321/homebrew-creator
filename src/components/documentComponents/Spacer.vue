@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'Spacer'
+  name: 'SpacerItem'
 };
 </script>
 

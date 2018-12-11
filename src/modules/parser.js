@@ -28,7 +28,7 @@ function countOccurrences (array, item) {
   return occurrences;
 }
 
-let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
+let parse = function (markdown, options) {
   let createdComponents = [];
   let outputComponents = [];
 
@@ -51,7 +51,7 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
       }
       case 'hr': {
         let thematicBreak = new PageThematicBreakClass({
-          propsData: { theme: pageTheme }
+          propsData: { theme: options.theme }
         });
         createdComponents.push(thematicBreak);
         if (tokenStack.length === 0) {
@@ -65,7 +65,7 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
         let heading = new PageHeadingClass({
           propsData: { 
             depth: token.depth, 
-            theme: pageTheme 
+            theme: options.theme 
           }
         });
         heading.$slots.default = [token.text];
@@ -93,7 +93,7 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
             headers: token.header,
             align: token.align,
             cells: token.cells,
-            theme: pageTheme
+            theme: options.theme
           }
         });
         createdComponents.push(table);
@@ -151,9 +151,9 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
           propsData: { 
             noteType: noteType,
             components: componentStack.pop(),
-            theme: pageTheme,
-            texturesEnabled: noteTexturesEnabled,
-            columns: columns
+            theme: options.theme,
+            texturesEnabled: options.noteTexturesEnabled,
+            columnCount: options.columnCount
           }
         });
 
@@ -191,7 +191,7 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
           propsData: {
             listType: listTypes.pop(),
             listComponents: componentStack.pop(),
-            theme: pageTheme
+            theme: options.theme
           }
         });
 
@@ -215,8 +215,8 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
         let htmlBlock = new PageHtmlClass({
           propsData: {
             html: token.text,
-            theme: pageTheme,
-            noteTexturesEnabled: noteTexturesEnabled
+            theme: options.theme,
+            noteTexturesEnabled: options.noteTexturesEnabled
           }
         });
         createdComponents.push(htmlBlock);
@@ -232,7 +232,7 @@ let parse = function (markdown, pageTheme, noteTexturesEnabled, columns) {
         let paragraph = new PageParagraphClass({
           propsData: { 
             text: token.text,
-            theme: pageTheme
+            theme: options.theme
           }
         });
         createdComponents.push(paragraph);

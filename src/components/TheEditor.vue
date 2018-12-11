@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <div ref="progress" class="progress"><i class="progress-icon fas fa-spinner fa-5x"></i></div>
-    <editor-toolbar
+    <the-editor-toolbar
       @insertPrimaryNote="insertPrimaryNote"
       @insertSecondaryNote="insertSecondaryNote"
       @insertTertiaryNote="insertTertiaryNote"
@@ -35,7 +35,7 @@
     <codemirror ref="editor" :options="codeMirrorOptions" 
       @input="codeChange" 
       @cursorActivity="cursorPositionChange"/>
-    <file-picker-modal ref="filePicker" title="File Picker" 
+    <the-file-picker-modal ref="filePicker" title="File Picker" 
       @downloadFile="downloadFileUsingProvider" 
       @uploadFile="uploadFileUsingProvider"
       @signOut="signOutFromProvider"/>
@@ -45,8 +45,8 @@
 <script>
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
-import EditorToolbar from '@/components/EditorToolbar.vue';
-import FilePickerModal from '@/components/FilePickerModal.vue';
+import TheEditorToolbar from '@/components/TheEditorToolbar';
+import TheFilePickerModal from '@/components/TheFilePickerModal';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -65,11 +65,11 @@ import { mapGetters } from 'vuex';
 import GoogleDriveProvider from '@/storageProviders/GoogleDriveProvider';
 
 export default {
-  name: 'EditorItem',
+  name: 'TheEditor',
   components: {
     codemirror,
-    EditorToolbar,
-    FilePickerModal
+    TheEditorToolbar,
+    TheFilePickerModal
   },
   data () {
     return {
