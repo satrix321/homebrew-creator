@@ -28,9 +28,15 @@ export default {
     if (this.columnCount) {
       this.classList.push('note--columns-' + this.columnCount);
     }
-
-    for (let component of this.components) {
-      this.$refs.content.appendChild(component.$el);
+    for (let i = 0; i < this.components.length; i++) {
+      console.log(this.components[i]);
+      if (i === 0) {
+        this.components[i].classList.push('first');
+      }
+      if (i === this.components.length - 1) {
+        this.components[i].classList.push('last');
+      }
+      this.$refs.content.appendChild(this.components[i].$el);
     }
   }
 };

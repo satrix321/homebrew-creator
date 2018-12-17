@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag">
+  <component :is="tag" :class="classList">
     <slot></slot>
   </component>
 </template>
@@ -19,11 +19,69 @@ export default {
   },
   data () {
     return {
-      tag: 'h' + this.depth
+      tag: 'h' + this.depth,
+      classList: [
+        this.theme
+      ]
     };
   }
 };
 </script>
 
 <style lang="scss" scoped>
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'headers';
+  text-transform: uppercase;
+  color: rgb(106, 28, 15);
+  margin-bottom: 15px;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  &::first-letter {
+    font-size: 120%;
+  }
+}
+
+h1 {
+  font-size: 21pt;
+}
+
+h2 {
+  font-size: 18pt;
+}
+
+h3 {
+  font-size: 16pt;
+  border-bottom: 1px solid rgb(201, 173, 105);
+}
+
+.theme--cthulhu-1 {
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 5px;
+  }
+
+  h1, h2, h3 {
+    &::first-letter {
+      font-size: 100%;
+    }
+  }
+
+  h3, h4, h5, h6 {
+    text-transform: initial;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  h2 {
+    font-size: 18pt;
+  }
+
+  h3 {
+    font-size: 14pt;
+    border-bottom: 0px solid black;
+  }
+}
 </style>

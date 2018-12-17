@@ -1,5 +1,5 @@
 <template>
-  <p v-html="processedText">
+  <p :class="classList" v-html="processedText">
   </p>
 </template>
 
@@ -9,6 +9,11 @@ export default {
   props: {
     text: { type: String, required: true },
     theme: { type: String, required: true }
+  },
+  data: function () {
+    return {
+      classList: []
+    };
   },
   computed: {
     processedText: function () {
@@ -35,4 +40,10 @@ p {
   line-height: 1.25;
   text-align: justify;
 }
+
+.list-item,
+.last {
+  margin-bottom: 0;
+}
+
 </style>

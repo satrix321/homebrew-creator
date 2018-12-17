@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table :class="classList">
     <thead>
       <tr>
         <th v-for="(header, index) in processedHeaders" :key="index" v-html="header"/>
@@ -26,6 +26,11 @@ export default {
     align: { type: Array, required: true },
     cells: { type: Array, required: true },
     theme: { type: String, required: true }
+  },
+  data: function () {
+    return {
+      classList: []
+    };
   },
   computed: {
     processedHeaders: function () {

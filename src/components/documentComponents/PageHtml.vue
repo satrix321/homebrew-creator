@@ -1,5 +1,5 @@
 <template>
-  <div ref="content">
+  <div ref="content" :class="classList">
   </div>
 </template>
 
@@ -15,7 +15,8 @@ export default {
   },
   data: function () {
     return {
-      createdComponents: []
+      createdComponents: [],
+      classList: []
     };
   },
   mounted: function () {
