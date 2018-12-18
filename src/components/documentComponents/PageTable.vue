@@ -29,7 +29,7 @@ export default {
   },
   data: function () {
     return {
-      classList: []
+      classList: [ this.theme ]
     };
   },
   computed: {
@@ -85,5 +85,35 @@ td {
   line-height: 1.25;
   text-align: justify;
   white-space: initial;
+}
+
+table {
+  &.theme--cthulhu-1,
+  &.theme--cthulhu-2 {
+    width: 100%;
+    border-spacing: 0px;
+    margin-bottom: 12px;
+
+    $cell-padding: 3px;
+
+    > thead {
+      background-color: #5f4625;
+
+      th {
+        padding: $cell-padding;
+        color: #DED7CC;
+      }
+    }
+  
+    > tbody {
+      tr:nth-child(even) {
+        background-color: rgba(224, 199, 136, 0.4);
+      }
+
+      td {
+        padding: $cell-padding;
+      }
+    }
+  }
 }
 </style>

@@ -65,7 +65,8 @@ let parse = function (markdown, options) {
         let heading = new PageHeadingClass({
           propsData: { 
             depth: token.depth, 
-            theme: options.theme 
+            theme: options.theme,
+            isTitlePage: options.isTitlePage
           }
         });
         heading.$slots.default = [token.text];

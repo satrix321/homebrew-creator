@@ -17,8 +17,8 @@ const editorSnippets = {
     titlePageSnippet: '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description\n',
 
     relativeImageSnippet: '![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Image")\n',
-    absoluteImageSnippet: '<img class="page-image-absolute" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>\n',
-    fullPageImageSnippet: '<img class="page-image-fullpage" src="https://i.imgur.com/PNpQjCA.jpg"/>\n',
+    absoluteImageSnippet: '<img class="image image--absolute" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>\n',
+    fullPageImageSnippet: '<img class="image image--fullpage" src="https://i.imgur.com/PNpQjCA.jpg"/>\n',
 
     columnBreakSnippet: '```\n```\n',
     wideBlockSnippet: '<pre markdown="1" class="page-wide-block">\nwide_block\n</pre>\n',

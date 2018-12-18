@@ -105,17 +105,34 @@ export default {
       }
     }
   }
-}
 
-.custom-html.custom-html--textured {
-  /deep/ .prop {
-    &.prop-handwritten {
-      background-image: url('../../assets/images/note_texture_cthulhu_02.jpg');
-      background-repeat: no-repeat;
-      background-position: center;
+  &.custom-html--textured {
+    /deep/ .prop {
+      &.prop-handwritten {
+        background-image: url('../../assets/images/note_texture_cthulhu_02.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      &.prop-newspaper {
+        background-color: #F4DCC0;
+      }
     }
-    &.prop-newspaper {
-      background-color: #F4DCC0;
+  }
+
+  /deep/ {
+    .image {
+      &.image--absolute {
+        position: absolute;
+        z-index: -1;
+      }
+      &.image--fullpage {
+        position: absolute;
+        z-index: -1;
+        left: 0cm;
+        top: 0cm;
+        width: 21cm;
+        height: 29.7cm;
+      }
     }
   }
 }
