@@ -1,5 +1,5 @@
 <template>
-  <div ref="content" :class="classList">
+  <div ref="content" :class="classList" class="custom-html">
   </div>
 </template>
 
@@ -49,4 +49,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// .custom-html {
+//   .prop {
+//     &.prop-handwritten {
+//       background-image: url('../../assets/images/note_texture_cthulhu_02.jpg');
+//       background-repeat: no-repeat;
+//       background-position: center; 
+
+//       p {
+//         font-family: 'handwriting';
+//         font-size: 12pt;
+//         color: black;
+//       }
+
+//       border-radius: 0px;
+//       border: 20px solid transparent;
+//       border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
+//       clip-path: polygon(
+//         0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
+//         calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
+//         100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
+//         13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+
+//       &::before {
+//         display: none;
+//       }
+    
+//       &::after {
+//         display: none;
+//       }
+//     }
+//     &.prop-newspaper {
+
+//     }
+//   }
+// }
 </style>

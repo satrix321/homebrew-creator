@@ -76,6 +76,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+th {
+  white-space: normal;
+}
 td {
   font-family: 'regular-text';
   font-size: 9pt;

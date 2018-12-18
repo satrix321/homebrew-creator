@@ -39,6 +39,7 @@ p {
   font-size: 9pt;
   line-height: 1.25;
   text-align: justify;
+  white-space: normal;
 }
 
 .list-item,
