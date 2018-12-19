@@ -1,41 +1,60 @@
 <template>
   <div class="toolbar">
-    <div class="dropdown">
-      <button class="btn"><i class="fas fa-image"></i> Theme</button>
-      <div class="dropdown-content">
-        <button class="btn" :class="{'is-clicked': theme === 'theme--default'}" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</button>
-        <button class="btn" :class="{'is-clicked': theme === 'theme--cthulhu-1'}" @click="toggleCthulhu1Theme"><i class="fas fa-image"></i> Cthulhu 1</button>
-        <button class="btn" :class="{'is-clicked': theme === 'theme--cthulhu-2'}" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</button>
-      </div>
-    </div>
-    <div class="dropdown">
-      <button class="btn"><i class="fas fa-image"></i> Textures</button>
-      <div class="dropdown-content">
-        <button class="btn" :class="{'is-clicked': pageTexturesEnabled}" @click="togglePageTextures"><i class="fas fa-image"></i> Pages</button>
-        <button class="btn" :class="{'is-clicked': noteTexturesEnabled}" @click="toggleNoteTextures"><i class="fas fa-file"></i> Notes</button>
-      </div>
-    </div>
-    <div class="dropdown dropdown-right">
-      <button class="btn">Zoom {{zoom}}%</button>
-      <div class="dropdown-content">
-        <button class="btn" @click="setZoom(50)">50%</button>
-        <button class="btn" @click="setZoom(100)">100%</button>
-        <button class="btn" @click="setZoom(150)">150%</button>
-      </div>
-    </div>
-    <button class="btn btn-right" @click="zoomIn"><i class="fas fa-search-plus"></i></button>
-    <button class="btn btn-right" @click="zoomOut"><i class="fas fa-search-minus"></i></button>
-    <button class="btn btn-right">Page {{pageCount > 0 ? documentCurrentPageNumber : 0}}/{{pageCount}}</button>
-    <button class="btn btn-right" @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button>
-    <button class="btn btn-right" @click="getPDF"><i class="fas fa-file-pdf"></i> Get PDF</button>
+
+    <dropdown-menu>
+      <template slot="dropdown-button">
+        <i class="fas fa-image"></i> Theme
+      </template>
+      <template slot="dropdown-content">
+        <dropdown-item :is-clicked="theme === 'theme--default'" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</dropdown-item>
+        <dropdown-item :is-clicked="theme === 'theme--cthulhu-1'" @click="toggleCthulhu1Theme"><i class="fas fa-image"></i> Cthulhu 1</dropdown-item>
+        <dropdown-item :is-clicked="theme === 'theme--cthulhu-2'" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</dropdown-item>
+      </template>
+    </dropdown-menu>
+
+    <dropdown-menu>
+      <template slot="dropdown-button">
+        <i class="fas fa-image"></i> Textures
+      </template>
+      <template slot="dropdown-content">
+        <dropdown-item :is-clicked="pageTexturesEnabled" @click="togglePageTextures"><i class="fas fa-image"></i> Pages</dropdown-item>
+        <dropdown-item :is-clicked="noteTexturesEnabled" @click="toggleNoteTextures"><i class="fas fa-file"></i> Notes</dropdown-item>
+      </template>
+    </dropdown-menu>
+
+    <dropdown-menu float-right>
+      <template slot="dropdown-button">
+        Zoom {{zoom}}%
+      </template>
+      <template slot="dropdown-content">
+        <dropdown-item @click="setZoom(50)">50%</dropdown-item>
+        <dropdown-item @click="setZoom(100)">100%</dropdown-item>
+        <dropdown-item @click="setZoom(150)">150%</dropdown-item>
+      </template>
+    </dropdown-menu>
+    
+    <button-item float-right @click="zoomIn"><i class="fas fa-search-plus"></i></button-item>
+    <button-item float-right @click="zoomOut"><i class="fas fa-search-minus"></i></button-item>
+    <button-item float-right>Page {{pageCount > 0 ? documentCurrentPageNumber : 0}}/{{pageCount}}</button-item>
+    <button-item float-right @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button-item>
+    <button-item float-right @click="getPDF"><i class="fas fa-file-pdf"></i> Get PDF</button-item>
+    
   </div>
 </template>
 
 <script>
+import ButtonItem from '@/components/ButtonItem';
+import DropdownMenu from '@/components/DropdownMenu';
+import DropdownItem from '@/components/DropdownItem';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Document',
+  name: 'TheDocumentToolbar',
+  components: {
+    ButtonItem,
+    DropdownMenu,
+    DropdownItem
+  },
   computed: {
     ...mapGetters({
       pageTexturesEnabled: 'document/pageTexturesEnabled',
@@ -86,5 +105,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/modules/toolbar.scss";
+.toolbar {
+  height: 30px;
+  width: 100%;
+  background-color: $toolbar-backgroundColor;
+  overflow-x: auto;
+  overflow-y: hidden;
+  clear: both;
+}
 </style>

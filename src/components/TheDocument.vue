@@ -6,8 +6,8 @@
       @getPDF="getPDF"/>
     <div ref="pagesContainer" class="document-pages-container">
       <div @change="checkOverflow" ref="pages" class="document-pages">
-        <spacer/>
-        <page v-for="page in pages" :key="page.key"
+        <spacer-item/>
+        <page-item v-for="page in pages" :key="page.key"
           :pageNumber="page.pageNumber"
           :pageTexturesEnabled="page.pageTexturesEnabled"
           :noteTexturesEnabled="page.noteTexturesEnabled"
@@ -17,7 +17,7 @@
           :columnCount="page.columnCount"
           :isTitlePage="page.isTitlePage"
         />
-        <spacer/>
+        <spacer-item/>
       </div>
     </div>
   </div>
@@ -25,8 +25,8 @@
 
 <script>
 import TheDocumentToolbar from '@/components/TheDocumentToolbar';
-import Spacer from '@/components/documentComponents/Spacer';
-import Page from '@/components/documentComponents/Page';
+import SpacerItem from '@/components/documentComponents/SpacerItem';
+import PageItem from '@/components/documentComponents/PageItem';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 
@@ -36,8 +36,8 @@ export default {
   name: 'TheDocument',
   components: {
     TheDocumentToolbar,
-    Spacer,
-    Page
+    SpacerItem,
+    PageItem
   },
   data: function () {
     return {
@@ -197,7 +197,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/modules/document.scss";
 .document {
   height: 100%;
   overflow: hidden;

@@ -32,6 +32,16 @@ export default {
       });
       this.createdComponents = result.createdComponents;
 
+      for (let i = 0; i < this.createdComponents.length; i++) {
+        if (i === 0) {
+          this.createdComponents[i].classList.push('first');
+        }
+        if (i === this.createdComponents.length - 1) {
+          this.createdComponents[i].classList.push('last');
+        }
+        this.createdComponents[i].$mount();
+      }
+
       for (let component of this.createdComponents) {
         component.$mount();
       }
@@ -54,7 +64,7 @@ export default {
 <style lang="scss" scoped>
 .custom-html {
   /deep/ .prop {
-    &.prop-handwritten {
+    &.prop--handwritten {
       p {
         font-family: 'handwriting';
         font-size: 12pt;
@@ -75,7 +85,7 @@ export default {
         display: none;
       }
     }
-    &.prop-newspaper {
+    &.prop--newspaper {
       h1 {
         font-family: 'newspaper-headers';
         text-align: center;
@@ -108,12 +118,12 @@ export default {
 
   &.custom-html--textured {
     /deep/ .prop {
-      &.prop-handwritten {
+      &.prop--handwritten {
         background-image: url('../../assets/images/note_texture_cthulhu_02.jpg');
         background-repeat: no-repeat;
         background-position: center;
       }
-      &.prop-newspaper {
+      &.prop--newspaper {
         background-color: #F4DCC0;
       }
     }
@@ -135,5 +145,95 @@ export default {
       }
     }
   }
+
+  /deep/ .stat-block {
+    margin-bottom: 12px;
+
+    &.stat-block--cthulhu {
+      border: 0px solid black;
+
+      table {
+        width: calc(100% + 1px);
+        border-collapse: collapse;
+        margin-bottom: 0;
+
+        thead {
+          background-color: #5f4625;
+        }
+
+        &:first-child {
+          border-spacing: 0;
+
+          th {
+            padding: 3px 5px;
+          }
+
+          td {
+            padding: 0;
+          }
+        }
+
+        &:nth-child(2) {
+          th {
+            padding: 0px 5px;
+          }
+
+          td {
+            padding-left: 5px;
+            padding-right: 5px;
+          }
+        }
+
+        &:nth-child(n+2) {
+          tbody {
+            tr:nth-child(odd) {
+              background-color: rgba(224, 199, 136, 0.2);
+            }
+
+            tr:nth-child(even) {
+              background-color: rgba(224, 199, 136, 0.5);
+            }
+          }
+        }
+
+        &:nth-child(n+3) {
+          th {
+            padding: 3px 5px;
+          }
+          td {
+            padding-left: 10px;
+            padding-right: 10px;
+          }
+        }
+
+        &:last-child {
+          margin-bottom: 0px;
+        }
+
+        th {
+          font-size: 12pt;
+          font-family: 'regular-text';
+          text-align: left;
+          color: #DED7CC;
+          padding: 0;
+        }
+        td {
+          font-size: 9pt;
+          font-family: 'regular-text';
+        }
+
+        &:nth-child(2) {
+          td {
+            font-size: 10pt;
+          }
+        }
+      }
+    }
+  }
+  // &.notes-are-textured > .table-stat {
+  //   &.table-stat-cthulhu > blockquote > table { 
+      
+  //   }
+  // }
 }
 </style>

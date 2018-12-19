@@ -111,6 +111,18 @@ export default {
   height: 29.7cm;
   padding: 1cm;
 
+  
+  /deep/ * {
+    margin-top: 0 !important;
+  }
+
+  .page-content {
+    /deep/ .page-wide-block {
+      column-span: all;
+      -webkit-column-span: all;
+    }
+  }
+
   &.theme--cthulhu-1:not(.title) {
     padding-top: 1.6cm;
   }

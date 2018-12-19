@@ -120,39 +120,31 @@ export default {
         background-position: center; 
         background-size: 100% 100%;
         box-shadow: 3px 3px 5px rgba(0, 0, 0, .5);
-        clip-path: none;
-        border-radius: 25px;
-        border: none;
-        padding: 0 20px;
-        &::before,
-        &::after {
-          display: block;
-          content: '';
-          height: 50px;
-          background-image: url('../../assets/images/cthulhu_note_hr_01_wide.png');
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: cover;
-        }
-        &::after {
-          transform: rotate(180deg);
-        }
-        &.note--columns-2::before,
-        &.note--columns-2::after {
-          background-image: url('../../assets/images/cthulhu_note_hr_01.png');
-        }
-        &.note--columns-3::before,
-        &.note--columns-3::after {
-          background-image: url('../../assets/images/cthulhu_note_hr_01_narrow.png');
-        }
       }
-      border: 20px solid transparent;
-      border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
-      clip-path: polygon(
-        0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
-        calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
-        100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
-        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+      border-radius: 25px;
+      border: none;
+      padding: 0 20px;
+      &::before,
+      &::after {
+        display: block;
+        content: '';
+        height: 50px;
+        background-image: url('../../assets/images/cthulhu_note_hr_01_wide.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+      &::after {
+        transform: rotate(180deg);
+      }
+      &.note--columns-2::before,
+      &.note--columns-2::after {
+        background-image: url('../../assets/images/cthulhu_note_hr_01.png');
+      }
+      &.note--columns-3::before,
+      &.note--columns-3::after {
+        background-image: url('../../assets/images/cthulhu_note_hr_01_narrow.png');
+      }
     }
     &.theme--cthulhu-2 {
       &.note--textured {

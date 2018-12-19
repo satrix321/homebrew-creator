@@ -1,6 +1,6 @@
 <template>
   <div class="editor">
-    <div ref="progress" class="progress"><i class="progress-icon fas fa-spinner fa-5x"></i></div>
+    <div ref="progress" class="progress"><i class="progress__icon fas fa-spinner fa-5x"></i></div>
     <the-editor-toolbar
       @insertPrimaryNote="insertPrimaryNote"
       @insertSecondaryNote="insertSecondaryNote"
@@ -229,7 +229,7 @@ export default {
     },
     syncFile: async function () {
       if (this.storageProviderFileId) {
-        this.$refs.progress.classList.add('is-visible');
+        this.$refs.progress.classList.add('progress--visible');
 
         if (!this.storageProvider.isSignedIn) {
           await this.storageProvider.authenticate();
@@ -244,11 +244,11 @@ export default {
             if (response.status !== 200) {
               alert(response);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           });
 
       } else {
@@ -257,7 +257,7 @@ export default {
     },
     downloadFileUsingProvider: async function () {
       if (this.storageProviderFileId) {
-        this.$refs.progress.classList.add('is-visible');
+        this.$refs.progress.classList.add('progress--visible');
 
         if (!this.storageProvider.isSignedIn) {
           await this.storageProvider.authenticate();
@@ -272,16 +272,16 @@ export default {
             } else {
               alert(response);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           });
       }
     },
     uploadFileUsingProvider: async function () {
-      this.$refs.progress.classList.add('is-visible');
+      this.$refs.progress.classList.add('progress--visible');
 
       if (!this.storageProvider.isSignedIn) {
         await this.storageProvider.authenticate();
@@ -297,11 +297,11 @@ export default {
             if (response.status !== 200) {
               alert(response);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           });
       } else if (this.storageProviderFileParentId) {
         this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)), this.storageProviderFileParentId)
@@ -311,11 +311,11 @@ export default {
             } else {
               this.$store.commit('filepicker/setFileId', response.result.id);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           });
       } else {
         this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)))
@@ -325,16 +325,16 @@ export default {
             } else {
               this.$store.commit('filepicker/setFileId', response.result.id);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--visible');
           });
       }
     },
     signOutFromProvider: function () {
-      this.$refs.progress.classList.add('is-visible');
+      this.$refs.progress.classList.add('progress--visible');
       this.$refs.filePicker.close();
 
       try {
@@ -342,13 +342,13 @@ export default {
       } catch (error) {
         console.error(error);
       } finally {
-        this.$refs.progress.classList.remove('is-visible');
+        this.$refs.progress.classList.remove('progress--visible');
       }
 
       return;
     },
     downloadGoogleDriveFile: async function () {
-      this.$refs.progress.classList.add('is-visible');
+      this.$refs.progress.classList.add('progress--visible');
 
       try {
         if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
@@ -360,17 +360,17 @@ export default {
         }
       } catch (error) {
         console.error(error);
-        this.$refs.progress.classList.remove('is-visible');
+        this.$refs.progress.classList.remove('progress--visible');
         return;
       }
 
       this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setDownloadMode();
       this.$refs.filePicker.show();
-      this.$refs.progress.classList.remove('is-visible');
+      this.$refs.progress.classList.remove('progress--visible');
     },
     uploadGoogleDriveFile: async function () {
-      this.$refs.progress.classList.add('is-visible');
+      this.$refs.progress.classList.add('progress--visible');
       
       try {
         if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
@@ -382,14 +382,14 @@ export default {
         }
       } catch (error) {
         console.error(error);
-        this.$refs.progress.classList.remove('is-visible');
+        this.$refs.progress.classList.remove('progress--visible');
         return;
       }
 
       this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setUploadMode();
       this.$refs.filePicker.show();
-      this.$refs.progress.classList.remove('is-visible');
+      this.$refs.progress.classList.remove('progress--visible');
     },
     downloadFile: function () {
       let data = {};
@@ -427,5 +427,34 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/modules/codemirror.scss";
-@import "@/assets/scss/modules/progress.scss";
+.progress {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+
+  &.progress--visible {
+    display: initial;
+  }
+
+  > .progress__icon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ddd;
+
+    animation-name: spin;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    @keyframes spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+  }
+}
 </style>
