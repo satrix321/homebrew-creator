@@ -229,7 +229,7 @@ export default {
     },
     syncFile: async function () {
       if (this.storageProviderFileId) {
-        this.$refs.progress.classList.add('progress--visible');
+        this.$refs.progress.classList.add('progress--is-visible');
 
         if (!this.storageProvider.isSignedIn) {
           await this.storageProvider.authenticate();
@@ -244,11 +244,11 @@ export default {
             if (response.status !== 200) {
               alert(response);
             }
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
 
       } else {
@@ -257,7 +257,7 @@ export default {
     },
     downloadFileUsingProvider: async function () {
       if (this.storageProviderFileId) {
-        this.$refs.progress.classList.add('progress--visible');
+        this.$refs.progress.classList.add('progress--is-visible');
 
         if (!this.storageProvider.isSignedIn) {
           await this.storageProvider.authenticate();
@@ -272,16 +272,16 @@ export default {
             } else {
               alert(response);
             }
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
       }
     },
     uploadFileUsingProvider: async function () {
-      this.$refs.progress.classList.add('progress--visible');
+      this.$refs.progress.classList.add('progress--is-visible');
 
       if (!this.storageProvider.isSignedIn) {
         await this.storageProvider.authenticate();
@@ -297,11 +297,11 @@ export default {
             if (response.status !== 200) {
               alert(response);
             }
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
       } else if (this.storageProviderFileParentId) {
         this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)), this.storageProviderFileParentId)
@@ -311,11 +311,11 @@ export default {
             } else {
               this.$store.commit('filepicker/setFileId', response.result.id);
             }
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
       } else {
         this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)))
@@ -325,16 +325,16 @@ export default {
             } else {
               this.$store.commit('filepicker/setFileId', response.result.id);
             }
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('progress--visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
       }
     },
     signOutFromProvider: function () {
-      this.$refs.progress.classList.add('progress--visible');
+      this.$refs.progress.classList.add('progress--is-visible');
       this.$refs.filePicker.close();
 
       try {
@@ -342,13 +342,13 @@ export default {
       } catch (error) {
         console.error(error);
       } finally {
-        this.$refs.progress.classList.remove('progress--visible');
+        this.$refs.progress.classList.remove('progress--is-visible');
       }
 
       return;
     },
     downloadGoogleDriveFile: async function () {
-      this.$refs.progress.classList.add('progress--visible');
+      this.$refs.progress.classList.add('progress--is-visible');
 
       try {
         if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
@@ -360,17 +360,17 @@ export default {
         }
       } catch (error) {
         console.error(error);
-        this.$refs.progress.classList.remove('progress--visible');
+        this.$refs.progress.classList.remove('progress--is-visible');
         return;
       }
 
       this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setDownloadMode();
       this.$refs.filePicker.show();
-      this.$refs.progress.classList.remove('progress--visible');
+      this.$refs.progress.classList.remove('progress--is-visible');
     },
     uploadGoogleDriveFile: async function () {
-      this.$refs.progress.classList.add('progress--visible');
+      this.$refs.progress.classList.add('progress--is-visible');
       
       try {
         if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
@@ -382,14 +382,14 @@ export default {
         }
       } catch (error) {
         console.error(error);
-        this.$refs.progress.classList.remove('progress--visible');
+        this.$refs.progress.classList.remove('progress--is-visible');
         return;
       }
 
       this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setUploadMode();
       this.$refs.filePicker.show();
-      this.$refs.progress.classList.remove('progress--visible');
+      this.$refs.progress.classList.remove('progress--is-visible');
     },
     downloadFile: function () {
       let data = {};
@@ -435,7 +435,7 @@ export default {
   height: 100%;
   background-color: rgba(0,0,0,0.4);
 
-  &.progress--visible {
+  &.progress--is-visible {
     display: initial;
   }
 
