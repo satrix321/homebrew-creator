@@ -21,7 +21,7 @@ export default {
   height: 30px;
   border: 0;
   padding: 0 8px 0 8px;
-  color: white;
+  color: $button-color;
   background-color: $button-background-color;
   outline: none;
   font-family: $site-font-mono;

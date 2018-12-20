@@ -22,7 +22,7 @@ export default {
   },
   created: function () {
     if (this.texturesEnabled) {
-      this.classList.push('note--textured');
+      this.classList.push('note--is-textured');
     }
     if (this.columnCount) {
       this.classList.push('note--columns-' + this.columnCount);
@@ -49,18 +49,18 @@ export default {
   margin-bottom: 10px;
 
   &.note--primary {
-    &.note--textured {
-      background-color: rgb(218, 230, 191);
+    &.note--is-textured {
+      background-color: $page-note-primary-default-background-color;
     }
     &.theme--default {
       border-style: solid;
       border-width: 11px;
       border-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAMAAADG+c2+AAAANlBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABHL6OuAAAAEXRSTlMABAwYJDRIXHSLo7fL2+fz+6go4VUAAAB6SURBVHgB7dg5DsJQAANRZ9+Xuf9lQUKKEHT5LlL4HWB6W5d61m1zrT/dhm5j6/RjPCkJco761ixQFoSl0aXfKQ+y9/qoJnAEYar01q64gqytNBz4ghyDMPMHnyYiIiIiIgIzYeYfj/Z56x3g7ovAf2L4bxb/EWS/ql7LZCDx/Ry3RwAAAABJRU5ErkJggg==") 11;
       border-image-outset: 9px 0;
-      box-shadow: 1px 4px 14px #888;
+      box-shadow: 1px 4px 14px grey;
     }
     &.theme--cthulhu-1 {
-      &.note--textured {
+      &.note--is-textured {
         background-image: url('../../assets/images/note_texture_cthulhu_02.jpg');
         background-repeat: no-repeat;
         background-position: center;
@@ -74,8 +74,8 @@ export default {
         13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
     }
     &.theme--cthulhu-2 {
-      &.note--textured {
-        background-color: rgba(0, 0, 0, 0.07);
+      &.note--is-textured {
+        background-color: $page-note-primary-cthulhu-2-background-color;
       }
       &::before,
       &::after {
@@ -105,8 +105,8 @@ export default {
   }
 
   &.note--secondary {
-    &.note--textured {
-      background-color: rgb(220, 207, 172);
+    &.note--is-textured {
+      background-color: $page-note-secondary-default-background-color;
     }    
     &.theme--default {
       border-style: solid;
@@ -115,7 +115,7 @@ export default {
       border-image-outset: 4px;
     }
     &.theme--cthulhu-1 {
-      &.note--textured {
+      &.note--is-textured {
         background-image: url('../../assets/images/note_texture_cthulhu_01.jpg');
         background-repeat: no-repeat;
         background-position: center; 
@@ -148,8 +148,8 @@ export default {
       }
     }
     &.theme--cthulhu-2 {
-      &.note--textured {
-        background-color: rgba(0, 0, 0, 0.07);
+      &.note--is-textured {
+        background-color: $page-note-secondary-cthulhu-2-background-color;
       }
       &::before,
       &::after {
@@ -179,8 +179,8 @@ export default {
   }
 
   &.note--tertiary {
-    &.note--textured {
-      background-color: rgb(231, 227, 239);
+    &.note--is-textured {
+      background-color: $page-note-tertiary-default-background-color;
     }
     &.theme--default {
       border-style: solid;
@@ -189,8 +189,8 @@ export default {
       border-image-outset: 4px;
     }
     &.theme--cthulhu-1 {
-      &.note--textured {
-        background-color: #F4EEC8;
+      &.note--is-textured {
+        background-color: $page-note-tertiary-cthulhu-1-background-color;
       }
       border: 20px solid transparent;
       border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
@@ -201,8 +201,8 @@ export default {
         13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
     }
     &.theme--cthulhu-2 {
-      &.note--textured {
-        background-color: rgba(0, 0, 0, 0.07);
+      &.note--is-textured {
+        background-color: $page-note-tertiary-cthulhu-2-background-color;
       }
       &::before,
       &::after {

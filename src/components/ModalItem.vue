@@ -72,8 +72,8 @@ export default {
 
     .modal__header {
       padding: 2px 16px;
-      background-color: $toolbar-background-color;
-      color: white;
+      background-color: $modal-header-footer-backgorund-color;
+      color: $modal-color;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -81,14 +81,14 @@ export default {
 
     .modal__body {
       padding: 10px;
-      background-color: #2a2a2a;
-      color: white;
+      background-color: $modal-body-background-color;
+      color: $modal-color;
     }
 
     .modal__footer {
       padding: 10px;
-      background-color: $toolbar-background-color;
-      color: white;
+      background-color: $modal-header-footer-backgorund-color;
+      color: $modal-color;
 
       &::after {
         content: " ";

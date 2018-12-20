@@ -207,7 +207,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content: center;
-    background-color: rgb(204, 204, 204);
+    background-color: $document-pages-container-background-color;
 
     &.document__pages-container--overflow-fix {
       display: block;

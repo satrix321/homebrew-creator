@@ -2,8 +2,7 @@
   <button class="button" :class="{ 
     'button--float-right': floatRight, 
     'button--is-icon': isIcon,
-    'button--is-clicked': isClicked,
-    'button--is-dropdown-item': isDropdownItem
+    'button--is-clicked': isClicked
     }" @click="$emit('click')">
     <slot></slot>
   </button>
@@ -16,8 +15,7 @@ export default {
   props: {
     floatRight: { type: Boolean, required: false, default: false },
     isIcon: { type: Boolean, required: false, default: false },
-    isClicked: { type: Boolean, required: false, default: false },
-    isDropdownItem: { type: Boolean, required: false, default: false }
+    isClicked: { type: Boolean, required: false, default: false }
   },
 };
 </script>
@@ -27,7 +25,7 @@ export default {
   height: 30px;
   border: 0;
   padding: 0 8px 0 8px;
-  color: white;
+  color: $button-color;
   background-color: $button-background-color;
   outline: none;
   font-family: $site-font-mono;
@@ -70,12 +68,6 @@ export default {
   &.button--is-icon {
     width: 30px;
     height: 30px;
-  }
-
-  &.button--is-dropdown-item {
-    display: block;
-    width: 100%;
-    text-align: left;
   }
 
   /deep/ svg {

@@ -8,11 +8,11 @@ export default {
   name: 'PageParagraph',
   props: {
     text: { type: String, required: true },
-    theme: { type: String, required: true }
+    pageTheme: { type: String, required: true }
   },
   data: function () {
     return {
-      classList: []
+      classList: [ this.pageTheme ]
     };
   },
   computed: {

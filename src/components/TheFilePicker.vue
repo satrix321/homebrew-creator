@@ -350,12 +350,12 @@ export default {
       user-select: none;
 
       &.filepicker__row--is-selected {
-        background-color: $button-background-active-color;
+        background-color: $filepicker-selected-row-background-color;
       }
 
       &:hover {
         cursor: pointer;
-        background-color: $button-background-hover-color;
+        background-color: $filepicker-row-hover-background-color;
       }
     }
 
@@ -364,7 +364,7 @@ export default {
       text-align: center;
 
       .fas.fa-folder {
-        color: rgb(255, 232, 148);
+        color: $filepicker-folder-color;
       }
     }
 

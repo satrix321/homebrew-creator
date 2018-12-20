@@ -25,11 +25,11 @@ export default {
     headers: { type: Array, required: true },
     align: { type: Array, required: true },
     cells: { type: Array, required: true },
-    theme: { type: String, required: true }
+    pageTheme: { type: String, required: true }
   },
   data: function () {
     return {
-      classList: [ this.theme ]
+      classList: [ this.pageTheme ]
     };
   },
   computed: {
@@ -76,28 +76,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-th {
-  white-space: normal;
-}
-td {
-  font-family: 'regular-text';
-  font-size: 9pt;
-  line-height: 1.25;
-  text-align: justify;
-  white-space: initial;
-}
-
 table {
+  th {
+    white-space: normal;
+  }
+
+  td {
+    font-family: 'regular-text';
+    font-size: 9pt;
+    line-height: 1.25;
+    text-align: justify;
+    white-space: initial;
+  }
+
   &.theme--cthulhu-1,
   &.theme--cthulhu-2 {
     width: 100%;
     border-spacing: 0px;
     margin-bottom: 12px;
-
     $cell-padding: 3px;
 
-    > thead {
-      background-color: #5f4625;
+    thead {
+      background-color: $page-table-header-cthulhu-background-color;
 
       th {
         padding: $cell-padding;
@@ -105,9 +105,9 @@ table {
       }
     }
   
-    > tbody {
+    tbody {
       tr:nth-child(even) {
-        background-color: rgba(224, 199, 136, 0.4);
+        background-color: $page-table-row-even-cthulhu-background-color;
       }
 
       td {

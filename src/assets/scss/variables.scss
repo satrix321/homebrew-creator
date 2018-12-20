@@ -1,26 +1,45 @@
 $toolbar-background-color: #363636;
+$button-color: white;
 $button-background-color: #4b4b4b;
 $button-background-hover-color: #737373;
 $button-background-active-color: #5f5f5f;
 $button-background-clicked-color: #191919;
 $button-disabled-color: #909090;
+$modal-header-footer-backgorund-color: #363636;
+$modal-body-background-color: #2a2a2a;
+$modal-color: white;
+$document-pages-container-background-color: #cccccc;
+$filepicker-folder-color: #ffe894;
+$filepicker-selected-row-background-color: #5f5f5f;
+$filepicker-row-hover-background-color: #737373;
+$page-background-color: white;
+$progress-icon-color: #ddd;
 
 $site-font: Arial;
 $site-font-mono: 'Fira Mono', monospace;
-
-$page-background-color: white;
 
 // THEME - DEFAULT
 $page-footer-number-default-color: #a08d5d;
 $page-heading-default-color: #6a1c0f;
 $page-heading-border-default-color: #c9ad69;
 $page-heading-title-default-color: #ffdc69;
+$page-note-primary-default-background-color: #dae6bf;
+$page-note-secondary-default-background-color: #dccfac;
+$page-note-tertiary-default-background-color: #e7e3ef;
 
 // THEME - CTHULHU 1
 $page-footer-number-cthulhu-1-color: black;
+$page-note-tertiary-cthulhu-1-background-color: #F4EEC8;
 
 // THEME - CTHULHU 2
 $page-footer-number-cthulhu-2-color: black;
+$page-note-primary-cthulhu-2-background-color: rgba(0, 0, 0, 0.071);
+$page-note-secondary-cthulhu-2-background-color: rgba(0, 0, 0, 0.071);
+$page-note-tertiary-cthulhu-2-background-color: rgba(0, 0, 0, 0.071);
+
+// CTHULHU TABLES
+$page-table-header-cthulhu-background-color: #5f4625;
+$page-table-row-even-cthulhu-background-color: rgba(224, 199, 136, 0.4);
 
 // PROPS
 $page-prop-handwritten-color: black;
@@ -29,5 +48,5 @@ $page-prop-newspaper-background-color: #F4DCC0;
 
 // STAT BLOCKS
 $page-stat-block-cthulhu-header-background-color: #5f4625;
-$page-stat-block-cthulhu-row-odd-background-color: #e0c78833;
-$page-stat-block-cthulhu-row-even-background-color: #e0c78880;
+$page-stat-block-cthulhu-row-odd-background-color: rgba(224, 199, 136, 0.2);
+$page-stat-block-cthulhu-row-even-background-color: rgba(224, 199, 136, 0.5);

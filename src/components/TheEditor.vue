@@ -444,7 +444,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #ddd;
+    color: $progress-icon-color;
 
     animation-name: spin;
     animation-duration: 2s;

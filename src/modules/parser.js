@@ -52,7 +52,7 @@ let parse = function (markdown, options) {
       case 'hr': {
         let thematicBreak = new PageThematicBreakClass({
           propsData: { 
-            theme: options.theme
+            pageTheme: options.theme
           }
         });
         createdComponents.push(thematicBreak);
@@ -96,7 +96,7 @@ let parse = function (markdown, options) {
             headers: token.header,
             align: token.align,
             cells: token.cells,
-            theme: options.theme
+            pageTheme: options.theme
           }
         });
         createdComponents.push(table);
@@ -235,7 +235,7 @@ let parse = function (markdown, options) {
         let paragraph = new PageParagraphClass({
           propsData: { 
             text: token.text,
-            theme: options.theme
+            pageTheme: options.theme
           }
         });
         createdComponents.push(paragraph);
