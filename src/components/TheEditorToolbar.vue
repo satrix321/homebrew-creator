@@ -16,10 +16,19 @@
 
     <dropdown-menu>
       <template slot="dropdown-button">
+        <i class="fas fa-table"></i> Stat Blocks
+      </template>
+      <template slot="dropdown-content">
+        <dropdown-item @click="insertCocStatBlock"><i class="fas fa-table"></i> Call of Cthulhu</dropdown-item>
+      </template>
+    </dropdown-menu>
+
+    <dropdown-menu>
+      <template slot="dropdown-button">
         <i class="fas fa-table"></i> Tables
       </template>
       <template slot="dropdown-content">
-        <dropdown-item @click="insertCocStatTable"><i class="fas fa-table"></i> Call of Cthulhu - Stat Table</dropdown-item>
+        <dropdown-item @click="insertRegularTable"><i class="fas fa-table"></i> Regular Table</dropdown-item>
       </template>
     </dropdown-menu>
 
@@ -116,7 +125,8 @@ export default {
     insertNewspaperNote: function () { this.$emit('insertNewspaperNote'); },
     insertHandwrittenNote: function () { this.$emit('insertHandwrittenNote'); },
     insertPhbNote: function () { this.$emit('insertPhbNote'); },
-    insertCocStatTable: function () { this.$emit('insertCocStatTable'); },
+    insertCocStatBlock: function () { this.$emit('insertCocStatBlock'); },
+    insertRegularTable: function () { this.$emit('insertRegularTable'); },
     insertRegularPage: function () { this.$emit('insertRegularPage'); },
     insertRelativeImage: function () { this.$emit('insertRelativeImage'); },
     insertAbsoluteImage: function () { this.$emit('insertAbsoluteImage'); },

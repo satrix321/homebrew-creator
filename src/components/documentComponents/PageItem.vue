@@ -110,7 +110,7 @@ export default {
   padding: 1cm;
   
   /deep/ * {
-    margin-top: 0 !important;
+    margin-top: 0;
   }
 
   .page__content {

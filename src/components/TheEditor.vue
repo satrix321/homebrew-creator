@@ -8,7 +8,8 @@
       @insertNewspaperNote="insertNewspaperNote"
       @insertHandwrittenNote="insertHandwrittenNote"
       @insertPhbNote="insertPhbNote"
-      @insertCocStatTable="insertCocStatTable"
+      @insertCocStatBlock="insertCocStatBlock"
+      @insertRegularTable="insertRegularTable"
       @insertRegularPage="insertRegularPage"
       @insertRelativeImage="insertRelativeImage"
       @insertAbsoluteImage="insertAbsoluteImage"
@@ -110,7 +111,9 @@ export default {
       handwrittenNoteSnippet: 'editorSnippets/handwrittenNoteSnippet',
       phbNoteSnippet: 'editorSnippets/phbNoteSnippet',
 
-      cthulhuStatTable: 'editorSnippets/cthulhuStatTable',
+      cthulhuStatTableSnippet: 'editorSnippets/cthulhuStatTableSnippet',
+
+      regularTableSnippet: 'editorSnippets/regularTableSnippet',
 
       regularPageSnippet: 'editorSnippets/regularPageSnippet',
       twoColumnPageSnippet: 'editorSnippets/twoColumnPageSnippet',
@@ -203,7 +206,8 @@ export default {
     insertNewspaperNote: function () { this.insertData(this.newspaperNoteSnippet, this.getCursorPosition()); },
     insertHandwrittenNote: function () { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
     insertPhbNote: function () { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
-    insertCocStatTable: function () { this.insertData(this.cthulhuStatTable, this.getCursorPosition()); },
+    insertCocStatBlock: function () { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
+    insertRegularTable: function () { this.insertData(this.regularTableSnippet, this.getCursorPosition()); },
     insertRegularPage: function () { this.insertData(this.regularPageSnippet, this.getCursorPosition()); },
     insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
     insertThreeColumnPage: function () { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },

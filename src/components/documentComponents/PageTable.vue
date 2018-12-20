@@ -2,13 +2,15 @@
   <table :class="classList">
     <thead>
       <tr>
-        <th v-for="(header, index) in processedHeaders" :key="index" v-html="header"/>
+        <th v-for="(header, index) in processedHeaders" :key="index" v-html="header" :class="{ 
+            'align-center': align[index] === 'center',
+            'align-right': align[index] === 'right'
+          }"/>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(row, rowIndex) in processedCells" :key="rowIndex">
         <td :class="{ 
-            'align-left': align[cellIndex] === 'left',
             'align-center': align[cellIndex] === 'center',
             'align-right': align[cellIndex] === 'right'
           }"
@@ -77,8 +79,19 @@ export default {
 
 <style lang="scss" scoped>
 table {
+  width: 100%;
+
   th {
+    text-align: left;
     white-space: normal;
+
+    &.align-center {
+      text-align: center;
+    }
+
+    &.align-right {
+      text-align: right;
+    }
   }
 
   td {
@@ -87,31 +100,57 @@ table {
     line-height: 1.25;
     text-align: justify;
     white-space: initial;
+
+    &.align-center {
+      text-align: center;
+    }
+
+    &.align-right {
+      text-align: right;
+    }
+  }
+
+  border-spacing: 0px;
+  margin-bottom: 12px;
+  thead {
+    th {
+      padding: 3px;
+    }
+  }
+
+  tbody {
+    td {
+      padding: 3px;
+    }
+  }
+
+  &.theme--default {
+    thead {
+      th {
+        font-family: $site-font;
+      }
+    }
+    
+    tbody {
+      tr:nth-child(odd) {
+        background-color: $page-table-row-odd-default-background-color;
+      }
+    }
   }
 
   &.theme--cthulhu-1,
   &.theme--cthulhu-2 {
-    width: 100%;
-    border-spacing: 0px;
-    margin-bottom: 12px;
-    $cell-padding: 3px;
-
     thead {
       background-color: $page-table-header-cthulhu-background-color;
 
       th {
-        padding: $cell-padding;
-        color: #DED7CC;
+        color: $page-table-header-cthulhu-color;
       }
     }
   
     tbody {
       tr:nth-child(even) {
         background-color: $page-table-row-even-cthulhu-background-color;
-      }
-
-      td {
-        padding: $cell-padding;
       }
     }
   }

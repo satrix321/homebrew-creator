@@ -15,7 +15,7 @@ $filepicker-row-hover-background-color: #737373;
 $page-background-color: white;
 $progress-icon-color: #ddd;
 
-$site-font: Arial;
+$site-font: 'Source Sans Pro', sans-serif;
 $site-font-mono: 'Fira Mono', monospace;
 
 // THEME - DEFAULT
@@ -26,6 +26,7 @@ $page-heading-title-default-color: #ffdc69;
 $page-note-primary-default-background-color: #dae6bf;
 $page-note-secondary-default-background-color: #dccfac;
 $page-note-tertiary-default-background-color: #e7e3ef;
+$page-table-row-odd-default-background-color: rgba(195, 220, 155, 0.6);
 
 // THEME - CTHULHU 1
 $page-footer-number-cthulhu-1-color: black;
@@ -39,6 +40,7 @@ $page-note-tertiary-cthulhu-2-background-color: rgba(0, 0, 0, 0.071);
 
 // CTHULHU TABLES
 $page-table-header-cthulhu-background-color: #5f4625;
+$page-table-header-cthulhu-color: #DED7CC;
 $page-table-row-even-cthulhu-background-color: rgba(224, 199, 136, 0.4);
 
 // PROPS

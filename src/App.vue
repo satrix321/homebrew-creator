@@ -49,6 +49,10 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/fonts.scss";
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
   margin: 0px;
