@@ -16,7 +16,7 @@ const editorSnippets = {
     threeColumnPageSnippet: '\\page[columns-3]\n',
     titlePageSnippet: '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description\n',
 
-    relativeImageSnippet: '![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Image")\n',
+    relativeImageSnippet: '<image src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>\n',
     absoluteImageSnippet: '<img class="image image--absolute" style="bottom: 1cm; right: 1cm;" src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png"/>\n',
     fullPageImageSnippet: '<img class="image image--fullpage" src="https://i.imgur.com/PNpQjCA.jpg"/>\n',
 

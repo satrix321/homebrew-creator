@@ -178,10 +178,8 @@ export default {
       let pagesContainer = this.$refs.pagesContainer;
       if (pagesContainer) {
         if (pagesContainer.clientWidth < pagesContainer.scrollWidth) {
-          if (!pagesContainer.classList.contains('document__pages-container--overflow-fix')) {
-            pagesContainer.classList.add('document__pages-container--overflow-fix');
-          }
-        } else if (pagesContainer.classList.contains('document__pages-container--overflow-fix')) {
+          pagesContainer.classList.add('document__pages-container--overflow-fix');
+        } else {
           pagesContainer.classList.remove('document__pages-container--overflow-fix');
         }
       }
