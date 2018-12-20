@@ -1,14 +1,15 @@
 <template>
   <div class="editor">
-    <div ref="progress" class="progress"><i class="progress-icon fas fa-spinner fa-5x"></i></div>
-    <editor-toolbar
+    <div ref="progress" class="progress"><i class="progress__icon fas fa-spinner fa-5x"></i></div>
+    <the-editor-toolbar
       @insertPrimaryNote="insertPrimaryNote"
       @insertSecondaryNote="insertSecondaryNote"
       @insertTertiaryNote="insertTertiaryNote"
       @insertNewspaperNote="insertNewspaperNote"
       @insertHandwrittenNote="insertHandwrittenNote"
       @insertPhbNote="insertPhbNote"
-      @insertCocStatTable="insertCocStatTable"
+      @insertCocStatBlock="insertCocStatBlock"
+      @insertRegularTable="insertRegularTable"
       @insertRegularPage="insertRegularPage"
       @insertRelativeImage="insertRelativeImage"
       @insertAbsoluteImage="insertAbsoluteImage"
@@ -35,7 +36,7 @@
     <codemirror ref="editor" :options="codeMirrorOptions" 
       @input="codeChange" 
       @cursorActivity="cursorPositionChange"/>
-    <file-picker-modal ref="filePicker" title="File Picker" 
+    <the-file-picker ref="filePicker" title="File Picker" 
       @downloadFile="downloadFileUsingProvider" 
       @uploadFile="uploadFileUsingProvider"
       @signOut="signOutFromProvider"/>
@@ -45,8 +46,8 @@
 <script>
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
-import EditorToolbar from '@/components/EditorToolbar.vue';
-import FilePickerModal from '@/components/FilePickerModal.vue';
+import TheEditorToolbar from '@/components/TheEditorToolbar';
+import TheFilePicker from '@/components/TheFilePicker';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -65,11 +66,11 @@ import { mapGetters } from 'vuex';
 import GoogleDriveProvider from '@/storageProviders/GoogleDriveProvider';
 
 export default {
-  name: 'EditorItem',
+  name: 'TheEditor',
   components: {
     codemirror,
-    EditorToolbar,
-    FilePickerModal
+    TheEditorToolbar,
+    TheFilePicker
   },
   data () {
     return {
@@ -110,7 +111,9 @@ export default {
       handwrittenNoteSnippet: 'editorSnippets/handwrittenNoteSnippet',
       phbNoteSnippet: 'editorSnippets/phbNoteSnippet',
 
-      cthulhuStatTable: 'editorSnippets/cthulhuStatTable',
+      cthulhuStatTableSnippet: 'editorSnippets/cthulhuStatTableSnippet',
+
+      regularTableSnippet: 'editorSnippets/regularTableSnippet',
 
       regularPageSnippet: 'editorSnippets/regularPageSnippet',
       twoColumnPageSnippet: 'editorSnippets/twoColumnPageSnippet',
@@ -203,7 +206,8 @@ export default {
     insertNewspaperNote: function () { this.insertData(this.newspaperNoteSnippet, this.getCursorPosition()); },
     insertHandwrittenNote: function () { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
     insertPhbNote: function () { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
-    insertCocStatTable: function () { this.insertData(this.cthulhuStatTable, this.getCursorPosition()); },
+    insertCocStatBlock: function () { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
+    insertRegularTable: function () { this.insertData(this.regularTableSnippet, this.getCursorPosition()); },
     insertRegularPage: function () { this.insertData(this.regularPageSnippet, this.getCursorPosition()); },
     insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
     insertThreeColumnPage: function () { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },
@@ -229,7 +233,7 @@ export default {
     },
     syncFile: async function () {
       if (this.storageProviderFileId) {
-        this.$refs.progress.classList.add('is-visible');
+        this.$refs.progress.classList.add('progress--is-visible');
 
         if (!this.storageProvider.isSignedIn) {
           await this.storageProvider.authenticate();
@@ -244,11 +248,11 @@ export default {
             if (response.status !== 200) {
               alert(response);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
 
       } else {
@@ -257,7 +261,7 @@ export default {
     },
     downloadFileUsingProvider: async function () {
       if (this.storageProviderFileId) {
-        this.$refs.progress.classList.add('is-visible');
+        this.$refs.progress.classList.add('progress--is-visible');
 
         if (!this.storageProvider.isSignedIn) {
           await this.storageProvider.authenticate();
@@ -272,16 +276,16 @@ export default {
             } else {
               alert(response);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
       }
     },
     uploadFileUsingProvider: async function () {
-      this.$refs.progress.classList.add('is-visible');
+      this.$refs.progress.classList.add('progress--is-visible');
 
       if (!this.storageProvider.isSignedIn) {
         await this.storageProvider.authenticate();
@@ -297,11 +301,11 @@ export default {
             if (response.status !== 200) {
               alert(response);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
       } else if (this.storageProviderFileParentId) {
         this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)), this.storageProviderFileParentId)
@@ -311,11 +315,11 @@ export default {
             } else {
               this.$store.commit('filepicker/setFileId', response.result.id);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
       } else {
         this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)))
@@ -325,16 +329,16 @@ export default {
             } else {
               this.$store.commit('filepicker/setFileId', response.result.id);
             }
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           })
           .catch((error) => {
             alert(error);
-            this.$refs.progress.classList.remove('is-visible');
+            this.$refs.progress.classList.remove('progress--is-visible');
           });
       }
     },
     signOutFromProvider: function () {
-      this.$refs.progress.classList.add('is-visible');
+      this.$refs.progress.classList.add('progress--is-visible');
       this.$refs.filePicker.close();
 
       try {
@@ -342,13 +346,13 @@ export default {
       } catch (error) {
         console.error(error);
       } finally {
-        this.$refs.progress.classList.remove('is-visible');
+        this.$refs.progress.classList.remove('progress--is-visible');
       }
 
       return;
     },
     downloadGoogleDriveFile: async function () {
-      this.$refs.progress.classList.add('is-visible');
+      this.$refs.progress.classList.add('progress--is-visible');
 
       try {
         if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
@@ -360,17 +364,17 @@ export default {
         }
       } catch (error) {
         console.error(error);
-        this.$refs.progress.classList.remove('is-visible');
+        this.$refs.progress.classList.remove('progress--is-visible');
         return;
       }
 
       this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setDownloadMode();
       this.$refs.filePicker.show();
-      this.$refs.progress.classList.remove('is-visible');
+      this.$refs.progress.classList.remove('progress--is-visible');
     },
     uploadGoogleDriveFile: async function () {
-      this.$refs.progress.classList.add('is-visible');
+      this.$refs.progress.classList.add('progress--is-visible');
       
       try {
         if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
@@ -382,14 +386,14 @@ export default {
         }
       } catch (error) {
         console.error(error);
-        this.$refs.progress.classList.remove('is-visible');
+        this.$refs.progress.classList.remove('progress--is-visible');
         return;
       }
 
       this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setUploadMode();
       this.$refs.filePicker.show();
-      this.$refs.progress.classList.remove('is-visible');
+      this.$refs.progress.classList.remove('progress--is-visible');
     },
     downloadFile: function () {
       let data = {};
@@ -426,6 +430,35 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/modules/codemirror.scss";
-@import "@/assets/scss/modules/progress.scss";
+@import "@/assets/scss/codemirror.scss";
+.progress {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+
+  &.progress--is-visible {
+    display: initial;
+  }
+
+  > .progress__icon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $progress-icon-color;
+
+    animation-name: spin;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    @keyframes spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+  }
+}
 </style>

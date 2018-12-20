@@ -1,41 +1,43 @@
 <template>
   <div class="document">
-    <document-toolbar 
+    <the-document-toolbar 
       @zoomChanged="zoomChanged"
       @scrollToCursor="scrollToCursor"
       @getPDF="getPDF"/>
-    <div ref="pagesContainer" class="document-pages-container">
-      <div @change="checkOverflow" ref="pages" class="document-pages">
-        <spacer/>
-        <page v-for="page in pages" :key="page.key"
+    <div ref="pagesContainer" class="document__pages-container">
+      <div @change="checkOverflow" ref="pages" class="document__pages">
+        <spacer-item/>
+        <page-item v-for="page in pages" :key="page.key"
           :pageNumber="page.pageNumber"
           :pageTexturesEnabled="page.pageTexturesEnabled"
           :noteTexturesEnabled="page.noteTexturesEnabled"
           :pageOptions="page.pageOptions"
           :pageTheme="page.pageTheme"
           :textData="page.textData"
+          :columnCount="page.columnCount"
+          :isTitlePage="page.isTitlePage"
         />
-        <spacer/>
+        <spacer-item/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import DocumentToolbar from '@/components/DocumentToolbar';
-import Spacer from '@/components/documentComponents/Spacer';
-import Page from '@/components/documentComponents/Page';
+import TheDocumentToolbar from '@/components/TheDocumentToolbar';
+import SpacerItem from '@/components/documentComponents/SpacerItem';
+import PageItem from '@/components/documentComponents/PageItem';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 
 import Vue from 'vue';
 
 export default {
-  name: 'DocumentItem',
+  name: 'TheDocument',
   components: {
-    DocumentToolbar,
-    Spacer,
-    Page
+    TheDocumentToolbar,
+    SpacerItem,
+    PageItem
   },
   data: function () {
     return {
@@ -84,7 +86,13 @@ export default {
     })
   },
   watch: {
-    rawCode: function () {
+    rawCode: function () { this.createPages(); },
+    pageTexturesEnabled: function () { this.createPages(); },
+    noteTexturesEnabled: function () { this.createPages(); },
+    theme: function () { this.createPages(); }
+  },
+  methods: {
+    createPages: function () {
       const pagesOptions = this.getPagesOptions(this.rawCode);
       const pagesRawInput = this.rawCode.split(this.pageSplitRegex);
       const numberOfPages = pagesRawInput.length - 1;
@@ -95,13 +103,27 @@ export default {
 
       let pageNumber = 1;
       while (pageNumber < pagesRawInput.length) {
+
+        let columnCount = 1;
+        let isTitlePage = false;
+        if (pagesOptions[pageNumber - 1]) {
+          let columnsOption = pagesOptions[pageNumber - 1].match(/columns-([0-9])/);
+          if (columnsOption) {
+            columnCount = Number(columnsOption[1]);
+          }
+
+          isTitlePage = pagesOptions[pageNumber - 1].match(/title/) ? true : false;
+        }
+
         let page = {
           pageNumber: pageNumber,
           pageTexturesEnabled: this.pageTexturesEnabled,
           noteTexturesEnabled: this.noteTexturesEnabled,
           pageOptions: pagesOptions[pageNumber - 1],
           pageTheme: this.theme,
-          textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length)
+          textData: pagesRawInput[pageNumber].substring(0, pagesRawInput[pageNumber].length),
+          columnCount: columnCount,
+          isTitlePage: isTitlePage
         };
         page.key = JSON.stringify(page);
 
@@ -112,12 +134,8 @@ export default {
         pageNumber++;
       }
 
-      console.log(pagesRawInput);
-
       this.checkOverflow();
-    }
-  },
-  methods: {
+    },
     getPagesOptions: function (code) {
       const pageSplitOptionsRegex = /\\page(?:\[([\w -]*)\])?/g;
       let pageOptions = [];
@@ -160,11 +178,9 @@ export default {
       let pagesContainer = this.$refs.pagesContainer;
       if (pagesContainer) {
         if (pagesContainer.clientWidth < pagesContainer.scrollWidth) {
-          if (!pagesContainer.classList.contains('document-overflow-fix')) {
-            pagesContainer.classList.add('document-overflow-fix');
-          }
-        } else if (pagesContainer.classList.contains('document-overflow-fix')) {
-          pagesContainer.classList.remove('document-overflow-fix');
+          pagesContainer.classList.add('document__pages-container--overflow-fix');
+        } else {
+          pagesContainer.classList.remove('document__pages-container--overflow-fix');
         }
       }
     },
@@ -179,5 +195,41 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/modules/document.scss";
+.document {
+  height: 100%;
+  overflow: hidden;
+
+  .document__pages-container {
+    overflow-y: auto;
+    height: calc(100vh - 30px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: $document-pages-container-background-color;
+
+    &.document__pages-container--overflow-fix {
+      display: block;
+
+      .document__pages {
+        transform-origin: top left;
+      }
+    }
+
+    .document__pages {
+      transform-origin: top center;
+      max-width: 21cm;
+    }
+  }
+}
+
+@media print {
+  .document {
+    overflow: visible !important;
+
+    .document__pages-container {
+      display: block !important;
+      overflow-y: visible !important;
+    }
+  }
+}
 </style>

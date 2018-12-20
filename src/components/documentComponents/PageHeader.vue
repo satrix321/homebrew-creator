@@ -1,33 +1,36 @@
 <template>
-  <div :class="headerClassList">
-    <div :class="backgroundClassList"></div>
+  <div class="header header--is-textured" :class="classList">
+    <div class="header__background"></div>
+    <p class="header__number"></p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'PageHeader',
-  props: ['pageNumber', 'pageTheme'],
+  props: {
+    pageNumber: { type: Number, required: true }, 
+    pageTheme: { type: String, required: true }
+  },
   data: function () {
     return {
-      headerClassList: [
-        'page-header'
-      ],
-      backgroundClassList: [
-        'is-textured'
-      ]
+      classList: [ this.pageTheme ]
     };
   },
   created: function () {
     if (this.pageNumber % 2 === 1) {
-      this.headerClassList.push('is-odd');
+      this.classList.push('header--is-odd');
     } else {
-      this.headerClassList.push('is-even');
+      this.classList.push('header--is-even');
     }
-    this.backgroundClassList.push(this.pageTheme);
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>

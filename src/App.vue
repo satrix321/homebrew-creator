@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <div class="main">
-      <split :gutterSize="10" style="height: 100vh;" @onDrag="splitDrag">
+      <split :gutterSize="10" class="splitter" @onDrag="splitDrag">
         <split-area class="split-editor" :size="50">
-          <editor-item/>
+          <the-editor/>
         </split-area>
         <split-area class="split-document" :size="50">
-          <document-item :eventBus="documentEventBus"/>
+          <the-document :eventBus="documentEventBus"/>
         </split-area>
       </split>
     </div>
@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import EditorItem from '@/components/Editor';
-import DocumentItem from '@/components/Document';
+import TheEditor from '@/components/TheEditor';
+import TheDocument from '@/components/TheDocument';
 import Vue from 'vue';
 
 export default {
   name: 'App',
   components: {
-    EditorItem,
-    DocumentItem
+    TheEditor,
+    TheDocument
   },
   data: function () {
     return {
@@ -49,9 +49,47 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/fonts.scss";
-@import "@/assets/scss/print.scss";
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   margin: 0px;
   overflow-x: hidden;
+}
+
+.splitter {
+  height: 100vh !important;
+}
+
+@media print {
+  @page {
+    margin: 0;
+  }
+  body {
+    margin: 0 !important;
+    box-shadow: none !important;
+    overflow-x: auto !important;
+  }
+  .split-editor {
+    display: none !important;
+    height: 0 !important;
+    float: none !important;
+  }
+  .split-document {
+    width: 100% !important;
+    float: none !important;
+  }
+  .gutter.gutter-horizontal {
+    display: none !important;
+    height: 0 !important;
+  }
+  .split {
+    overflow: visible !important;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>

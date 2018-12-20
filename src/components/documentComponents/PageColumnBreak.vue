@@ -1,12 +1,15 @@
 <template>
-  <div class="document-pages-spacer"></div>
+  <div class="break"/>
 </template>
 
 <script>
 export default {
-  name: 'Spacer'
+  name: 'PageColumnBreak'
 };
 </script>
 
 <style lang="scss" scoped>
+.break {
+  break-after: column;
+}
 </style>
