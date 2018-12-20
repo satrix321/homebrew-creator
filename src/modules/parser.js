@@ -51,7 +51,9 @@ let parse = function (markdown, options) {
       }
       case 'hr': {
         let thematicBreak = new PageThematicBreakClass({
-          propsData: { theme: options.theme }
+          propsData: { 
+            theme: options.theme
+          }
         });
         createdComponents.push(thematicBreak);
         if (tokenStack.length === 0) {
@@ -152,7 +154,7 @@ let parse = function (markdown, options) {
           propsData: { 
             noteType: noteType,
             components: componentStack.pop(),
-            theme: options.theme,
+            pageTheme: options.theme,
             texturesEnabled: options.noteTexturesEnabled,
             columnCount: options.columnCount
           }
@@ -192,7 +194,7 @@ let parse = function (markdown, options) {
           propsData: {
             listType: listTypes.pop(),
             listComponents: componentStack.pop(),
-            theme: options.theme
+            pageTheme: options.theme
           }
         });
 

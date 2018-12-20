@@ -71,8 +71,9 @@ export default {
       p {
         font-family: 'handwriting';
         font-size: 12pt;
-        color: black;
+        color: $page-prop-handwritten-color;
       }
+
       border-radius: 0px;
       border: 20px solid transparent;
       border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
@@ -81,27 +82,32 @@ export default {
         calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
         100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
         13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+
       &::before {
         display: none;
       }
+
       &::after {
         display: none;
       }
     }
+
     &.prop--newspaper {
       h1 {
         font-family: 'newspaper-headers';
         text-align: center;
         font-size: 18pt;
         text-transform: uppercase;
-        color: black;
+        color: $page-prop-newspaper-color;
       }
+
       p {
         font-family: 'newspaper-text';
         text-align: justify;
         font-size: 12pt;
-        color: black;
+        color: $page-prop-newspaper-color;
       }
+
       border-radius: 0px;
       border: 20px solid transparent;
       border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
@@ -110,9 +116,11 @@ export default {
         calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
         100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
         13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+
       &::before {
         display: none;
       }
+
       &::after {
         display: none;
       }
@@ -126,8 +134,9 @@ export default {
         background-repeat: no-repeat;
         background-position: center;
       }
+
       &.prop--newspaper {
-        background-color: #F4DCC0;
+        background-color: $page-prop-newspaper-background-color;
       }
     }
   }
@@ -138,6 +147,7 @@ export default {
         position: absolute;
         z-index: -1;
       }
+      
       &.image--fullpage {
         position: absolute;
         z-index: -1;
@@ -147,87 +157,89 @@ export default {
         height: 29.7cm;
       }
     }
-  }
 
-  /deep/ .stat-block {
-    margin-bottom: 12px;
+    .stat-block {
+      margin-bottom: 12px;
 
-    &.stat-block--cthulhu {
-      border: 0px solid black;
+      &.stat-block--cthulhu {
+        border: none;
 
-      table {
-        width: calc(100% + 1px);
-        border-collapse: collapse;
-        margin-bottom: 0;
+        table {
+          width: calc(100% + 1px);
+          border-collapse: collapse;
+          margin-bottom: 0;
 
-        thead {
-          background-color: #5f4625;
-        }
-
-        &:first-child {
-          border-spacing: 0;
-
-          th {
-            padding: 3px 5px;
+          thead {
+            background-color: $page-stat-block-cthulhu-header-background-color;
           }
 
-          td {
+          &:first-child {
+            border-spacing: 0;
+
+            th {
+              padding: 3px 5px;
+            }
+
+            td {
+              padding: 0;
+            }
+          }
+
+          &:nth-child(2) {
+            th {
+              padding: 0px 5px;
+            }
+
+            td {
+              padding-left: 5px;
+              padding-right: 5px;
+            }
+          }
+
+          &:nth-child(n+2) {
+            tbody {
+              tr:nth-child(odd) {
+                background-color: $page-stat-block-cthulhu-row-odd-background-color;
+              }
+
+              tr:nth-child(even) {
+                background-color: $page-stat-block-cthulhu-row-even-background-color;
+              }
+            }
+          }
+
+          &:nth-child(n+3) {
+            th {
+              padding: 3px 5px;
+            }
+
+            td {
+              padding-left: 10px;
+              padding-right: 10px;
+            }
+          }
+
+          &:last-child {
+            margin-bottom: 0px;
+          }
+
+          th {
+            font-size: 12pt;
+            font-family: 'regular-text';
+            text-align: left;
+            color: #DED7CC;
             padding: 0;
           }
-        }
-
-        &:nth-child(2) {
-          th {
-            padding: 0px 5px;
-          }
 
           td {
-            padding-left: 5px;
-            padding-right: 5px;
+            font-size: 9pt;
+            font-family: 'regular-text';
           }
-        }
 
-        &:nth-child(n+2) {
-          tbody {
-            tr:nth-child(odd) {
-              background-color: rgba(224, 199, 136, 0.2);
+          &:nth-child(2) {
+            td {
+              font-size: 10pt;
             }
-
-            tr:nth-child(even) {
-              background-color: rgba(224, 199, 136, 0.5);
-            }
-          }
-        }
-
-        &:nth-child(n+3) {
-          th {
-            padding: 3px 5px;
-          }
-          td {
-            padding-left: 10px;
-            padding-right: 10px;
-          }
-        }
-
-        &:last-child {
-          margin-bottom: 0px;
-        }
-
-        th {
-          font-size: 12pt;
-          font-family: 'regular-text';
-          text-align: left;
-          color: #DED7CC;
-          padding: 0;
-        }
-        td {
-          font-size: 9pt;
-          font-family: 'regular-text';
-        }
-
-        &:nth-child(2) {
-          td {
-            font-size: 10pt;
           }
         }
       }

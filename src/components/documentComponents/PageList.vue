@@ -13,11 +13,11 @@ export default {
   props: {
     listType: { type: String, required: true },
     listComponents: { type: Array, required: true },
-    theme: { type: String, required: true }
+    pageTheme: { type: String, required: true }
   },
   data: function () {
     return {
-      classList: []
+      classList: [ this.pageTheme ]
     };
   },
   mounted: function () {

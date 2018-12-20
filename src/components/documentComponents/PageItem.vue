@@ -1,7 +1,7 @@
 <template>
   <div class="page" :class="classList">
     <page-header v-if="headerVisible" :pageNumber="pageNumber" :pageTheme="pageTheme"></page-header>
-    <div class="page-content" ref="pageContent"></div>
+    <div class="page__content" ref="pageContent"></div>
     <page-footer v-if="footerVisible" :pageNumber="pageNumber" :pageTheme="pageTheme"></page-footer>
   </div>
 </template>
@@ -39,9 +39,7 @@ export default {
     };
   },
   created: function () {
-    if (this.pageNumber % 2 === 0) { this.classList.push('is-inverted'); }
-    if (this.pageTexturesEnabled) { this.classList.push('is-textured'); }
-    if (this.noteTexturesEnabled) { this.classList.push('notes-are-textured'); }
+    if (this.pageTexturesEnabled) { this.classList.push('page--is-textured'); }
     this.classList.push(this.pageTheme);
     if (this.pageOptions) {
       let classNames = this.pageOptions.split(' ');
@@ -103,20 +101,19 @@ export default {
   position: relative;
   margin-bottom: 0.5cm;
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-  background-color: white;
+  background-color: $page-background-color;
   position: relative;
   box-sizing: border-box;
   z-index: 1;
   width: 21cm;
   height: 29.7cm;
   padding: 1cm;
-
   
   /deep/ * {
     margin-top: 0 !important;
   }
 
-  .page-content {
+  .page__content {
     /deep/ .page-wide-block {
       column-span: all;
       -webkit-column-span: all;
@@ -133,7 +130,7 @@ export default {
     padding-bottom: 2cm;
   }
 
-  &.is-textured {
+  &.page--is-textured {
     background-size: 100% 100%;
 
     &.theme--default {
@@ -148,7 +145,7 @@ export default {
       background-image: url('../../assets/images/texture_cthulhu_02.jpg');
     }
 
-    &.is-inverted {
+    &.page--page--is-inverted {
       &.theme--default {
         background-image: url('../../assets/images/texture_02.jpg');
       }
@@ -165,7 +162,7 @@ export default {
 
   &.columns-2,
   &.columns-3 {
-    .page-content {
+    .page__content {
       column-fill: auto;
       -webkit-column-gap: 16px;
       -moz-column-gap: 16px;
@@ -173,19 +170,19 @@ export default {
     }
   }
 
-  &.columns-2 .page-content {
+  &.columns-2 .page__content {
     -moz-column-count: 2 !important;
     -webkit-column-count: 2 !important;
     column-count: 2 !important;
   }
 
-  &.columns-3 .page-content {
+  &.columns-3 .page__content {
     -moz-column-count: 3 !important;
     -webkit-column-count: 3 !important;
     column-count: 3 !important;
   }
 
-  .page-content {
+  .page__content {
     height: 100%;
   }
 }

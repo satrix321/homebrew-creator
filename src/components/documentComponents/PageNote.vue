@@ -1,5 +1,5 @@
 <template>
-  <div ref="content" :class="classList"/>
+  <div ref="content" class="note" :class="classList"/>
 </template>
 
 <script>
@@ -8,26 +8,27 @@ export default {
   props: {
     noteType: { type: String, required: true },
     components: { type: Array, required: true },
-    theme: { type: String, required: true },
+    pageTheme: { type: String, required: true },
     texturesEnabled: { type: Boolean, required: true },
     columnCount: {}
   },
   data: function () {
     return {
-      classList: [ 
-        'note', 
+      classList: [
         this.noteType,
-        this.theme
+        this.pageTheme
       ]
     };
   },
-  mounted: function () {
+  created: function () {
     if (this.texturesEnabled) {
       this.classList.push('note--textured');
     }
     if (this.columnCount) {
       this.classList.push('note--columns-' + this.columnCount);
     }
+  },
+  mounted: function () {
     for (let i = 0; i < this.components.length; i++) {
       if (i === 0) {
         this.components[i].classList.push('first');

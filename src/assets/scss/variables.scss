@@ -8,6 +8,8 @@ $button-disabled-color: #909090;
 $site-font: Arial;
 $site-font-mono: 'Fira Mono', monospace;
 
+$page-background-color: white;
+
 // THEME - DEFAULT
 $page-footer-number-default-color: #a08d5d;
 $page-heading-default-color: #6a1c0f;
@@ -19,3 +21,13 @@ $page-footer-number-cthulhu-1-color: black;
 
 // THEME - CTHULHU 2
 $page-footer-number-cthulhu-2-color: black;
+
+// PROPS
+$page-prop-handwritten-color: black;
+$page-prop-newspaper-color: black;
+$page-prop-newspaper-background-color: #F4DCC0;
+
+// STAT BLOCKS
+$page-stat-block-cthulhu-header-background-color: #5f4625;
+$page-stat-block-cthulhu-row-odd-background-color: #e0c78833;
+$page-stat-block-cthulhu-row-even-background-color: #e0c78880;
