@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/fonts.scss";
-@import "@/assets/scss/print.scss";
+
 body {
   margin: 0px;
   overflow-x: hidden;
@@ -57,5 +57,35 @@ body {
 
 .splitter {
   height: 100vh !important;
+}
+
+@media print {
+  @page {
+    margin: 0;
+  }
+  body {
+    margin: 0 !important;
+    box-shadow: none !important;
+    overflow-x: auto !important;
+  }
+  .split-editor {
+    display: none !important;
+    height: 0 !important;
+    float: none !important;
+  }
+  .split-document {
+    width: 100% !important;
+    float: none !important;
+  }
+  .gutter.gutter-horizontal {
+    display: none !important;
+    height: 0 !important;
+  }
+  .split {
+    overflow: visible !important;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>

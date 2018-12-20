@@ -3,7 +3,11 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        data: `@import "@/assets/scss/variables.scss";`
+        data: `
+          @import "@/assets/scss/variables.scss";
+          @import "@/assets/scss/mixins.scss";
+          @import "@/assets/scss/functions.scss";
+        `
       }
     }
   },

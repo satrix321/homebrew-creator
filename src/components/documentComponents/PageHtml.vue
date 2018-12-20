@@ -1,5 +1,5 @@
 <template>
-  <div ref="content" :class="classList" class="custom-html">
+  <div ref="content" class="custom-html" :class="classList">
   </div>
 </template>
 
@@ -10,24 +10,27 @@ export default {
   name: 'PageHtml',
   props: {
     html: { type: String, required: true },
-    theme: { type: String, required: true },
+    pageTheme: { type: String, required: true },
     noteTexturesEnabled: { type: Boolean, required: true }
   },
   data: function () {
     return {
       createdComponents: [],
-      classList: []
+      classList: [ this.pageTheme ]
     };
   },
-  mounted: function () {
+  created: function () {
     if (this.noteTexturesEnabled) {
       this.classList.push('custom-html--textured');
     }
+  },
+  mounted: function () {
     this.$refs.content.innerHTML = this.html;
     let markdownBlocks = this.$refs.content.querySelectorAll('[markdown="1"]');
+
     for (let block of markdownBlocks) {
       let result = parser(block.innerHTML, {
-        theme: this.theme, 
+        theme: this.pageTheme, 
         noteTexturesEnabled: this.noteTexturesEnabled
       });
       this.createdComponents = result.createdComponents;
@@ -230,10 +233,5 @@ export default {
       }
     }
   }
-  // &.notes-are-textured > .table-stat {
-  //   &.table-stat-cthulhu > blockquote > table { 
-      
-  //   }
-  // }
 }
 </style>

@@ -1,48 +1,61 @@
 <template>
-  <div class="modal" :class="{'is-visible': visible}">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">
-          {{title}} - {{downloadMode ? 'Download' : ''}}{{uploadMode ? 'Upload' : ''}}
-        </h2>
-        <div style="display: grid; grid-column-gap: 5px; grid-template-columns: auto auto;">
-          <button class="btn btn-right btn-icon" @click="signOut"><i class="fas fa-sign-in-alt"></i></button>
-          <button class="btn btn-right btn-icon" @click="cancel"><i class="fas fa-times"></i></button>
+
+  <div class="filepicker">
+    <modal-item ref="modal">
+
+      <template slot="modal-header">
+        <div class="filepicker__header">
+          <h2>{{title}} - {{downloadMode ? 'Download' : ''}}{{uploadMode ? 'Upload' : ''}}</h2>
+          <button-item float-right is-icon @click="signOut"><i class="fas fa-sign-in-alt"></i></button-item>
+          <button-item float-right is-icon @click="cancel"><i class="fas fa-times"></i></button-item>
         </div>
-      </div>
-      <div class="modal-body">
-        <div class="directory">
-          <button class="btn directory-back" @click="goBack"><i class="fas fa-arrow-up"></i></button>
-          <span class="directory-path">{{path}}</span>
+      </template>
+
+      <template slot="modal-content">
+        <div class="filepicker__directory">
+          <button-item float-right is-icon @click="goBack"><i class="fas fa-arrow-up"></i></button-item>
+          <span>{{path}}</span>
         </div>
-        <div class="filepicker">
-          <div class="filepicker-container">
-            <table class="filepicker-table" ref="fileTable" @click="itemDeselected">
-              <tbody>
-                <tr class="filepicker-row" v-for="file in fileList" :key="file.id" @click="itemSelected($event)" @dblclick="itemOpened($event)">
-                  <td class="filepicker-col-icon"><i :class="{'fas fa-folder': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
-                  <td class="filepicker-col-name">{{file.name}}</td>
-                  <td class="filepicker-col-id">{{file.id}}</td>
-                  <th class="filepicker-col-mime">{{file.mimeType}}</th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="filepicker__container">
+          <table class="filepicker__table" ref="fileTable" @click="itemDeselected">
+            <tbody>
+              <tr class="filepicker__row" v-for="file in fileList" :key="file.id" @click.stop="itemSelected($event)" @dblclick.stop="itemOpened($event)">
+                <td class="filepicker__col-icon"><i :class="{'fas fa-folder': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
+                <td class="filepicker__col-name">{{file.name}}</td>
+                <td class="filepicker__col-id">{{file.id}}</td>
+                <th class="filepicker__col-mime">{{file.mimeType}}</th>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-      <div class="modal-footer">
-        <input v-if="this.uploadMode" ref="fileName" class="input input-file-name">
-        <input v-if="this.uploadMode" class="input input-file-extension" value=".hmd" disabled="disabled">
-        <button class="btn btn-right" @click="ok">OK</button>
-        <button class="btn btn-right" @click="cancel">Cancel</button>
-      </div>
-    </div>
+      </template>
+
+      <template slot="modal-footer">
+        <div class="filepicker__footer">
+          <input-item v-if="this.uploadMode" ref="fileName" class="filepicker__filename"/>
+          <input-item v-if="this.uploadMode" value=".hmd" disabled="disabled" class="filepicker__filetype"/>
+          <button-item float-right @click="ok" class="filepicker__ok-button">OK</button-item>
+          <button-item float-right @click="cancel" class="filepicker__cancel-button">Cancel</button-item>
+        </div>
+      </template>
+
+    </modal-item>
   </div>
+
 </template>
 
 <script>
+import ModalItem from '@/components/ModalItem';
+import ButtonItem from '@/components/ButtonItem';
+import InputItem from '@/components/InputItem';
+
 export default {
-  name: 'TheFilePickerModal',
+  name: 'TheFilePicker',
+  components: {
+    ModalItem,
+    ButtonItem,
+    InputItem
+  },
   props: ['title'],
   data () {
     return {
@@ -82,14 +95,15 @@ export default {
 
         this.path = '/';
         this.visible = true;
+        this.$refs.modal.show();
       } else {
         alert('Storage provider not set!');
       }
     },
     clearSelection: function () {
-      let selectedItem = this.$refs.fileTable.querySelector('tr.is-selected');
+      let selectedItem = this.$refs.fileTable.querySelector('.filepicker__row--is-selected');
       if (selectedItem) {
-        selectedItem.classList.remove('is-selected');
+        selectedItem.classList.remove('filepicker__row--is-selected');
       }
       this.selectedItem = undefined;
     },
@@ -140,6 +154,7 @@ export default {
       this.clearFileName();
       this.pathIdList = [];
       this.visible = false;
+      this.$refs.modal.hide();
     },
     goBack: async function () {
       if (!this.provider) {
@@ -174,13 +189,11 @@ export default {
       }
     },
     itemSelected: function (event) {
-      event.stopPropagation();
       this.clearSelection();
-
       let clickedRow = event.target.parentElement;
-      let selectedId = clickedRow.querySelector('.filepicker-col-id').innerHTML;
+      let selectedId = clickedRow.querySelector('.filepicker__col-id').innerHTML;
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
-      clickedRow.classList.add('is-selected');
+      clickedRow.classList.add('filepicker__row--is-selected');
 
       if (this.uploadMode && this.selectedItem.mimeType !== this.folderMimeType) {
         if (this.selectedItem.name.length > 4 && this.selectedItem.name.substring(this.selectedItem.name.length - 4) === '.' + this.provider.fileExtension) {
@@ -204,7 +217,7 @@ export default {
       }
 
       let clickedRow = event.target.parentElement;
-      let selectedId = clickedRow.querySelector('.filepicker-col-id').innerHTML;
+      let selectedId = clickedRow.querySelector('.filepicker__col-id').innerHTML;
       this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
 
       if (this.selectedItem.mimeType === this.folderMimeType) {
@@ -312,9 +325,86 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/modules/button.scss';
-@import '@/assets/scss/modules/input.scss';
-@import '@/assets/scss/modules/modal.scss';
-@import '@/assets/scss/modules/directory.scss';
-@import '@/assets/scss/modules/filepicker.scss';
+.filepicker {
+  .filepicker__directory {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 10px;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .filepicker__container {
+    height: 450px;
+    overflow-y: scroll;
+  }
+
+  .filepicker__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0; 
+
+    .filepicker__row {
+      vertical-align: middle;
+      height: 30px;
+      user-select: none;
+
+      &.filepicker__row--is-selected {
+        background-color: $button-background-active-color;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $button-background-hover-color;
+      }
+    }
+
+    .filepicker__col-icon {
+      width: 30px;
+      text-align: center;
+
+      .fas.fa-folder {
+        color: rgb(255, 232, 148);
+      }
+    }
+
+    .filepicker__col-id, .filepicker__col-mime {
+      display: none;
+    }
+  }
+
+
+  .filepicker__header {
+    display: grid;
+    grid-column-gap: 5px;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .filepicker__footer {
+    display: grid;
+    grid-template-columns: 60% 5% 10px 1fr 10px 1fr;
+
+    .filepicker__filename {
+      grid-column-start: 1;
+      grid-column-end: 2;
+    }
+
+    .filepicker__filetype {
+      grid-column-start: 2;
+      grid-column-end: 3;
+    }
+
+    .filepicker__ok-button {
+      grid-column-start: 4;
+      grid-column-end: 5;
+    }
+
+    .filepicker__cancel-button {
+      grid-column-start: 6;
+      grid-column-end: 7;
+    }
+  }
+}
 </style>

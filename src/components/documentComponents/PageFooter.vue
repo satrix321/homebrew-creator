@@ -1,126 +1,102 @@
 <template>
-  <div :class="footerClassList" :data-page="pageNumber">
-    <div :class="backgroundClassList"></div>
-    <p :class="pageNumberClassList">{{ pageNumber }}</p>
+  <div class="footer footer--is-textured" :class="classList" :data-page="pageNumber">
+    <div class="footer__background"/>
+    <p class="footer__number">{{ pageNumber }}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'PageFooter',
-  props: ['pageNumber', 'pageTheme'],
+  props: {
+    pageNumber: { type: Number, required: true }, 
+    pageTheme: { type: String, required: true }
+  },
   data: function () {
     return {
-      footerClassList: [
-        'page-footer'
-      ],
-      backgroundClassList: [
-        'is-textured'
-      ],
-      pageNumberClassList: [
-        'page-number'
-      ]
+      classList: [ this.pageTheme ]
     };
   },
   created: function () {
     if (this.pageNumber % 2 === 1) {
-      this.footerClassList.push('is-odd');
+      this.classList.push('footer--is-odd');
     } else {
-      this.footerClassList.push('is-even');
+      this.classList.push('footer--is-even');
     }
-    this.backgroundClassList.push(this.pageTheme);
-    this.pageNumberClassList.push(this.pageTheme);
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.page-footer {
+.footer {
   position: absolute;
   bottom: 0;
   left: 0;
 
-  > .is-textured {
-    position: absolute;
-    width: 21cm;
-    height: 1cm;
-    bottom: 0;
-    left: 0;
-
+  &.footer--is-textured {
     &.theme--default {
-      background-image: url('../../assets/images/footer_01.png'); 
-    }
+      .footer__background {
+        position: absolute;
+        width: 21cm;
+        height: 1cm;
+        bottom: 0;
+        left: 0; 
+        background-image: url('../../assets/images/footer_01.png');
+        background-size: 21cm 1cm;
+      }
 
-    &.theme--cthulhu-1 {
-      
+      &.footer--is-even {
+        .footer__background {
+          transform: scaleX(-1);
+        }
+      }
     }
-
-    &.theme--cthulhu-2 {
-      
-    }
-
-    background-size: 21cm 1cm;
   }
 
-  > .page-number {
+  .footer__number {
     position: absolute;
-    bottom: 0.2cm;
     font-family: 'headers';
-    color: rgb(160, 141, 93);
+    color: $page-footer-number-default-color;
     font-size: 12pt;
-    left: 20.3cm;
+  }
 
-    &.theme--cthulhu-1 {
+  &.theme--default {
+    .footer__number {
+      bottom: 0.2cm;
+    }
+    &.footer--is-odd {
+      .footer__number {
+        left: 20.3cm;
+      }  
+    }
+    &.footer--is-even {
+      .footer__number {
+        left: 0.5cm;
+      }  
+    }
+  }
+
+  &.theme--cthulhu-1 {
+    .footer__number {
       bottom: 0;
       left: 10.5cm;
       -moz-transform: translate(-50%);
       -o-transform: translate(-50%);
       -webkit-transform: translate(-50%);
       transform: translate(-50%);
-      color: black;
+      color: $page-footer-number-cthulhu-1-color;
     }
+  }
 
-    &.theme--cthulhu-2 {
+  &.theme--cthulhu-2 {
+    .footer__number {
       bottom: 0.8cm;
-      left: 10.45cm;
+      left: 10.5cm;
       -moz-transform: translate(-50%);
       -o-transform: translate(-50%);
       -webkit-transform: translate(-50%);
       transform: translate(-50%);
-      color: black;
-    }
-  }
-
-  &.is-even {
-    > .is-textured {
-      -moz-transform: scaleX(-1);
-      -o-transform: scaleX(-1);
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
-    }
-
-    > .page-number {
-      left: 0.5cm;
-
-      &.theme--cthulhu-1 {
-        bottom: 0;
-        left: 10.5cm;
-        -moz-transform: translate(-50%);
-        -o-transform: translate(-50%);
-        -webkit-transform: translate(-50%);
-        transform: translate(-50%);
-        color: black;
-      }
-
-      &.theme--cthulhu-2 {
-        bottom: 0.8cm;
-        left: 10.5cm;
-        -moz-transform: translate(-50%);
-        -o-transform: translate(-50%);
-        -webkit-transform: translate(-50%);
-        transform: translate(-50%);
-        color: black;
-      }
+      color: $page-footer-number-cthulhu-2-color;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="document-pages-spacer"></div>
+  <div class="spacer"></div>
 </template>
 
 <script>
@@ -9,8 +9,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.document-pages-spacer {
+.spacer {
   width: 21cm;
   height: 50px;
+}
+
+@media print {
+  .spacer {
+    display: none !important;
+    height: 0 !important;
+  }
 }
 </style>

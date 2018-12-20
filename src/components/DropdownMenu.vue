@@ -34,7 +34,7 @@ export default {
   .dropdown__content {
     display: none;
     position: absolute;
-    background-color: $toolbar-backgroundColor;
+    background-color: $toolbar-background-color;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
     top: 30px;

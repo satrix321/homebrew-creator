@@ -35,7 +35,7 @@
     <codemirror ref="editor" :options="codeMirrorOptions" 
       @input="codeChange" 
       @cursorActivity="cursorPositionChange"/>
-    <the-file-picker-modal ref="filePicker" title="File Picker" 
+    <the-file-picker ref="filePicker" title="File Picker" 
       @downloadFile="downloadFileUsingProvider" 
       @uploadFile="uploadFileUsingProvider"
       @signOut="signOutFromProvider"/>
@@ -46,7 +46,7 @@
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
 import TheEditorToolbar from '@/components/TheEditorToolbar';
-import TheFilePickerModal from '@/components/TheFilePickerModal';
+import TheFilePicker from '@/components/TheFilePicker';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -69,7 +69,7 @@ export default {
   components: {
     codemirror,
     TheEditorToolbar,
-    TheFilePickerModal
+    TheFilePicker
   },
   data () {
     return {
@@ -426,7 +426,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/modules/codemirror.scss";
+@import "@/assets/scss/codemirror.scss";
 .progress {
   display: none;
   position: fixed;

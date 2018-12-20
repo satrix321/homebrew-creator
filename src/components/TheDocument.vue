@@ -4,8 +4,8 @@
       @zoomChanged="zoomChanged"
       @scrollToCursor="scrollToCursor"
       @getPDF="getPDF"/>
-    <div ref="pagesContainer" class="document-pages-container">
-      <div @change="checkOverflow" ref="pages" class="document-pages">
+    <div ref="pagesContainer" class="document__pages-container">
+      <div @change="checkOverflow" ref="pages" class="document__pages">
         <spacer-item/>
         <page-item v-for="page in pages" :key="page.key"
           :pageNumber="page.pageNumber"
@@ -178,11 +178,11 @@ export default {
       let pagesContainer = this.$refs.pagesContainer;
       if (pagesContainer) {
         if (pagesContainer.clientWidth < pagesContainer.scrollWidth) {
-          if (!pagesContainer.classList.contains('document-overflow-fix')) {
-            pagesContainer.classList.add('document-overflow-fix');
+          if (!pagesContainer.classList.contains('document__pages-container--overflow-fix')) {
+            pagesContainer.classList.add('document__pages-container--overflow-fix');
           }
-        } else if (pagesContainer.classList.contains('document-overflow-fix')) {
-          pagesContainer.classList.remove('document-overflow-fix');
+        } else if (pagesContainer.classList.contains('document__pages-container--overflow-fix')) {
+          pagesContainer.classList.remove('document__pages-container--overflow-fix');
         }
       }
     },
@@ -201,7 +201,7 @@ export default {
   height: 100%;
   overflow: hidden;
 
-  .document-pages-container {
+  .document__pages-container {
     overflow-y: auto;
     height: calc(100vh - 30px);
     width: 100%;
@@ -209,17 +209,28 @@ export default {
     justify-content: center;
     background-color: rgb(204, 204, 204);
 
-    &.document-overflow-fix {
+    &.document__pages-container--overflow-fix {
       display: block;
 
-      .document-pages {
+      .document__pages {
         transform-origin: top left;
       }
     }
 
-    .document-pages {
+    .document__pages {
       transform-origin: top center;
       max-width: 21cm;
+    }
+  }
+}
+
+@media print {
+  .document {
+    overflow: visible !important;
+
+    .document__pages-container {
+      display: block !important;
+      overflow-y: visible !important;
     }
   }
 }

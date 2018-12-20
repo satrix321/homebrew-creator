@@ -65,7 +65,7 @@ let parse = function (markdown, options) {
         let heading = new PageHeadingClass({
           propsData: { 
             depth: token.depth, 
-            theme: options.theme,
+            pageTheme: options.theme,
             isTitlePage: options.isTitlePage
           }
         });
@@ -216,7 +216,7 @@ let parse = function (markdown, options) {
         let htmlBlock = new PageHtmlClass({
           propsData: {
             html: token.text,
-            theme: options.theme,
+            pageTheme: options.theme,
             noteTexturesEnabled: options.noteTexturesEnabled
           }
         });

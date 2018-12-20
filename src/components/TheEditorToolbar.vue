@@ -148,9 +148,16 @@ export default {
 .toolbar {
   height: 30px;
   width: 100%;
-  background-color: $toolbar-backgroundColor;
+  background-color: $toolbar-background-color;
   overflow-x: auto;
   overflow-y: hidden;
   clear: both;
+}
+
+@media print {
+  .toolbar {
+    display: none !important;
+    height: 0 !important;
+  }
 }
 </style>

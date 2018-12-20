@@ -28,14 +28,14 @@ export default {
   border: 0;
   padding: 0 8px 0 8px;
   color: white;
-  background-color: $btn-backgroundColor;
+  background-color: $button-background-color;
   outline: none;
-  font-family: $site-monoFont;
+  font-family: $site-font-mono;
   font-size: 9pt;
   float: left;
 
   &:hover {
-    background-color: $btn-backgroundColorHover;
+    background-color: $button-background-hover-color;
     cursor: pointer;
   }
 
@@ -44,22 +44,22 @@ export default {
   }
 
   &:active {
-    background-color: $btn-backgroundColorActive;
+    background-color: $button-background-active-color;
   }
 
   &:disabled {
-    color: $btn-colorDisabled;
+    color: $button-disabled-color;
 
     &:hover {
-      background-color: $btn-backgroundColor;
+      background-color: $button-background-color;
     }
   }
 
   &.button--is-clicked {
-    background-color: $btn-backgroundColorClicked;
+    background-color: $button-background-clicked-color;
 
     &:hover {
-      background-color: $btn-backgroundColorHover;
+      background-color: $button-background-hover-color;
     }
   }
 

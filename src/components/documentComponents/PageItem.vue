@@ -189,4 +189,16 @@ export default {
     height: 100%;
   }
 }
+
+@media print {
+  .page {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    margin: 0 !important;
+    position: relative !important;
+    box-shadow: none !important;
+    page-break-after: always !important;
+    overflow-x: auto !important;
+  }
+}
 </style>

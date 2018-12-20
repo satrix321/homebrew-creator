@@ -4,7 +4,7 @@
       <div class="modal__header">
         <slot name="modal-header"></slot>
       </div>
-      <div class="modal__content">
+      <div class="modal__body">
         <slot name="modal-content"></slot>
       </div>
       <div class="modal__footer">
@@ -30,8 +30,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'button';
-
 .modal {
   display: none;
   position: fixed;
@@ -42,7 +40,7 @@ export default {
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
-  font-family: $site-monoFont;
+  font-family: $site-font-mono;
   animation-name: modalshow;
   animation-duration: 0.4s;
 
@@ -74,7 +72,7 @@ export default {
 
     .modal__header {
       padding: 2px 16px;
-      background-color: $toolbar-backgroundColor;
+      background-color: $toolbar-background-color;
       color: white;
       display: flex;
       align-items: center;
@@ -89,7 +87,7 @@ export default {
 
     .modal__footer {
       padding: 10px;
-      background-color: $toolbar-backgroundColor;
+      background-color: $toolbar-background-color;
       color: white;
 
       &::after {
