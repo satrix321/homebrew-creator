@@ -39,13 +39,13 @@ export default {
       let output = [];
       for (let header of this.headers) {
         let outputHeader = header;
-        outputHeader = outputHeader.replace(/(?<!\*)\*([^\s*].*?[^\s*]|[^\s*])\*(?!\*)/g, function (fullMatch, group1) {
+        outputHeader = outputHeader.replace(/(?:(?!\*).|^)\*([^\s*].*?[^\s*]|[^\s*])\*(?!\*)/g, function (fullMatch, group1) {
           return '<em>' + group1 + '</em>';
         });
-        outputHeader = outputHeader.replace(/(?<!\*)\*\*([^\s*].*?[^\s*]|[^\s*])\*\*(?!\*)/g, function (fullMatch, group1) {
+        outputHeader = outputHeader.replace(/(?:(?!\*).|^)\*\*([^\s*].*?[^\s*]|[^\s*])\*\*(?!\*)/g, function (fullMatch, group1) {
           return '<strong>' + group1 + '</strong>';
         });
-        outputHeader = outputHeader.replace(/(?<!\*)\*\*\*([^\s*].*?[^\s*]|[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1) {
+        outputHeader = outputHeader.replace(/(?:(?!\*).|^)\*\*\*([^\s*].*?[^\s*]|[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1) {
           return '<strong><em>' + group1 + '</em></strong>';
         });
         output.push(outputHeader);
@@ -58,13 +58,13 @@ export default {
         let processedRow = [];
         for (let cell of row) {
           let processedCell = cell;
-          processedCell = processedCell.replace(/(?<!\*)\*([^\s*].*?[^\s*])\*(?!\*)/g, function (fullMatch, group1) {
+          processedCell = processedCell.replace(/(?:(?!\*).|^)\*([^\s*].*?[^\s*])\*(?!\*)/g, function (fullMatch, group1) {
             return '<em>' + group1 + '</em>';
           });
-          processedCell = processedCell.replace(/(?<!\*)\*\*([^\s*].*?[^\s*])\*\*(?!\*)/g, function (fullMatch, group1) {
+          processedCell = processedCell.replace(/(?:(?!\*).|^)\*\*([^\s*].*?[^\s*])\*\*(?!\*)/g, function (fullMatch, group1) {
             return '<strong>' + group1 + '</strong>';
           });
-          processedCell = processedCell.replace(/(?<!\*)\*\*\*([^\s*].*?[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1) {
+          processedCell = processedCell.replace(/(?:(?!\*).|^)\*\*\*([^\s*].*?[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1) {
             return '<strong><em>' + group1 + '</em></strong>';
           });
           processedRow.push(processedCell);

@@ -18,13 +18,13 @@ export default {
   computed: {
     processedText: function () {
       let output = this.text;
-      output = output.replace(/(?<!\*)\*([^\s*].*?[^\s*]|[^\s*])\*(?!\*)/g, function (fullMatch, group1) {
+      output = output.replace(/(?:(?!\*).|^)\*([^\s*].*?[^\s*]|[^\s*])\*(?!\*)/g, function (fullMatch, group1) {
         return '<em>' + group1 + '</em>';
       });
-      output = output.replace(/(?<!\*)\*\*([^\s*].*?[^\s*]|[^\s*])\*\*(?!\*)/g, function (fullMatch, group1) {
+      output = output.replace(/(?:(?!\*).|^)\*\*([^\s*].*?[^\s*]|[^\s*])\*\*(?!\*)/g, function (fullMatch, group1) {
         return '<strong>' + group1 + '</strong>';
       });
-      output = output.replace(/(?<!\*)\*\*\*([^\s*].*?[^\s*]|[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1) {
+      output = output.replace(/(?:(?!\*).|^)\*\*\*([^\s*].*?[^\s*]|[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1) {
         return '<strong><em>' + group1 + '</em></strong>';
       });
       return output;
