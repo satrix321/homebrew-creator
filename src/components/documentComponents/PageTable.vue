@@ -111,7 +111,7 @@ table {
   }
 
   border-spacing: 0px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   thead {
     th {
       padding: 3px;

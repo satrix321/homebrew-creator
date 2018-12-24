@@ -93,12 +93,16 @@ export default {
     }
 
     &.prop--newspaper {
-      h1 {
+      h1, h2, h3, h4, h5, h6 {
+        color: $page-prop-newspaper-color;
         font-family: 'newspaper-headers';
+        white-space: initial;
+      }
+      
+      h1 {
         text-align: center;
         font-size: 18pt;
         text-transform: uppercase;
-        color: $page-prop-newspaper-color;
       }
 
       p {
@@ -227,7 +231,7 @@ export default {
             font-size: 12pt;
             font-family: 'regular-text';
             text-align: left;
-            color: #DED7CC;
+            color: $page-stat-block-cthulhu-header-color;
             padding: 0;
           }
 

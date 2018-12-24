@@ -40,6 +40,7 @@ p {
   line-height: 1.25;
   text-align: justify;
   white-space: normal;
+  margin-bottom: 10px;
 }
 
 .list-item,

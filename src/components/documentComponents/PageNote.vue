@@ -59,6 +59,7 @@ export default {
       border-image-outset: 9px 0;
       box-shadow: 1px 4px 14px grey;
       margin-bottom: 20px;
+      margin-top: 20px;
     }
     &.theme--cthulhu-1 {
       &.note--is-textured {
@@ -114,6 +115,8 @@ export default {
       border-width: 7px;
       border-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAMAAADG+c2+AAAAM1BMVEUAAAAAAAAAAAAkAAA1GwA0GgA5GgA5GwA4HgA7HgA5HgA7HgA7HwA7HgA8HgA7HgA8HwDn6RpAAAAAEHRSTlMAAQcHMDExQ1ZW1dXY3t7+02zZCAAAAKNJREFUWMPt2LEOwyAMBNCkSXGpKfb/f20G3AGUiWOJdNlueYrt6di2J3xHrmZF9mVCdnd3T/NgCO+ItUWdB0P4RrQWfR4chOVggUcu/cgCH0X6o+ynuivg3QjIAm8FggQJEiRIkCBBggQJEoTApO56An15EFIrVgJ4vaAtlnlwEKKbGrLATlgOxg9XeORfv9IMH+Xzb7tSzGo+gL7chNcjXpUulIwXVrjWS+0AAAAASUVORK5CYII=") 12 round;
       border-image-outset: 4px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
     &.theme--cthulhu-1 {
       &.note--is-textured {
@@ -190,6 +193,7 @@ export default {
       border-image-outset: 9px 0;
       box-shadow: 1px 4px 14px grey;
       margin-bottom: 20px;
+      margin-top: 20px;
     }
     &.theme--cthulhu-1 {
       &.note--is-textured {
@@ -231,20 +235,6 @@ export default {
       border-radius: 25px;
       border: none;
       padding: 0 20px;
-    }
-  }
-}
-
-.break {
-  ~ .note {
-    &.note--primary.theme--default {
-      margin-top: 10px;  
-    }
-    &.note--secondary.theme--default {
-      margin-top: 4px;
-    }
-    &.note--tertiary.theme--default {
-      margin-top: 10px;  
     }
   }
 }
