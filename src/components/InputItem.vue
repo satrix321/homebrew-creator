@@ -1,11 +1,16 @@
 <template>
-  <input class="input">
+  <input class="input" v-model="value">
 </template>
 
 <script>
 
 export default {
   name: 'InputItem',
+  data: function () {
+    return {
+      value: ''
+    };
+  }
 };
 </script>
 
