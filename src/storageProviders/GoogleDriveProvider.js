@@ -37,27 +37,24 @@ export default class GoogleDriveProvider extends StorageProvider {
   }
 
   // Initializes the API client library and sets up sign-in state listeners.
-  initClient() {
-    gapi.client.init({
+  async initClient() {
+    await gapi.client.init({
       apiKey: this.apiKey,
       clientId: this.clientId,
       discoveryDocs: this.discoveryDocs,
       scope: this.scopes
-    })
-    .then(() => {
-      gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus.bind(this));
     });
+    
+    gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus.bind(this));
   }
 
   updateSigninStatus(isSignedIn) {
     this.isSignedIn = isSignedIn;
   }
 
-  authenticate() {
-    return gapi.auth2.getAuthInstance().signIn()
-      .then(() => {
-        this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-      });
+  async authenticate() {
+    await gapi.auth2.getAuthInstance().signIn();
+    this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
   }
 
   signOut() {
@@ -85,23 +82,21 @@ export default class GoogleDriveProvider extends StorageProvider {
   }
 
   async uploadFile(name, data, parentId = 'root') {
-    let fileId;
-    await gapi.client.drive.files.create({
+    let response = await gapi.client.drive.files.create({
       resource: {
         'name': name,
         'mimeType': 'application/octet-stream',
         'parents': [parentId]
       },
       fields: 'id'
-    }).then((response) => {
-      switch (response.status) {
-        case 200:
-          fileId = response.result.id;
-          break;
-        default:
-          throw 'Error creating the file, ' + response;
-      }
     });
+    
+    let fileId;
+    if (response && response.status === 200) {
+      fileId = response.result.id;
+    } else {
+      throw 'Error creating the file, ' + response;
+    }
 
     return this.updateFile(data, fileId);
   }
