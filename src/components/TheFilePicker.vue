@@ -83,22 +83,21 @@ export default {
       this.uploadMode = true;
     },
     show: async function () {
-      if (this.provider) {
-
-        await this.provider.listFiles().then((response) => {
-          if (response.status === 200) {
-            this.fileList = response.result.files;
-          } else {
-            alert(response);
-          }
-        });
-
-        this.path = '/';
-        this.visible = true;
-        this.$refs.modal.show();
-      } else {
+      if (!this.provider) {
         alert('Storage provider not set!');
+        return;
       }
+
+      let response = await this.provider.listFiles();  
+      if (response && response.status === 200) {
+        this.fileList = response.result.files;
+      } else {
+        alert(response);
+      }
+
+      this.path = '/';
+      this.visible = true;
+      this.$refs.modal.show();
     },
     clearSelection: function () {
       let selectedItem = this.$refs.fileTable.querySelector('.filepicker__row--is-selected');
@@ -162,31 +161,31 @@ export default {
         return;
       }
 
-      if (this.path !== '/') {
-        let parentId = undefined;
-
-        if (this.pathIdList.length > 0) {
-          this.pathIdList.pop();
-        }
-        
-        if (this.pathIdList.length == 0) {
-          parentId = 'root';
-        } else {
-          parentId = this.pathIdList[this.pathIdList.length - 1];
-        }
-
-        await this.provider.listFiles(parentId).then((response) => {
-          if (response.status === 200) {
-            this.fileList = response.result.files;
-          } else {
-            alert(response);
-          }
-        });
-
-        this.path = this.path.substring(0, this.path.length - 1);
-        this.path = this.path.substring(0, this.path.lastIndexOf('/'));
-        this.path += '/';
+      if (this.path === '/') {
+        return;
       }
+
+      if (this.pathIdList.length > 0) {
+        this.pathIdList.pop();
+      }
+
+      let parentId;
+      if (this.pathIdList.length == 0) {
+        parentId = 'root';
+      } else {
+        parentId = this.pathIdList[this.pathIdList.length - 1];
+      }
+
+      let response = await this.provider.listFiles(parentId);
+      if (response && response.status === 200) {
+        this.fileList = response.result.files;
+      } else {
+        alert(response);
+      }
+
+      this.path = this.path.substring(0, this.path.length - 1);
+      this.path = this.path.substring(0, this.path.lastIndexOf('/'));
+      this.path += '/';
     },
     itemSelected: function (event) {
       this.clearSelection();
@@ -208,7 +207,7 @@ export default {
     itemDeselected: function () {
       this.clearSelection();
     },
-    itemOpened: async function (event) {
+    itemOpened: function (event) {
       event.stopPropagation();
 
       if (!this.provider) {
@@ -218,32 +217,36 @@ export default {
 
       let clickedRow = event.target.parentElement;
       let selectedId = clickedRow.querySelector('.filepicker__col-id').innerHTML;
-      this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
+      this.selectedItem = this.fileList.find((element) => {
+        return element.id === selectedId;
+      });
 
       if (this.selectedItem.mimeType === this.folderMimeType) {
         this.openFolder();
+      } else if (this.downloadMode) {
+        this.downloadFile();
+        this.close();
       } else {
-        if (this.downloadMode) {
-          this.downloadFile();
-          this.close();
-        } else {
-          this.uploadFile();
-          this.close();
-        }
+        this.uploadFile();
+        this.close();
       }
     },
     openFolder: async function () {
+      if (!this.provider) {
+        alert('Storage provider not set!');
+        return;
+      }
+      
       this.pathIdList.push(this.selectedItem.id);
 
-      await this.provider.listFiles(this.selectedItem.id).then((response) => {
-        if (response.status === 200) {
-          this.path += this.selectedItem.name + '/';
-          this.selectedItem = undefined;
-          this.fileList = response.result.files;
-        } else {
-          alert(response);
-        }
-      });
+      let response = await this.provider.listFiles(this.selectedItem.id);
+      if (response && response.status === 200) {
+        this.path += this.selectedItem.name + '/';
+        this.selectedItem = undefined;
+        this.fileList = response.result.files;
+      } else {
+        alert(response);
+      }
     },
     downloadFile: function () {
       if (!this.provider) {
