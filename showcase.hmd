@@ -1,0 +1,139 @@
+\page[title]
+
+<div style="height: 350px;"></div>
+
+# Homebrew Creator
+
+##### A mardkwon RPG editor
+
+
+\page[columns-2]
+
+A markdown editor for creating homebrew for various RPG systems.
+
+## Pages
+
+* Regular Pages
+* * Full width pages
+* Two Column Pages
+* Three Column Pages
+* Title Pages
+
+## Notes
+
+> ##### Example primary note
+>
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor nibh. Maecenas quis placerat purus. Nulla facilisi. Curabitur in ipsum dolor.
+
+>> ##### Example secondary note
+>>
+>> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor nibh. Maecenas quis placerat purus. Nulla facilisi. Curabitur in ipsum dolor.
+
+>>> ##### Example tertiary note
+>>>
+>>> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor nibh. Maecenas quis placerat purus. Nulla facilisi. Curabitur in ipsum dolor.
+
+## Tables
+
+|Align Left|Align Center|Align Right|
+|-|:-:|-:|
+|text|text|text|
+|*italic*|*italic*|*italic*|
+|**bold**|**bold**|**bold**|
+|***bold italic***|***bold italic***|***bold italic***|
+
+```
+```
+
+## Props
+
+### Newspaper Note
+
+<pre markdown="1" class="prop prop--newspaper">
+# Headline
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor nibh. Maecenas quis placerat purus. Nulla facilisi. Curabitur in ipsum dolor. Nam malesuada magna id lobortis sodales. Pellentesque quis diam ipsum. Nullam laoreet mauris non luctus pellentesque. Aliquam quis malesuada libero, sed mattis turpis. Proin nec mollis justo. Cras sit amet faucibus lacus. Vivamus ac magna tincidunt, suscipit eros in, pellentesque sapien. Integer rhoncus, mi ut cursus sodales, nulla ex fringilla mi, id vulputate nulla neque ac mi. Sed volutpat placerat malesuada.
+</pre>
+
+### Handwritten
+
+<pre markdown="1" class="prop prop--handwritten">
+Dear John Doe,
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor nibh. Maecenas quis placerat purus. Nulla facilisi. Curabitur in ipsum dolor. Nam malesuada magna id lobortis sodales. Pellentesque quis diam ipsum. Nullam laoreet mauris non luctus pellentesque. Aliquam quis malesuada libero, sed mattis turpis. Proin nec mollis justo. Cras sit amet faucibus lacus. Vivamus ac magna tincidunt, suscipit eros in, pellentesque sapien. Integer rhoncus, mi ut cursus sodales, nulla ex fringilla mi, id vulputate nulla neque ac mi. Sed volutpat placerat malesuada.
+
+<p style="float: right;">John Doe</p>
+</pre>
+
+\page[columns-2]
+
+## Images
+
+### Relative Images
+
+### Absolute Images
+
+### Full Page Images
+
+## Stat Blocks
+
+### Call of Cthulhu
+
+<pre markdown="1" class="stat-block stat-block--cthulhu">
+|JOSH WINSCOTT, *damned by his legacy*|
+|-|
+
+||||||
+|-|-|-|-|-|
+|**STR** 00|**CON** 00|**SIZ** 00|**DEX** 00|**INT** 00|
+|**APP** 00|**POW** 00|**EDU** 00|**SAN** 00|**HP** 00|
+|**DB** 0|**Build** 0|**Move** 0|**MP** 00|-|
+
+|*Combat*||
+|-|-|
+|Knife|00% (00/00), damage **0**|
+|Dodge|00% (00/00)|
+
+|*Skills*|
+|-|
+|Climb 00%, Credit Rating 00%, Fast Talk 00%, History 00%, Jump 00%, Library Use 00%, Occult 00%.|
+|**Languages:** English 00%, French 00%.|
+</pre>
+
+
+## Fonts
+
+* Title
+* Headers
+* Note Headers
+* Regular Text
+* Newspaper Headers
+* Newspaper Text
+* Handwriting
+
+## Spacings
+
+### Vertical
+
+> 1cm spacing below.
+>
+> <div style="height: 1cm;"/>
+>
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+\page[columns-2]
+
+## Column Breaks
+
+Before column break.
+
+```
+```
+
+After column break.
+
+## Themes
+
+Currently we're supporting multiple themes
+
+\page[columns-2]
