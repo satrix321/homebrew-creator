@@ -28,7 +28,7 @@
         <i class="fas fa-table"></i> Tables
       </template>
       <template slot="dropdown-content">
-        <dropdown-item @click="insertRegularTable"><i class="fas fa-table"></i> Regular Table</dropdown-item>
+        <dropdown-item @click="insertRegularTable"><i class="fas fa-table"></i> Table</dropdown-item>
       </template>
     </dropdown-menu>
 
@@ -37,7 +37,7 @@
         <i class="fas fa-file"></i> Pages
       </template>
       <template slot="dropdown-content">
-        <dropdown-item @click="insertRegularPage"><i class="fas fa-file"></i> Regular Page</dropdown-item>
+        <dropdown-item @click="insertRegularPage"><i class="fas fa-file"></i> Page</dropdown-item>
         <dropdown-item @click="insertTwoColumnPage"><i class="fas fa-file"></i> Two Column Page</dropdown-item>
         <dropdown-item @click="insertThreeColumnPage"><i class="fas fa-file"></i> Three Column Page</dropdown-item>
         <dropdown-item @click="insertTitlePage"><i class="fas fa-file"></i> Title Page</dropdown-item>

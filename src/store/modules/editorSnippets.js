@@ -6,14 +6,14 @@ const editorSnippets = {
     secondaryNoteSnippet: '>> ##### Header\n>>\n>> Example text.\n',
     tertiaryNoteSnippet: '>>> ##### Header\n>>>\n>>> Example text.\n',
     newspaperNoteSnippet: '<pre markdown="1" class="prop prop--newspaper">\n# headline\n\narticle_content\n</pre>\n',
-    handwrittenNoteSnippet: '<pre markdown="1" class="prop prop--handwritten">\nHandwritten note\n\n<p style="float: right;">John Doe</p>\n<div style="clear: both;"/>\n</pre>\n',
+    handwrittenNoteSnippet: '<pre markdown="1" class="prop prop--handwritten">\nHandwritten note\n\n<p style="float: right;">John Doe</p>\n</pre>\n',
     phbNoteSnippet: '<pre markdown="1" class="note-phb">\n##### header\n\nnote_content\n</pre>\n',
 
     cthulhuStatTableSnippet: '<pre markdown="1" class="stat-block stat-block--cthulhu">\n|JOSH WINSCOTT, *damned by his legacy*|\n|-|\n\n||||||\n|-|-|-|-|-|\n|**STR** 00|**CON** 00|**SIZ** 00|**DEX** 00|**INT** 00|\n|**APP** 00|**POW** 00|**EDU** 00|**SAN** 00|**HP** 00|\n|**DB** 0|**Build** 0|**Move** 0|**MP** 00|-|\n\n|*Combat*||\n|-|-|\n|Knife|00% (00/00), damage **0**|\n|Dodge|00% (00/00)|\n\n|*Skills*|\n|-|\n|Climb 00%, Credit Rating 00%, Fast Talk 00%, History 00%, Jump 00%, Library Use 00%, Occult 00%.|\n|**Languages:** English 00%, French 00%.|\n</pre>\n',
 
-    regularTableSnippet: '|Header 1|Header 2|Header 3|\n|-|:-:|-:|\n|aaa|bbb|ccc|\n|aaa|bbb|ccc|\n',
+    tableSnippet: '|Header 1|Header 2|Header 3|\n|-|:-:|-:|\n|aaa|bbb|ccc|\n|aaa|bbb|ccc|\n',
 
-    regularPageSnippet: '\\page\n',
+    pageSnippet: '\\page\n',
     twoColumnPageSnippet: '\\page[columns-2]\n',
     threeColumnPageSnippet: '\\page[columns-3]\n',
     titlePageSnippet: '\\page[title]\n\n<div style="height: 350px;"></div>\n\n# Title\n\n##### Description\n',
@@ -45,9 +45,9 @@ const editorSnippets = {
 
     cthulhuStatTableSnippet: state => state.cthulhuStatTableSnippet,
 
-    regularTableSnippet: state => state.regularTableSnippet,
+    tableSnippet: state => state.tableSnippet,
 
-    regularPageSnippet: state => state.regularPageSnippet,
+    pageSnippet: state => state.pageSnippet,
     twoColumnPageSnippet: state => state.twoColumnPageSnippet,
     threeColumnPageSnippet: state => state.threeColumnPageSnippet,
     titlePageSnippet: state => state.titlePageSnippet,

@@ -113,9 +113,9 @@ export default {
 
       cthulhuStatTableSnippet: 'editorSnippets/cthulhuStatTableSnippet',
 
-      regularTableSnippet: 'editorSnippets/regularTableSnippet',
+      tableSnippet: 'editorSnippets/tableSnippet',
 
-      regularPageSnippet: 'editorSnippets/regularPageSnippet',
+      pageSnippet: 'editorSnippets/pageSnippet',
       twoColumnPageSnippet: 'editorSnippets/twoColumnPageSnippet',
       threeColumnPageSnippet: 'editorSnippets/threeColumnPageSnippet',
       titlePageSnippet: 'editorSnippets/titlePageSnippet',
@@ -207,8 +207,8 @@ export default {
     insertHandwrittenNote: function () { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
     insertPhbNote: function () { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
     insertCocStatBlock: function () { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
-    insertRegularTable: function () { this.insertData(this.regularTableSnippet, this.getCursorPosition()); },
-    insertRegularPage: function () { this.insertData(this.regularPageSnippet, this.getCursorPosition()); },
+    insertRegularTable: function () { this.insertData(this.tableSnippet, this.getCursorPosition()); },
+    insertRegularPage: function () { this.insertData(this.pageSnippet, this.getCursorPosition()); },
     insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
     insertThreeColumnPage: function () { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },
     insertTitlePage: function () { this.insertData(this.titlePageSnippet, this.getCursorPosition()); },
