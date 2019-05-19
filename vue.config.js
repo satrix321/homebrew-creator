@@ -17,7 +17,7 @@ module.exports = {
   devServer: {
     port: 8080
   },
-  baseUrl: process.env.NODE_ENV === 'production'
+  publicPath: process.env.NODE_ENV === 'production'
     ? '/HomebrewCreator/'
     : '/'
 }
