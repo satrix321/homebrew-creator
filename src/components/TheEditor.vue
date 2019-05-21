@@ -163,6 +163,31 @@ export default {
     });
   },
   methods: {
+    insertPrimaryNote: function () { this.insertData(this.primaryNoteSnippet, this.getCursorPosition()); },
+    insertSecondaryNote: function () { this.insertData(this.secondaryNoteSnippet, this.getCursorPosition()); },
+    insertTertiaryNote: function () { this.insertData(this.tertiaryNoteSnippet, this.getCursorPosition()); },
+    insertNewspaperNote: function () { this.insertData(this.newspaperNoteSnippet, this.getCursorPosition()); },
+    insertHandwrittenNote: function () { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
+    insertPhbNote: function () { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
+    insertCocStatBlock: function () { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
+    insertRegularTable: function () { this.insertData(this.tableSnippet, this.getCursorPosition()); },
+    insertRegularPage: function () { this.insertData(this.pageSnippet, this.getCursorPosition()); },
+    insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
+    insertThreeColumnPage: function () { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },
+    insertTitlePage: function () { this.insertData(this.titlePageSnippet, this.getCursorPosition()); },
+    insertRelativeImage: function () { this.insertData(this.relativeImageSnippet, this.getCursorPosition()); },
+    insertAbsoluteImage: function () { this.insertData(this.absoluteImageSnippet, this.getCursorPosition()); },
+    insertFullPageImage: function () { this.insertData(this.fullPageImageSnippet, this.getCursorPosition()); },
+    insertColumnBreak: function () { this.insertData(this.columnBreakSnippet, this.getCursorPosition()); },
+    insertWideBlock: function () { this.insertData(this.wideBlockSnippet, this.getCursorPosition()); },
+    insertVerticalSpacing: function () { this.insertData(this.verticalSpacingSnippet, this.getCursorPosition()); },
+    insertCustomTitlePageFont: function () { this.insertData(this.customTitlePageFontSnippet, this.getCursorPosition()); },
+    insertCustomHeadersFont: function () { this.insertData(this.customHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomNoteHeadersFont: function () { this.insertData(this.customNoteHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomRegularTextFont: function () { this.insertData(this.customRegularTextFontSnippet, this.getCursorPosition()); },
+    insertCustomNewspaperHeadersFont: function () { this.insertData(this.customNewspaperHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomNewspaperTextFont: function () { this.insertData(this.customNewspaperTextFontSnippet, this.getCursorPosition()); },
+    insertCustomHandwritingFont: function () { this.insertData(this.customHandwritingFontSnippet, this.getCursorPosition()); },
     codeChange: _.debounce(function (rawCode) {
       let pageBreakIndexes = [];
       let search = this.codeMirror.getSearchCursor('\\page');
@@ -200,31 +225,6 @@ export default {
     insertData: function (data, position) {
       this.codeMirror.getDoc().replaceRange(data, position);
     },
-    insertPrimaryNote: function () { this.insertData(this.primaryNoteSnippet, this.getCursorPosition()); },
-    insertSecondaryNote: function () { this.insertData(this.secondaryNoteSnippet, this.getCursorPosition()); },
-    insertTertiaryNote: function () { this.insertData(this.tertiaryNoteSnippet, this.getCursorPosition()); },
-    insertNewspaperNote: function () { this.insertData(this.newspaperNoteSnippet, this.getCursorPosition()); },
-    insertHandwrittenNote: function () { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
-    insertPhbNote: function () { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
-    insertCocStatBlock: function () { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
-    insertRegularTable: function () { this.insertData(this.tableSnippet, this.getCursorPosition()); },
-    insertRegularPage: function () { this.insertData(this.pageSnippet, this.getCursorPosition()); },
-    insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
-    insertThreeColumnPage: function () { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },
-    insertTitlePage: function () { this.insertData(this.titlePageSnippet, this.getCursorPosition()); },
-    insertRelativeImage: function () { this.insertData(this.relativeImageSnippet, this.getCursorPosition()); },
-    insertAbsoluteImage: function () { this.insertData(this.absoluteImageSnippet, this.getCursorPosition()); },
-    insertFullPageImage: function () { this.insertData(this.fullPageImageSnippet, this.getCursorPosition()); },
-    insertColumnBreak: function () { this.insertData(this.columnBreakSnippet, this.getCursorPosition()); },
-    insertWideBlock: function () { this.insertData(this.wideBlockSnippet, this.getCursorPosition()); },
-    insertVerticalSpacing: function () { this.insertData(this.verticalSpacingSnippet, this.getCursorPosition()); },
-    insertCustomTitlePageFont: function () { this.insertData(this.customTitlePageFontSnippet, this.getCursorPosition()); },
-    insertCustomHeadersFont: function () { this.insertData(this.customHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomNoteHeadersFont: function () { this.insertData(this.customNoteHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomRegularTextFont: function () { this.insertData(this.customRegularTextFontSnippet, this.getCursorPosition()); },
-    insertCustomNewspaperHeadersFont: function () { this.insertData(this.customNewspaperHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomNewspaperTextFont: function () { this.insertData(this.customNewspaperTextFontSnippet, this.getCursorPosition()); },
-    insertCustomHandwritingFont: function () { this.insertData(this.customHandwritingFontSnippet, this.getCursorPosition()); },
     scrollToPage: function () {
       if (this.pageBreakIndexes[this.documentCurrentPageIndex] !== undefined) {
         this.codeMirror.scrollIntoView({line: this.pageBreakIndexes[this.documentCurrentPageIndex], char: 0}, 100);
@@ -239,22 +239,20 @@ export default {
           await this.storageProvider.authenticate();
         }
 
-        let data = {};
-        data.data = this.rawCode;
-        data.theme = this.theme;
+        let data = {
+          data: this.rawCode,
+          theme: this.theme,
+        };
 
-        this.storageProvider.updateFile(encodeURIComponent(JSON.stringify(data)), this.storageProviderFileId)
-          .then((response) => {
-            if (response.status !== 200) {
-              alert(response);
-            }
-            this.$refs.progress.classList.remove('progress--is-visible');
-          })
-          .catch((error) => {
-            alert(error);
-            this.$refs.progress.classList.remove('progress--is-visible');
-          });
-
+        try {
+          let response = await this.storageProvider.updateFile(encodeURIComponent(JSON.stringify(data)), this.storageProviderFileId);
+          if (response.status !== 200) {
+            alert(response);
+          }
+        } catch (error) {
+          alert(error);
+        }
+        this.$refs.progress.classList.remove('progress--is-visible');
       } else {
         alert('file not selected!');
       }
@@ -267,21 +265,20 @@ export default {
           await this.storageProvider.authenticate();
         }
 
-        this.storageProvider.downloadFile(this.storageProviderFileId)
-          .then((response) => {
-            if (response.status === 200) {
-              let data = JSON.parse(decodeURIComponent(response.body));
-              this.codeMirror.setValue(data.data);
-              this.$store.commit('document/setTheme', data.theme);
-            } else {
-              alert(response);
-            }
-            this.$refs.progress.classList.remove('progress--is-visible');
-          })
-          .catch((error) => {
-            alert(error);
-            this.$refs.progress.classList.remove('progress--is-visible');
-          });
+        try {
+          let response = await this.storageProvider.downloadFile(this.storageProviderFileId);
+          if (response.status === 200) {
+            let data = JSON.parse(decodeURIComponent(response.body));
+            this.codeMirror.setValue(data.data);
+            this.$store.commit('document/setTheme', data.theme);
+          } else {
+            alert(response);
+          }
+        } catch (error) {
+          alert(error);
+          
+        }
+        this.$refs.progress.classList.remove('progress--is-visible');
       }
     },
     uploadFileUsingProvider: async function () {
@@ -296,45 +293,39 @@ export default {
       data.theme = this.theme;
 
       if (this.storageProviderFileId) {
-        this.storageProvider.updateFile(encodeURIComponent(JSON.stringify(data)), this.storageProviderFileId)
-          .then((response) => {
-            if (response.status !== 200) {
-              alert(response);
-            }
-            this.$refs.progress.classList.remove('progress--is-visible');
-          })
-          .catch((error) => {
-            alert(error);
-            this.$refs.progress.classList.remove('progress--is-visible');
-          });
+        try {
+          let response = await this.storageProvider.updateFile(encodeURIComponent(JSON.stringify(data)), this.storageProviderFileId);
+          if (response.status !== 200) {
+            alert(response);
+          }
+        } catch (error) {
+          alert(error);
+        }
+        this.$refs.progress.classList.remove('progress--is-visible');
       } else if (this.storageProviderFileParentId) {
-        this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)), this.storageProviderFileParentId)
-          .then((response) => {
-            if (response.status !== 200) {
-              alert(response);
-            } else {
-              this.$store.commit('filepicker/setFileId', response.result.id);
-            }
-            this.$refs.progress.classList.remove('progress--is-visible');
-          })
-          .catch((error) => {
-            alert(error);
-            this.$refs.progress.classList.remove('progress--is-visible');
-          });
+        try {
+          let response = this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)), this.storageProviderFileParentId);
+          if (response.status !== 200) {
+            alert(response);
+          } else {
+            this.$store.commit('filepicker/setFileId', response.result.id);
+          }
+        } catch (error) {
+          alert(error);
+        }
+        this.$refs.progress.classList.remove('progress--is-visible');
       } else {
-        this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)))
-          .then((response) => {
-            if (response.status !== 200) {
-              alert(response);
-            } else {
-              this.$store.commit('filepicker/setFileId', response.result.id);
-            }
-            this.$refs.progress.classList.remove('progress--is-visible');
-          })
-          .catch((error) => {
-            alert(error);
-            this.$refs.progress.classList.remove('progress--is-visible');
-          });
+        try {
+          let response = await this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)));
+          if (response.status !== 200) {
+            alert(response);
+          } else {
+            this.$store.commit('filepicker/setFileId', response.result.id);
+          }
+        } catch (error) {
+          alert(error);
+        }
+        this.$refs.progress.classList.remove('progress--is-visible');
       }
     },
     signOutFromProvider: function () {
@@ -363,7 +354,7 @@ export default {
           await this.storageProvider.authenticate();
         }
       } catch (error) {
-        console.error(error);
+        alert(error);
         this.$refs.progress.classList.remove('progress--is-visible');
         return;
       }
@@ -385,7 +376,7 @@ export default {
           await this.storageProvider.authenticate();
         }
       } catch (error) {
-        console.error(error);
+        alert(error);
         this.$refs.progress.classList.remove('progress--is-visible');
         return;
       }
