@@ -85,7 +85,7 @@ export default class GoogleDriveProvider extends StorageProvider {
     let response = await gapi.client.drive.files.create({
       resource: {
         'name': name,
-        'mimeType': 'application/octet-stream',
+        'mimeType': 'application/json',
         'parents': [parentId]
       },
       fields: 'id'

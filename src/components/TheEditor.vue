@@ -245,7 +245,7 @@ export default {
         };
 
         try {
-          let response = await this.storageProvider.updateFile(encodeURIComponent(JSON.stringify(data)), this.storageProviderFileId);
+          let response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
           if (response.status !== 200) {
             alert(response);
           }
@@ -268,7 +268,7 @@ export default {
         try {
           let response = await this.storageProvider.downloadFile(this.storageProviderFileId);
           if (response.status === 200) {
-            let data = JSON.parse(decodeURIComponent(response.body));
+            let data = JSON.parse(response.body);
             this.codeMirror.setValue(data.data);
             this.$store.commit('document/setTheme', data.theme);
           } else {
@@ -294,7 +294,7 @@ export default {
 
       if (this.storageProviderFileId) {
         try {
-          let response = await this.storageProvider.updateFile(encodeURIComponent(JSON.stringify(data)), this.storageProviderFileId);
+          let response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
           if (response.status !== 200) {
             alert(response);
           }
@@ -304,7 +304,7 @@ export default {
         this.$refs.progress.classList.remove('progress--is-visible');
       } else if (this.storageProviderFileParentId) {
         try {
-          let response = this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)), this.storageProviderFileParentId);
+          let response = this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data), this.storageProviderFileParentId);
           if (response.status !== 200) {
             alert(response);
           } else {
@@ -316,7 +316,7 @@ export default {
         this.$refs.progress.classList.remove('progress--is-visible');
       } else {
         try {
-          let response = await this.storageProvider.uploadFile(this.storageProviderFileName, encodeURIComponent(JSON.stringify(data)));
+          let response = await this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data));
           if (response.status !== 200) {
             alert(response);
           } else {
