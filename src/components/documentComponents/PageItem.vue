@@ -198,4 +198,10 @@ export default {
     overflow-x: auto !important;
   }
 }
+
+@-moz-document url-prefix() {
+  .page {
+    height: 29.66cm !important;
+  }    
+}
 </style>
