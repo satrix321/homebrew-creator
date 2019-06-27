@@ -81,11 +81,18 @@ let parse = function (markdown, options) {
         break;
       }
       case 'code': {
-        let columnBreak = new PageColumnBreakClass();
-        createdComponents.push(columnBreak);
         if (tokenStack.length === 0) {
+          let columnBreak = new PageColumnBreakClass({
+            propsData: {
+              pageWorkAreaHeight: options.pageWorkAreaHeight,
+              precedingComponents: Array.from(outputComponents),
+            }
+          });
+          createdComponents.push(columnBreak);
           outputComponents.push(columnBreak);
         } else {
+          let columnBreak = new PageColumnBreakClass();
+          createdComponents.push(columnBreak);
           componentStack.last().push(columnBreak);
         }
         break;

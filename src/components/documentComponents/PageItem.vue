@@ -76,11 +76,18 @@ export default {
       }
       this.createdComponents = [];
 
+      let pageHeight = this.$el.offsetHeight;
+      let computedStyles = window.getComputedStyle(this.$el);
+      let pagePaddingTop = parseFloat(computedStyles.paddingTop);
+      let pagePaddingBottom = parseFloat(computedStyles.paddingBottom);
+      let pageWorkAreaHeight = pageHeight - pagePaddingTop - pagePaddingBottom;
+
       let result = parser(this.textData, { 
         theme: this.pageTheme,
         noteTexturesEnabled: this.noteTexturesEnabled,
         columnCount: this.columnCount,
-        isTitlePage: this.isTitlePage
+        isTitlePage: this.isTitlePage,
+        pageWorkAreaHeight: pageWorkAreaHeight,
       });
       this.createdComponents = result.createdComponents;
 
