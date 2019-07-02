@@ -79,6 +79,7 @@ export default {
   &.theme--cthulhu-1 {
     .footer__number {
       bottom: 0;
+      margin-bottom: 10px;
       left: 10.5cm;
       -moz-transform: translate(-50%);
       -o-transform: translate(-50%);
