@@ -113,7 +113,7 @@ export default {
   box-sizing: border-box;
   z-index: 1;
   width: 21cm;
-  height: 29.7cm;
+  height: 29.66cm;
   padding: 1cm;
   
   /deep/ * {
@@ -204,11 +204,5 @@ export default {
     page-break-after: always !important;
     overflow-x: auto !important;
   }
-}
-
-@-moz-document url-prefix() {
-  .page {
-    height: 29.66cm !important;
-  }    
 }
 </style>
