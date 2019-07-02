@@ -12,6 +12,8 @@
       </template>
     </dropdown-menu>
 
+    <toolbar-separator/>
+
     <dropdown-menu>
       <template slot="dropdown-button">
         <i class="fas fa-image"></i> Textures
@@ -22,7 +24,33 @@
       </template>
     </dropdown-menu>
 
-    <dropdown-menu float-right>
+    <toolbar-separator/>
+
+    <div class="toolbar__spacer"></div>
+
+    <toolbar-separator/>
+
+    <button-item @click="getPDF"><i class="fas fa-file-pdf"></i> Get PDF</button-item>
+
+    <toolbar-separator/>
+    
+    <button-item @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button-item>
+
+    <toolbar-separator/>
+
+    <button-item>Page {{pageCount > 0 ? documentCurrentPageNumber : 0}}/{{pageCount}}</button-item>
+
+    <toolbar-separator/>
+
+    <button-item @click="zoomIn"><i class="fas fa-search-plus" style="margin-right: 0"></i></button-item>
+
+    <toolbar-separator/>
+
+    <button-item @click="zoomOut"><i class="fas fa-search-minus" style="margin-right: 0"></i></button-item>    
+
+    <toolbar-separator/>
+    
+    <dropdown-menu>
       <template slot="dropdown-button">
         Zoom {{zoom}}%
       </template>
@@ -33,12 +61,6 @@
       </template>
     </dropdown-menu>
     
-    <button-item float-right @click="zoomIn"><i class="fas fa-search-plus"></i></button-item>
-    <button-item float-right @click="zoomOut"><i class="fas fa-search-minus"></i></button-item>
-    <button-item float-right>Page {{pageCount > 0 ? documentCurrentPageNumber : 0}}/{{pageCount}}</button-item>
-    <button-item float-right @click="scrollToCursor"><i class="fas fa-arrows-alt-v"></i> Locate</button-item>
-    <button-item float-right @click="getPDF"><i class="fas fa-file-pdf"></i> Get PDF</button-item>
-    
   </div>
 </template>
 
@@ -46,6 +68,7 @@
 import ButtonItem from '@/components/ButtonItem';
 import DropdownMenu from '@/components/DropdownMenu';
 import DropdownItem from '@/components/DropdownItem';
+import ToolbarSeparator from '@/components/ToolbarSeparator';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -53,7 +76,8 @@ export default {
   components: {
     ButtonItem,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    ToolbarSeparator
   },
   computed: {
     ...mapGetters({
@@ -109,9 +133,18 @@ export default {
   height: 30px;
   width: 100%;
   background-color: $toolbar-background-color;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
-  clear: both;
+  display: flex;
+
+  .toolbar__spacer {
+    flex-grow: 1;
+  }
+
+  i {
+    font-size: 16px;
+    margin-right: 5px;
+  }
 }
 
 @media print {

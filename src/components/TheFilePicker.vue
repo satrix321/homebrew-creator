@@ -6,14 +6,14 @@
       <template slot="modal-header">
         <div class="filepicker__header">
           <h2>{{title}} - {{downloadMode ? 'Download' : ''}}{{uploadMode ? 'Upload' : ''}}</h2>
-          <button-item float-right is-icon @click="signOut"><i class="fas fa-sign-in-alt"></i></button-item>
-          <button-item float-right is-icon @click="cancel"><i class="fas fa-times"></i></button-item>
+          <button-item is-icon @click="signOut"><i class="fas fa-sign-in-alt"></i></button-item>
+          <button-item is-icon @click="cancel"><i class="fas fa-times"></i></button-item>
         </div>
       </template>
 
       <template slot="modal-content">
         <div class="filepicker__directory">
-          <button-item float-right is-icon @click="goBack"><i class="fas fa-arrow-up"></i></button-item>
+          <button-item is-icon @click="goBack"><i class="fas fa-arrow-up"></i></button-item>
           <span>{{path}}</span>
         </div>
         <div class="filepicker__container">
@@ -34,8 +34,8 @@
         <div class="filepicker__footer">
           <input-item v-if="this.uploadMode" ref="fileName" class="filepicker__filename"/>
           <input-item v-if="this.uploadMode" value=".hmd" disabled="disabled" class="filepicker__filetype"/>
-          <button-item float-right @click="ok" class="filepicker__ok-button">OK</button-item>
-          <button-item float-right @click="cancel" class="filepicker__cancel-button">Cancel</button-item>
+          <button-item @click="ok" class="filepicker__ok-button">OK</button-item>
+          <button-item @click="cancel" class="filepicker__cancel-button">Cancel</button-item>
         </div>
       </template>
 

@@ -1,6 +1,5 @@
 <template>
-  <button class="button" :class="{ 
-    'button--float-right': floatRight, 
+  <button class="button" :class="{
     'button--is-icon': isIcon,
     'button--is-clicked': isClicked
     }" @click="$emit('click')">
@@ -13,7 +12,6 @@
 export default {
   name: 'ButtonItem',
   props: {
-    floatRight: { type: Boolean, required: false, default: false },
     isIcon: { type: Boolean, required: false, default: false },
     isClicked: { type: Boolean, required: false, default: false }
   },
@@ -30,7 +28,9 @@ export default {
   outline: none;
   font-family: $site-font-mono;
   font-size: 9pt;
-  float: left;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: $button-background-hover-color;
@@ -59,10 +59,6 @@ export default {
     &:hover {
       background-color: $button-background-hover-color;
     }
-  }
-
-  &.button--float-right {
-    float: right;
   }
 
   &.button--is-icon {

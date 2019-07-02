@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown" :class="{ 'dropdown--float-right': floatRight }">
+  <div class="dropdown">
     <button-item class="dropdown__button">
       <slot name="dropdown-button"></slot>
     </button-item>
@@ -17,19 +17,11 @@ export default {
   components: {
     ButtonItem
   },
-  props: {
-    floatRight: { type: Boolean, required: false, default: false },
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 .dropdown {
-  float: left;
-  
-  &.dropdown--float-right {
-    float: right;
-  }
 
   .dropdown__content {
     display: none;
@@ -38,12 +30,12 @@ export default {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
     top: 30px;
-    float: none;
     overflow: visible;
+    flex-direction: column;
   }
 
   &:hover .dropdown__content {
-    display: block;
+    display: flex;
   }
 }
 </style>

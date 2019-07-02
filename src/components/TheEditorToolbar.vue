@@ -14,6 +14,8 @@
       </template>
     </dropdown-menu>
 
+    <toolbar-separator/>
+
     <dropdown-menu>
       <template slot="dropdown-button">
         <i class="fas fa-table"></i> Stat Blocks
@@ -23,6 +25,8 @@
       </template>
     </dropdown-menu>
 
+    <toolbar-separator/>
+
     <dropdown-menu>
       <template slot="dropdown-button">
         <i class="fas fa-table"></i> Tables
@@ -31,6 +35,8 @@
         <dropdown-item @click="insertRegularTable"><i class="fas fa-table"></i> Table</dropdown-item>
       </template>
     </dropdown-menu>
+
+    <toolbar-separator/>
 
     <dropdown-menu>
       <template slot="dropdown-button">
@@ -44,6 +50,8 @@
       </template>
     </dropdown-menu>
 
+    <toolbar-separator/>
+
     <dropdown-menu>
       <template slot="dropdown-button">
         <i class="fas fa-image"></i> Images
@@ -55,6 +63,8 @@
       </template>
     </dropdown-menu>
 
+    <toolbar-separator/>
+
     <dropdown-menu>
       <template slot="dropdown-button">
         <i class="fas fa-random"></i> Misc
@@ -65,6 +75,8 @@
         <dropdown-item @click="insertVerticalSpacing"><i class="fas fa-arrows-alt-v"></i> Vertical Spacing</dropdown-item>
       </template>
     </dropdown-menu>
+    
+    <toolbar-separator/>
 
     <dropdown-menu>
       <template slot="dropdown-button">
@@ -81,9 +93,17 @@
       </template>
     </dropdown-menu>
 
-    <button-item float-right @click="scrollToPage"><i class="fas fa-arrows-alt-v"></i> Locate</button-item>
+    <toolbar-separator/>
 
-    <dropdown-menu float-right>
+    <div class="toolbar__spacer"></div>
+
+    <toolbar-separator/>
+
+    <button-item @click="syncFile" :disabled="!this.storageProviderFileId"><i class="fas fa-sync"></i> Sync</button-item>
+
+    <toolbar-separator/>
+
+    <dropdown-menu>
       <template slot="dropdown-button">
         <i class="fas fa-file"></i> File
       </template>
@@ -95,7 +115,9 @@
       </template>
     </dropdown-menu>
 
-    <button-item float-right @click="syncFile" :disabled="!this.storageProviderFileId"><i class="fas fa-sync"></i> Sync</button-item>
+    <toolbar-separator/>
+
+    <button-item @click="scrollToPage"><i class="fas fa-arrows-alt-v"></i> Locate</button-item>    
     
   </div>
 </template>
@@ -104,6 +126,7 @@
 import ButtonItem from '@/components/ButtonItem';
 import DropdownMenu from '@/components/DropdownMenu';
 import DropdownItem from '@/components/DropdownItem';
+import ToolbarSeparator from '@/components/ToolbarSeparator';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -111,7 +134,8 @@ export default {
   components: {
     ButtonItem,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    ToolbarSeparator
   },
   computed: {
     ...mapGetters({
@@ -159,9 +183,18 @@ export default {
   height: 30px;
   width: 100%;
   background-color: $toolbar-background-color;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
-  clear: both;
+  display: flex;
+
+  .toolbar__spacer {
+    flex-grow: 1;
+  }
+
+  i {
+    font-size: 16px;
+    margin-right: 5px;
+  }
 }
 
 @media print {

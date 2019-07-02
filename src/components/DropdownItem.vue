@@ -26,9 +26,11 @@ export default {
   outline: none;
   font-family: $site-font-mono;
   font-size: 9pt;
-  display: block;
   width: 100%;
   text-align: left;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid $toolbar-separator-color;
 
   &:hover {
     background-color: $button-background-hover-color;
