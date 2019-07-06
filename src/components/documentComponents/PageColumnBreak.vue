@@ -1,5 +1,5 @@
 <template>
-  <div class="break" :style="{ 'height': pageBreakHeight }"/>
+  <div :style="{ 'height': pageBreakHeight }"/>
 </template>
 
 <script>
@@ -33,7 +33,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.break {
-  break-after: column;
-}
 </style>
