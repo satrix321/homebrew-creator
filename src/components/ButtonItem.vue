@@ -26,8 +26,8 @@ export default {
   color: $button-color;
   background-color: $button-background-color;
   outline: none;
-  font-family: $site-font-mono;
-  font-size: 9pt;
+  font-family: $site-font;
+  font-size: 10pt;
   display: inline-flex;
   align-items: center;
   justify-content: center;

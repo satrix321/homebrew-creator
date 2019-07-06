@@ -22,6 +22,10 @@ export default {
 
 <style lang="scss" scoped>
 .dropdown {
+  .dropdown__button {
+    font-family: $site-font;
+    font-size: 10pt;
+  }
 
   .dropdown__content {
     display: none;

@@ -5,7 +5,7 @@
 
       <template slot="modal-header">
         <div class="filepicker__header">
-          <h2>{{title}} - {{downloadMode ? 'Download' : ''}}{{uploadMode ? 'Upload' : ''}}</h2>
+          <h2>{{downloadMode ? 'Choose File' : ''}}{{uploadMode ? 'Save As' : ''}}</h2>
           <button-item is-icon @click="signOut"><i class="fas fa-sign-in-alt"></i></button-item>
           <button-item is-icon @click="cancel"><i class="fas fa-times"></i></button-item>
         </div>
@@ -56,7 +56,6 @@ export default {
     ButtonItem,
     InputItem
   },
-  props: ['title'],
   data () {
     return {
       provider: undefined,
@@ -329,6 +328,11 @@ export default {
 
 <style lang="scss" scoped>
 .filepicker {
+
+  .filepicker__header {
+    font-family: $site-font;
+  }
+
   .filepicker__directory {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -369,6 +373,10 @@ export default {
       .fas.fa-folder {
         color: $filepicker-folder-color;
       }
+    }
+
+    .filepicker__col-name {
+      font-family: $site-font;
     }
 
     .filepicker__col-id, .filepicker__col-mime {

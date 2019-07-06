@@ -36,7 +36,7 @@
     <codemirror ref="editor" :options="codeMirrorOptions" 
       @input="codeChange" 
       @cursorActivity="cursorPositionChange"/>
-    <the-file-picker ref="filePicker" title="File Picker" 
+    <the-file-picker ref="filePicker" 
       @downloadFile="downloadFileUsingProvider" 
       @uploadFile="uploadFileUsingProvider"
       @signOut="signOutFromProvider"/>
