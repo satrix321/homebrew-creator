@@ -247,10 +247,10 @@ export default {
         try {
           let response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
           if (response.status !== 200) {
-            alert(response);
+            console.error(response);
           }
         } catch (error) {
-          alert(error);
+          console.error(error);
         }
         this.$refs.progress.classList.remove('progress--is-visible');
       } else {
@@ -272,10 +272,10 @@ export default {
             this.codeMirror.setValue(data.data);
             this.$store.commit('document/setTheme', data.theme);
           } else {
-            alert(response);
+            console.error(response);
           }
         } catch (error) {
-          alert(error);
+          console.error(error);
           
         }
         this.$refs.progress.classList.remove('progress--is-visible');
@@ -296,34 +296,34 @@ export default {
         try {
           let response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
           if (response.status !== 200) {
-            alert(response);
+            console.error(response);
           }
         } catch (error) {
-          alert(error);
+          console.error(error);
         }
         this.$refs.progress.classList.remove('progress--is-visible');
       } else if (this.storageProviderFileParentId) {
         try {
           let response = this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data), this.storageProviderFileParentId);
           if (response.status !== 200) {
-            alert(response);
+            console.error(response);
           } else {
             this.$store.commit('filepicker/setFileId', response.result.id);
           }
         } catch (error) {
-          alert(error);
+          console.error(error);
         }
         this.$refs.progress.classList.remove('progress--is-visible');
       } else {
         try {
           let response = await this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data));
           if (response.status !== 200) {
-            alert(response);
+            console.error(response);
           } else {
             this.$store.commit('filepicker/setFileId', response.result.id);
           }
         } catch (error) {
-          alert(error);
+          console.error(error);
         }
         this.$refs.progress.classList.remove('progress--is-visible');
       }
@@ -354,8 +354,12 @@ export default {
           await this.storageProvider.authenticate();
         }
       } catch (error) {
-        alert(error);
-        this.$refs.progress.classList.remove('progress--is-visible');
+        if (error.error === 'popup_closed_by_user') {
+          this.$refs.progress.classList.remove('progress--is-visible');
+        } else {
+          console.error(error);
+          this.$refs.progress.classList.remove('progress--is-visible');
+        }
         return;
       }
 
@@ -376,8 +380,12 @@ export default {
           await this.storageProvider.authenticate();
         }
       } catch (error) {
-        alert(error);
-        this.$refs.progress.classList.remove('progress--is-visible');
+        if (error.error === 'popup_closed_by_user') {
+          this.$refs.progress.classList.remove('progress--is-visible');
+        } else {
+          console.error(error);
+          this.$refs.progress.classList.remove('progress--is-visible');
+        }
         return;
       }
 
