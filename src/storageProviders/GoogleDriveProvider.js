@@ -1,5 +1,4 @@
 import StorageProvider from './StorageProvider';
-import gapi from '../modules/gapi';
 
 export default class GoogleDriveProvider extends StorageProvider {
   // Client ID and API key from the Developer Console
@@ -29,23 +28,23 @@ export default class GoogleDriveProvider extends StorageProvider {
   }
 
   async load() {
-    gapi.load('client:auth2', this.initClient.bind(this));
+    window.gapi.load('client:auth2', this.initClient.bind(this));
 
-    while (!gapi.auth2 || !gapi.auth2.getAuthInstance()) {
+    while (!window.gapi.auth2 || !window.gapi.auth2.getAuthInstance()) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
   }
 
   // Initializes the API client library and sets up sign-in state listeners.
   async initClient() {
-    await gapi.client.init({
+    await window.gapi.client.init({
       apiKey: this.apiKey,
       clientId: this.clientId,
       discoveryDocs: this.discoveryDocs,
       scope: this.scopes
     });
     
-    gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus.bind(this));
+    window.gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus.bind(this));
   }
 
   updateSigninStatus(isSignedIn) {
@@ -53,36 +52,36 @@ export default class GoogleDriveProvider extends StorageProvider {
   }
 
   async authenticate() {
-    await gapi.auth2.getAuthInstance().signIn();
-    this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    await window.gapi.auth2.getAuthInstance().signIn();
+    this.updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
   }
 
   signOut() {
-    return gapi.auth2.getAuthInstance().signOut();
+    return window.gapi.auth2.getAuthInstance().signOut();
   }
 
   disconnect() {
-    return gapi.auth2.getAuthInstance().disconnect();
+    return window.gapi.auth2.getAuthInstance().disconnect();
   }
 
   listFiles(folderId = 'root', pageSize = 1000) {
-    return gapi.client.drive.files.list({
+    return window.gapi.client.drive.files.list({
       'pageSize': pageSize,
-      'fields': 'nextPageToken, files(id, name, fileExtension, mimeType)',
+      'fields': 'nextPageToken, files(id, name, fileExtension, mimeType, modifiedTime)',
       'spaces': 'drive',
       'q': 'trashed = false and "' + folderId + '" in parents and (name contains ".' + this.fileExtension + '" or mimeType = "application/vnd.google-apps.folder")',
     });
   }
 
   downloadFile(fileId) {
-    return gapi.client.drive.files.get({
+    return window.gapi.client.drive.files.get({
       fileId: fileId,
       alt: 'media'
     });
   }
 
   async uploadFile(name, data, parentId = 'root') {
-    let response = await gapi.client.drive.files.create({
+    let response = await window.gapi.client.drive.files.create({
       resource: {
         'name': name,
         'mimeType': 'application/json',
@@ -102,7 +101,7 @@ export default class GoogleDriveProvider extends StorageProvider {
   }
 
   updateFile(data, fileId) {
-    return gapi.client.request({
+    return window.gapi.client.request({
       path: '/upload/drive/v3/files/' + fileId,
       method: 'PATCH',
       params: {

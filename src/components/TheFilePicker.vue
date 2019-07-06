@@ -6,14 +6,14 @@
       <template slot="modal-header">
         <div class="filepicker__header">
           <h2>{{downloadMode ? 'Choose File' : ''}}{{uploadMode ? 'Save As' : ''}}</h2>
-          <button-item is-icon @click="signOut"><i class="fas fa-sign-in-alt"></i></button-item>
-          <button-item is-icon @click="cancel"><i class="fas fa-times"></i></button-item>
+          <button-item is-icon class="filepicker__icon-button" @click="signOut"><i class="fas fa-sign-in-alt"></i></button-item>
+          <button-item is-icon class="filepicker__icon-button" @click="cancel"><i class="fas fa-times"></i></button-item>
         </div>
       </template>
 
       <template slot="modal-content">
         <div class="filepicker__directory">
-          <button-item is-icon @click="goBack"><i class="fas fa-arrow-up"></i></button-item>
+          <button-item is-icon class="filepicker__icon-button" @click="goBack"><i class="fas fa-arrow-up"></i></button-item>
           <span>{{path}}</span>
         </div>
         <div class="filepicker__container">
@@ -22,6 +22,7 @@
               <tr class="filepicker__row" v-for="file in fileList" :key="file.id" @click.stop="itemSelected($event)" @dblclick.stop="itemOpened($event)">
                 <td class="filepicker__col-icon"><i :class="{'fas fa-folder': file.mimeType === folderMimeType, 'fas fa-file': file.mimeType !== folderMimeType}"></i></td>
                 <td class="filepicker__col-name">{{file.name}}</td>
+                <td class="filepicker__col-modified-time">{{file.modifiedTime}}</td>
                 <td class="filepicker__col-id">{{file.id}}</td>
                 <th class="filepicker__col-mime">{{file.mimeType}}</th>
               </tr>
@@ -48,6 +49,7 @@
 import ModalItem from '@/components/ModalItem';
 import ButtonItem from '@/components/ButtonItem';
 import InputItem from '@/components/InputItem';
+import { format } from 'date-fns';
 
 export default {
   name: 'TheFilePicker',
@@ -89,7 +91,14 @@ export default {
 
       let response = await this.provider.listFiles();  
       if (response && response.status === 200) {
-        this.fileList = response.result.files;
+        this.fileList = response.result.files.map(file => { 
+          return {
+            id: file.id,
+            name: file.name,
+            mimeType: file.mimeType,
+            modifiedTime: format(new Date(file.modifiedTime), 'YYYY-MM-DD HH:mm'),
+          };
+        });
       } else {
         alert(response);
       }
@@ -329,8 +338,8 @@ export default {
 <style lang="scss" scoped>
 .filepicker {
 
-  .filepicker__header {
-    font-family: $site-font;
+  .filepicker__icon-button {
+    border-radius: 50%;
   }
 
   .filepicker__directory {
@@ -375,8 +384,10 @@ export default {
       }
     }
 
-    .filepicker__col-name {
-      font-family: $site-font;
+    .filepicker__col-modified-time {
+      width: 1px;
+      white-space: nowrap;
+      padding-right: 10px;
     }
 
     .filepicker__col-id, .filepicker__col-mime {

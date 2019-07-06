@@ -40,7 +40,7 @@ export default {
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
-  font-family: $site-font-mono;
+  font-family: $site-font;
   animation-name: modalshow;
   animation-duration: 0.4s;
 
