@@ -66,7 +66,11 @@ export default {
 
 <style lang="scss" scoped>
 .custom-html {
+  margin-bottom: 10px;
+
   /deep/ .prop {
+    margin-bottom: 0;
+
     &.prop--handwritten {
       p {
         font-family: 'handwriting';
@@ -179,7 +183,100 @@ export default {
     }
 
     .stat-block {
-      margin-bottom: 12px;
+      margin-bottom: 0;
+
+      &.stat-block--dnd {
+        box-shadow: 0px 0px 10px #727159;
+        background-image: url('../../assets/images/texture_02.jpg');
+        position: relative;
+
+        &:before {
+          content: url('../../assets/images/dnd_stat_block_border.svg');
+          display: block;
+          position: absolute;
+          height: 5px;
+          margin: 0 -2px;
+          top: -4px;
+          left: 0;
+          width: calc(100% + 4px);
+        }
+
+        &:after {
+          content: url('../../assets/images/dnd_stat_block_border.svg');
+          display: block;
+          position: absolute;
+          height: 5px;
+          margin: 0 -2px;
+          bottom: 0;
+          left: 0;
+          width: calc(100% + 4px);
+        }
+
+        > p:first-child {
+          padding-top: 10px;
+        }
+
+        > p:last-child {
+          padding-bottom: 10px;
+        }
+
+        hr {
+          border: 0;
+          content: url('../../assets/images/dnd_stat_block_separator.svg');
+          height: 10.5px;
+          width: 100%;
+          padding: 0 8px;
+          box-sizing: border-box;
+        }
+
+        ul {
+          list-style: none;
+          padding-left: 0;
+          margin-left: 8px !important;
+          margin-right: 8px !important;
+
+          p {
+            text-align: left;
+            padding-left: 10px;
+            text-indent: -10px;
+          }
+        }
+
+        table {
+          padding-left: 8px !important;
+          padding-right: 8px !important;
+          margin-bottom: 2px;
+          margin-top: -10px;
+
+          th {
+            color: #6A1C0F;
+          }
+
+          th, td {
+            width: 16.66%;
+          }
+
+          tr {
+            background-color: transparent !important;
+          }
+        }
+
+        > h1, > h2, > h3, > h4, > h5, > h6, > p {
+          margin-left: 8px !important;
+          margin-right: 8px !important;
+        }
+
+        h1 {
+          margin: 0;
+          font-size: 16pt;
+        }
+        h2 {
+          margin: 0;
+          font-size: 12pt;
+          margin-bottom: 5px;
+          border-bottom: 1px solid #6A1C0F;
+        }
+      }
 
       &.stat-block--cthulhu {
         border: none;

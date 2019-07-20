@@ -122,6 +122,7 @@ export default {
 
   .page__content {
     /deep/ .page-wide-block {
+      margin-bottom: 0;
       column-span: all;
       -webkit-column-span: all;
     }

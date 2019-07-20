@@ -9,6 +9,7 @@
       @insertHandwrittenNote="insertHandwrittenNote"
       @insertPhbNote="insertPhbNote"
       @insertCocStatBlock="insertCocStatBlock"
+      @insertDndStatBlock="insertDndStatBlock"
       @insertRegularTable="insertRegularTable"
       @insertRegularPage="insertRegularPage"
       @insertRelativeImage="insertRelativeImage"
@@ -112,6 +113,7 @@ export default {
       phbNoteSnippet: 'editorSnippets/phbNoteSnippet',
 
       cthulhuStatTableSnippet: 'editorSnippets/cthulhuStatTableSnippet',
+      dndStatTableSnippet: 'editorSnippets/dndStatTableSnippet',
 
       tableSnippet: 'editorSnippets/tableSnippet',
 
@@ -170,6 +172,7 @@ export default {
     insertHandwrittenNote: function () { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
     insertPhbNote: function () { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
     insertCocStatBlock: function () { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
+    insertDndStatBlock: function () { this.insertData(this.dndStatTableSnippet, this.getCursorPosition()); },
     insertRegularTable: function () { this.insertData(this.tableSnippet, this.getCursorPosition()); },
     insertRegularPage: function () { this.insertData(this.pageSnippet, this.getCursorPosition()); },
     insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },

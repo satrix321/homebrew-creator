@@ -22,6 +22,7 @@
       </template>
       <template slot="dropdown-content">
         <dropdown-item @click="insertCocStatBlock"><i class="fas fa-table"></i> Call of Cthulhu</dropdown-item>
+        <dropdown-item @click="insertDndStatBlock"><i class="fas fa-table"></i> Dungeons & Dragons</dropdown-item>
       </template>
     </dropdown-menu>
 
@@ -148,8 +149,8 @@ export default {
     insertTertiaryNote: function () { this.$emit('insertTertiaryNote'); },
     insertNewspaperNote: function () { this.$emit('insertNewspaperNote'); },
     insertHandwrittenNote: function () { this.$emit('insertHandwrittenNote'); },
-    insertPhbNote: function () { this.$emit('insertPhbNote'); },
     insertCocStatBlock: function () { this.$emit('insertCocStatBlock'); },
+    insertDndStatBlock: function () { this.$emit('insertDndStatBlock'); },
     insertRegularTable: function () { this.$emit('insertRegularTable'); },
     insertRegularPage: function () { this.$emit('insertRegularPage'); },
     insertRelativeImage: function () { this.$emit('insertRelativeImage'); },
