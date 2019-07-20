@@ -17,28 +17,31 @@ export default {
   },
   data: function () {
     return {
-      classList: [ this.pageTheme ]
+      classList: [ this.pageTheme ],
+      initialized: false,
     };
   },
   mounted: function () {
-    let list = this.listType === 'unordered' ? this.$refs.unorderedList : this.$refs.orderedList;
-    for (let i = 0; i < this.listComponents.length; i++) {
-      if (this.listComponents[i].$el.classList.contains('list')) {
-        list.appendChild(this.listComponents[i].$el);
-      } else {
-        if (i === 0) {
-          this.listComponents[i].classList.push('first');
+    if (!this.initialized) {
+      let list = this.listType === 'unordered' ? this.$refs.unorderedList : this.$refs.orderedList;
+      for (let i = 0; i < this.listComponents.length; i++) {
+        if (this.listComponents[i].$el.classList.contains('list')) {
+          list.appendChild(this.listComponents[i].$el);
+        } else {
+          if (i === 0) {
+            this.listComponents[i].classList.push('first');
+          }
+          this.listComponents[i].classList.push('list-item');
+          if (i === this.listComponents.length - 1) {
+            this.listComponents[i].classList.push('last');
+          }
+          let listItem = document.createElement('li');
+          listItem.appendChild(this.listComponents[i].$el);
+          list.appendChild(listItem);
         }
-        this.listComponents[i].classList.push('list-item');
-        if (i === this.listComponents.length - 1) {
-          this.listComponents[i].classList.push('last');
-        }
-        let listItem = document.createElement('li');
-        listItem.appendChild(this.listComponents[i].$el);
-        list.appendChild(listItem);
       }
+      this.initialized = true;
     }
-
   }
 };
 </script>

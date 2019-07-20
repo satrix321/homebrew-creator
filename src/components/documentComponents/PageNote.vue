@@ -17,7 +17,8 @@ export default {
       classList: [
         this.noteType,
         this.pageTheme
-      ]
+      ],
+      initialized: false,
     };
   },
   created: function () {
@@ -29,14 +30,17 @@ export default {
     }
   },
   mounted: function () {
-    for (let i = 0; i < this.components.length; i++) {
-      if (i === 0) {
-        this.components[i].classList.push('first');
+    if (!this.initialized) {
+      for (let i = 0; i < this.components.length; i++) {
+        if (i === 0) {
+          this.components[i].classList.push('first');
+        }
+        if (i === this.components.length - 1) {
+          this.components[i].classList.push('last');
+        }
+        this.$refs.content.appendChild(this.components[i].$el);
       }
-      if (i === this.components.length - 1) {
-        this.components[i].classList.push('last');
-      }
-      this.$refs.content.appendChild(this.components[i].$el);
+      this.initialized = true;
     }
   }
 };
