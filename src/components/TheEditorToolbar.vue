@@ -34,6 +34,7 @@
       </template>
       <template slot="dropdown-content">
         <dropdown-item @click="insertRegularTable"><i class="fas fa-table"></i> Table</dropdown-item>
+        <dropdown-item @click="insertDndCustomTable"><i class="fas fa-table"></i> Custom DnD Table</dropdown-item>
       </template>
     </dropdown-menu>
 
@@ -152,6 +153,7 @@ export default {
     insertCocStatBlock: function () { this.$emit('insertCocStatBlock'); },
     insertDndStatBlock: function () { this.$emit('insertDndStatBlock'); },
     insertRegularTable: function () { this.$emit('insertRegularTable'); },
+    insertDndCustomTable: function () { this.$emit('insertDndCustomTable'); },
     insertRegularPage: function () { this.$emit('insertRegularPage'); },
     insertRelativeImage: function () { this.$emit('insertRelativeImage'); },
     insertAbsoluteImage: function () { this.$emit('insertAbsoluteImage'); },

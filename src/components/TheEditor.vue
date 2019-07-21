@@ -11,6 +11,7 @@
       @insertCocStatBlock="insertCocStatBlock"
       @insertDndStatBlock="insertDndStatBlock"
       @insertRegularTable="insertRegularTable"
+      @insertDndCustomTable="insertDndCustomTable"
       @insertRegularPage="insertRegularPage"
       @insertRelativeImage="insertRelativeImage"
       @insertAbsoluteImage="insertAbsoluteImage"
@@ -116,6 +117,7 @@ export default {
       dndStatTableSnippet: 'editorSnippets/dndStatTableSnippet',
 
       tableSnippet: 'editorSnippets/tableSnippet',
+      dndCustomTableSnippet: 'editorSnippets/dndCustomTableSnippet',
 
       pageSnippet: 'editorSnippets/pageSnippet',
       twoColumnPageSnippet: 'editorSnippets/twoColumnPageSnippet',
@@ -174,6 +176,7 @@ export default {
     insertCocStatBlock: function () { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
     insertDndStatBlock: function () { this.insertData(this.dndStatTableSnippet, this.getCursorPosition()); },
     insertRegularTable: function () { this.insertData(this.tableSnippet, this.getCursorPosition()); },
+    insertDndCustomTable: function () { this.insertData(this.dndCustomTableSnippet, this.getCursorPosition()); },
     insertRegularPage: function () { this.insertData(this.pageSnippet, this.getCursorPosition()); },
     insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
     insertThreeColumnPage: function () { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },

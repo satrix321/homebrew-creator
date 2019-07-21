@@ -226,7 +226,8 @@ let parse = function (markdown, options) {
           propsData: {
             html: token.text,
             pageTheme: options.theme,
-            noteTexturesEnabled: options.noteTexturesEnabled
+            noteTexturesEnabled: options.noteTexturesEnabled,
+            columnCount: options.columnCount
           }
         });
         createdComponents.push(htmlBlock);
