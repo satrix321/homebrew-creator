@@ -8,7 +8,7 @@ To avoid any display problems you should use **Chrome** browser, otherwise some 
 
 ## Live preview
 
-> https://satrix321.github.io/HomebrewCreator/index.html
+> https://satrix321.github.io/Homebrew-Creator/
 
 ## Build Setup
 
