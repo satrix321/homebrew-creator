@@ -1,4 +1,6 @@
 /* eslint-disable */
+const path = require("path");
+
 module.exports = {
   css: {
     loaderOptions: {
@@ -17,8 +19,10 @@ module.exports = {
   devServer: {
     port: 8080
   },
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/HomebrewCreator/'
-    : '/'
+  outputDir: path.resolve(__dirname, 'docs'),
+
+  // publicPath: process.env.NODE_ENV === 'production'
+  //   ? '/HomebrewCreator/'
+  //   : '/'
 }
 /* eslint-enable */
