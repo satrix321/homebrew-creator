@@ -20,9 +20,8 @@ module.exports = {
     port: 8080
   },
   outputDir: path.resolve(__dirname, 'docs'),
-
-  // publicPath: process.env.NODE_ENV === 'production'
-  //   ? '/HomebrewCreator/'
-  //   : '/'
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/Homebrew-Creator/'
+    : '/'
 }
 /* eslint-enable */
