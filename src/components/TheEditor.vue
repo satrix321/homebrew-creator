@@ -2,6 +2,7 @@
   <div class="editor">
     <div ref="progress" class="progress"><i class="progress__icon fas fa-spinner fa-5x"></i></div>
     <the-editor-toolbar
+      :eventBus="eventBus"
       @insertPrimaryNote="insertPrimaryNote"
       @insertSecondaryNote="insertSecondaryNote"
       @insertTertiaryNote="insertTertiaryNote"
@@ -94,6 +95,7 @@ export default {
       storageProvider: undefined,
     };
   },
+  props: ['eventBus'],
   computed: {
     ...mapGetters({
       pageBreakIndexes: 'editor/pageBreakIndexes',

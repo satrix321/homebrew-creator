@@ -25,6 +25,7 @@ export default {
   .dropdown__button {
     font-family: $site-font;
     font-size: 10pt;
+    white-space: nowrap;
   }
 
   .dropdown__content {

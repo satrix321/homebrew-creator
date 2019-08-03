@@ -31,6 +31,7 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 
   &:hover {
     background-color: $button-background-hover-color;

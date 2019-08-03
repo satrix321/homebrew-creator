@@ -1,103 +1,111 @@
 <template>
   <div class="toolbar">
 
-    <dropdown-menu>
-      <template slot="dropdown-button">
-        <i class="fas fa-sticky-note"></i> Notes
-      </template>
-      <template slot="dropdown-content">
-        <dropdown-item @click="insertPrimaryNote"><i style="color: rgb(218, 230, 191);" class="fas fa-sticky-note"></i> Primary</dropdown-item>
-        <dropdown-item @click="insertSecondaryNote"><i style="color: rgb(220, 207, 172);" class="fas fa-sticky-note"></i> Secondary</dropdown-item>
-        <dropdown-item @click="insertTertiaryNote"><i style="color: rgb(231, 227, 239);" class="fas fa-sticky-note"></i> Tertiary</dropdown-item>
-        <dropdown-item @click="insertNewspaperNote"><i style="color: rgb(244, 244, 226)" class="fas fa-sticky-note"></i> Newspaper</dropdown-item>
-        <dropdown-item @click="insertHandwrittenNote"><i style="color: rgb(244, 244, 236)" class="fas fa-sticky-note"></i> Handwritten</dropdown-item>
-      </template>
-    </dropdown-menu>
+    <div @click="openMenu" class="toolbar__collapsible-group" :class="{ 'toolbar__collapsible-group--is-collapsed': isCollapsed, 'toolbar__collapsible-group--is-open': isMenuOpen }" ref="collapsibleGroup">
 
-    <toolbar-separator/>
+      <button-item class="toolbar__collapsible-group-icon">
+        <i class="fas fa-bars"></i>
+      </button-item>
 
-    <dropdown-menu>
-      <template slot="dropdown-button">
-        <i class="fas fa-table"></i> Stat Blocks
-      </template>
-      <template slot="dropdown-content">
-        <dropdown-item @click="insertCocStatBlock"><i class="fas fa-table"></i> Call of Cthulhu</dropdown-item>
-        <dropdown-item @click="insertDndStatBlock"><i class="fas fa-table"></i> Dungeons & Dragons</dropdown-item>
-      </template>
-    </dropdown-menu>
+      <dropdown-menu>
+        <template slot="dropdown-button">
+          <i class="fas fa-file"></i> Pages
+        </template>
+        <template slot="dropdown-content">
+          <dropdown-item @click="insertRegularPage"><i class="fas fa-file"></i> Page</dropdown-item>
+          <dropdown-item @click="insertTwoColumnPage"><i class="fas fa-file"></i> Two Column Page</dropdown-item>
+          <dropdown-item @click="insertThreeColumnPage"><i class="fas fa-file"></i> Three Column Page</dropdown-item>
+          <dropdown-item @click="insertTitlePage"><i class="fas fa-file"></i> Title Page</dropdown-item>
+        </template>
+      </dropdown-menu>
 
-    <toolbar-separator/>
+      <toolbar-separator/>
 
-    <dropdown-menu>
-      <template slot="dropdown-button">
-        <i class="fas fa-table"></i> Tables
-      </template>
-      <template slot="dropdown-content">
-        <dropdown-item @click="insertRegularTable"><i class="fas fa-table"></i> Table</dropdown-item>
-        <dropdown-item @click="insertDndCustomTable"><i class="fas fa-table"></i> Custom DnD Table</dropdown-item>
-      </template>
-    </dropdown-menu>
+      <dropdown-menu>
+        <template slot="dropdown-button">
+          <i class="fas fa-font"></i> Fonts
+        </template>
+        <template slot="dropdown-content">
+          <dropdown-item @click="insertCustomTitlePageFont"><i class="fas fa-font"></i> Title Font</dropdown-item>
+          <dropdown-item @click="insertCustomHeadersFont"><i class="fas fa-font"></i> Headers Font</dropdown-item>
+          <dropdown-item @click="insertCustomNoteHeadersFont"><i class="fas fa-font"></i> Note Headers Font</dropdown-item>
+          <dropdown-item @click="insertCustomRegularTextFont"><i class="fas fa-font"></i> Regular Text Font</dropdown-item>
+          <dropdown-item @click="insertCustomNewspaperHeadersFont"><i class="fas fa-font"></i> Newspaper Headers Font</dropdown-item>
+          <dropdown-item @click="insertCustomNewspaperTextFont"><i class="fas fa-font"></i> Newspaper Text Font</dropdown-item>
+          <dropdown-item @click="insertCustomHandwritingFont"><i class="fas fa-font"></i> Handwriting Font</dropdown-item>
+        </template>
+      </dropdown-menu>
 
-    <toolbar-separator/>
+      <toolbar-separator/>
 
-    <dropdown-menu>
-      <template slot="dropdown-button">
-        <i class="fas fa-file"></i> Pages
-      </template>
-      <template slot="dropdown-content">
-        <dropdown-item @click="insertRegularPage"><i class="fas fa-file"></i> Page</dropdown-item>
-        <dropdown-item @click="insertTwoColumnPage"><i class="fas fa-file"></i> Two Column Page</dropdown-item>
-        <dropdown-item @click="insertThreeColumnPage"><i class="fas fa-file"></i> Three Column Page</dropdown-item>
-        <dropdown-item @click="insertTitlePage"><i class="fas fa-file"></i> Title Page</dropdown-item>
-      </template>
-    </dropdown-menu>
+      <dropdown-menu>
+        <template slot="dropdown-button">
+          <i class="fas fa-sticky-note"></i> Notes
+        </template>
+        <template slot="dropdown-content">
+          <dropdown-item @click="insertPrimaryNote"><i style="color: rgb(218, 230, 191);" class="fas fa-sticky-note"></i> Primary</dropdown-item>
+          <dropdown-item @click="insertSecondaryNote"><i style="color: rgb(220, 207, 172);" class="fas fa-sticky-note"></i> Secondary</dropdown-item>
+          <dropdown-item @click="insertTertiaryNote"><i style="color: rgb(231, 227, 239);" class="fas fa-sticky-note"></i> Tertiary</dropdown-item>
+          <dropdown-item @click="insertNewspaperNote"><i style="color: rgb(244, 244, 226)" class="fas fa-sticky-note"></i> Newspaper</dropdown-item>
+          <dropdown-item @click="insertHandwrittenNote"><i style="color: rgb(244, 244, 236)" class="fas fa-sticky-note"></i> Handwritten</dropdown-item>
+        </template>
+      </dropdown-menu>
 
-    <toolbar-separator/>
+      <toolbar-separator/>
 
-    <dropdown-menu>
-      <template slot="dropdown-button">
-        <i class="fas fa-image"></i> Images
-      </template>
-      <template slot="dropdown-content">
-        <dropdown-item @click="insertRelativeImage"><i class="fas fa-image"></i> Relative Image</dropdown-item>
-        <dropdown-item @click="insertAbsoluteImage"><i class="fas fa-image"></i> Absolute Image</dropdown-item>
-        <dropdown-item @click="insertFullPageImage"><i class="fas fa-file-image"></i> Full Page Image</dropdown-item>
-      </template>
-    </dropdown-menu>
+      <dropdown-menu>
+        <template slot="dropdown-button">
+          <i class="fas fa-table"></i> Stat Blocks
+        </template>
+        <template slot="dropdown-content">
+          <dropdown-item @click="insertCocStatBlock"><i class="fas fa-table"></i> Call of Cthulhu</dropdown-item>
+          <dropdown-item @click="insertDndStatBlock"><i class="fas fa-table"></i> Dungeons & Dragons</dropdown-item>
+        </template>
+      </dropdown-menu>
 
-    <toolbar-separator/>
+      <toolbar-separator/>
 
-    <dropdown-menu>
-      <template slot="dropdown-button">
-        <i class="fas fa-random"></i> Misc
-      </template>
-      <template slot="dropdown-content">
-        <dropdown-item @click="insertColumnBreak"><i class="fas fa-columns"></i> Column Break</dropdown-item>
-        <dropdown-item @click="insertWideBlock"><i class="fas fa-arrows-alt-h"></i> Wide Block</dropdown-item>
-        <dropdown-item @click="insertVerticalSpacing"><i class="fas fa-arrows-alt-v"></i> Vertical Spacing</dropdown-item>
-      </template>
-    </dropdown-menu>
-    
-    <toolbar-separator/>
+      <dropdown-menu>
+        <template slot="dropdown-button">
+          <i class="fas fa-table"></i> Tables
+        </template>
+        <template slot="dropdown-content">
+          <dropdown-item @click="insertRegularTable"><i class="fas fa-table"></i> Table</dropdown-item>
+          <dropdown-item @click="insertDndCustomTable"><i class="fas fa-table"></i> Custom DnD Table</dropdown-item>
+        </template>
+      </dropdown-menu>
 
-    <dropdown-menu>
-      <template slot="dropdown-button">
-        <i class="fas fa-font"></i> Fonts
-      </template>
-      <template slot="dropdown-content">
-        <dropdown-item @click="insertCustomTitlePageFont"><i class="fas fa-font"></i> Title Font</dropdown-item>
-        <dropdown-item @click="insertCustomHeadersFont"><i class="fas fa-font"></i> Headers Font</dropdown-item>
-        <dropdown-item @click="insertCustomNoteHeadersFont"><i class="fas fa-font"></i> Note Headers Font</dropdown-item>
-        <dropdown-item @click="insertCustomRegularTextFont"><i class="fas fa-font"></i> Regular Text Font</dropdown-item>
-        <dropdown-item @click="insertCustomNewspaperHeadersFont"><i class="fas fa-font"></i> Newspaper Headers Font</dropdown-item>
-        <dropdown-item @click="insertCustomNewspaperTextFont"><i class="fas fa-font"></i> Newspaper Text Font</dropdown-item>
-        <dropdown-item @click="insertCustomHandwritingFont"><i class="fas fa-font"></i> Handwriting Font</dropdown-item>
-      </template>
-    </dropdown-menu>
+      <toolbar-separator/>
 
-    <toolbar-separator/>
+      <dropdown-menu>
+        <template slot="dropdown-button">
+          <i class="fas fa-image"></i> Images
+        </template>
+        <template slot="dropdown-content">
+          <dropdown-item @click="insertRelativeImage"><i class="fas fa-image"></i> Relative Image</dropdown-item>
+          <dropdown-item @click="insertAbsoluteImage"><i class="fas fa-image"></i> Absolute Image</dropdown-item>
+          <dropdown-item @click="insertFullPageImage"><i class="fas fa-file-image"></i> Full Page Image</dropdown-item>
+        </template>
+      </dropdown-menu>
 
-    <div class="toolbar__spacer"></div>
+      <toolbar-separator/>
+
+      <dropdown-menu>
+        <template slot="dropdown-button">
+          <i class="fas fa-random"></i> Misc
+        </template>
+        <template slot="dropdown-content">
+          <dropdown-item @click="insertColumnBreak"><i class="fas fa-columns"></i> Column Break</dropdown-item>
+          <dropdown-item @click="insertWideBlock"><i class="fas fa-arrows-alt-h"></i> Wide Block</dropdown-item>
+          <dropdown-item @click="insertVerticalSpacing"><i class="fas fa-arrows-alt-v"></i> Vertical Spacing</dropdown-item>
+        </template>
+      </dropdown-menu>
+
+      <toolbar-separator/>
+
+    </div>
+
+    <div class="toolbar__spacer" ref="spacer"></div>
 
     <toolbar-separator/>
 
@@ -139,12 +147,44 @@ export default {
     DropdownItem,
     ToolbarSeparator
   },
+  data: function () {
+    return {
+      isCollapsed: false,
+      isMenuOpen: false,
+    };
+  },
+  props: ['eventBus'],
   computed: {
     ...mapGetters({
       storageProviderFileId: 'filepicker/fileId'
     })
   },
+  mounted: function () {
+    if (this.eventBus) {
+      this.eventBus.$on('resize', () => {
+        this.handleResize();
+      });
+    }
+
+    window.requestAnimationFrame(this.handleResize);
+  },
   methods: {
+    handleResize: function () {
+      if (this.isCollapsed) {
+        if (this.$refs.spacer.clientWidth >= 490) {
+          this.isCollapsed = false;
+        }
+      } else {
+        if (!this.$refs.spacer.clientWidth) {
+          this.isCollapsed = true;  
+        }
+      }
+    },
+    openMenu: function () {
+      if (this.isCollapsed) {
+        this.isMenuOpen = !this.isMenuOpen;
+      }
+    },
     insertPrimaryNote: function () { this.$emit('insertPrimaryNote'); },
     insertSecondaryNote: function () { this.$emit('insertSecondaryNote'); },
     insertTertiaryNote: function () { this.$emit('insertTertiaryNote'); },
@@ -189,6 +229,84 @@ export default {
   overflow-x: hidden;
   overflow-y: hidden;
   display: flex;
+  overflow: visible;
+
+  .toolbar__collapsible-group {
+    display: flex;
+
+    &.toolbar__collapsible-group--is-collapsed {
+      height: 30px;
+      cursor: pointer;
+      display: block;
+      z-index: 5;
+
+      &.toolbar__collapsible-group--is-open {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        > .button, > .dropdown {
+          display: initial;
+          border-bottom: 1px solid $toolbar-separator-color;
+
+          &.toolbar__collapsible-group-icon {
+            border-bottom: 0;
+
+            + * {
+              border-top: 1px solid $toolbar-separator-color;
+            }
+          }
+        }
+
+        > .dropdown {
+          position: relative;
+
+          /deep/ .dropdown__button {
+            width: 100%;
+            justify-content: left;
+          }
+
+          /deep/ .dropdown__content {
+            position: absolute;
+            top: -1px;
+            left: calc(100%);
+            white-space: nowrap;
+            border-left: 5px solid $toolbar-separator-color;
+
+            .dropdown-item {
+              height: 31px;
+            }
+          }
+          
+        }
+
+      }
+
+      > .separator, > .dropdown {
+        display: none;
+      }
+
+      > .button {
+        display: none;
+
+        &.toolbar__collapsible-group-icon {
+          display: inline-flex;
+        }
+      }
+    }
+
+    > .toolbar__collapsible-group-icon {
+      display: none;
+      width: 39px;
+      align-items: center;
+      justify-content: center;
+      color: white;
+
+      i {
+        margin: 7px 0;
+      }
+    }
+  }
 
   .toolbar__spacer {
     flex-grow: 1;

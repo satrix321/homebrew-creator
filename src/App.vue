@@ -3,10 +3,10 @@
     <div class="main">
       <split :gutterSize="10" class="splitter" @onDrag="splitDrag">
         <split-area class="split-editor" :size="50">
-          <the-editor/>
+          <the-editor :eventBus="eventBus"/>
         </split-area>
-        <split-area class="split-document" :size="50">
-          <the-document :eventBus="documentEventBus"/>
+        <split-area class="split-document" :size="50" :min-size="530">
+          <the-document :eventBus="eventBus"/>
         </split-area>
       </split>
     </div>
@@ -26,22 +26,26 @@ export default {
   },
   data: function () {
     return {
-      documentEventBus: new Vue()
+      eventBus: new Vue()
     };
   },
   created: function () {
     window.addEventListener('resize', this.windowResized);
-    window.onbeforeprint = this.onBeforePrint;
+    window.addEventListener('beforeprint', this.onBeforePrint);
+  },
+  beforeDestroy: function () {
+    window.removeEventListener('resize', this.windowResized);
+    window.removeEventListener('beforeprint', this.onBeforePrint);
   },
   methods: {
     splitDrag: function () {
-      this.documentEventBus.$emit('resize');
+      this.eventBus.$emit('resize');
     },
     windowResized: function () {
-      this.documentEventBus.$emit('resize');
+      this.eventBus.$emit('resize');
     },
     onBeforePrint: function () {
-      this.documentEventBus.$emit('onBeforePrint');
+      this.eventBus.$emit('onBeforePrint');
     }
   }
 };
