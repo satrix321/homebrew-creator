@@ -36,9 +36,11 @@ export default {
 
   .header__background {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
+  }
+
+  .header__number {
+    margin: 0;
   }
 
   &.theme--cthulhu-1 {
