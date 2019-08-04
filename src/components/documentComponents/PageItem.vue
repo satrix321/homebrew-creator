@@ -39,8 +39,16 @@ export default {
     };
   },
   created: function () {
-    if (this.pageTexturesEnabled) { this.classList.push('page--is-textured'); }
     this.classList.push(this.pageTheme);
+
+    if (this.pageTexturesEnabled) {
+      this.classList.push('page--is-textured');
+    }
+
+    if (!(this.pageNumber % 2)) {
+      this.classList.push('page--is-inverted');
+    }
+    
     if (this.pageOptions) {
       let classNames = this.pageOptions.split(' ');
       this.classList.push(classNames);
@@ -141,31 +149,49 @@ export default {
   &.page--is-textured {
     background-size: 100% 100%;
 
-    &.theme--default {
+    &.theme--default,
+    &.theme--cthulhu-1,
+    &.theme--cthulhu-2 {
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: -1;
+        background-size: 100% 100%;
+      }
+    }
+
+    &.theme--default:before {
       background-image: url('../../assets/images/texture_02.jpg');
     }
 
-    &.theme--cthulhu-1 {
+    &.theme--cthulhu-1:before {
       background-image: url('../../assets/images/texture_cthulhu_01.jpg');
     }
 
-    &.theme--cthulhu-2 {
+    &.theme--cthulhu-2:before {
       background-image: url('../../assets/images/texture_cthulhu_02.jpg');
     }
 
-    &.page--page--is-inverted {
-      &.theme--default {
-        background-image: url('../../assets/images/texture_02.jpg');
+    &.page--is-inverted {
+      &.theme--default:before {
+        transform: scaleX(-1);
       }
 
-      &.theme--cthulhu-1 {
-        background-image: url('../../assets/images/texture_cthulhu_01_inverted.jpg');
+      &.theme--cthulhu-1:before {
+        transform: scaleX(-1);
       }
 
-      &.theme--cthulhu-2 {
-        background-image: url('../../assets/images/texture_cthulhu_02_inverted.jpg');
+      &.theme--cthulhu-2:before {
+        transform: scaleX(-1);
       }
     }
+
   }
 
   &.columns-2,
