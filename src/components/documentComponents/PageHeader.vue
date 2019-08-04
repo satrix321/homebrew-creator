@@ -32,5 +32,26 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+
+  .header__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &.theme--cthulhu-1 {
+    .header__background {
+      background-image: url('../../assets/images/header_cthulhu_01.png');
+      background-repeat: no-repeat;
+      height: 10px;
+      top: 40px;
+    }
+
+    &.header--is-even .header__background {
+      transform: scaleX(-1);
+    }
+  }
 }
 </style>
