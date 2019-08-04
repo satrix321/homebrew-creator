@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div class="main">
-      <split :gutterSize="10" class="splitter" @onDrag="splitDrag">
-        <split-area class="split-editor" :size="50">
+      <split ref="split" :gutterSize="10" class="splitter" @onDrag="splitDrag">
+        <split-area class="split-editor" :size="startWidths[0]" :min-size="editorPanelMinWidth">
           <the-editor :eventBus="eventBus"/>
         </split-area>
-        <split-area class="split-document" :size="50" :min-size="530">
+        <split-area class="split-document" :size="startWidths[1]" :min-size="documentPanelMinWidth">
           <the-document :eventBus="eventBus"/>
         </split-area>
       </split>
@@ -18,6 +18,11 @@ import TheEditor from '@/components/TheEditor';
 import TheDocument from '@/components/TheDocument';
 import Vue from 'vue';
 
+// Document panel min width needs to be defined here, otherwise the valuse inside the calc
+// function would be undefined during the first calculation.
+const editorPanelMinWidth = 300;
+const documentPanelMinWidth = 530;
+
 export default {
   name: 'App',
   components: {
@@ -26,7 +31,10 @@ export default {
   },
   data: function () {
     return {
-      eventBus: new Vue()
+      eventBus: new Vue(),
+      editorPanelMinWidth,
+      documentPanelMinWidth,
+      startWidths: this.calculatePanelWidths(),
     };
   },
   created: function () {
@@ -43,9 +51,18 @@ export default {
     },
     windowResized: function () {
       this.eventBus.$emit('resize');
+      this.startWidths = this.calculatePanelWidths();
     },
     onBeforePrint: function () {
       this.eventBus.$emit('onBeforePrint');
+    },
+    calculatePanelWidths: function () {
+      if (document.body.clientWidth * 0.5 >= documentPanelMinWidth) {
+        return [50, 50];
+      } else {
+        let documentWidth = Math.round((documentPanelMinWidth / document.body.clientWidth) * 100);
+        return [100 - documentWidth, documentWidth];
+      }
     }
   }
 };
