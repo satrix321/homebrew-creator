@@ -31,6 +31,7 @@ export default {
   display: flex;
   align-items: center;
   border-top: 1px solid $toolbar-separator-color;
+  white-space: nowrap;
 
   &:hover {
     background-color: $button-background-hover-color;

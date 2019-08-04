@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <div class="main">
-      <split ref="split" :gutterSize="10" class="splitter" @onDrag="splitDrag">
+      <split ref="split" :gutterSize="gutterSize" class="splitter" @onDrag="splitDrag">
         <split-area class="split-editor" :size="startWidths[0]" :min-size="editorPanelMinWidth">
-          <the-editor :eventBus="eventBus"/>
+          <the-editor :eventBus="eventBus" @switchView="switchToDocument"/>
         </split-area>
         <split-area class="split-document" :size="startWidths[1]" :min-size="documentPanelMinWidth">
-          <the-document :eventBus="eventBus"/>
+          <the-document :eventBus="eventBus" @switchView="switchToEditor"/>
         </split-area>
       </split>
     </div>
@@ -17,11 +17,14 @@
 import TheEditor from '@/components/TheEditor';
 import TheDocument from '@/components/TheDocument';
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
+import { breakpoint, STATE_ENUM } from '@/modules/globals';
 
 // Document panel min width needs to be defined here, otherwise the valuse inside the calc
 // function would be undefined during the first calculation.
 const editorPanelMinWidth = 300;
-const documentPanelMinWidth = 530;
+const documentPanelMinWidth = 540;
+const defaultGutterSize = 10;
 
 export default {
   name: 'App',
@@ -34,27 +37,50 @@ export default {
       eventBus: new Vue(),
       editorPanelMinWidth,
       documentPanelMinWidth,
-      startWidths: this.calculatePanelWidths(),
+      gutterSize: defaultGutterSize,
+      startWidths: [50, 50],
     };
   },
+  computed: {
+    ...mapGetters({
+      state: 'app/state',
+    }),
+  },
   created: function () {
-    window.addEventListener('resize', this.windowResized);
     window.addEventListener('beforeprint', this.onBeforePrint);
+    window.addEventListener('resize', this.windowResized);
+
+    if (this.state === STATE_ENUM.EDITOR) {
+      this.switchToEditor();
+    } else {
+      this.startWidths = this.calculatePanelWidths();
+    }
   },
   beforeDestroy: function () {
-    window.removeEventListener('resize', this.windowResized);
     window.removeEventListener('beforeprint', this.onBeforePrint);
+    window.removeEventListener('resize', this.windowResized);
   },
   methods: {
     splitDrag: function () {
       this.eventBus.$emit('resize');
     },
-    windowResized: function () {
-      this.eventBus.$emit('resize');
-      this.startWidths = this.calculatePanelWidths();
-    },
     onBeforePrint: function () {
       this.eventBus.$emit('onBeforePrint');
+    },
+    windowResized: function () {
+      this.eventBus.$emit('resize');
+      let isMobile = document.body.clientWidth <= breakpoint;
+      if (isMobile) {
+        if (this.state === STATE_ENUM.DESKTOP) {
+          this.switchToEditor();
+        }
+      } else {
+        this.$store.commit('app/setState', STATE_ENUM.DESKTOP);
+        this.gutterSize = defaultGutterSize;
+        this.editorPanelMinWidth = editorPanelMinWidth;
+        this.documentPanelMinWidth = documentPanelMinWidth;
+        this.startWidths = this.calculatePanelWidths();
+      }
     },
     calculatePanelWidths: function () {
       if (document.body.clientWidth * 0.5 >= documentPanelMinWidth) {
@@ -63,6 +89,20 @@ export default {
         let documentWidth = Math.round((documentPanelMinWidth / document.body.clientWidth) * 100);
         return [100 - documentWidth, documentWidth];
       }
+    },
+    switchToEditor: function () {
+      this.gutterSize = 0;
+      this.editorPanelMinWidth = 0;
+      this.documentPanelMinWidth = 0;
+      this.$store.commit('app/setState', STATE_ENUM.EDITOR);
+      this.startWidths = [100, 0];
+    },
+    switchToDocument: function () {
+      this.gutterSize = 0;
+      this.editorPanelMinWidth = 0;
+      this.documentPanelMinWidth = 0;
+      this.$store.commit('app/setState', STATE_ENUM.DOCUMENT);
+      this.startWidths = [0, 100];
     }
   }
 };

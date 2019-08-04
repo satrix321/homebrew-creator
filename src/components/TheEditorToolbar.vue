@@ -113,7 +113,7 @@
 
     <toolbar-separator/>
 
-    <dropdown-menu>
+    <dropdown-menu :alignToRight="true">
       <template slot="dropdown-button">
         <i class="fas fa-file"></i> File
       </template>
@@ -125,9 +125,13 @@
       </template>
     </dropdown-menu>
 
-    <toolbar-separator/>
+    <toolbar-separator class="desktop-only"/>
 
-    <button-item @click="scrollToPage"><i class="fas fa-arrows-alt-v"></i> Locate</button-item>    
+    <button-item class="desktop-only" @click="scrollToPage"><i class="fas fa-arrows-alt-v"></i> Locate</button-item>
+
+    <toolbar-separator class="mobile-only"/>
+
+    <button-item class="mobile-only switch-button" @click="switchView"><i class="fas fa-eye"></i></button-item>
     
   </div>
 </template>
@@ -138,6 +142,8 @@ import DropdownMenu from '@/components/DropdownMenu';
 import DropdownItem from '@/components/DropdownItem';
 import ToolbarSeparator from '@/components/ToolbarSeparator';
 import { mapGetters } from 'vuex';
+
+const uncollapseWidth = 490;
 
 export default {
   name: 'TheEditorToolbar',
@@ -171,7 +177,7 @@ export default {
   methods: {
     handleResize: function () {
       if (this.isCollapsed) {
-        if (this.$refs.spacer.clientWidth >= 490) {
+        if (this.$refs.spacer.clientWidth >= uncollapseWidth) {
           this.isCollapsed = false;
         }
       } else {
@@ -216,7 +222,8 @@ export default {
     uploadGoogleDriveFile: function () { this.$emit('uploadGoogleDriveFile'); },
     downloadFile: function () { this.$emit('downloadFile'); },
     uploadFile: function () { this.$emit('uploadFile'); },
-    scrollToPage: function () { this.$emit('scrollToPage'); }
+    scrollToPage: function () { this.$emit('scrollToPage'); },
+    switchView: function () { this.isMenuOpen = false; this.$emit('switchView'); }
   }
 };
 </script>
@@ -230,6 +237,26 @@ export default {
   overflow-y: hidden;
   display: flex;
   overflow: visible;
+
+  .desktop-only {
+    @media screen and (max-width: $breakpoint) {
+      display: none;
+    }
+  }
+
+  .mobile-only {
+    @media screen and (min-width: $breakpoint + 1) {
+      display: none;
+    }
+  }
+
+  .switch-button {
+    width: 40px;
+
+    i {
+      margin-right: 0;
+    }
+  }
 
   .toolbar__collapsible-group {
     display: flex;

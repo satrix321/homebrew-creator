@@ -1,9 +1,12 @@
 <template>
   <div class="document">
-    <the-document-toolbar 
+    <the-document-toolbar
+      :eventBus="eventBus"
       @zoomChanged="zoomChanged"
       @scrollToCursor="scrollToCursor"
-      @getPDF="getPDF"/>
+      @getPDF="getPDF"
+      @switchView="switchView"
+    />
     <div ref="pagesContainer" class="document__pages-container">
       <div @change="checkOverflow" ref="pages" class="document__pages">
         <spacer-item/>
@@ -29,6 +32,7 @@ import SpacerItem from '@/components/documentComponents/SpacerItem';
 import PageItem from '@/components/documentComponents/PageItem';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
+import { STATE_ENUM } from '@/modules/globals';
 
 import Vue from 'vue';
 
@@ -46,6 +50,37 @@ export default {
     };
   },
   props: ['eventBus'],
+  computed: {
+    ...mapGetters({
+      editorCurrentPageIndex: 'editor/currentPageIndex',
+
+      rawCode: 'editor/rawCode',
+
+      pageTexturesEnabled: 'document/pageTexturesEnabled',
+      noteTexturesEnabled: 'document/noteTexturesEnabled',
+
+      oldZoom: 'document/oldZoom',
+      zoom: 'document/zoom',
+
+      state: 'app/state',
+
+      theme: 'document/theme',
+
+      pageHeightPx: 'document/pageHeightPx',
+      pageOffsetPx: 'document/pageOffsetPx'
+    })
+  },
+  watch: {
+    rawCode: function () { this.createPages(); },
+    pageTexturesEnabled: function () { this.createPages(); },
+    noteTexturesEnabled: function () { this.createPages(); },
+    theme: function () { this.createPages(); },
+    state: function () {
+      if (this.state === STATE_ENUM.DOCUMENT) {
+        this.checkOverflow();
+      }
+    }
+  },
   mounted: function () {
     // calculate current page on scroll
     let pagesContainer = this.$refs.pagesContainer;
@@ -66,30 +101,6 @@ export default {
     } else {
       console.error('event bus (Main <-> Document) not instantiated');
     }
-  },
-  computed: {
-    ...mapGetters({
-      editorCurrentPageIndex: 'editor/currentPageIndex',
-
-      rawCode: 'editor/rawCode',
-
-      pageTexturesEnabled: 'document/pageTexturesEnabled',
-      noteTexturesEnabled: 'document/noteTexturesEnabled',
-
-      oldZoom: 'document/oldZoom',
-      zoom: 'document/zoom',
-
-      theme: 'document/theme',
-
-      pageHeightPx: 'document/pageHeightPx',
-      pageOffsetPx: 'document/pageOffsetPx'
-    })
-  },
-  watch: {
-    rawCode: function () { this.createPages(); },
-    pageTexturesEnabled: function () { this.createPages(); },
-    noteTexturesEnabled: function () { this.createPages(); },
-    theme: function () { this.createPages(); }
   },
   methods: {
     createPages: function () {
@@ -189,6 +200,9 @@ export default {
     },
     getPDF: function () {
       window.print();
+    },
+    switchView: function () {
+      this.$emit('switchView');
     }
   }
 };

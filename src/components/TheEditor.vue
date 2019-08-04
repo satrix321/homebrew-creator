@@ -35,7 +35,9 @@
       @uploadGoogleDriveFile="uploadGoogleDriveFile"
       @downloadFile="downloadFile"
       @uploadFile="uploadFile"
-      @scrollToPage="scrollToPage"/>
+      @scrollToPage="scrollToPage"
+      @switchView="switchView"
+    />
     <codemirror ref="editor" :options="codeMirrorOptions" 
       @input="codeChange" 
       @cursorActivity="cursorPositionChange"/>
@@ -431,6 +433,9 @@ export default {
         document.body.removeChild(element);
       };
       element.click();
+    },
+    switchView: function () {
+      this.$emit('switchView');
     }
   }
 };
