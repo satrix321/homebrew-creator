@@ -76,7 +76,7 @@ export default {
     noteTexturesEnabled: function () { this.createPages(); },
     theme: function () { this.createPages(); },
     state: function () {
-      if (this.state === STATE_ENUM.DOCUMENT) {
+      if (this.state === STATE_ENUM.DOCUMENT || this.state === STATE_ENUM.DESKTOP) {
         this.checkOverflow();
       }
     }
