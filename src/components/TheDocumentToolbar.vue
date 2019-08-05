@@ -1,38 +1,35 @@
 <template>
   <div class="toolbar">
 
-    <div @click="openMenu" class="toolbar__collapsible-group" :class="{ 'toolbar__collapsible-group--is-collapsed': isCollapsed, 'toolbar__collapsible-group--is-open': isMenuOpen }" ref="collapsibleGroup">
+    <dropdown-menu>
+      <template slot="dropdown-button">
+        <i class="fas fa-bars toolbar__menu"></i>
+      </template>
+      <template slot="dropdown-content">
+        
+        <dropdown-menu>
+          <template slot="dropdown-button">
+            <i class="fas fa-image"></i> Theme
+          </template>
+          <template slot="dropdown-content">
+            <dropdown-item :is-clicked="theme === 'theme--default'" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</dropdown-item>
+            <dropdown-item :is-clicked="theme === 'theme--cthulhu-1'" @click="toggleCthulhu1Theme"><i class="fas fa-image"></i> Cthulhu 1</dropdown-item>
+            <dropdown-item :is-clicked="theme === 'theme--cthulhu-2'" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</dropdown-item>
+          </template>
+        </dropdown-menu>
 
-      <button-item class="toolbar__collapsible-group-icon">
-        <i class="fas fa-bars"></i>
-      </button-item>
+        <dropdown-menu>
+          <template slot="dropdown-button">
+            <i class="fas fa-image"></i> Textures
+          </template>
+          <template slot="dropdown-content">
+            <dropdown-item :is-clicked="pageTexturesEnabled" @click="togglePageTextures"><i class="fas fa-image"></i> Pages</dropdown-item>
+            <dropdown-item :is-clicked="noteTexturesEnabled" @click="toggleNoteTextures"><i class="fas fa-file"></i> Notes</dropdown-item>
+          </template>
+        </dropdown-menu>
 
-      <dropdown-menu>
-        <template slot="dropdown-button">
-          <i class="fas fa-image"></i> Theme
-        </template>
-        <template slot="dropdown-content">
-          <dropdown-item :is-clicked="theme === 'theme--default'" @click="toggleDefaultTheme"><i class="fas fa-image"></i> Default</dropdown-item>
-          <dropdown-item :is-clicked="theme === 'theme--cthulhu-1'" @click="toggleCthulhu1Theme"><i class="fas fa-image"></i> Cthulhu 1</dropdown-item>
-          <dropdown-item :is-clicked="theme === 'theme--cthulhu-2'" @click="toggleCthulhu2Theme"><i class="fas fa-image"></i> Cthulhu 2</dropdown-item>
-        </template>
-      </dropdown-menu>
-
-      <toolbar-separator/>
-
-      <dropdown-menu>
-        <template slot="dropdown-button">
-          <i class="fas fa-image"></i> Textures
-        </template>
-        <template slot="dropdown-content">
-          <dropdown-item :is-clicked="pageTexturesEnabled" @click="togglePageTextures"><i class="fas fa-image"></i> Pages</dropdown-item>
-          <dropdown-item :is-clicked="noteTexturesEnabled" @click="toggleNoteTextures"><i class="fas fa-file"></i> Notes</dropdown-item>
-        </template>
-      </dropdown-menu>
-
-      <toolbar-separator/>
-
-    </div>
+      </template>
+    </dropdown-menu>
 
     <div class="toolbar__spacer" ref="spacer"></div>
 
@@ -82,9 +79,6 @@ import DropdownMenu from '@/components/DropdownMenu';
 import DropdownItem from '@/components/DropdownItem';
 import ToolbarSeparator from '@/components/ToolbarSeparator';
 import { mapGetters } from 'vuex';
-import { STATE_ENUM } from '@/modules/globals';
-
-const uncollapseWidth = 140;
 
 export default {
   name: 'TheDocumentToolbar',
@@ -93,12 +87,6 @@ export default {
     DropdownMenu,
     DropdownItem,
     ToolbarSeparator
-  },
-  data: function () {
-    return {
-      isCollapsed: false,
-      isMenuOpen: false,
-    };
   },
   props: ['eventBus'],
   computed: {
@@ -113,20 +101,6 @@ export default {
       documentCurrentPageNumber: 'document/currentPageNumber',
       pageCount: 'editor/pageCount'
     })
-  },
-  mounted: function () {
-    if (this.eventBus) {
-      this.eventBus.$on('resize', () => {
-        this.handleResize();
-      });
-    }
-  },
-  watch: {
-    state: function () {
-      if (this.state === STATE_ENUM.DOCUMENT) {
-        this.handleResize();
-      }
-    }
   },
   methods: {
     setZoom: function (zoom) {
@@ -166,22 +140,6 @@ export default {
       this.isMenuOpen = false;
       this.$emit('switchView');
     },
-    handleResize: function () {
-      if (this.isCollapsed) {
-        if (this.$refs.spacer.clientWidth >= uncollapseWidth) {
-          this.isCollapsed = false;
-        }
-      } else {
-        if (!this.$refs.spacer.clientWidth) {
-          this.isCollapsed = true;  
-        }
-      }
-    },
-    openMenu: function () {
-      if (this.isCollapsed) {
-        this.isMenuOpen = !this.isMenuOpen;
-      }
-    }
   }
 };
 </script>
@@ -216,85 +174,13 @@ export default {
     }
   }
 
-  .toolbar__collapsible-group {
-    display: flex;
-
-    &.toolbar__collapsible-group--is-collapsed {
-      height: 30px;
-      cursor: pointer;
-      display: block;
-      z-index: 5;
-
-      &.toolbar__collapsible-group--is-open {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-
-        > .button, > .dropdown {
-          display: initial;
-          border-bottom: 1px solid $toolbar-separator-color;
-
-          &.toolbar__collapsible-group-icon {
-            border-bottom: 0;
-
-            + * {
-              border-top: 1px solid $toolbar-separator-color;
-            }
-          }
-        }
-
-        > .dropdown {
-          position: relative;
-
-          /deep/ .dropdown__button {
-            width: 100%;
-            justify-content: left;
-          }
-
-          /deep/ .dropdown__content {
-            position: absolute;
-            top: -1px;
-            left: calc(100%);
-            white-space: nowrap;
-            border-left: 5px solid $toolbar-separator-color;
-
-            .dropdown-item {
-              height: 31px;
-            }
-          }
-          
-        }
-
-      }
-
-      > .separator, > .dropdown {
-        display: none;
-      }
-
-      > .button {
-        display: none;
-
-        &.toolbar__collapsible-group-icon {
-          display: inline-flex;
-        }
-      }
-    }
-
-    > .toolbar__collapsible-group-icon {
-      display: none;
-      width: 39px;
-      align-items: center;
-      justify-content: center;
-      color: white;
-
-      i {
-        margin: 7px 0;
-      }
-    }
-  }
-
   .toolbar__spacer {
     flex-grow: 1;
+  }
+
+  .toolbar__menu {
+    margin: 0;
+    width: 23px;
   }
 
   i {
