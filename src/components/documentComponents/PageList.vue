@@ -35,6 +35,7 @@ export default {
           if (i === this.listComponents.length - 1) {
             this.listComponents[i].classList.push('last');
           }
+
           let listItem = document.createElement('li');
           listItem.appendChild(this.listComponents[i].$el);
           list.appendChild(listItem);
@@ -47,4 +48,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.list {
+  margin-bottom: 10px;
+
+  ul, ol {
+    margin-bottom: 0;
+  }
+
+  ol /deep/ li,
+  ul /deep/ li {
+    font-size: 9pt;
+  }
+
+  /deep/ .list {
+    margin-bottom: 0;
+  }
+}
 </style>

@@ -12,7 +12,8 @@
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
             "sourceMapPathOverrides": {
-                "webpack:///src/*": "${webRoot}/*"
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///./src/modules/*": "${webRoot}/modules/*",
             }
         },
         {

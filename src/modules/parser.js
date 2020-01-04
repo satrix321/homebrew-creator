@@ -36,6 +36,7 @@ let parse = function (markdown, options) {
   let listTypes = [];
   let componentStack = [];
   let tokens = marked.lexer(markdown);
+  console.log(tokens);
 
   componentStack.last = function () {
     if (this.length > 0) {

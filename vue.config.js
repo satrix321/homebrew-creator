@@ -14,7 +14,7 @@ module.exports = {
     }
   },
   configureWebpack: {
-    devtool: 'eval-source-map'
+    devtool: 'inline-source-map'
   },
   devServer: {
     port: 8080
