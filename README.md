@@ -4,7 +4,7 @@
 
 A simple web-based tool for creating homebrews using markdown. 
 
-To avoid any display problems you should use **Chrome** browser, otherwise some things may not display correctly and printing won't work.
+For this project to work correctly it is recommended to use the latest version of Chrome or Firefox.
 
 ## Live preview
 
