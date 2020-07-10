@@ -6,6 +6,8 @@
 
 ##### A markdown editor for creating homebrew for various RPG systems.
 
+<img class="image image--fullpage" src="https://satrix321.github.io/Homebrew-Creator/showcase-background.jpg"/>
+
 \page[columns-2]
 
 ## Pages
@@ -126,11 +128,7 @@ ___
 
 ## Images
 
-### Relative Images
-
-### Absolute Images
-
-### Full Page Images
+<image width="200" src="https://satrix321.github.io/Homebrew-Creator/showcase-image.png"/>
 
 ## Fonts
 

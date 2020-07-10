@@ -128,8 +128,6 @@ export default {
           isTitlePage = pagesOptions[pageNumber - 1].match(/title/) ? true : false;
         }
 
-        // console.log(columnCount);
-
         let page = {
           pageNumber: pageNumber,
           pageTexturesEnabled: this.pageTexturesEnabled,

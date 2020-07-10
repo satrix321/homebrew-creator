@@ -39,8 +39,6 @@ export default {
     };
   },
   created: function () {
-    console.log(this.columnCount);
-    // console.log(this.pageNumber);
     this.classList.push(this.pageTheme);
 
     if (this.pageTexturesEnabled) {
