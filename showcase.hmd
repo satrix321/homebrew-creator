@@ -4,12 +4,9 @@
 
 # Homebrew Creator
 
-##### A mardkwon RPG editor
-
+##### A markdown editor for creating homebrew for various RPG systems.
 
 \page[columns-2]
-
-A markdown editor for creating homebrew for various RPG systems.
 
 ## Pages
 
@@ -67,15 +64,39 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor ni
 
 \page[columns-2]
 
-## Images
-
-### Relative Images
-
-### Absolute Images
-
-### Full Page Images
-
 ## Stat Blocks
+
+### Dungeon & Dragons
+
+<pre markdown="1" class="stat-block stat-block--dnd">
+# Animated armor
+*Medium construct, unaligned*
+___
+* **Armor Class 18** (natural armor)
+* **Hit Points 33** (6d8 + 6)
+* **Speed** 25 ft.
+___
+|STR|DEX|CON|INT|WIS|CHA|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|14 (+2)|11 (+0)|13 (+1)|1 (-5)|3 (-4)|1 (-5)|
+
+___
+* **Damage Immunities** poison, psychic
+* **Condition Immunities** blinded, charmed, deafened, exhaustion, frightened, paralyzed, petrified, poisoned
+* **Senses** blindsight 60 ft. (blind beyond this radius), passive Perception 6
+* **Languages** ---
+* **Challenge** 1 (200XP)
+___
+***Antimagic Susceptibility.*** The armor is incapacitated while in the area of an antimagic field. If targeted by dispel magic, the armor must succeed on a Constituion saving throw against the caster's spell save DC or fall unconscious for 1 minute.
+
+***False Appearance***. While the armor remains motionless, it is indistinguishable from a normal suit of armor.
+
+## Actions
+
+***Multiattack.*** The armor makes two melee attacks.
+
+***Slam.*** *Melee Weapon Attack:* +4 to hit, reach 5ft., one target. *Hit:* 5 (1d6 + 2) bludgeoning damage.
+</pre>
 
 ### Call of Cthulhu
 
@@ -100,6 +121,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor ni
 |**Languages:** English 00%, French 00%.|
 </pre>
 
+```
+```
+
+## Images
+
+### Relative Images
+
+### Absolute Images
+
+### Full Page Images
 
 ## Fonts
 
@@ -121,19 +152,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor ni
 >
 > Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-\page[columns-2]
-
-## Column Breaks
-
-Before column break.
-
-```
-```
-
-After column break.
-
 ## Themes
 
-Currently we're supporting multiple themes
-
-\page[columns-2]
+Currently we're supporting multiple themes, you can choose between them in the top menu on the right side view.

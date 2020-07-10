@@ -12,7 +12,6 @@ export default {
     html: { type: String, required: true },
     pageTheme: { type: String, required: true },
     noteTexturesEnabled: { type: Boolean, required: true },
-    columnCount: { type: Number, required: true },
   },
   data: function () {
     return {

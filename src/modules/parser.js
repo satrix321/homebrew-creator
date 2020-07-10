@@ -28,7 +28,7 @@ function countOccurrences (array, item) {
   return occurrences;
 }
 
-let parse = function (markdown, options) {
+const parse = function (markdown, options) {
   let createdComponents = [];
   let outputComponents = [];
 
@@ -36,7 +36,6 @@ let parse = function (markdown, options) {
   let listTypes = [];
   let componentStack = [];
   let tokens = marked.lexer(markdown);
-  console.log(tokens);
 
   componentStack.last = function () {
     if (this.length > 0) {

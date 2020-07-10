@@ -38,7 +38,7 @@
       @scrollToPage="scrollToPage"
       @switchView="switchView"
     />
-    <codemirror ref="editor" :options="codeMirrorOptions" 
+    <codemirror ref="editor" :options="codeMirrorOptions"
       @input="codeChange" 
       @cursorActivity="cursorPositionChange"/>
     <the-file-picker ref="filePicker" 
@@ -169,6 +169,8 @@ export default {
     this.$refs.editor.codemirror.setOption('extraKeys', {
       'Ctrl-/': this.commentText.bind(this)
     });
+
+    this.insertData(this.rawCode + ' ', this.getCursorPosition());
   },
   methods: {
     insertPrimaryNote: function () { this.insertData(this.primaryNoteSnippet, this.getCursorPosition()); },

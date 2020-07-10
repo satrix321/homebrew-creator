@@ -101,6 +101,8 @@ export default {
     } else {
       console.error('event bus (Main <-> Document) not instantiated');
     }
+
+    this.createPages();
   },
   methods: {
     createPages: function () {
@@ -125,6 +127,8 @@ export default {
 
           isTitlePage = pagesOptions[pageNumber - 1].match(/title/) ? true : false;
         }
+
+        // console.log(columnCount);
 
         let page = {
           pageNumber: pageNumber,
