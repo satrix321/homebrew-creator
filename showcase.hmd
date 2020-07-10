@@ -41,6 +41,15 @@
 |**bold**|**bold**|**bold**|
 |***bold italic***|***bold italic***|***bold italic***|
 
+<div style="height: 20px;"/>
+
+<pre markdown="1" class="custom-table custom-table--dnd">
+|Header 1|Header 2|Header 3|
+|-|:-:|-:|
+|aaa|bbb|ccc|
+|aaa|bbb|ccc|
+</pre>
+
 ```
 ```
 
