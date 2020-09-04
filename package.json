@@ -30,7 +30,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^6.1.2",
     "gh-pages": "2.0.1",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "sass-loader": "^8.0.0",
     "tar": "^5.0.5",
     "vue-template-compiler": "^2.6.11"
