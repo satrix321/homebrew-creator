@@ -13,22 +13,29 @@ export default {
       required: true,
       validator: function (value) {
         return [1, 2, 3, 4, 5, 6].indexOf(value) !== -1;
-      }
+      },
     },
-    pageTheme: { type: String, requried: true },
-    isTitlePage: { type: Boolean, required: false, default: false }
+    pageTheme: {
+      type: String,
+      requried: true,
+    },
+    isTitlePage: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
       tag: 'h' + this.depth,
       classList: [ this.pageTheme ]
     };
   },
-  created: function () {
+  created() {
     if (this.isTitlePage) {
       this.classList.push('heading--is-title');
     }
-  }
+  },
 };
 </script>
 

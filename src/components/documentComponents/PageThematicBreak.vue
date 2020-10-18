@@ -6,13 +6,16 @@
 export default {
   name: 'PageThematicBreak',
   props: {
-    pageTheme: { type: String, required: true }
+    pageTheme: {
+      type: String,
+      required: true,
+    },
   },
-  data: function () {
+  data() {
     return {
-      classList: [ this.pageTheme ]
+      classList: [ this.pageTheme ],
     };
-  }
+  },
 };
 </script>
 

@@ -6,29 +6,39 @@
 export default {
   name: 'PageColumnBreak',
   props: {
-    pageWorkAreaHeight: { type: Number, required: false, default: 0 },
-    precedingComponents: { type: Array, required: false, default: undefined },
+    pageWorkAreaHeight: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    precedingComponents: {
+      type: Array,
+      required: false,
+      default: undefined,
+    },
   },
-  data: function () {
+  data() {
     return {
       pageBreakHeight: '',
     };
   },
-  mounted: function () {
+  mounted() {
     window.requestAnimationFrame(this.calculateHeight);
   },
   methods: {
-    calculateHeight: function () {
+    calculateHeight() {
       if (this.pageWorkAreaHeight && this.precedingComponents) {
         let componentsHeight = 0;
-        for (let component of this.precedingComponents) {
-          let computedStyles = window.getComputedStyle(component.$el);
+
+        for (const component of this.precedingComponents) {
+          const computedStyles = window.getComputedStyle(component.$el);
           componentsHeight += component.$el.offsetHeight + parseInt(computedStyles.marginTop) + parseInt(computedStyles.marginBottom);
         }
-        this.pageBreakHeight = this.pageWorkAreaHeight - componentsHeight + 'px';
+
+        this.pageBreakHeight = (this.pageWorkAreaHeight - componentsHeight) + 'px';
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

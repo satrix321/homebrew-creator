@@ -9,31 +9,41 @@ import parser from '@/modules/parser';
 export default {
   name: 'PageHtml',
   props: {
-    html: { type: String, required: true },
-    pageTheme: { type: String, required: true },
-    noteTexturesEnabled: { type: Boolean, required: true },
+    html: {
+      type: String,
+      required: true,
+    },
+    pageTheme: {
+      type: String,
+      required: true,
+    },
+    noteTexturesEnabled: {
+      type: Boolean,
+      required: true,
+    },
   },
-  data: function () {
+  data() {
     return {
       createdComponents: [],
-      classList: [ this.pageTheme ]
+      classList: [ this.pageTheme ],
     };
   },
-  created: function () {
+  created() {
     if (this.noteTexturesEnabled) {
       this.classList.push('custom-html--textured');
     }
   },
-  mounted: function () {
+  mounted() {
     this.$refs.content.innerHTML = this.html;
-    let markdownBlocks = this.$refs.content.querySelectorAll('[markdown="1"]');
+    const markdownBlocks = this.$refs.content.querySelectorAll('[markdown="1"]');
 
-    for (let block of markdownBlocks) {
+    for (const block of markdownBlocks) {
       let result = parser(block.innerHTML, {
         theme: this.pageTheme, 
         noteTexturesEnabled: this.noteTexturesEnabled
       });
-      this.createdComponents = result.createdComponents;
+
+      this.createdComponents = [].concat(this.createdComponents, result.createdComponents);
 
       for (let i = 0; i < this.createdComponents.length; i++) {
         if (i === 0) {
@@ -45,22 +55,19 @@ export default {
         this.createdComponents[i].$mount();
       }
 
-      for (let component of this.createdComponents) {
-        component.$mount();
-      }
-
       block.innerHTML = '';
-      for (let outputComponent of result.outputComponents) {
+
+      for (const outputComponent of result.outputComponents) {
         block.appendChild(outputComponent.$el);
       }
     }
   },
-  destroyed: function () {
-    for (let i = 0; i < this.createdComponents.length; i++) {
-      this.createdComponents[i].$destroy();
+  destroyed() {
+    for (const component of this.createdComponents) {
+      component.$destroy();
     }
     this.createdComponents = [];
-  }
+  },
 };
 </script>
 
@@ -78,14 +85,14 @@ export default {
         color: $page-prop-handwritten-color;
       }
 
-      border-radius: 0px;
+      border-radius: 0;
       border: 20px solid transparent;
       border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
       clip-path: polygon(
-        0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
-        calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
+        0 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0,
+        calc(100% - 14px) 0, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
         100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
-        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0 calc(100% - 14px));
 
       &::before {
         display: none;
@@ -116,14 +123,14 @@ export default {
         color: $page-prop-newspaper-color;
       }
 
-      border-radius: 0px;
+      border-radius: 0;
       border: 20px solid transparent;
       border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
       clip-path: polygon(
-        0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
-        calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
+        0 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0,
+        calc(100% - 14px) 0, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
         100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
-        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0 calc(100% - 14px));
 
       &::before {
         display: none;
@@ -186,7 +193,7 @@ export default {
       margin-bottom: 0;
 
       &.stat-block--dnd {
-        box-shadow: 0px 0px 10px #727159;
+        box-shadow: 0 0 10px #727159;
         background-image: url('../../assets/images/texture_02.jpg');
         position: relative;
 
@@ -289,7 +296,7 @@ export default {
 
       &.stat-block--cthulhu {
         border: none;
-        box-shadow: 0px 0px 1px gray;
+        box-shadow: 0 0 1px gray;
 
         table {
           width: calc(100% + 1px);
@@ -314,7 +321,7 @@ export default {
 
           &:nth-child(2) {
             th {
-              padding: 0px 5px;
+              padding: 0 5px;
             }
 
             td {
@@ -347,7 +354,7 @@ export default {
           }
 
           &:last-child {
-            margin-bottom: 0px;
+            margin-bottom: 0;
           }
 
           th {

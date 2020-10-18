@@ -67,11 +67,11 @@ export default {
     })
   },
   watch: {
-    rawCode: function () { this.createPages(); },
-    pageTexturesEnabled: function () { this.createPages(); },
-    noteTexturesEnabled: function () { this.createPages(); },
-    theme: function () { this.createPages(); },
-    state: function () {
+    rawCode() { this.createPages(); },
+    pageTexturesEnabled() { this.createPages(); },
+    noteTexturesEnabled() { this.createPages(); },
+    theme() { this.createPages(); },
+    state() {
       if (this.state === DISPLAY_STATE.DOCUMENT || this.state === DISPLAY_STATE.EDITOR_AND_DOCUMENT) {
         this.checkOverflow();
       }

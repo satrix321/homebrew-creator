@@ -20,7 +20,7 @@ const PageListClass = Vue.extend(PageList);
 
 const countOccurrences = (array, item) => {
   let occurrences = 0;
-  for (let value of array) {
+  for (const value of array) {
     if (value === item) {
       occurrences++;
     }
@@ -29,13 +29,13 @@ const countOccurrences = (array, item) => {
 };
 
 const parse = function (markdown, options) {
-  let createdComponents = [];
-  let outputComponents = [];
+  const createdComponents = [];
+  const outputComponents = [];
 
-  let tokenStack = [];
-  let listTypes = [];
-  let componentStack = [];
-  let tokens = marked.lexer(markdown);
+  const tokenStack = [];
+  const listStack = [];
+  const componentStack = [];
+  const tokens = marked.lexer(markdown);
 
   componentStack.last = function () {
     if (this.length > 0) {
@@ -44,13 +44,13 @@ const parse = function (markdown, options) {
     return undefined;
   };
 
-  for (let token of tokens) {
+  for (const token of tokens) {
     switch (token.type) {
       case 'space': {
         continue;
       }
       case 'hr': {
-        let thematicBreak = new PageThematicBreakClass({
+        const thematicBreak = new PageThematicBreakClass({
           propsData: { 
             pageTheme: options.theme
           }
@@ -64,7 +64,7 @@ const parse = function (markdown, options) {
         break;
       }
       case 'heading': {
-        let heading = new PageHeadingClass({
+        const heading = new PageHeadingClass({
           propsData: { 
             depth: token.depth, 
             pageTheme: options.theme,
@@ -82,7 +82,7 @@ const parse = function (markdown, options) {
       }
       case 'code': {
         if (tokenStack.length === 0) {
-          let columnBreak = new PageColumnBreakClass({
+          const columnBreak = new PageColumnBreakClass({
             propsData: {
               pageWorkAreaHeight: options.pageWorkAreaHeight,
               precedingComponents: Array.from(outputComponents),
@@ -91,14 +91,14 @@ const parse = function (markdown, options) {
           createdComponents.push(columnBreak);
           outputComponents.push(columnBreak);
         } else {
-          let columnBreak = new PageColumnBreakClass();
+          const columnBreak = new PageColumnBreakClass();
           createdComponents.push(columnBreak);
           componentStack.last().push(columnBreak);
         }
         break;
       }
       case 'table': {
-        let table = new PageTableClass({
+        const table = new PageTableClass({
           propsData: {
             headers: token.header,
             align: token.align,
@@ -122,9 +122,9 @@ const parse = function (markdown, options) {
         break;
       }
       case 'blockquote_end': {
-        let startOccurrences = countOccurrences(tokenStack, 'blockquote_start');
+        const startOccurrences = countOccurrences(tokenStack, 'blockquote_start');
         if (startOccurrences > 1) {
-          let endOccurrences = countOccurrences(tokenStack, 'blockquote_end') + 1;
+          const endOccurrences = countOccurrences(tokenStack, 'blockquote_end') + 1;
           if (startOccurrences > endOccurrences) {
             tokenStack.push('blockquote_end');
             break;
@@ -157,7 +157,7 @@ const parse = function (markdown, options) {
           }
         }
 
-        let note = new PageNoteClass({
+        const note = new PageNoteClass({
           propsData: { 
             noteType: noteType,
             components: componentStack.pop(),
@@ -177,7 +177,7 @@ const parse = function (markdown, options) {
         break;
       }
       case 'list_start': {
-        listTypes.push(token.ordered ? 'ordered' : 'unordered');
+        listStack.push(token.ordered ? 'ordered' : 'unordered');
         tokenStack.push('list_start');
         componentStack.push([]);
         break;
@@ -197,9 +197,9 @@ const parse = function (markdown, options) {
         break;
       }
       case 'list_end': {
-        let list = new PageListClass({
+        const list = new PageListClass({
           propsData: {
-            listType: listTypes.pop(),
+            listType: listStack.pop(),
             listComponents: componentStack.pop(),
             pageTheme: options.theme
           }
@@ -222,7 +222,7 @@ const parse = function (markdown, options) {
         break;
       }
       case 'html': {
-        let htmlBlock = new PageHtmlClass({
+        const htmlBlock = new PageHtmlClass({
           propsData: {
             html: token.text,
             pageTheme: options.theme,
@@ -240,7 +240,7 @@ const parse = function (markdown, options) {
       }
       case 'text' :
       case 'paragraph': {
-        let paragraph = new PageParagraphClass({
+        const paragraph = new PageParagraphClass({
           propsData: { 
             text: token.text,
             pageTheme: options.theme
@@ -259,7 +259,7 @@ const parse = function (markdown, options) {
 
   return {
     outputComponents,
-    createdComponents
+    createdComponents,
   };
 };
 

@@ -14,66 +14,91 @@
             'align-center': align[cellIndex] === 'center',
             'align-right': align[cellIndex] === 'right'
           }"
-          v-for="(cell, cellIndex) in row" :key="cellIndex" v-html="cell"/>
+          v-for="(cell, cellIndex) in row" :key="cellIndex" v-html="cell"
+        />
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+import { regexConsts } from '@/modules/globals';
+
 export default {
   name: 'PageTable',
   props: {
-    headers: { type: Array, required: true },
-    align: { type: Array, required: true },
-    cells: { type: Array, required: true },
-    pageTheme: { type: String, required: true }
+    headers: {
+      type: Array,
+      required: true,
+    },
+    align: {
+      type: Array,
+      required: true,
+    },
+    cells: {
+      type: Array,
+      required: true,
+    },
+    pageTheme: {
+      type: String,
+      required: true,
+    },
   },
-  data: function () {
+  data() {
     return {
-      classList: [ this.pageTheme ]
+      classList: [ this.pageTheme ],
     };
   },
   computed: {
-    processedHeaders: function () {
-      let output = [];
-      for (let header of this.headers) {
+    processedHeaders() {
+      const output = [];
+
+      for (const header of this.headers) {
         let outputHeader = header;
-        outputHeader = outputHeader.replace(/((?:(?!\*).)|^)\*((?:[^\s*].*?[^\s*])|[^\s*])\*(?!\*)/g, function (fullMatch, group1, group2) {
-          return `${group1}<em>${group2}</em>`;
-        });
-        outputHeader = outputHeader.replace(/((?:(?!\*).)|^)\*\*((?:[^\s*].*?[^\s*])|[^\s*])\*\*(?!\*)/g, function (fullMatch, group1, group2) {
-          return `${group1}<strong>${group2}</strong>`;
-        });
-        outputHeader = outputHeader.replace(/((?:(?!\*).)|^)\*\*\*((?:[^\s*].*?[^\s*])|[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1, group2) {
-          return `${group1}<strong><em>${group2}</em></strong>`;
-        });
+        outputHeader = outputHeader.replace(
+          regexConsts.italicTextRegex,
+          (fullMatch, group1, group2) => `${group1}<em>${group2}</em>`
+        );
+        outputHeader = outputHeader.replace(
+          regexConsts.boldTextRegex,
+          (fullMatch, group1, group2) => `${group1}<strong>${group2}</strong>`
+        );
+        outputHeader = outputHeader.replace(
+          regexConsts.italicBoldTextRegex,
+          (fullMatch, group1, group2) => `${group1}<strong><em>${group2}</em></strong>`
+        );
         output.push(outputHeader);
       }
       return output;
     },
-    processedCells: function () {
-      let output = [];
-      for (let row of this.cells) {
-        let processedRow = [];
-        for (let cell of row) {
+    processedCells() {
+      const output = [];
+
+      for (const row of this.cells) {
+        const processedRow = [];
+
+        for (const cell of row) {
           let processedCell = cell;
-          processedCell = processedCell.replace(/((?:(?!\*).)|^)\*((?:[^\s*].*?[^\s*])|[^\s*])\*(?!\*)/g, function (fullMatch, group1, group2) {
-            return `${group1}<em>${group2}</em>`;
-          });
-          processedCell = processedCell.replace(/((?:(?!\*).)|^)\*\*((?:[^\s*].*?[^\s*])|[^\s*])\*\*(?!\*)/g, function (fullMatch, group1, group2) {
-            return `${group1}<strong>${group2}</strong>`;
-          });
-          processedCell = processedCell.replace(/((?:(?!\*).)|^)\*\*\*((?:[^\s*].*?[^\s*])|[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1, group2) {
-            return `${group1}<strong><em>${group2}</em></strong>`;
-          });
+
+          processedCell = processedCell.replace(
+            regexConsts.italicTextRegex,
+            (fullMatch, group1, group2) => `${group1}<em>${group2}</em>`
+          );
+          processedCell = processedCell.replace(
+            regexConsts.boldTextRegex,
+            (fullMatch, group1, group2) => `${group1}<strong>${group2}</strong>`
+          );
+          processedCell = processedCell.replace(
+            regexConsts.italicBoldTextRegex,
+            (fullMatch, group1, group2) => `${group1}<strong><em>${group2}</em></strong>`
+          );
           processedRow.push(processedCell);
         }
         output.push(processedRow);
       }
       return output;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -110,7 +135,7 @@ table {
     }
   }
 
-  border-spacing: 0px;
+  border-spacing: 0;
   margin-bottom: 10px;
   thead {
     th {

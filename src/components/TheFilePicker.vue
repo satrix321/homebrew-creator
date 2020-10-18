@@ -56,9 +56,9 @@ export default {
   components: {
     ModalItem,
     ButtonItem,
-    InputItem
+    InputItem,
   },
-  data () {
+  data() {
     return {
       provider: undefined,
       fileList: [],
@@ -72,24 +72,24 @@ export default {
     };
   },
   methods: {
-    setProvider: function (provider) {
+    setProvider(provider) {
       this.provider = provider;
     },
-    setDownloadMode: function () {
+    setDownloadMode() {
       this.downloadMode = true;
       this.uploadMode = false;
     },
-    setUploadMode: function () {
+    setUploadMode() {
       this.downloadMode = false;
       this.uploadMode = true;
     },
-    show: async function () {
+    async show() {
       if (!this.provider) {
         alert('Storage provider not set!');
         return;
       }
 
-      let response = await this.provider.listFiles();  
+      const response = await this.provider.listFiles();  
       if (response && response.status === 200) {
         this.fileList = response.result.files.map(file => { 
           return {
@@ -107,22 +107,22 @@ export default {
       this.visible = true;
       this.$refs.modal.show();
     },
-    clearSelection: function () {
-      let selectedItem = this.$refs.fileTable.querySelector('.filepicker__row--is-selected');
+    clearSelection() {
+      const selectedItem = this.$refs.fileTable.querySelector('.filepicker__row--is-selected');
       if (selectedItem) {
         selectedItem.classList.remove('filepicker__row--is-selected');
       }
       this.selectedItem = undefined;
     },
-    clearFileName: function () {
+    clearFileName() {
       if (this.$refs.fileName) {
         this.$refs.fileName.value = '';
       }
     },
-    cancel: function () {
+    cancel() {
       this.close();
     },
-    ok: function () {
+    ok() {
       if (!this.provider) {
         alert('Storage provider not set!');
         return;
@@ -156,14 +156,14 @@ export default {
         alert('Download/Upload mode not set!');
       }
     },
-    close: function () {
+    close() {
       this.clearSelection();
       this.clearFileName();
       this.pathIdList = [];
       this.visible = false;
       this.$refs.modal.hide();
     },
-    goBack: async function () {
+    async goBack() {
       if (!this.provider) {
         alert('Storage provider not set!');
         return;
@@ -184,7 +184,7 @@ export default {
         parentId = this.pathIdList[this.pathIdList.length - 1];
       }
 
-      let response = await this.provider.listFiles(parentId);
+      const response = await this.provider.listFiles(parentId);
       if (response && response.status === 200) {
         this.fileList = response.result.files;
       } else {
@@ -195,11 +195,11 @@ export default {
       this.path = this.path.substring(0, this.path.lastIndexOf('/'));
       this.path += '/';
     },
-    itemSelected: function (event) {
+    itemSelected(event) {
       this.clearSelection();
-      let clickedRow = event.target.parentElement;
-      let selectedId = clickedRow.querySelector('.filepicker__col-id').innerHTML;
-      this.selectedItem = this.fileList.find((element) => { return element.id === selectedId; });
+      const clickedRow = event.target.parentElement;
+      const selectedId = clickedRow.querySelector('.filepicker__col-id').innerHTML;
+      this.selectedItem = this.fileList.find(element => element.id === selectedId);
       clickedRow.classList.add('filepicker__row--is-selected');
 
       if (this.uploadMode && this.selectedItem.mimeType !== this.folderMimeType) {
@@ -212,10 +212,10 @@ export default {
         this.clearFileName();
       }
     },
-    itemDeselected: function () {
+    itemDeselected() {
       this.clearSelection();
     },
-    itemOpened: function (event) {
+    itemOpened(event) {
       event.stopPropagation();
 
       if (!this.provider) {
@@ -223,11 +223,9 @@ export default {
         return;
       }
 
-      let clickedRow = event.target.parentElement;
-      let selectedId = clickedRow.querySelector('.filepicker__col-id').innerHTML;
-      this.selectedItem = this.fileList.find((element) => {
-        return element.id === selectedId;
-      });
+      const clickedRow = event.target.parentElement;
+      const selectedId = clickedRow.querySelector('.filepicker__col-id').innerHTML;
+      this.selectedItem = this.fileList.find(element => element.id === selectedId);
 
       if (this.selectedItem.mimeType === this.folderMimeType) {
         this.openFolder();
@@ -239,7 +237,7 @@ export default {
         this.close();
       }
     },
-    openFolder: async function () {
+    async openFolder() {
       if (!this.provider) {
         alert('Storage provider not set!');
         return;
@@ -247,7 +245,7 @@ export default {
       
       this.pathIdList.push(this.selectedItem.id);
 
-      let response = await this.provider.listFiles(this.selectedItem.id);
+      const response = await this.provider.listFiles(this.selectedItem.id);
       if (response && response.status === 200) {
         this.path += this.selectedItem.name + '/';
         this.selectedItem = undefined;
@@ -256,7 +254,7 @@ export default {
         alert(response);
       }
     },
-    downloadFile: function () {
+    downloadFile() {
       if (!this.provider) {
         alert('Storage provider not set!');
         return;
@@ -265,7 +263,7 @@ export default {
       this.$store.commit('filepicker/setFileId', this.selectedItem.id);
       this.$emit('downloadFile');
     },
-    uploadFile: function () {
+    uploadFile() {
       if (!this.provider) {
         alert('Storage provider not set!');
         return;
@@ -274,14 +272,10 @@ export default {
       if (this.selectedItem) {
         if (this.selectedItem.mimeType === this.folderMimeType) {
           if (this.$refs.fileName.value) {
-            let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
+            const fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
             this.$store.commit('filepicker/setFileId', this.selectedItem.id);
             this.$store.commit('filepicker/setFileName', fileName);
-            if (this.pathIdList.length > 0) {
-              this.$store.commit('filepicker/setFileParentId', this.pathIdList[this.pathIdList.length - 1]);
-            } else {
-              this.$store.commit('filepicker/setFileParentId', undefined);
-            }
+            this.$store.commit('filepicker/setFileParentId', this.pathIdList.length ? this.pathIdList[this.pathIdList.length - 1] : undefined);
           } else {
             alert('Select a file with .' + this.provider.fileExtension + ' extension');
             return;
@@ -290,20 +284,12 @@ export default {
           if (this.$refs.fileName.value && (this.$refs.fileName.value + '.' + this.provider.fileExtension === this.selectedItem.name)) {
             this.$store.commit('filepicker/setFileId', this.selectedItem.id);
             this.$store.commit('filepicker/setFileName', undefined);
-            if (this.pathIdList.length > 0) {
-              this.$store.commit('filepicker/setFileParentId', this.pathIdList[this.pathIdList.length - 1]);
-            } else {
-              this.$store.commit('filepicker/setFileParentId', undefined);
-            }
+            this.$store.commit('filepicker/setFileParentId', this.pathIdList.length ? this.pathIdList[this.pathIdList.length - 1] : undefined);
           } else if (this.$refs.fileName.value) {
-            let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
+            const fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
             this.$store.commit('filepicker/setFileId', undefined);
             this.$store.commit('filepicker/setFileName', fileName);
-            if (this.pathIdList.length > 0) {
-              this.$store.commit('filepicker/setFileParentId', this.pathIdList[this.pathIdList.length - 1]);
-            } else {
-              this.$store.commit('filepicker/setFileParentId', undefined);
-            }
+            this.$store.commit('filepicker/setFileParentId', this.pathIdList.length ? this.pathIdList[this.pathIdList.length - 1] : undefined);
           } else {
             alert('Select a file with .' + this.provider.fileExtension + ' extenion');
             return;
@@ -312,14 +298,10 @@ export default {
 
       } else {
         if (this.$refs.fileName.value && this.$refs.fileName.value !== '') {
-          let fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
+          const fileName = this.$refs.fileName.value + '.' + this.provider.fileExtension;
           this.$store.commit('filepicker/setFileId', undefined);
           this.$store.commit('filepicker/setFileName', fileName);
-          if (this.pathIdList.length > 0) {
-            this.$store.commit('filepicker/setFileParentId', this.pathIdList[this.pathIdList.length - 1]);
-          } else {
-            this.$store.commit('filepicker/setFileParentId', undefined);
-          }
+          this.$store.commit('filepicker/setFileParentId', this.pathIdList.length ? this.pathIdList[this.pathIdList.length - 1] : undefined);
         } else {
           alert('Please provide file name');
           return;
@@ -328,7 +310,7 @@ export default {
 
       this.$emit('uploadFile');
     },
-    signOut: function () {
+    signOut() {
       this.$emit('signOut');
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="header header--is-textured" :class="classList">
+  <div class="header" :class="classList">
     <div class="header__background"></div>
     <p class="header__number"></p>
   </div>
@@ -9,21 +9,27 @@
 export default {
   name: 'PageHeader',
   props: {
-    pageNumber: { type: Number, required: true }, 
-    pageTheme: { type: String, required: true }
+    pageNumber: {
+      type: Number,
+      required: true,
+    }, 
+    pageTheme: {
+      type: String,
+      required: true,
+    },
   },
-  data: function () {
+  data() {
     return {
-      classList: [ this.pageTheme ]
+      classList: [ this.pageTheme ],
     };
   },
-  created: function () {
+  created() {
     if (this.pageNumber % 2 === 1) {
       this.classList.push('header--is-odd');
     } else {
       this.classList.push('header--is-even');
     }
-  }
+  },
 };
 </script>
 

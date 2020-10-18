@@ -5,7 +5,7 @@
 <script>
 
 export default {
-  name: 'ToolbarSeparator'
+  name: 'ToolbarSeparator',
 };
 </script>
 

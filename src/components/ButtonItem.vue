@@ -2,7 +2,7 @@
   <button class="button" :class="{
     'button--is-icon': isIcon,
     'button--is-clicked': isClicked
-    }" 
+    }"
     @click="$emit('click')"
     :style="{ width: width ? width + 'px' : '' }"
   >
@@ -15,9 +15,21 @@
 export default {
   name: 'ButtonItem',
   props: {
-    isIcon: { type: Boolean, required: false, default: false },
-    isClicked: { type: Boolean, required: false, default: false },
-    width: { type: Number, required: false, default: 0 },
+    isIcon: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    isClicked: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    width: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
 };
 </script>

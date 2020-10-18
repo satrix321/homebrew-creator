@@ -81,7 +81,7 @@ export default class GoogleDriveProvider extends StorageProvider {
   }
 
   async uploadFile(name, data, parentId = 'root') {
-    let response = await window.gapi.client.drive.files.create({
+    const response = await window.gapi.client.drive.files.create({
       resource: {
         'name': name,
         'mimeType': 'application/json',

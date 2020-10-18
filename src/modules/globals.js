@@ -4,3 +4,8 @@ export const DISPLAY_STATE = {
   EDITOR: 2,
   DOCUMENT: 3,
 };
+export const regexConsts = {
+  italicTextRegex: /((?:(?!\*).)|^|\n)\*((?:[^\s*].*?[^\s*])|[^\s*])\*(?!\*)/g,
+  boldTextRegex: /((?:(?!\*).)|^|\n)\*\*((?:[^\s*].*?[^\s*])|[^\s*])\*\*(?!\*)/g,
+  italicBoldTextRegex: /((?:(?!\*).)|^|\n)\*\*\*((?:[^\s*].*?[^\s*])|[^\s*])\*\*\*(?!\*)/g,
+};

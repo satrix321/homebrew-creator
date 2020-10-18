@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="main">
+      <the-loader />
       <split ref="split" :gutterSize="gutterSize" class="splitter" @onDrag="splitDrag">
         <split-area class="split-editor" :size="editor.percentWidth" :min-size="editor.minWidth">
           <the-editor :eventBus="eventBus" @switchView="switchToDocument"/>
@@ -14,17 +15,19 @@
 </template>
 
 <script>
-import TheEditor from '@/components/TheEditor';
-import TheDocument from '@/components/TheDocument';
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
 import { displayBreakpoint, DISPLAY_STATE } from '@/modules/globals';
+import TheEditor from '@/components/TheEditor';
+import TheDocument from '@/components/TheDocument';
+import TheLoader from '@/components/TheLoader';
 
 export default {
   name: 'App',
   components: {
     TheEditor,
     TheDocument,
+    TheLoader,
   },
   data() {
     return {

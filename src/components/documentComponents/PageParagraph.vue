@@ -1,35 +1,45 @@
 <template>
-  <p :class="classList" v-html="processedText">
-  </p>
+  <p :class="classList" v-html="processedText"></p>
 </template>
 
 <script>
+import { regexConsts } from '@/modules/globals';
+
 export default {
   name: 'PageParagraph',
   props: {
-    text: { type: String, required: true },
-    pageTheme: { type: String, required: true }
+    text: {
+      type: String,
+      required: true,
+    },
+    pageTheme: {
+      type: String,
+      required: true,
+    },
   },
-  data: function () {
+  data() {
     return {
-      classList: [ this.pageTheme ]
+      classList: [ this.pageTheme ],
     };
   },
   computed: {
-    processedText: function () {
+    processedText() {
       let output = this.text;
-      output = output.replace(/((?:(?!\*).)|^|\n)\*((?:[^\s*].*?[^\s*])|[^\s*])\*(?!\*)/g, function (fullMatch, group1, group2) {
-        return `${group1}<em>${group2}</em>`;
-      });
-      output = output.replace(/((?:(?!\*).)|^|\n)\*\*((?:[^\s*].*?[^\s*])|[^\s*])\*\*(?!\*)/g, function (fullMatch, group1, group2) {
-        return `${group1}<strong>${group2}</strong>`;
-      });
-      output = output.replace(/((?:(?!\*).)|^|\n)\*\*\*((?:[^\s*].*?[^\s*])|[^\s*])\*\*\*(?!\*)/g, function (fullMatch, group1, group2) {
-        return `${group1}<strong><em>${group2}</em></strong>`;
-      });
+      output = output.replace(
+        regexConsts.italicTextRegex,
+        (fullMatch, group1, group2) => `${group1}<em>${group2}</em>`
+      );
+      output = output.replace(
+        regexConsts.boldTextRegex,
+        (fullMatch, group1, group2) => `${group1}<strong>${group2}</strong>`
+      );
+      output = output.replace(
+        regexConsts.italicBoldTextRegex,
+        (fullMatch, group1, group2) => `${group1}<strong><em>${group2}</em></strong>`
+      );
       return output;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -6,22 +6,34 @@
 export default {
   name: 'PageNote',
   props: {
-    noteType: { type: String, required: true },
-    components: { type: Array, required: true },
-    pageTheme: { type: String, required: true },
-    texturesEnabled: { type: Boolean, required: true },
-    columnCount: {}
+    noteType: {
+      type: String,
+      required: true,
+    },
+    components: {
+      type: Array,
+      required: true,
+    },
+    pageTheme: {
+      type: String,
+      required: true,
+    },
+    texturesEnabled: {
+      type: Boolean,
+      required: true,
+    },
+    columnCount: {},
   },
-  data: function () {
+  data() {
     return {
       classList: [
         this.noteType,
-        this.pageTheme
+        this.pageTheme,
       ],
       initialized: false,
     };
   },
-  created: function () {
+  created() {
     if (this.texturesEnabled) {
       this.classList.push('note--is-textured');
     }
@@ -29,20 +41,23 @@ export default {
       this.classList.push('note--columns-' + this.columnCount);
     }
   },
-  mounted: function () {
+  mounted() {
     if (!this.initialized) {
       for (let i = 0; i < this.components.length; i++) {
         if (i === 0) {
           this.components[i].classList.push('first');
         }
+
         if (i === this.components.length - 1) {
           this.components[i].classList.push('last');
         }
+
         this.$refs.content.appendChild(this.components[i].$el);
       }
+
       this.initialized = true;
     }
-  }
+  },
 };
 </script>
 
@@ -74,10 +89,10 @@ export default {
       border: 20px solid transparent;
       border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
       clip-path: polygon(
-        0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
-        calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
+        0 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0,
+        calc(100% - 14px) 0, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
         100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
-        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0 calc(100% - 14px));
     }
     &.theme--cthulhu-2 {
       &.note--is-textured {
@@ -206,10 +221,10 @@ export default {
       border: 20px solid transparent;
       border-image: url('../../assets/images/note_border_cthulhu_01.png') 41;
       clip-path: polygon(
-        0px 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0px,
-        calc(100% - 14px) 0px, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
+        0 13px, 5px 13px, 8px 12px, 10px 11px, 12px 8px, 14px 0,
+        calc(100% - 14px) 0, calc(100% - 12px) 8px, calc(100% - 10px) 11px, calc(100% - 8px) 12px, calc(100% - 5px) 13px, 100% 13px,
         100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 8px) calc(100% - 12px), calc(100% - 10px) calc(100% - 11px), calc(100% - 12px) calc(100% - 8px), calc(100% - 14px) 100%,
-        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0px calc(100% - 14px));
+        13px 100%, 13px calc(100% - 5px), 12px calc(100% - 8px), 11px calc(100% - 10px), 8px calc(100% - 12px), 0 calc(100% - 14px));
     }
     &.theme--cthulhu-2 {
       &.note--is-textured {

@@ -16,29 +16,51 @@ export default {
   name: 'PageItem',
   components: {
     PageHeader,
-    PageFooter
+    PageFooter,
   },
   props: {
-    pageNumber: { type: Number, required: true },
-    pageTexturesEnabled: { type: Boolean, required: true },
-    noteTexturesEnabled: { type: Boolean, required: true },
-    pageTheme: { type: String, required: true },
-    textData: { type: String, required: true },
-    pageOptions: { type: String, required: false },
-    columnCount: { type: Number, required: true },
-    isTitlePage: { type: Boolean, required: true }
+    pageNumber: {
+      type: Number,
+      required: true,
+    },
+    pageTexturesEnabled: {
+      type: Boolean,
+      required: true,
+    },
+    noteTexturesEnabled: {
+      type: Boolean,
+      required: true,
+    },
+    pageTheme: {
+      type: String,
+      required: true,
+    },
+    textData: {
+      type: String,
+      required: true,
+    },
+    pageOptions: {
+      type: String,
+      required: false,
+    },
+    columnCount: {
+      type: Number,
+      required: true,
+    },
+    isTitlePage: {
+      type: Boolean,
+      required: true,
+    }
   },
-  data: function () {
+  data() {
     return {
       classList: [],
-
       headerVisible: true,
       footerVisible: true,
-
-      createdComponents: []
+      createdComponents: [],
     };
   },
-  created: function () {
+  created() {
     this.classList.push(this.pageTheme);
 
     if (this.pageTexturesEnabled) {
@@ -50,64 +72,57 @@ export default {
     }
     
     if (this.pageOptions) {
-      let classNames = this.pageOptions.split(' ');
+      const classNames = this.pageOptions.split(' ');
       this.classList.push(classNames);
+
       if (classNames.includes('title')) {
         this.headerVisible = false;
         this.footerVisible = false;
       }
     }
   },
-  mounted: function () {
+  mounted() {
     this.compileMarkdown();
   },
-  beforeDestroy: function () {
+  beforeDestroy() {
     while (this.createdComponents.length > 0) {
-      let component = this.createdComponents.pop();
+      const component = this.createdComponents.pop();
       component.$destroy();
       component.$el.remove();
     }
   },
   methods: {
-    countOccurrences: function (array, item) {
-      let occurrences = 0;
-      for (let value of array) {
-        if (value === item) {
-          occurrences++;
-        }
-      }
-      return occurrences;
-    },
-    compileMarkdown: function () {
-      for (let i = 0; i < this.createdComponents.length; i++) {
-        this.createdComponents[i].$destroy();
+    compileMarkdown() {
+      for (const component of this.createdComponents) {
+        component.$destroy();
       }
       this.createdComponents = [];
 
-      let pageHeight = this.$el.offsetHeight;
-      let computedStyles = window.getComputedStyle(this.$el);
-      let pagePaddingTop = parseFloat(computedStyles.paddingTop);
-      let pagePaddingBottom = parseFloat(computedStyles.paddingBottom);
-      let pageWorkAreaHeight = pageHeight - pagePaddingTop - pagePaddingBottom;
+      const pageHeight = this.$el.offsetHeight;
+      const computedStyles = window.getComputedStyle(this.$el);
+      const pagePaddingTop = parseFloat(computedStyles.paddingTop);
+      const pagePaddingBottom = parseFloat(computedStyles.paddingBottom);
+      const pageWorkAreaHeight = pageHeight - pagePaddingTop - pagePaddingBottom;
 
-      let result = parser(this.textData, { 
+      const result = parser(this.textData, { 
         theme: this.pageTheme,
         noteTexturesEnabled: this.noteTexturesEnabled,
         columnCount: this.columnCount,
         isTitlePage: this.isTitlePage,
         pageWorkAreaHeight: pageWorkAreaHeight,
       });
+
       this.createdComponents = result.createdComponents;
 
-      for (let component of this.createdComponents) {
+      for (const component of this.createdComponents) {
         component.$mount();
       }
 
-      for (let outputComponent of result.outputComponents) {
+      for (const outputComponent of result.outputComponents) {
         this.$refs.pageContent.appendChild(outputComponent.$el);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

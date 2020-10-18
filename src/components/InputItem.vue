@@ -3,14 +3,13 @@
 </template>
 
 <script>
-
 export default {
   name: 'InputItem',
-  data: function () {
+  data() {
     return {
-      value: ''
+      value: '',
     };
-  }
+  },
 };
 </script>
 

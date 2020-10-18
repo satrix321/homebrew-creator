@@ -15,17 +15,16 @@
 </template>
 
 <script>
-
 export default {
   name: 'ModalItem',
   methods: {
-    show: function () {
+    show() {
       this.$refs.modal.classList.add('modal--is-visible');
     },
-    hide: function () {
+    hide() {
       this.$refs.modal.classList.remove('modal--is-visible');
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -66,7 +65,7 @@ export default {
     transform: translate(-50%, -50%);
 
     @keyframes animatetop {
-      from {top: 0px; opacity: 0}
+      from {top: 0; opacity: 0}
       to {top: 50%; opacity: 1}
     }
 

@@ -1,6 +1,5 @@
 <template>
   <div class="editor">
-    <div ref="progress" class="progress"><i class="progress__icon fas fa-spinner fa-5x"></i></div>
     <the-editor-toolbar
       :eventBus="eventBus"
       @insertPrimaryNote="insertPrimaryNote"
@@ -77,7 +76,7 @@ export default {
     TheEditorToolbar,
     TheFilePicker
   },
-  data () {
+  data() {
     return {
       codeMirror: undefined,
       codeMirrorOptions: {
@@ -92,7 +91,7 @@ export default {
       codeMirrorCommentOptions: {
         blockCommentStart: '<!--',
         blockCommentEnd: '-->',
-        fullLines: false
+        fullLines: false,
       },
       storageProvider: undefined,
     };
@@ -145,25 +144,37 @@ export default {
       customHandwritingFontSnippet: 'editorSnippets/customHandwritingFontSnippet'
     }),
   },
-  beforeCreate: function () {
-    // highlight new page lines
+  beforeCreate() {
     CodeMirror.defineMode('homebrew-markdown', function(config, parserConfig) {
-      var homebrewOverlay = {
-        token: function(stream) {
-          var ch;
+      // highlight lines with '\page' string
+      const homebrewOverlay = {
+        token(stream) {
+          let char;
+
           if (stream.match('\\page')) {
-            while ((ch = stream.next()) != null && ch != ']') { continue; }
+            while ((char = stream.next()) != null && char != ']') {
+              continue;
+            }
             return 'line-cm-new-page-line';
           }
-          while (stream.next() != null && !stream.match('\\page', false)) { continue; }
+
+          while (stream.next() != null && !stream.match('\\page', false)) {
+            continue;
+          }
+
           return null;
         }
       };
-      return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || 'text/x-markdown'), homebrewOverlay);
+
+      return CodeMirror.overlayMode(
+        CodeMirror.getMode(config, parserConfig.backdrop || 'text/x-markdown'),
+        homebrewOverlay
+      );
     });
+
     CodeMirror.keyMap.default['Ctrl-G'] = 'jumpToLine';
   },
-  mounted: function () {
+  mounted() {
     this.codeMirror = this.$refs.editor.codemirror;
     this.codeMirror.showMatchesOnScrollbar('\\page', false, { className: 'CodeMirror-search-match-new-page' });
     this.$refs.editor.codemirror.setOption('extraKeys', {
@@ -173,36 +184,36 @@ export default {
     this.insertData(this.rawCode + ' ', this.getCursorPosition());
   },
   methods: {
-    insertPrimaryNote: function () { this.insertData(this.primaryNoteSnippet, this.getCursorPosition()); },
-    insertSecondaryNote: function () { this.insertData(this.secondaryNoteSnippet, this.getCursorPosition()); },
-    insertTertiaryNote: function () { this.insertData(this.tertiaryNoteSnippet, this.getCursorPosition()); },
-    insertNewspaperNote: function () { this.insertData(this.newspaperNoteSnippet, this.getCursorPosition()); },
-    insertHandwrittenNote: function () { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
-    insertPhbNote: function () { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
-    insertCocStatBlock: function () { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
-    insertDndStatBlock: function () { this.insertData(this.dndStatTableSnippet, this.getCursorPosition()); },
-    insertRegularTable: function () { this.insertData(this.tableSnippet, this.getCursorPosition()); },
-    insertDndCustomTable: function () { this.insertData(this.dndCustomTableSnippet, this.getCursorPosition()); },
-    insertRegularPage: function () { this.insertData(this.pageSnippet, this.getCursorPosition()); },
-    insertTwoColumnPage: function () { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
-    insertThreeColumnPage: function () { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },
-    insertTitlePage: function () { this.insertData(this.titlePageSnippet, this.getCursorPosition()); },
-    insertRelativeImage: function () { this.insertData(this.relativeImageSnippet, this.getCursorPosition()); },
-    insertAbsoluteImage: function () { this.insertData(this.absoluteImageSnippet, this.getCursorPosition()); },
-    insertFullPageImage: function () { this.insertData(this.fullPageImageSnippet, this.getCursorPosition()); },
-    insertColumnBreak: function () { this.insertData(this.columnBreakSnippet, this.getCursorPosition()); },
-    insertWideBlock: function () { this.insertData(this.wideBlockSnippet, this.getCursorPosition()); },
-    insertVerticalSpacing: function () { this.insertData(this.verticalSpacingSnippet, this.getCursorPosition()); },
-    insertCustomTitlePageFont: function () { this.insertData(this.customTitlePageFontSnippet, this.getCursorPosition()); },
-    insertCustomHeadersFont: function () { this.insertData(this.customHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomNoteHeadersFont: function () { this.insertData(this.customNoteHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomRegularTextFont: function () { this.insertData(this.customRegularTextFontSnippet, this.getCursorPosition()); },
-    insertCustomNewspaperHeadersFont: function () { this.insertData(this.customNewspaperHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomNewspaperTextFont: function () { this.insertData(this.customNewspaperTextFontSnippet, this.getCursorPosition()); },
-    insertCustomHandwritingFont: function () { this.insertData(this.customHandwritingFontSnippet, this.getCursorPosition()); },
+    insertPrimaryNote() { this.insertData(this.primaryNoteSnippet, this.getCursorPosition()); },
+    insertSecondaryNote() { this.insertData(this.secondaryNoteSnippet, this.getCursorPosition()); },
+    insertTertiaryNote() { this.insertData(this.tertiaryNoteSnippet, this.getCursorPosition()); },
+    insertNewspaperNote() { this.insertData(this.newspaperNoteSnippet, this.getCursorPosition()); },
+    insertHandwrittenNote() { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
+    insertPhbNote() { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
+    insertCocStatBlock() { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
+    insertDndStatBlock() { this.insertData(this.dndStatTableSnippet, this.getCursorPosition()); },
+    insertRegularTable() { this.insertData(this.tableSnippet, this.getCursorPosition()); },
+    insertDndCustomTable() { this.insertData(this.dndCustomTableSnippet, this.getCursorPosition()); },
+    insertRegularPage() { this.insertData(this.pageSnippet, this.getCursorPosition()); },
+    insertTwoColumnPage() { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
+    insertThreeColumnPage() { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },
+    insertTitlePage() { this.insertData(this.titlePageSnippet, this.getCursorPosition()); },
+    insertRelativeImage() { this.insertData(this.relativeImageSnippet, this.getCursorPosition()); },
+    insertAbsoluteImage() { this.insertData(this.absoluteImageSnippet, this.getCursorPosition()); },
+    insertFullPageImage() { this.insertData(this.fullPageImageSnippet, this.getCursorPosition()); },
+    insertColumnBreak() { this.insertData(this.columnBreakSnippet, this.getCursorPosition()); },
+    insertWideBlock() { this.insertData(this.wideBlockSnippet, this.getCursorPosition()); },
+    insertVerticalSpacing() { this.insertData(this.verticalSpacingSnippet, this.getCursorPosition()); },
+    insertCustomTitlePageFont() { this.insertData(this.customTitlePageFontSnippet, this.getCursorPosition()); },
+    insertCustomHeadersFont() { this.insertData(this.customHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomNoteHeadersFont() { this.insertData(this.customNoteHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomRegularTextFont() { this.insertData(this.customRegularTextFontSnippet, this.getCursorPosition()); },
+    insertCustomNewspaperHeadersFont() { this.insertData(this.customNewspaperHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomNewspaperTextFont() { this.insertData(this.customNewspaperTextFontSnippet, this.getCursorPosition()); },
+    insertCustomHandwritingFont() { this.insertData(this.customHandwritingFontSnippet, this.getCursorPosition()); },
     codeChange: _.debounce(function (rawCode) {
-      let pageBreakIndexes = [];
-      let search = this.codeMirror.getSearchCursor('\\page');
+      const pageBreakIndexes = [];
+      const search = this.codeMirror.getSearchCursor('\\page');
       while (search.findNext()) {
         pageBreakIndexes.push(search.from().line);
       }
@@ -210,7 +221,7 @@ export default {
       this.$store.commit('editor/setRawCode', rawCode);
     }, 500),
     cursorPositionChange: _.debounce(function (position) {
-      let currentLineIndex = position.getCursor().line;
+      const currentLineIndex = position.getCursor().line;
       let currentPageIndex = 0;
       if (this.pageBreakIndexes.length > 1) {
         for (let i = 1; currentLineIndex >= this.pageBreakIndexes[i]; i++) {
@@ -219,68 +230,67 @@ export default {
       }
       this.$store.commit('editor/setCurrentPageIndex', currentPageIndex);
     }, 200),
-    getCursorPosition: function () {
-      let cursor = this.codeMirror.getDoc().getCursor();
-      let position = {
+    getCursorPosition() {
+      const cursor = this.codeMirror.getDoc().getCursor();
+      return {
         line: cursor.line,
         ch: cursor.position
       };
-      return position;
     },
-    commentText: function () {
-      let from = this.codeMirror.getCursor(true);
-      let to = this.codeMirror.getCursor(false);
+    commentText() {
+      const from = this.codeMirror.getCursor(true);
+      const to = this.codeMirror.getCursor(false);
       if (!this.codeMirror.uncomment(from, to, this.codeMirrorCommentOptions)) {
         this.codeMirror.blockComment(from, to, this.codeMirrorCommentOptions);
       }
     },
-    insertData: function (data, position) {
+    insertData(data, position) {
       this.codeMirror.getDoc().replaceRange(data, position);
     },
-    scrollToPage: function () {
+    scrollToPage() {
       if (this.pageBreakIndexes[this.documentCurrentPageIndex] !== undefined) {
         this.codeMirror.scrollIntoView({line: this.pageBreakIndexes[this.documentCurrentPageIndex], char: 0}, 100);
         this.codeMirror.setCursor({line: this.pageBreakIndexes[this.documentCurrentPageIndex], ch: 0});
       }
     },
-    syncFile: async function () {
+    async syncFile() {
       if (this.storageProviderFileId) {
-        this.$refs.progress.classList.add('progress--is-visible');
+        this.$store.commit('app/showLoader');
 
         if (!this.storageProvider.isSignedIn) {
           await this.storageProvider.authenticate();
         }
 
-        let data = {
+        const data = {
           data: this.rawCode,
           theme: this.theme,
         };
 
         try {
-          let response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
+          const response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
           if (response.status !== 200) {
             console.error(response);
           }
         } catch (error) {
           console.error(error);
         }
-        this.$refs.progress.classList.remove('progress--is-visible');
+        this.$store.commit('app/hideLoader');
       } else {
         alert('file not selected!');
       }
     },
-    downloadFileUsingProvider: async function () {
+    async downloadFileUsingProvider() {
       if (this.storageProviderFileId) {
-        this.$refs.progress.classList.add('progress--is-visible');
+        this.$store.commit('app/showLoader');
 
         if (!this.storageProvider.isSignedIn) {
           await this.storageProvider.authenticate();
         }
 
         try {
-          let response = await this.storageProvider.downloadFile(this.storageProviderFileId);
+          const response = await this.storageProvider.downloadFile(this.storageProviderFileId);
           if (response.status === 200) {
-            let data = JSON.parse(response.body);
+            const data = JSON.parse(response.body);
             this.codeMirror.setValue(data.data);
             this.$store.commit('document/setTheme', data.theme);
           } else {
@@ -290,33 +300,34 @@ export default {
           console.error(error);
           
         }
-        this.$refs.progress.classList.remove('progress--is-visible');
+
+        this.$store.commit('app/hideLoader');
       }
     },
-    uploadFileUsingProvider: async function () {
-      this.$refs.progress.classList.add('progress--is-visible');
+    async uploadFileUsingProvider() {
+      this.$store.commit('app/showLoader');
 
       if (!this.storageProvider.isSignedIn) {
         await this.storageProvider.authenticate();
       }
 
-      let data = {};
-      data.data = this.rawCode;
-      data.theme = this.theme;
+      const data = {
+        data: this.rawCode,
+        theme: this.theme,
+      };
 
       if (this.storageProviderFileId) {
         try {
-          let response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
+          const response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
           if (response.status !== 200) {
             console.error(response);
           }
         } catch (error) {
           console.error(error);
         }
-        this.$refs.progress.classList.remove('progress--is-visible');
       } else if (this.storageProviderFileParentId) {
         try {
-          let response = this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data), this.storageProviderFileParentId);
+          const response = this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data), this.storageProviderFileParentId);
           if (response.status !== 200) {
             console.error(response);
           } else {
@@ -325,10 +336,9 @@ export default {
         } catch (error) {
           console.error(error);
         }
-        this.$refs.progress.classList.remove('progress--is-visible');
       } else {
         try {
-          let response = await this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data));
+          const response = await this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data));
           if (response.status !== 200) {
             console.error(response);
           } else {
@@ -337,25 +347,24 @@ export default {
         } catch (error) {
           console.error(error);
         }
-        this.$refs.progress.classList.remove('progress--is-visible');
       }
+
+      this.$store.commit('app/hideLoader');
     },
-    signOutFromProvider: function () {
-      this.$refs.progress.classList.add('progress--is-visible');
+    signOutFromProvider() {
+      this.$store.commit('app/showLoader');
       this.$refs.filePicker.close();
 
       try {
         this.storageProvider.signOut();
       } catch (error) {
         console.error(error);
-      } finally {
-        this.$refs.progress.classList.remove('progress--is-visible');
       }
 
-      return;
+      this.$store.commit('app/hideLoader');
     },
-    downloadGoogleDriveFile: async function () {
-      this.$refs.progress.classList.add('progress--is-visible');
+    async downloadGoogleDriveFile() {
+      this.$store.commit('app/showLoader');
 
       try {
         if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
@@ -366,22 +375,20 @@ export default {
           await this.storageProvider.authenticate();
         }
       } catch (error) {
-        if (error.error === 'popup_closed_by_user') {
-          this.$refs.progress.classList.remove('progress--is-visible');
-        } else {
+        if (error.error !== 'popup_closed_by_user') {
           console.error(error);
-          this.$refs.progress.classList.remove('progress--is-visible');
         }
+        this.$store.commit('app/hideLoader');
         return;
       }
 
       this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setDownloadMode();
       this.$refs.filePicker.show();
-      this.$refs.progress.classList.remove('progress--is-visible');
+      this.$store.commit('app/hideLoader');
     },
-    uploadGoogleDriveFile: async function () {
-      this.$refs.progress.classList.add('progress--is-visible');
+    async uploadGoogleDriveFile() {
+      this.$store.commit('app/showLoader');
       
       try {
         if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
@@ -392,51 +399,51 @@ export default {
           await this.storageProvider.authenticate();
         }
       } catch (error) {
-        if (error.error === 'popup_closed_by_user') {
-          this.$refs.progress.classList.remove('progress--is-visible');
-        } else {
+        if (error.error !== 'popup_closed_by_user') {
           console.error(error);
-          this.$refs.progress.classList.remove('progress--is-visible');
         }
+        this.$store.commit('app/hideLoader');
         return;
       }
 
       this.$refs.filePicker.setProvider(this.storageProvider);
       this.$refs.filePicker.setUploadMode();
       this.$refs.filePicker.show();
-      this.$refs.progress.classList.remove('progress--is-visible');
+      this.$store.commit('app/hideLoader');
     },
-    downloadFile: function () {
-      let data = {};
-      data.data = this.rawCode;
-      data.theme = this.theme;
+    downloadFile() {
+      const data = {
+        data: this.rawCode,
+        theme: this.theme,
+      };
 
-      let element = document.createElement('a');
-      element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)));
-      element.setAttribute('download', 'homebrew.hmd');
-      element.style.display = 'none';
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
+      const anchorElement = document.createElement('a');
+      anchorElement.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)));
+      anchorElement.setAttribute('download', 'homebrew.hmd');
+      anchorElement.style.display = 'none';
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+      document.body.removeChild(anchorElement);
     },
-    uploadFile: function () {
-      let element = document.createElement('input');
-      element.setAttribute('type', 'file');
-      element.style.display = 'none';
-      document.body.appendChild(element);
-      element.onchange = () => {
-        var reader = new FileReader();
-        reader.readAsText(element.files[0]);
+    uploadFile() {
+      const inputElement = document.createElement('input');
+      inputElement.setAttribute('type', 'file');
+      inputElement.style.display = 'none';
+      inputElement.onchange = () => {
+        const reader = new FileReader();
+        reader.readAsText(inputElement.files[0]);
         reader.onload = () => {
-          let data = JSON.parse(reader.result);
+          const data = JSON.parse(reader.result);
           this.codeMirror.setValue(data.data);
           this.$store.commit('document/setTheme', data.theme);
         };
-        document.body.removeChild(element);
+        document.body.removeChild(inputElement);
       };
-      element.click();
+
+      document.body.appendChild(inputElement);
+      inputElement.click();
     },
-    switchView: function () {
+    switchView() {
       this.$emit('switchView');
     }
   }
@@ -445,34 +452,4 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/codemirror.scss";
-.progress {
-  display: none;
-  position: fixed;
-  z-index: 200;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.4);
-
-  &.progress--is-visible {
-    display: initial;
-  }
-
-  > .progress__icon {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: $progress-icon-color;
-
-    animation-name: spin;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-
-    @keyframes spin {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-  }
-}
 </style>

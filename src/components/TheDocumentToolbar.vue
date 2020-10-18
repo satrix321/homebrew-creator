@@ -88,7 +88,7 @@ export default {
     ButtonItem,
     DropdownMenu,
     DropdownItem,
-    ToolbarSeparator
+    ToolbarSeparator,
   },
   props: ['eventBus'],
   computed: {
@@ -97,52 +97,49 @@ export default {
       noteTexturesEnabled: 'document/noteTexturesEnabled',
       zoom: 'document/zoom',
       theme: 'document/theme',
-
-      state: 'app/displayState',
-
       documentCurrentPageNumber: 'document/currentPageNumber',
       pageCount: 'editor/pageCount'
     })
   },
   methods: {
-    setZoom: function (zoom) {
+    setZoom(zoom) {
       this.$store.dispatch('document/setZoom', zoom);
       this.$emit('zoomChanged');
     },
-    zoomIn: function () {
+    zoomIn() {
       this.$store.dispatch('document/zoomIn');
       this.$emit('zoomChanged');
     },
-    zoomOut: function () {
+    zoomOut() {
       this.$store.dispatch('document/zoomOut');
       this.$emit('zoomChanged');
     },
-    toggleDefaultTheme: function () {
+    toggleDefaultTheme() {
       this.$store.commit('document/setTheme', 'theme--default');
     },
-    toggleCthulhu1Theme: function () {
+    toggleCthulhu1Theme() {
       this.$store.commit('document/setTheme', 'theme--cthulhu-1');
     },
-    toggleCthulhu2Theme: function () {
+    toggleCthulhu2Theme() {
       this.$store.commit('document/setTheme', 'theme--cthulhu-2');
     },
-    togglePageTextures: function () {
+    togglePageTextures() {
       this.$store.commit('document/togglePageTextures');
     },
-    toggleNoteTextures: function () {
+    toggleNoteTextures() {
       this.$store.commit('document/toggleNoteTextures');
     },
-    scrollToCursor: function () {
+    scrollToCursor() {
       this.$emit('scrollToCursor');
     },
-    getPDF: function () {
+    getPDF() {
       this.$emit('getPDF');
     },
-    switchView: function () {
+    switchView() {
       this.isMenuOpen = false;
       this.$emit('switchView');
     },
-  }
+  },
 };
 </script>
 

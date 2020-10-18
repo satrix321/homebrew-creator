@@ -7,7 +7,7 @@
     <button-item class="dropdown__button" :width="width">
       <slot name="dropdown-button"></slot>
     </button-item>
-    <div class="dropdown__content" :class="{ 'dropdown__content--align-to-right': alignToRight }">
+    <div class="dropdown__content" :class="{ 'dropdown__content--aligned-to-right': alignToRight }">
       <slot name="dropdown-content"></slot>
     </div>
   </div>
@@ -19,16 +19,17 @@ import ButtonItem from '@/components/ButtonItem';
 export default {
   name: 'DropdownMenu',
   components: {
-    ButtonItem
+    ButtonItem,
   },
   props: ['width', 'alignToRight'],
-  data: function () {
+  data() {
     return {
       isClicked: false,
     };
   },
-  mounted: function () {
+  mounted() {
     window.addEventListener('click', this.checkClick);
+
     this.$on('dropdownClick', (vueComponent) => {
       for (let child of this.$children) {
         if (child != vueComponent && child.close) {
@@ -36,29 +37,30 @@ export default {
         }
       }
     });
+
     this.$on('dropdownItemClick', () => {
       this.isClicked = false;
       this.$parent.$emit('dropdownItemClick');
     });
   },
-  beforeDestroy: function () {
+  beforeDestroy() {
     window.removeEventListener('click', this.checkClick);
   },
   methods: {
-    close: function () {
+    close() {
       this.isClicked = false;
     },
-    click: function (event) {
+    click(event) {
       this.isClicked = !this.isClicked;
       this.$parent.$emit('dropdownClick', this);
       event.stopPropagation();
     },
-    checkClick: function (event) {
+    checkClick(event) {
       if (event.target !== this.$el) {
         this.isClicked = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -76,7 +78,7 @@ export default {
     display: none;
     position: absolute;
     background-color: $toolbar-background-color;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 10;
     top: 30px;
     overflow: visible;
@@ -116,7 +118,7 @@ export default {
       }
     }
 
-    &.dropdown__content--align-to-right {
+    &.dropdown__content--aligned-to-right {
       right: 0;
     }
   }

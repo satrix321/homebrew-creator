@@ -1,7 +1,8 @@
 <template>
   <button class="dropdown-item" :class="{ 
     'dropdown-item--is-clicked': isClicked,
-    }" @click="click">
+    }" @click="click"
+  >
     <slot></slot>
   </button>
 </template>
@@ -11,15 +12,19 @@
 export default {
   name: 'ButtonItem',
   props: {
-    isClicked: { type: Boolean, required: false, default: false },
+    isClicked: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
-    click: function () {
+    click(event) {
+      event.stopPropagation();
       this.$emit('click');
       this.$parent.$emit('dropdownItemClick');
-      event.stopPropagation();
-    }
-  }
+    },
+  },
 };
 </script>
 

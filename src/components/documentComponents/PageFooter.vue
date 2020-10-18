@@ -1,5 +1,5 @@
 <template>
-  <div class="footer footer--is-textured" :class="classList" :data-page="pageNumber">
+  <div class="footer" :class="classList" :data-page="pageNumber">
     <div class="footer__background"/>
     <p class="footer__number">{{ pageNumber }}</p>
   </div>
@@ -9,21 +9,27 @@
 export default {
   name: 'PageFooter',
   props: {
-    pageNumber: { type: Number, required: true }, 
-    pageTheme: { type: String, required: true }
+    pageNumber: {
+      type: Number,
+      required: true,
+    }, 
+    pageTheme: {
+      type: String,
+      required: true,
+    },
   },
-  data: function () {
+  data() {
     return {
-      classList: [ this.pageTheme ]
+      classList: [ this.pageTheme ],
     };
   },
-  created: function () {
+  created() {
     if (this.pageNumber % 2 === 1) {
       this.classList.push('footer--is-odd');
     } else {
       this.classList.push('footer--is-even');
     }
-  }
+  },
 };
 </script>
 
@@ -33,26 +39,6 @@ export default {
   bottom: 0;
   left: 0;
 
-  &.footer--is-textured {
-    &.theme--default {
-      .footer__background {
-        position: absolute;
-        width: 21cm;
-        height: 1cm;
-        bottom: 0;
-        left: 0; 
-        background-image: url('../../assets/images/footer_01.png');
-        background-size: 21cm 1cm;
-      }
-
-      &.footer--is-even {
-        .footer__background {
-          transform: scaleX(-1);
-        }
-      }
-    }
-  }
-
   .footer__number {
     position: absolute;
     font-family: 'headers';
@@ -61,6 +47,22 @@ export default {
   }
 
   &.theme--default {
+    .footer__background {
+      position: absolute;
+      width: 21cm;
+      height: 1cm;
+      bottom: 0;
+      left: 0; 
+      background-image: url('../../assets/images/footer_01.png');
+      background-size: 21cm 1cm;
+    }
+
+    &.footer--is-even {
+      .footer__background {
+        transform: scaleX(-1);
+      }
+    }
+
     .footer__number {
       bottom: 0.2cm;
     }
