@@ -9,7 +9,6 @@
     />
     <div ref="pagesContainer" class="document__pages-container">
       <div @change="checkOverflow" ref="pages" class="document__pages">
-        <spacer-item/>
         <page-item v-for="page in pages" :key="page.key"
           :pageNumber="page.pageNumber"
           :pageTexturesEnabled="page.pageTexturesEnabled"
@@ -20,7 +19,6 @@
           :columnCount="page.columnCount"
           :isTitlePage="page.isTitlePage"
         />
-        <spacer-item/>
       </div>
     </div>
   </div>
@@ -28,7 +26,6 @@
 
 <script>
 import TheDocumentToolbar from '@/components/TheDocumentToolbar';
-import SpacerItem from '@/components/documentComponents/SpacerItem';
 import PageItem from '@/components/documentComponents/PageItem';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
@@ -40,7 +37,6 @@ export default {
   name: 'TheDocument',
   components: {
     TheDocumentToolbar,
-    SpacerItem,
     PageItem
   },
   data: function () {

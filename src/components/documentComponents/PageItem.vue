@@ -123,6 +123,14 @@ export default {
   width: 21cm;
   height: 29.66cm;
   padding: 1cm;
+
+  &:first-child {
+    margin-top: 50px;
+  }
+
+  &:last-child {
+    margin-bottom: 50px;
+  }
   
   ::v-deep * {
     margin-top: 0;
