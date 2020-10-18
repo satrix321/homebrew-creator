@@ -144,7 +144,7 @@ export default {
     display: flex;
   }
 
-  @media screen and (max-width: $breakpoint) {
+  @media screen and (max-width: $display-breakpoint) {
     &.dropdown--is-clicked > .dropdown__content {
       display: flex;
     }

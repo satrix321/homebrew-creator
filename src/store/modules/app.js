@@ -1,24 +1,19 @@
-const breakpoint = 1023;
-const STATE_ENUM = {
-  DESKTOP: 1,
-  EDITOR: 2,
-  DOCUMENT: 3,
-};
+import { displayBreakpoint, DISPLAY_STATE } from '@/modules/globals';
 
 const app = {
   namespaced: true,
   
   state: {
-    state: document.body.clientWidth > breakpoint ? STATE_ENUM.DESKTOP : STATE_ENUM.EDITOR,
+    displayState: document.body.clientWidth > displayBreakpoint ? DISPLAY_STATE.EDITOR_AND_DOCUMENT : DISPLAY_STATE.EDITOR,
   },
 
   getters: {
-    state: state => state.state,
+    displayState: state => state.displayState,
   },
 
   mutations: {
-    setState (state, appState) {
-      state.state = appState;
+    setDisplayState(state, displayState) {
+      state.displayState = displayState;
     },
   }
 };

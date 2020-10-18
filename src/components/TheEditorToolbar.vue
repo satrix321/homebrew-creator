@@ -195,13 +195,13 @@ export default {
   overflow: visible;
 
   .desktop-only {
-    @media screen and (max-width: $breakpoint) {
+    @media screen and (max-width: $display-breakpoint) {
       display: none;
     }
   }
 
   .mobile-only {
-    @media screen and (min-width: $breakpoint + 1) {
+    @media screen and (min-width: $display-breakpoint + 1) {
       display: none;
     }
   }

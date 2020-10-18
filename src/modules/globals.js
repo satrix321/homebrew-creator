@@ -1,8 +1,6 @@
-const breakpoint = 1023;
-const STATE_ENUM = {
-  DESKTOP: 1,
+export const displayBreakpoint = 1023;
+export const DISPLAY_STATE = {
+  EDITOR_AND_DOCUMENT: 1,
   EDITOR: 2,
   DOCUMENT: 3,
 };
-
-export { breakpoint, STATE_ENUM };

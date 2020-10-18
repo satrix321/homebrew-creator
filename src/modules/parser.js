@@ -9,16 +9,16 @@ import PageTable from '@/components/documentComponents/PageTable';
 import PageHtml from '@/components/documentComponents/PageHtml';
 import PageList from '@/components/documentComponents/PageList';
 
-let PageParagraphClass = Vue.extend(PageParagraph);
-let PageThematicBreakClass = Vue.extend(PageThematicBreak);
-let PageHeadingClass = Vue.extend(PageHeading);
-let PageColumnBreakClass = Vue.extend(PageColumnBreak);
-let PageNoteClass = Vue.extend(PageNote);
-let PageTableClass = Vue.extend(PageTable);
-let PageHtmlClass = Vue.extend(PageHtml);
-let PageListClass = Vue.extend(PageList);
+const PageParagraphClass = Vue.extend(PageParagraph);
+const PageThematicBreakClass = Vue.extend(PageThematicBreak);
+const PageHeadingClass = Vue.extend(PageHeading);
+const PageColumnBreakClass = Vue.extend(PageColumnBreak);
+const PageNoteClass = Vue.extend(PageNote);
+const PageTableClass = Vue.extend(PageTable);
+const PageHtmlClass = Vue.extend(PageHtml);
+const PageListClass = Vue.extend(PageList);
 
-function countOccurrences (array, item) {
+const countOccurrences = (array, item) => {
   let occurrences = 0;
   for (let value of array) {
     if (value === item) {
@@ -26,7 +26,7 @@ function countOccurrences (array, item) {
     }
   }
   return occurrences;
-}
+};
 
 const parse = function (markdown, options) {
   let createdComponents = [];
@@ -262,4 +262,5 @@ const parse = function (markdown, options) {
     createdComponents
   };
 };
+
 export default parse;

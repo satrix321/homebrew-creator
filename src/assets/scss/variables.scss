@@ -1,3 +1,8 @@
+$site-font: 'Source Sans Pro', sans-serif;
+$site-font-mono: 'Fira Mono', monospace;
+
+$display-breakpoint: 1023px;
+
 $toolbar-background-color: #363636;
 $toolbar-separator-color: black;
 $button-color: white;
@@ -15,11 +20,6 @@ $filepicker-selected-row-background-color: #5f5f5f;
 $filepicker-row-hover-background-color: #737373;
 $page-background-color: white;
 $progress-icon-color: #ddd;
-
-$site-font: 'Source Sans Pro', sans-serif;
-$site-font-mono: 'Fira Mono', monospace;
-
-$breakpoint: 1023px;
 
 // THEME - DEFAULT
 $page-footer-number-default-color: #a08d5d;

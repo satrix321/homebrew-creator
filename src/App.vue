@@ -2,10 +2,10 @@
   <div id="app">
     <div class="main">
       <split ref="split" :gutterSize="gutterSize" class="splitter" @onDrag="splitDrag">
-        <split-area class="split-editor" :size="startWidths[0]" :min-size="editorPanelMinWidth">
+        <split-area class="split-editor" :size="editor.percentWidth" :min-size="editor.minWidth">
           <the-editor :eventBus="eventBus" @switchView="switchToDocument"/>
         </split-area>
-        <split-area class="split-document" :size="startWidths[1]" :min-size="documentPanelMinWidth">
+        <split-area class="split-document" :size="document.percentWidth" :min-size="document.minWidth">
           <the-document :eventBus="eventBus" @switchView="switchToEditor"/>
         </split-area>
       </split>
@@ -18,91 +18,98 @@ import TheEditor from '@/components/TheEditor';
 import TheDocument from '@/components/TheDocument';
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
-import { breakpoint, STATE_ENUM } from '@/modules/globals';
-
-// Document panel min width needs to be defined here, otherwise the valuse inside the calc
-// function would be undefined during the first calculation.
-const editorPanelMinWidth = 300;
-const documentPanelMinWidth = 540;
-const defaultGutterSize = 10;
+import { displayBreakpoint, DISPLAY_STATE } from '@/modules/globals';
 
 export default {
   name: 'App',
   components: {
     TheEditor,
-    TheDocument
+    TheDocument,
   },
-  data: function () {
+  data() {
     return {
       eventBus: new Vue(),
-      editorPanelMinWidth,
-      documentPanelMinWidth,
-      gutterSize: defaultGutterSize,
-      startWidths: [50, 50],
+      editor: {
+        defaultMinWidth: 300,
+        minWidth: 300,
+        percentWidth: 50,
+      },
+      document: {
+        defaultMinWidth: 540,
+        minWidth: 540,
+        percentWidth: 50,
+      },
+      gutterSize: 10,
+      defaultGutterSize: 10,
     };
   },
   computed: {
     ...mapGetters({
-      state: 'app/state',
+      state: 'app/displayState',
     }),
   },
-  created: function () {
+  created() {
     window.addEventListener('beforeprint', this.onBeforePrint);
     window.addEventListener('resize', this.windowResized);
 
-    if (this.state === STATE_ENUM.EDITOR) {
+    if (this.state === DISPLAY_STATE.EDITOR) {
       this.switchToEditor();
     } else {
-      this.startWidths = this.calculatePanelWidths();
+      this.calculatePanelWidths();
     }
   },
-  beforeDestroy: function () {
+  beforeDestroy() {
     window.removeEventListener('beforeprint', this.onBeforePrint);
     window.removeEventListener('resize', this.windowResized);
   },
   methods: {
-    splitDrag: function () {
+    splitDrag() {
       this.eventBus.$emit('resize');
     },
-    onBeforePrint: function () {
+    onBeforePrint() {
       this.eventBus.$emit('onBeforePrint');
     },
-    windowResized: function () {
+    windowResized() {
       this.eventBus.$emit('resize');
-      let isMobile = document.body.clientWidth <= breakpoint;
+      const isMobile = document.body.clientWidth <= displayBreakpoint;
+
       if (isMobile) {
-        if (this.state === STATE_ENUM.DESKTOP) {
+        if (this.state === DISPLAY_STATE.EDITOR_AND_DOCUMENT) {
           this.switchToEditor();
         }
       } else {
-        this.$store.commit('app/setState', STATE_ENUM.DESKTOP);
-        this.gutterSize = defaultGutterSize;
-        this.editorPanelMinWidth = editorPanelMinWidth;
-        this.documentPanelMinWidth = documentPanelMinWidth;
-        this.startWidths = this.calculatePanelWidths();
+        this.$store.commit('app/setDisplayState', DISPLAY_STATE.EDITOR_AND_DOCUMENT);
+        this.gutterSize = this.defaultGutterSize;
+        this.editor.minWidth = this.editor.defaultMinWidth;
+        this.document.minWidth = this.document.defaultMinWidth;
+        this.calculatePanelWidths();
       }
     },
-    calculatePanelWidths: function () {
-      if (document.body.clientWidth * 0.5 >= documentPanelMinWidth) {
-        return [50, 50];
+    calculatePanelWidths() {
+      if (document.body.clientWidth * 0.5 >= this.document.minWidth) {
+        this.editor.percentWidth = 50;
+        this.document.percentWidth = 50;
       } else {
-        let documentWidth = Math.round((documentPanelMinWidth / document.body.clientWidth) * 100);
-        return [100 - documentWidth, documentWidth];
+        const documentWidth = Math.round((this.document.minWidth / document.body.clientWidth) * 100);
+        this.editor.percentWidth = 100 - documentWidth;
+        this.document.percentWidth = documentWidth;
       }
     },
-    switchToEditor: function () {
+    switchToEditor() {
       this.gutterSize = 0;
-      this.editorPanelMinWidth = 0;
-      this.documentPanelMinWidth = 0;
-      this.$store.commit('app/setState', STATE_ENUM.EDITOR);
-      this.startWidths = [100, 0];
+      this.editor.minWidth = 0;
+      this.document.minWidth = 0;
+      this.$store.commit('app/setDisplayState', DISPLAY_STATE.EDITOR);
+      this.editor.percentWidth = 100;
+      this.document.percentWidth = 0;
     },
-    switchToDocument: function () {
+    switchToDocument() {
       this.gutterSize = 0;
-      this.editorPanelMinWidth = 0;
-      this.documentPanelMinWidth = 0;
-      this.$store.commit('app/setState', STATE_ENUM.DOCUMENT);
-      this.startWidths = [0, 100];
+      this.editor.minWidth = 0;
+      this.document.minWidth = 0;
+      this.$store.commit('app/setDisplayState', DISPLAY_STATE.DOCUMENT);
+      this.editor.percentWidth = 0;
+      this.document.percentWidth = 100;
     }
   }
 };
@@ -116,7 +123,7 @@ export default {
 }
 
 body {
-  margin: 0px;
+  margin: 0;
   overflow-x: hidden;
 }
 

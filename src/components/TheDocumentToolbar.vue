@@ -31,6 +31,8 @@
       </template>
     </dropdown-menu>
 
+    <toolbar-separator/>
+
     <div class="toolbar__spacer" ref="spacer"></div>
 
     <toolbar-separator/>
@@ -96,7 +98,7 @@ export default {
       zoom: 'document/zoom',
       theme: 'document/theme',
 
-      state: 'app/state',
+      state: 'app/displayState',
 
       documentCurrentPageNumber: 'document/currentPageNumber',
       pageCount: 'editor/pageCount'
@@ -155,13 +157,13 @@ export default {
   overflow: visible;
 
   .desktop-only {
-    @media screen and (max-width: $breakpoint) {
+    @media screen and (max-width: $display-breakpoint) {
       display: none;
     }
   }
 
   .mobile-only {
-    @media screen and (min-width: $breakpoint + 1) {
+    @media screen and (min-width: $display-breakpoint + 1) {
       display: none;
     }
   }

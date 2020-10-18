@@ -29,7 +29,7 @@ import TheDocumentToolbar from '@/components/TheDocumentToolbar';
 import PageItem from '@/components/documentComponents/PageItem';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
-import { STATE_ENUM } from '@/modules/globals';
+import { DISPLAY_STATE } from '@/modules/globals';
 
 import Vue from 'vue';
 
@@ -58,7 +58,7 @@ export default {
       oldZoom: 'document/oldZoom',
       zoom: 'document/zoom',
 
-      state: 'app/state',
+      state: 'app/displayState',
 
       theme: 'document/theme',
 
@@ -72,7 +72,7 @@ export default {
     noteTexturesEnabled: function () { this.createPages(); },
     theme: function () { this.createPages(); },
     state: function () {
-      if (this.state === STATE_ENUM.DOCUMENT || this.state === STATE_ENUM.DESKTOP) {
+      if (this.state === DISPLAY_STATE.DOCUMENT || this.state === DISPLAY_STATE.EDITOR_AND_DOCUMENT) {
         this.checkOverflow();
       }
     }
