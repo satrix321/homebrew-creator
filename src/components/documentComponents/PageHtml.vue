@@ -68,7 +68,7 @@ export default {
 .custom-html {
   margin-bottom: 10px;
 
-  /deep/ .prop {
+  ::v-deep .prop {
     margin-bottom: 0;
 
     &.prop--handwritten {
@@ -136,7 +136,7 @@ export default {
   }
 
   &.custom-html--textured {
-    /deep/ .prop {
+    ::v-deep .prop {
       &.prop--handwritten {
         background-image: url('../../assets/images/note_texture_cthulhu_02.jpg');
         background-repeat: no-repeat;
@@ -149,7 +149,7 @@ export default {
     }
   }
 
-  /deep/ {
+  ::v-deep {
     .image {
       &.image--absolute {
         position: absolute;

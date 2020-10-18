@@ -124,12 +124,12 @@ export default {
   height: 29.66cm;
   padding: 1cm;
   
-  /deep/ * {
+  ::v-deep * {
     margin-top: 0;
   }
 
   .page__content {
-    /deep/ .page-wide-block {
+    ::v-deep .page-wide-block {
       margin-bottom: 0;
       column-span: all;
       -webkit-column-span: all;

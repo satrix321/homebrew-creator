@@ -55,12 +55,12 @@ export default {
     margin-bottom: 0;
   }
 
-  ol /deep/ li,
-  ul /deep/ li {
+  ol ::v-deep li,
+  ul ::v-deep li {
     font-size: 9pt;
   }
 
-  /deep/ .list {
+  ::v-deep .list {
     margin-bottom: 0;
   }
 }

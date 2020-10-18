@@ -69,7 +69,7 @@ export default {
     }
   }
 
-  /deep/ svg {
+  ::v-deep svg {
     vertical-align: middle;
   }
 }
