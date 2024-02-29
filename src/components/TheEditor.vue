@@ -3,7 +3,7 @@
     <the-editor-toolbar :eventBus="eventBus" @insertPrimaryNote="insertPrimaryNote"
       @insertSecondaryNote="insertSecondaryNote" @insertTertiaryNote="insertTertiaryNote"
       @insertNewspaperNote="insertNewspaperNote" @insertHandwrittenNote="insertHandwrittenNote"
-      @insertPhbNote="insertPhbNote" @insertCocStatBlock="insertCocStatBlock" @insertDndStatBlock="insertDndStatBlock"
+      @insertCocStatBlock="insertCocStatBlock" @insertDndStatBlock="insertDndStatBlock"
       @insertRegularTable="insertRegularTable" @insertDndCustomTable="insertDndCustomTable"
       @insertRegularPage="insertRegularPage" @insertRelativeImage="insertRelativeImage"
       @insertAbsoluteImage="insertAbsoluteImage" @insertFullPageImage="insertFullPageImage"
@@ -24,6 +24,7 @@
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
 import TheEditorToolbar from '@/components/TheEditorToolbar';
+import * as editorSnippets from '@/modules/editorSnippets';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -73,40 +74,6 @@ export default {
 
       documentCurrentPageIndex: 'document/currentPageIndex',
       theme: 'document/theme',
-
-      primaryNoteSnippet: 'editorSnippets/primaryNoteSnippet',
-      secondaryNoteSnippet: 'editorSnippets/secondaryNoteSnippet',
-      tertiaryNoteSnippet: 'editorSnippets/tertiaryNoteSnippet',
-      newspaperNoteSnippet: 'editorSnippets/newspaperNoteSnippet',
-      handwrittenNoteSnippet: 'editorSnippets/handwrittenNoteSnippet',
-      phbNoteSnippet: 'editorSnippets/phbNoteSnippet',
-
-      cthulhuStatTableSnippet: 'editorSnippets/cthulhuStatTableSnippet',
-      dndStatTableSnippet: 'editorSnippets/dndStatTableSnippet',
-
-      tableSnippet: 'editorSnippets/tableSnippet',
-      dndCustomTableSnippet: 'editorSnippets/dndCustomTableSnippet',
-
-      pageSnippet: 'editorSnippets/pageSnippet',
-      twoColumnPageSnippet: 'editorSnippets/twoColumnPageSnippet',
-      threeColumnPageSnippet: 'editorSnippets/threeColumnPageSnippet',
-      titlePageSnippet: 'editorSnippets/titlePageSnippet',
-
-      relativeImageSnippet: 'editorSnippets/relativeImageSnippet',
-      absoluteImageSnippet: 'editorSnippets/absoluteImageSnippet',
-      fullPageImageSnippet: 'editorSnippets/fullPageImageSnippet',
-
-      columnBreakSnippet: 'editorSnippets/columnBreakSnippet',
-      wideBlockSnippet: 'editorSnippets/wideBlockSnippet',
-      verticalSpacingSnippet: 'editorSnippets/verticalSpacingSnippet',
-
-      customTitlePageFontSnippet: 'editorSnippets/customTitlePageFontSnippet',
-      customHeadersFontSnippet: 'editorSnippets/customHeadersFontSnippet',
-      customNoteHeadersFontSnippet: 'editorSnippets/customNoteHeadersFontSnippet',
-      customRegularTextFontSnippet: 'editorSnippets/customRegularTextFontSnippet',
-      customNewspaperHeadersFontSnippet: 'editorSnippets/customNewspaperHeadersFontSnippet',
-      customNewspaperTextFontSnippet: 'editorSnippets/customNewspaperTextFontSnippet',
-      customHandwritingFontSnippet: 'editorSnippets/customHandwritingFontSnippet'
     }),
   },
   beforeCreate() {
@@ -149,33 +116,32 @@ export default {
     this.insertData(this.rawCode + ' ', this.getCursorPosition());
   },
   methods: {
-    insertPrimaryNote() { this.insertData(this.primaryNoteSnippet, this.getCursorPosition()); },
-    insertSecondaryNote() { this.insertData(this.secondaryNoteSnippet, this.getCursorPosition()); },
-    insertTertiaryNote() { this.insertData(this.tertiaryNoteSnippet, this.getCursorPosition()); },
-    insertNewspaperNote() { this.insertData(this.newspaperNoteSnippet, this.getCursorPosition()); },
-    insertHandwrittenNote() { this.insertData(this.handwrittenNoteSnippet, this.getCursorPosition()); },
-    insertPhbNote() { this.insertData(this.phbNoteSnippet, this.getCursorPosition()); },
-    insertCocStatBlock() { this.insertData(this.cthulhuStatTableSnippet, this.getCursorPosition()); },
-    insertDndStatBlock() { this.insertData(this.dndStatTableSnippet, this.getCursorPosition()); },
-    insertRegularTable() { this.insertData(this.tableSnippet, this.getCursorPosition()); },
-    insertDndCustomTable() { this.insertData(this.dndCustomTableSnippet, this.getCursorPosition()); },
-    insertRegularPage() { this.insertData(this.pageSnippet, this.getCursorPosition()); },
-    insertTwoColumnPage() { this.insertData(this.twoColumnPageSnippet, this.getCursorPosition()); },
-    insertThreeColumnPage() { this.insertData(this.threeColumnPageSnippet, this.getCursorPosition()); },
-    insertTitlePage() { this.insertData(this.titlePageSnippet, this.getCursorPosition()); },
-    insertRelativeImage() { this.insertData(this.relativeImageSnippet, this.getCursorPosition()); },
-    insertAbsoluteImage() { this.insertData(this.absoluteImageSnippet, this.getCursorPosition()); },
-    insertFullPageImage() { this.insertData(this.fullPageImageSnippet, this.getCursorPosition()); },
-    insertColumnBreak() { this.insertData(this.columnBreakSnippet, this.getCursorPosition()); },
-    insertWideBlock() { this.insertData(this.wideBlockSnippet, this.getCursorPosition()); },
-    insertVerticalSpacing() { this.insertData(this.verticalSpacingSnippet, this.getCursorPosition()); },
-    insertCustomTitlePageFont() { this.insertData(this.customTitlePageFontSnippet, this.getCursorPosition()); },
-    insertCustomHeadersFont() { this.insertData(this.customHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomNoteHeadersFont() { this.insertData(this.customNoteHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomRegularTextFont() { this.insertData(this.customRegularTextFontSnippet, this.getCursorPosition()); },
-    insertCustomNewspaperHeadersFont() { this.insertData(this.customNewspaperHeadersFontSnippet, this.getCursorPosition()); },
-    insertCustomNewspaperTextFont() { this.insertData(this.customNewspaperTextFontSnippet, this.getCursorPosition()); },
-    insertCustomHandwritingFont() { this.insertData(this.customHandwritingFontSnippet, this.getCursorPosition()); },
+    insertPrimaryNote() { this.insertData(editorSnippets.primaryNoteSnippet, this.getCursorPosition()); },
+    insertSecondaryNote() { this.insertData(editorSnippets.secondaryNoteSnippet, this.getCursorPosition()); },
+    insertTertiaryNote() { this.insertData(editorSnippets.tertiaryNoteSnippet, this.getCursorPosition()); },
+    insertNewspaperNote() { this.insertData(editorSnippets.newspaperNoteSnippet, this.getCursorPosition()); },
+    insertHandwrittenNote() { this.insertData(editorSnippets.handwrittenNoteSnippet, this.getCursorPosition()); },
+    insertCocStatBlock() { this.insertData(editorSnippets.cthulhuStatTableSnippet, this.getCursorPosition()); },
+    insertDndStatBlock() { this.insertData(editorSnippets.dndStatTableSnippet, this.getCursorPosition()); },
+    insertRegularTable() { this.insertData(editorSnippets.tableSnippet, this.getCursorPosition()); },
+    insertDndCustomTable() { this.insertData(editorSnippets.dndCustomTableSnippet, this.getCursorPosition()); },
+    insertRegularPage() { this.insertData(editorSnippets.pageSnippet, this.getCursorPosition()); },
+    insertTwoColumnPage() { this.insertData(editorSnippets.twoColumnPageSnippet, this.getCursorPosition()); },
+    insertThreeColumnPage() { this.insertData(editorSnippets.threeColumnPageSnippet, this.getCursorPosition()); },
+    insertTitlePage() { this.insertData(editorSnippets.titlePageSnippet, this.getCursorPosition()); },
+    insertRelativeImage() { this.insertData(editorSnippets.relativeImageSnippet, this.getCursorPosition()); },
+    insertAbsoluteImage() { this.insertData(editorSnippets.absoluteImageSnippet, this.getCursorPosition()); },
+    insertFullPageImage() { this.insertData(editorSnippets.fullPageImageSnippet, this.getCursorPosition()); },
+    insertColumnBreak() { this.insertData(editorSnippets.columnBreakSnippet, this.getCursorPosition()); },
+    insertWideBlock() { this.insertData(editorSnippets.wideBlockSnippet, this.getCursorPosition()); },
+    insertVerticalSpacing() { this.insertData(editorSnippets.verticalSpacingSnippet, this.getCursorPosition()); },
+    insertCustomTitlePageFont() { this.insertData(editorSnippets.customTitlePageFontSnippet, this.getCursorPosition()); },
+    insertCustomHeadersFont() { this.insertData(editorSnippets.customHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomNoteHeadersFont() { this.insertData(editorSnippets.customNoteHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomRegularTextFont() { this.insertData(editorSnippets.customRegularTextFontSnippet, this.getCursorPosition()); },
+    insertCustomNewspaperHeadersFont() { this.insertData(editorSnippets.customNewspaperHeadersFontSnippet, this.getCursorPosition()); },
+    insertCustomNewspaperTextFont() { this.insertData(editorSnippets.customNewspaperTextFontSnippet, this.getCursorPosition()); },
+    insertCustomHandwritingFont() { this.insertData(editorSnippets.customHandwritingFontSnippet, this.getCursorPosition()); },
     codeChange: _.debounce(function (rawCode) {
       const pageBreakIndexes = [];
       const search = this.codeMirror.getSearchCursor('\\page');
