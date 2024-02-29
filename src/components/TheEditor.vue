@@ -1,49 +1,22 @@
 <template>
   <div class="editor">
-    <the-editor-toolbar
-      :eventBus="eventBus"
-      @insertPrimaryNote="insertPrimaryNote"
-      @insertSecondaryNote="insertSecondaryNote"
-      @insertTertiaryNote="insertTertiaryNote"
-      @insertNewspaperNote="insertNewspaperNote"
-      @insertHandwrittenNote="insertHandwrittenNote"
-      @insertPhbNote="insertPhbNote"
-      @insertCocStatBlock="insertCocStatBlock"
-      @insertDndStatBlock="insertDndStatBlock"
-      @insertRegularTable="insertRegularTable"
-      @insertDndCustomTable="insertDndCustomTable"
-      @insertRegularPage="insertRegularPage"
-      @insertRelativeImage="insertRelativeImage"
-      @insertAbsoluteImage="insertAbsoluteImage"
-      @insertFullPageImage="insertFullPageImage"
-      @insertTwoColumnPage="insertTwoColumnPage"
-      @insertThreeColumnPage="insertThreeColumnPage"
-      @insertTitlePage="insertTitlePage"
-      @insertColumnBreak="insertColumnBreak"
-      @insertWideBlock="insertWideBlock"
-      @insertVerticalSpacing="insertVerticalSpacing"
-      @insertCustomTitlePageFont="insertCustomTitlePageFont"
-      @insertCustomHeadersFont="insertCustomHeadersFont"
-      @insertCustomNoteHeadersFont="insertCustomNoteHeadersFont"
+    <the-editor-toolbar :eventBus="eventBus" @insertPrimaryNote="insertPrimaryNote"
+      @insertSecondaryNote="insertSecondaryNote" @insertTertiaryNote="insertTertiaryNote"
+      @insertNewspaperNote="insertNewspaperNote" @insertHandwrittenNote="insertHandwrittenNote"
+      @insertPhbNote="insertPhbNote" @insertCocStatBlock="insertCocStatBlock" @insertDndStatBlock="insertDndStatBlock"
+      @insertRegularTable="insertRegularTable" @insertDndCustomTable="insertDndCustomTable"
+      @insertRegularPage="insertRegularPage" @insertRelativeImage="insertRelativeImage"
+      @insertAbsoluteImage="insertAbsoluteImage" @insertFullPageImage="insertFullPageImage"
+      @insertTwoColumnPage="insertTwoColumnPage" @insertThreeColumnPage="insertThreeColumnPage"
+      @insertTitlePage="insertTitlePage" @insertColumnBreak="insertColumnBreak" @insertWideBlock="insertWideBlock"
+      @insertVerticalSpacing="insertVerticalSpacing" @insertCustomTitlePageFont="insertCustomTitlePageFont"
+      @insertCustomHeadersFont="insertCustomHeadersFont" @insertCustomNoteHeadersFont="insertCustomNoteHeadersFont"
       @insertCustomRegularTextFont="insertCustomRegularTextFont"
       @insertCustomNewspaperHeadersFont="insertCustomNewspaperHeadersFont"
       @insertCustomNewspaperTextFont="insertCustomNewspaperTextFont"
-      @insertCustomHandwritingFont="insertCustomHandwritingFont"
-      @syncFile="syncFile"
-      @downloadGoogleDriveFile="downloadGoogleDriveFile"
-      @uploadGoogleDriveFile="uploadGoogleDriveFile"
-      @downloadFile="downloadFile"
-      @uploadFile="uploadFile"
-      @scrollToPage="scrollToPage"
-      @switchView="switchView"
-    />
-    <codemirror ref="editor" :options="codeMirrorOptions"
-      @input="codeChange" 
-      @cursorActivity="cursorPositionChange"/>
-    <the-file-picker ref="filePicker" 
-      @downloadFile="downloadFileUsingProvider" 
-      @uploadFile="uploadFileUsingProvider"
-      @signOut="signOutFromProvider"/>
+      @insertCustomHandwritingFont="insertCustomHandwritingFont" @downloadFile="downloadFile" @uploadFile="uploadFile"
+      @scrollToPage="scrollToPage" @switchView="switchView" />
+    <codemirror ref="editor" :options="codeMirrorOptions" @input="codeChange" @cursorActivity="cursorPositionChange" />
   </div>
 </template>
 
@@ -51,7 +24,6 @@
 import CodeMirror from 'codemirror';
 import { codemirror } from 'vue-codemirror';
 import TheEditorToolbar from '@/components/TheEditorToolbar';
-import TheFilePicker from '@/components/TheFilePicker';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
@@ -67,14 +39,12 @@ import 'codemirror/addon/search/match-highlighter.js';
 import 'codemirror/addon/comment/comment.js';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
-import GoogleDriveProvider from '@/storageProviders/GoogleDriveProvider';
 
 export default {
   name: 'TheEditor',
   components: {
     codemirror,
     TheEditorToolbar,
-    TheFilePicker
   },
   data() {
     return {
@@ -93,7 +63,6 @@ export default {
         blockCommentEnd: '-->',
         fullLines: false,
       },
-      storageProvider: undefined,
     };
   },
   props: ['eventBus'],
@@ -102,10 +71,6 @@ export default {
       pageBreakIndexes: 'editor/pageBreakIndexes',
       rawCode: 'editor/rawCode',
 
-      storageProviderFileId: 'filepicker/fileId',
-      storageProviderFileName: 'filepicker/fileName',
-      storageProviderFileParentId: 'filepicker/fileParentId',
-      
       documentCurrentPageIndex: 'document/currentPageIndex',
       theme: 'document/theme',
 
@@ -145,7 +110,7 @@ export default {
     }),
   },
   beforeCreate() {
-    CodeMirror.defineMode('homebrew-markdown', function(config, parserConfig) {
+    CodeMirror.defineMode('homebrew-markdown', function (config, parserConfig) {
       // highlight lines with '\page' string
       const homebrewOverlay = {
         token(stream) {
@@ -249,167 +214,9 @@ export default {
     },
     scrollToPage() {
       if (this.pageBreakIndexes[this.documentCurrentPageIndex] !== undefined) {
-        this.codeMirror.scrollIntoView({line: this.pageBreakIndexes[this.documentCurrentPageIndex], char: 0}, 100);
-        this.codeMirror.setCursor({line: this.pageBreakIndexes[this.documentCurrentPageIndex], ch: 0});
+        this.codeMirror.scrollIntoView({ line: this.pageBreakIndexes[this.documentCurrentPageIndex], char: 0 }, 100);
+        this.codeMirror.setCursor({ line: this.pageBreakIndexes[this.documentCurrentPageIndex], ch: 0 });
       }
-    },
-    async syncFile() {
-      if (this.storageProviderFileId) {
-        this.$store.commit('app/showLoader');
-
-        if (!this.storageProvider.isSignedIn) {
-          await this.storageProvider.authenticate();
-        }
-
-        const data = {
-          data: this.rawCode,
-          theme: this.theme,
-        };
-
-        try {
-          const response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
-          if (response.status !== 200) {
-            console.error(response);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-        this.$store.commit('app/hideLoader');
-      } else {
-        alert('file not selected!');
-      }
-    },
-    async downloadFileUsingProvider() {
-      if (this.storageProviderFileId) {
-        this.$store.commit('app/showLoader');
-
-        if (!this.storageProvider.isSignedIn) {
-          await this.storageProvider.authenticate();
-        }
-
-        try {
-          const response = await this.storageProvider.downloadFile(this.storageProviderFileId);
-          if (response.status === 200) {
-            const data = JSON.parse(response.body);
-            this.codeMirror.setValue(data.data);
-            this.$store.commit('document/setTheme', data.theme);
-          } else {
-            console.error(response);
-          }
-        } catch (error) {
-          console.error(error);
-          
-        }
-
-        this.$store.commit('app/hideLoader');
-      }
-    },
-    async uploadFileUsingProvider() {
-      this.$store.commit('app/showLoader');
-
-      if (!this.storageProvider.isSignedIn) {
-        await this.storageProvider.authenticate();
-      }
-
-      const data = {
-        data: this.rawCode,
-        theme: this.theme,
-      };
-
-      if (this.storageProviderFileId) {
-        try {
-          const response = await this.storageProvider.updateFile(JSON.stringify(data), this.storageProviderFileId);
-          if (response.status !== 200) {
-            console.error(response);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      } else if (this.storageProviderFileParentId) {
-        try {
-          const response = this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data), this.storageProviderFileParentId);
-          if (response.status !== 200) {
-            console.error(response);
-          } else {
-            this.$store.commit('filepicker/setFileId', response.result.id);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        try {
-          const response = await this.storageProvider.uploadFile(this.storageProviderFileName, JSON.stringify(data));
-          if (response.status !== 200) {
-            console.error(response);
-          } else {
-            this.$store.commit('filepicker/setFileId', response.result.id);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-
-      this.$store.commit('app/hideLoader');
-    },
-    signOutFromProvider() {
-      this.$store.commit('app/showLoader');
-      this.$refs.filePicker.close();
-
-      try {
-        this.storageProvider.signOut();
-      } catch (error) {
-        console.error(error);
-      }
-
-      this.$store.commit('app/hideLoader');
-    },
-    async downloadGoogleDriveFile() {
-      this.$store.commit('app/showLoader');
-
-      try {
-        if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
-          this.storageProvider = new GoogleDriveProvider();
-          await this.storageProvider.load();
-          await this.storageProvider.authenticate();
-        } else if (!this.storageProvider.isSignedIn) {
-          await this.storageProvider.authenticate();
-        }
-      } catch (error) {
-        if (error.error !== 'popup_closed_by_user') {
-          console.error(error);
-        }
-        this.$store.commit('app/hideLoader');
-        return;
-      }
-
-      this.$refs.filePicker.setProvider(this.storageProvider);
-      this.$refs.filePicker.setDownloadMode();
-      this.$refs.filePicker.show();
-      this.$store.commit('app/hideLoader');
-    },
-    async uploadGoogleDriveFile() {
-      this.$store.commit('app/showLoader');
-      
-      try {
-        if (!this.storageProvider || !(this.storageProvider instanceof GoogleDriveProvider)) {
-          this.storageProvider = new GoogleDriveProvider();
-          await this.storageProvider.load();
-          await this.storageProvider.authenticate();
-        } else if (!this.storageProvider.isSignedIn) {
-          await this.storageProvider.authenticate();
-        }
-      } catch (error) {
-        if (error.error !== 'popup_closed_by_user') {
-          console.error(error);
-        }
-        this.$store.commit('app/hideLoader');
-        return;
-      }
-
-      this.$refs.filePicker.setProvider(this.storageProvider);
-      this.$refs.filePicker.setUploadMode();
-      this.$refs.filePicker.show();
-      this.$store.commit('app/hideLoader');
     },
     downloadFile() {
       const data = {

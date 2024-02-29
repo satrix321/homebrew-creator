@@ -26,11 +26,16 @@
           <template slot="dropdown-content">
             <dropdown-item @click="insertCustomTitlePageFont"><i class="fas fa-font"></i> Title Font</dropdown-item>
             <dropdown-item @click="insertCustomHeadersFont"><i class="fas fa-font"></i> Headers Font</dropdown-item>
-            <dropdown-item @click="insertCustomNoteHeadersFont"><i class="fas fa-font"></i> Note Headers Font</dropdown-item>
-            <dropdown-item @click="insertCustomRegularTextFont"><i class="fas fa-font"></i> Regular Text Font</dropdown-item>
-            <dropdown-item @click="insertCustomNewspaperHeadersFont"><i class="fas fa-font"></i> Newspaper Headers Font</dropdown-item>
-            <dropdown-item @click="insertCustomNewspaperTextFont"><i class="fas fa-font"></i> Newspaper Text Font</dropdown-item>
-            <dropdown-item @click="insertCustomHandwritingFont"><i class="fas fa-font"></i> Handwriting Font</dropdown-item>
+            <dropdown-item @click="insertCustomNoteHeadersFont"><i class="fas fa-font"></i> Note Headers
+              Font</dropdown-item>
+            <dropdown-item @click="insertCustomRegularTextFont"><i class="fas fa-font"></i> Regular Text
+              Font</dropdown-item>
+            <dropdown-item @click="insertCustomNewspaperHeadersFont"><i class="fas fa-font"></i> Newspaper Headers
+              Font</dropdown-item>
+            <dropdown-item @click="insertCustomNewspaperTextFont"><i class="fas fa-font"></i> Newspaper Text
+              Font</dropdown-item>
+            <dropdown-item @click="insertCustomHandwritingFont"><i class="fas fa-font"></i> Handwriting
+              Font</dropdown-item>
           </template>
         </dropdown-menu>
 
@@ -39,11 +44,16 @@
             <i class="fas fa-sticky-note"></i> Notes
           </template>
           <template slot="dropdown-content">
-            <dropdown-item @click="insertPrimaryNote"><i style="color: rgb(218, 230, 191);" class="fas fa-sticky-note"></i> Primary</dropdown-item>
-            <dropdown-item @click="insertSecondaryNote"><i style="color: rgb(220, 207, 172);" class="fas fa-sticky-note"></i> Secondary</dropdown-item>
-            <dropdown-item @click="insertTertiaryNote"><i style="color: rgb(231, 227, 239);" class="fas fa-sticky-note"></i> Tertiary</dropdown-item>
-            <dropdown-item @click="insertNewspaperNote"><i style="color: rgb(244, 244, 226)" class="fas fa-sticky-note"></i> Newspaper</dropdown-item>
-            <dropdown-item @click="insertHandwrittenNote"><i style="color: rgb(244, 244, 236)" class="fas fa-sticky-note"></i> Handwritten</dropdown-item>
+            <dropdown-item @click="insertPrimaryNote"><i style="color: rgb(218, 230, 191);"
+                class="fas fa-sticky-note"></i> Primary</dropdown-item>
+            <dropdown-item @click="insertSecondaryNote"><i style="color: rgb(220, 207, 172);"
+                class="fas fa-sticky-note"></i> Secondary</dropdown-item>
+            <dropdown-item @click="insertTertiaryNote"><i style="color: rgb(231, 227, 239);"
+                class="fas fa-sticky-note"></i> Tertiary</dropdown-item>
+            <dropdown-item @click="insertNewspaperNote"><i style="color: rgb(244, 244, 226)"
+                class="fas fa-sticky-note"></i> Newspaper</dropdown-item>
+            <dropdown-item @click="insertHandwrittenNote"><i style="color: rgb(244, 244, 236)"
+                class="fas fa-sticky-note"></i> Handwritten</dropdown-item>
           </template>
         </dropdown-menu>
 
@@ -85,43 +95,38 @@
           <template slot="dropdown-content">
             <dropdown-item @click="insertColumnBreak"><i class="fas fa-columns"></i> Column Break</dropdown-item>
             <dropdown-item @click="insertWideBlock"><i class="fas fa-arrows-alt-h"></i> Wide Block</dropdown-item>
-            <dropdown-item @click="insertVerticalSpacing"><i class="fas fa-arrows-alt-v"></i> Vertical Spacing</dropdown-item>
+            <dropdown-item @click="insertVerticalSpacing"><i class="fas fa-arrows-alt-v"></i> Vertical
+              Spacing</dropdown-item>
           </template>
         </dropdown-menu>
 
       </template>
     </dropdown-menu>
 
-    <toolbar-separator/>
+    <toolbar-separator />
 
     <div class="toolbar__spacer" ref="spacer"></div>
 
-    <toolbar-separator/>
-
-    <button-item @click="syncFile" :disabled="!this.storageProviderFileId"><i class="fas fa-sync"></i> Sync</button-item>
-
-    <toolbar-separator/>
+    <toolbar-separator />
 
     <dropdown-menu :alignToRight="true">
       <template slot="dropdown-button">
         <i class="fas fa-file"></i> File
       </template>
       <template slot="dropdown-content">
-        <dropdown-item @click="downloadGoogleDriveFile"><i class="fab fa-google-drive"></i> Download - Google Drive</dropdown-item>
-        <dropdown-item @click="uploadGoogleDriveFile"><i class="fab fa-google-drive"></i> Upload - Google Drive</dropdown-item>
         <dropdown-item @click="downloadFile"><i class="fas fa-download"></i> Download File</dropdown-item>
         <dropdown-item @click="uploadFile"><i class="fas fa-upload"></i> Upload File</dropdown-item>
       </template>
     </dropdown-menu>
 
-    <toolbar-separator class="desktop-only"/>
+    <toolbar-separator class="desktop-only" />
 
     <button-item class="desktop-only" @click="scrollToPage"><i class="fas fa-arrows-alt-v"></i> Locate</button-item>
 
-    <toolbar-separator class="mobile-only"/>
+    <toolbar-separator class="mobile-only" />
 
     <button-item class="mobile-only switch-button" @click="switchView"><i class="fas fa-eye"></i></button-item>
-    
+
   </div>
 </template>
 
@@ -130,7 +135,6 @@ import ButtonItem from '@/components/ButtonItem';
 import DropdownMenu from '@/components/DropdownMenu';
 import DropdownItem from '@/components/DropdownItem';
 import ToolbarSeparator from '@/components/ToolbarSeparator';
-import { mapGetters } from 'vuex';
 
 export default {
   name: 'TheEditorToolbar',
@@ -141,11 +145,6 @@ export default {
     ToolbarSeparator
   },
   props: ['eventBus'],
-  computed: {
-    ...mapGetters({
-      storageProviderFileId: 'filepicker/fileId'
-    })
-  },
   methods: {
     insertPrimaryNote() { this.$emit('insertPrimaryNote'); },
     insertSecondaryNote() { this.$emit('insertSecondaryNote'); },
@@ -173,9 +172,6 @@ export default {
     insertCustomNewspaperHeadersFont() { this.$emit('insertCustomNewspaperHeadersFont'); },
     insertCustomNewspaperTextFont() { this.$emit('insertCustomNewspaperTextFont'); },
     insertCustomHandwritingFont() { this.$emit('insertCustomHandwritingFont'); },
-    syncFile() { this.$emit('syncFile'); },
-    downloadGoogleDriveFile() { this.$emit('downloadGoogleDriveFile'); },
-    uploadGoogleDriveFile() { this.$emit('uploadGoogleDriveFile'); },
     downloadFile() { this.$emit('downloadFile'); },
     uploadFile() { this.$emit('uploadFile'); },
     scrollToPage() { this.$emit('scrollToPage'); },

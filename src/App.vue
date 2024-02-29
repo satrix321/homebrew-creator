@@ -1,13 +1,12 @@
 <template>
   <div id="app">
     <div class="main">
-      <the-loader />
       <split ref="split" :gutterSize="gutterSize" class="splitter" @onDrag="splitDrag">
         <split-area class="split-editor" :size="editor.percentWidth" :min-size="editor.minWidth">
-          <the-editor :eventBus="eventBus" @switchView="switchToDocument"/>
+          <the-editor :eventBus="eventBus" @switchView="switchToDocument" />
         </split-area>
         <split-area class="split-document" :size="document.percentWidth" :min-size="document.minWidth">
-          <the-document :eventBus="eventBus" @switchView="switchToEditor"/>
+          <the-document :eventBus="eventBus" @switchView="switchToEditor" />
         </split-area>
       </split>
     </div>
@@ -20,14 +19,12 @@ import { mapGetters } from 'vuex';
 import { displayBreakpoint, DISPLAY_STATE } from '@/modules/globals';
 import TheEditor from '@/components/TheEditor';
 import TheDocument from '@/components/TheDocument';
-import TheLoader from '@/components/TheLoader';
 
 export default {
   name: 'App',
   components: {
     TheEditor,
     TheDocument,
-    TheLoader,
   },
   data() {
     return {
@@ -120,6 +117,7 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/fonts.scss";
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -138,29 +136,34 @@ body {
   @page {
     margin: 0;
   }
+
   body {
     margin: 0 !important;
     box-shadow: none !important;
     overflow-x: auto !important;
   }
+
   .split-editor {
     display: none !important;
     height: 0 !important;
     float: none !important;
   }
+
   .split-document {
     width: 100% !important;
     float: none !important;
   }
+
   .gutter.gutter-horizontal {
     display: none !important;
     height: 0 !important;
   }
+
   .split {
     overflow: visible !important;
   }
+
   ::-webkit-scrollbar {
     display: none;
   }
-}
-</style>
+}</style>

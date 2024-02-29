@@ -1,5 +1,5 @@
-$site-font: 'Source Sans Pro', sans-serif;
-$site-font-mono: 'Fira Mono', monospace;
+$site-font: "Source Sans Pro", sans-serif;
+$site-font-mono: "Fira Mono", monospace;
 
 $display-breakpoint: 1023px;
 
@@ -15,11 +15,7 @@ $modal-header-footer-backgorund-color: #363636;
 $modal-body-background-color: #2a2a2a;
 $modal-color: white;
 $document-pages-container-background-color: #cccccc;
-$filepicker-folder-color: #ffe894;
-$filepicker-selected-row-background-color: #5f5f5f;
-$filepicker-row-hover-background-color: #737373;
 $page-background-color: white;
-$loader-color: #ddd;
 
 // THEME - DEFAULT
 $page-footer-number-default-color: #a08d5d;
@@ -33,7 +29,7 @@ $page-table-row-odd-default-background-color: rgba(195, 220, 155, 0.6);
 
 // THEME - CTHULHU 1
 $page-footer-number-cthulhu-1-color: black;
-$page-note-tertiary-cthulhu-1-background-color: #F4EEC8;
+$page-note-tertiary-cthulhu-1-background-color: #f4eec8;
 
 // THEME - CTHULHU 2
 $page-footer-number-cthulhu-2-color: black;
@@ -43,16 +39,16 @@ $page-note-tertiary-cthulhu-2-background-color: rgba(0, 0, 0, 0.071);
 
 // CTHULHU TABLES
 $page-table-header-cthulhu-background-color: #5f4625;
-$page-table-header-cthulhu-color: #DED7CC;
+$page-table-header-cthulhu-color: #ded7cc;
 $page-table-row-even-cthulhu-background-color: rgba(224, 199, 136, 0.4);
 
 // PROPS
 $page-prop-handwritten-color: black;
 $page-prop-newspaper-color: black;
-$page-prop-newspaper-background-color: #F4DCC0;
+$page-prop-newspaper-background-color: #f4dcc0;
 
 // STAT BLOCKS
 $page-stat-block-cthulhu-header-background-color: #5f4625;
-$page-stat-block-cthulhu-header-color: #DED7CC;
+$page-stat-block-cthulhu-header-color: #ded7cc;
 $page-stat-block-cthulhu-row-odd-background-color: rgba(224, 199, 136, 0.2);
 $page-stat-block-cthulhu-row-even-background-color: rgba(224, 199, 136, 0.5);
